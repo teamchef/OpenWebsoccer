@@ -1,0 +1,26 @@
+{% extends ajaxRequest is defined and ajaxRequest ? "ajax.twig" : "layout.twig" %}
+
+{% block stylesheets %}
+	body 								{padding-top: 60px;padding-bottom: 40px;}
+	.sidebar-nav 						{padding: 9px 0;}
+	.box 								{padding: 8px 10px;background: #fdfdfd;border: 1px solid #eeeeee;border-bottom: 3px solid #eee;border-radius: 6px;margin-bottom: 30px;}
+	.box table 							{margin-bottom: 10px;}
+	.box > h4 							{border-bottom: 1px solid #eeeeee;padding-bottom: 7px;}
+	#footer 							{position:fixed;bottom:0px; left:0px; right:0px;background-image: url(./img/schedioartskin/players-bg.png);	text-align:center;padding:0px;padding-top:30px;}
+	* html #footer  					{height:8%;padding-top:3.5%;background-image:url(./img/schedioartskin/players-bg.png);}
+	.top_spoiler 						{padding: 60px;padding-top: 20px;padding-right: 60px;padding-bottom: 20px;padding-left: 60px;margin-bottom: 30px;font-size: 18px;
+										 font-weight: 200;line-height: 30px;color: inherit;	background-color: #eeeeee;-webkit-border-radius: 6px;-moz-border-radius: 6px;
+										 border-radius: 6px;background-image:url(./img/top_spoiler.png);}
+	#ajaxLoaderPage 					{display: none;background: url('./img/ajaxloaderbar.gif') no-repeat center center;height: 15px;width: 100%;position: fixed;bottom: 10px;}
+	.darkIcon 							{color: black;}
+	.collapse 							{overflow: hidden;}
+	.dl-horizontal dt 					{white-space: normal;}
+	.tab-content 						{overflow: visible;}
+	.incell-strength-label 				{width: 30px;display: inline-block;}
+	@media all and (min-height: 100px) 	{.modal-body {max-height: 50px;}}
+	@media all and (min-height: 300px) 	{.modal-body {max-height: 150px;}}
+	@media all and (min-height: 450px) 	{.modal-body {max-height: 300px;}}
+	@media all and (min-height: 700px) 	{.modal-body {max-height: 550px;}}
+	#stadium 							{background: url('./img/pitch_bg.png') no-repeat 110px 90px;}
+	#report_result 						{border-top:1px solid black;border-bottom:1px solid black;text-align:center;}
+{% endblock %}

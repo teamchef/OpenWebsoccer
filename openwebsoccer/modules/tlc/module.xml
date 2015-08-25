@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="2.0.0">
+
+	<admin>
+		<adminpage id="phpjobscheduler" permissionrole="r_admin" navcategory="settings" filename="phpjobscheduler"/>
+	</admin>
+
+	<settings>
+		<setting id="amount_aufstellung_enabled" category="tlc" type="boolean" default="1" />
+		<setting id="amount_aufstellung" category="tlc" type="text" default="100000" />
+	
+		<setting id="sim_auto_deblock" category="tlc" type="boolean" default="1" />
+
+		<setting id="externlink1" category="tlc" type="text" default="" />
+		<setting id="externlink1txt" category="tlc" type="text" default="" />
+		<setting id="externlink2" category="tlc" type="text" default="" />
+		<setting id="externlink2txt" category="tlc" type="text" default="" />
+
+		<setting id="addplyr" category="tlc" type="text" default="AddPlayerWithoutTeamToTransfermarketJob" />
+      	<setting id="extransf" category="tlc" type="text" default="ExecuteTransfersJob" />
+      	<setting id="sim" category="tlc" type="text" default="SimulateMatchesJob" />
+      	<setting id="usractv" category="tlc" type="text" default="UserInactivityCheckJob" />
+      	<setting id="stats" category="tlc" type="text" default="UpdateStatisticsJob" />
+      	<setting id="stadium" category="tlc" type="text" default="AcceptStadiumConstructionWorkJob" />
+
+      	<setting id="version" category="tlc" type="text" default="Step 86 / Co-Powered by Rolf Joseph / ErdemCan" />
+	</settings>
+</module>

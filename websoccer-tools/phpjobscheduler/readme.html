@@ -1,0 +1,292 @@
+﻿<html>
+<head>
+<title>phpJobScheduler - Readme</title>
+<style type="text/css">
+BODY{  color:#107B08; font-size: 9pt; font-family: Verdana}
+.button {background-color:#94CE94; color:#107B08; font-weight: bold}
+em {color:#000;}
+table{font-size: 10pt; font-family: Verdana; font-weight: normal}
+.style1 {color: #000000}
+</style>
+
+<body >
+
+<div align="center">
+  <center>
+
+<table cellSpacing="3" cellPadding="0" border="0" width="1058">
+  <tr bgColor="#334873">
+    <td width="200" align="middle" bgcolor="#FFFFFF"><p align="center"><a
+    href="http://www.phpjobscheduler.co.uk/"><img src="pjslogo.gif"
+    alt="phpJobScheduler" border="0" width="165" height="75"></a><strong><br>
+    </strong></td>
+    <td align="middle" bgcolor="#FFFFFF" width="849"><p align="left"><strong>phpJobScheduler - README</strong><br>
+      Author: <a href="http://www.DWalker.co.uk">DWalker.co.uk</a>&nbsp; Hilfe und Support gibt es im <a href="http://members.dwalker.co.uk/forum/">Forum</a><br>
+    </td>
+  </tr>
+</table>
+<br>
+</center></div>
+
+<center>
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">Findest du es gut ?  Unterstützen kannst du DWalker.co.uk hier:<br> 
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="2148409">
+<input type="image" src="https://www.paypal.com/en_GB/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="">
+<img alt="" border="0" src="https://www.paypal.com/en_GB/i/scr/pixel.gif" width="1" height="1">
+<br />
+Jeder Penny oder Cent hilft. :-) 
+</form>
+
+</center>
+
+<p align="center"><strong><em>php</em>JobScheduler wurde designed, um Jobs regelmäßig automatiesiert auszuführen.</strong><br>
+Diese Version führt dies Jobs im Hintergrund aus, ohne das Ausgaben erfolgen. Diese werden inclusive von Fehlermeldungen in die Datenbank geschrieben.<br>
+Genaue Details können sie dort einsehen: <a href="http://www.phpjobscheduler.co.uk/">www.phpjobscheduler.co.uk</a></p>
+<strong>
+
+<p>Voraussetzungen:</strong> 
+
+<ul>
+  <li>MySQL ( sollte nun auch mit vielen anderen Datenbanken laufen, verändern sie entsprechend die Einstellungen in dieser Datei:  
+  in&nbsp; /phpjobscheduler/pjsfiles/constants.inc.php )</li>
+  <li>PHP 5.x</li>
+</ul>
+<p><strong>Index:</strong></p>
+<ul>
+	<li><a href="#upgrade">Upgrade Details</a> - Wie man ein Upgrade bei einer existierenden Installation vornimmmt</li>
+	<li><a href="#new_install">Komplette NEUE Installation</a> - Wie man eine neue Installation vornimmt</li>
+	<li><a href="#error_log">Error Log</a> - Error logging, ein und ausschalten</li>
+	<li><a href="#timeframewindow">Zeitfenster für die Ausführung</a> - Anpassungen für das Zeitfenster vornehmen</li>
+	<li><a href="#debug">Debug</a> - Testumgebung</li>
+	<li><a href="#history">History</a> - von der Instaqllation bis Heute...</li>
+	<li><a href="#disclaimer">Disclaimer</a> - Das sollten Sie vor der Installation Wissen.</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>Die Durchführung eines Upgrades bei einer vorhandenen Installation:</strong><a name="upgrade"></a>&nbsp; 
+Hierbei sind zwei Hauptpunkte zu beachten !</p>
+<ol>
+  <li>
+    <p align="left">Wenn Jobs existieren, so werden diese in der Datenbank unverändert so belassen.&nbsp; <br>
+      Sie können auch die Konfigurationsdatei behalten:<strong>&nbsp; /phpjobscheduler/pjsfiles/config.inc.php<br>
+	<br></strong>Haben sie Änderungen an dieser Datei gemacht :&nbsp; /<strong>phpjobscheduler/pjsfiles/constants.inc.php</strong>
+	<br>so müssen sie diese Änderungen erneut vornehmen, da Veränderungen vom Upgrade vorgenommenn werden. Machen sie daher zuvor eine Kopie dieser Datei.</p>
+  </li>
+  <li>
+    <p align="left">Haben sie die obigen Anweisungen befolgt, so müssen sie sich einloggen, um die Jobs zu überprüfen, so werden benötigte neue Felder in der Datenbank automatisch korrigiert.<br><br><br></p>
+  </li>
+</ol>
+<strong><p>Neuinstallation durchführen:</strong> <a name="new_install"></a>
+
+<ol>
+  <li>Entpacken sie das heruntergeladene Verzeichnis.<br>
+    <br>
+  </li>
+  <li>Editieren sie folgende Datei mittels Notepad bzw. ihren bevorzugten PHP-Editor:<strong> /phpjobscheduler/pjsfiles/config.inc.php </strong><br><br>
+
+  </li>
+  <li>Laden sie dann das Verezeicnis auf ihren Server. <br>
+    <br>
+  </li>
+  <li><font color="#ff0000">Sehr wichtig ! <strong>Schützen sie unbedingt das Verzeichnis &quot;pjsfiles&quot;</strong></font> unbedingt mit einem Passwort. - Wenn sie dies nicht tun, k ann jeder, der dieses Verzeichnis erreicht sämtliche Einstellunge der Jobs ändern !
+  Eine htaccess kann auf allen Systemen eingerichtet werden, damit zuerst eine Zugangskontrolle über Username und Password erfolgt. ( Auf Windows nutzen die das Control Panel. )&nbsp;
+    ( Bitte kontaktieren sie ihren Anbietern bei Problemen und nicht mich ! ).<br>
+    <br>
+  </li>
+  <li> Der folgende Punkt muss bei einer Ausführung über Cron nicht gemacht werden, sondern dient als Alternative für Websites ohne Cronsupport.<br><br>
+  Fügen sie folgendes z.B. in die index.php bzw. index.html ein<strong><font color="#7B8CD6"></font><font
+        color="#8080C0"></font></strong><strong><font color="#0080FF"></font></strong>, dadurch werden die Jobs über diese Dateien angestoßen.&nbsp; Dabei gibt es zwei Methoden:<br>
+    <br>
+    <ol>
+      <li type="i">Am Anfang der<strong> <font color="#7B8CD6"> </font><font
+        color="#8080C0">PHP</font> Datei</strong>: 
+        <blockquote>
+          <p><font color="#8080C0"><strong>&lt;?php include( dirname(__FILE__) .
+          &quot;/phpjobscheduler/firepjs.php&quot;); ?&gt;</strong></font><br>
+          </p>
+        </blockquote>
+      </li>
+      <li type="i">oder einfach in die <strong><font color="#0080FF"> HTML</font> Seite</strong>,  bzw. jede andere besuchte Seite ihrer Webpräsens:      <br>
+      </li>
+    </ol>
+    <blockquote>
+	<form name="f1">
+      <textarea rows="2" cols="80" onClick="this.focus();this.select()" name="fire_url" type="text" style="border:solid 1px #0080FF;">&lt;img src=&quot;http://YOURDOMAIN/phpjobscheduler/firepjs.php?return_image=1&quot; border=&quot;0&quot; alt=&quot;phpJobScheduler&quot;&gt;</textarea>
+ 
+<strong><div id="domain_msg">Beachte unbedingt, das 'DEINEDOMAIN' auch auf deine Domain zeigt !</div></strong>
+</form>
+<script>
+protocol_str=top.location.href.substring(0,5);
+if (protocol_str=="http:")
+{
+ the_link="<img src=\"http://";
+ the_link=the_link+self.location.hostname+self.location.pathname.replace("readme.html","");
+ the_link=the_link+"firepjs.php?return_image=1\" border=\"0\" alt=\"phpJobScheduler\">";
+ document.f1.fire_url.value=the_link;
+ document.getElementById("domain_msg").innerHTML="";
+}
+if (top.location.href.indexOf("noconfig")>-1) alert("Bevor mann einen Job zufügen kann, müssen Angaben zur Datenbank in dieser Datei eingetragen werden:\n\n /pjsfiles/config.inc.php \n\n");
+
+</script>
+          Der obige  <strong><font color="#0080FF">HTML-Code</font></strong> kann auf jede beliebige HTML-Seite eingefügt werden. Unsichtbar, klein und behindert nicht die Seitenausführung.
+        <p>&nbsp;</p>
+    </blockquote>
+  </li>
+  <li><a href="pjsfiles/?add=1"><strong>Bitte hier klicken, um neue Jobs hinzu zu fügen.</strong></a>
+  
+  
+  
+  <br>
+  <br>
+  </li>
+  <blockquote>
+    <p>Wenn sie korrekt die obigen Schritte befolgt haben, so werden die folgenden <strong><font color="#FF8000">Datentabellen</font></strong> in der Datenbank erzeugt: </p>
+  </blockquote>
+  <ol>
+    <blockquote>
+      <p align="left"><font color="#FF8000"><strong>phpJobScheduler<br>
+        phpJobScheduler_log</strong></font></p>
+    </blockquote>
+  </ol>
+  <li><a href="firepjs.php">Hier klicken</a> um die Jobs zum Test zu starten.&nbsp;Dies erlaubt es die Ausgaben zu überprüfen und ob alles wie gewünscht ausgeführt wird.&nbsp;
+  Wenn DEBUG gesetzt ist, so wird folgendes ausgegeben: &quot;Found script to run...&quot;, etc.<br><br><br><br>
+  </li>
+	<li>Wenn alles wie gewünscht läuft setzen sie DEBUG auf false, indem sie die Datei:<strong> /phpjobscheduler/pjsfiles/config.inc.php </strong> entsprechend editieren.<br>
+    <br>
+  </li>
+</ol>
+
+<hr width="100%" color="#808080" align="center">
+
+<blockquote>
+  <blockquote>
+    <p><strong><a name="error_log"></a><font color="#FF8000">Error log</font> - Jede Jobausführung wird geloggt, was eine Dokumentation der Ausführungszeiten gleichkommt.
+	Darüber hinaus sind evebtuelle Fehler erkennbar. Sofern Die Jobs auch einen Rückgabewert liefern, sind diese ebenso einsehbar. Besonders die Ausführungszeit eines Joba
+	kann wertvolle Aufschlüsse ergeben, ob im ausgeführtem Script die Laufzeit zu lange ist.</strong></p>
+    <blockquote>
+      <p>Erfasste Daten: Datum und ketze Ausführungszeit mit der URL eventueller Fehlerausgabe.
+      &quot;Ausgabe:&quot; "ohne Daten" bedeutet, das die Ausführung des Scripts ohne Fehler und ohne Rückgabewert erfolgte. </p>
+      <p>Die Standardeinstellung ist(TRUE), das Logging ist eingeschaltet. Um die Einstellung ein/aus zu schalten, muss man wie folgt vorgehen:</p>
+      <blockquote>
+        <p>Ändern sie die Variable ERROR_LOG in der Datei <strong>/pjsfiles/constants.inc.php</strong>
+        . FALSE stopt die Aufzeichnung. Es beeinflusst nicht die Ausführung der Jobs. </p>
+      </blockquote>
+      <p>Ein Logeintrag hat eine maximale Länge von 1200 Zeichen. Dies kann mann mit der Konstante MAX_ERROR_LOG_LENGTH in der Datei constants.inc.php ändern.</p>
+    </blockquote>
+  </blockquote>
+  <p>&nbsp;</p>
+	<p>&nbsp;</p>
+	<p>&nbsp;</p>
+</blockquote>
+
+<hr width="100%" color="#808080" align="center">
+
+<blockquote>
+    <blockquote>
+		<p><a name="timeframewindow"></a><strong><font color="#FF8000">Veränderung des Zeitfensters</font></strong></p> - Dies gilt für die Ausführung ohne Cronjob !
+		<blockquote>
+			<p align="left">Das Zeitfenster kann durch eine Anpassung der Variable TIME_WINDOW in der Datei <strong>/pjsfiles/constants.inc.php</strong> gesetzt werden.&nbsp;
+			Die Grundeinstellung ist 3600 Sekunden ( 60 Minuten&nbsp;, dies sollte für die meisten Zwecke reichen ).&nbsp; Dies bedeutet, das durch das ausführen der Datei phpjobscheduler/firepjs.php)
+			alle Jobs in einem Zeitrahmen von 60 Minuten ausgelöst werden.</p>
+			<p align="left">Sie können diesen Zeitrahmen nach oben oder untern entsprechend verändern. 
+			&nbsp;Sollte ihre Seite zu wenig Besucher haben, so können sie die Einstellung auf bis zu 43200 ( 12 Stunden ) erhöhen.</p>
+			<p align="left">Wenn ihre Seite<strong> IMMER</strong> viele Besucher haben, so reduzieren sie die Einstellung entsprechend.</p>
+			<p align="left"><font color="#0000FF"><big><strong>Wenn sie weitere hilfe benötigen schauen sie ins 
+			</strong></big></font>
+			<a
+      href="http://members.dwalker.co.uk/forum/">Forum</a> </p>
+		</blockquote>
+	</blockquote>
+
+	<p align="left">&nbsp;</p>
+	<p align="left">&nbsp;</p>
+</blockquote>
+
+<hr width="100%" color="#808080" align="center">
+
+<blockquote>
+    <blockquote>
+		<p><strong><font color="#FF8000"><a name="debug"></a>DEBUG - 
+		die Testumgebung</font></strong></p>
+		<blockquote>
+			<p align="left">DEBUG</a><br><br>Wenn alles ohne Fehler nach ihren Wünschen funktioniert, so setzen Sie DEBUG auf false. Hierzu editieren sie folgende Datrei:<strong> 
+			<br><br>/phpjobscheduler/pjsfiles/config.inc.php 
+			</strong></li>
+  		  </p>
+			<p align="left">&nbsp;</p>
+			<p align="left">Dies erfolgt ohne Ausgabe. Wird firejps.php ausgeführt, so geschieht dies im Hintergurnd.</p>
+		</blockquote>
+	</blockquote>
+</blockquote>
+
+<p align="left"><br></p>
+
+<hr width="100%" color="#808080" align="center">
+
+<p align="left"><strong>HISTORY</strong><a name="history"></a></p>
+<blockquote>
+<p><strong>Erste Veröffentlichung: 14. Oktober 2003 <br></strong><br><strong>Version und Beschreibungen der Änderunge</strong></p>
+<ul>
+	<li>1.0 
+14. Oktober 2003 Original Release </li>
+	<li>3.0 November 2005 Released unter GPL/GNU Lizenz</li>
+	<li>3.1 Junu 2006 Fixed Problem bei einer Änderung des Jobs und andere kleinere Probleme </li>
+	<li>3.3 Dezember 2006 
+Bugs entfernt und Codeverbesserungen durchgeführt</li>
+	<li>3.4 November 2007 AJAX eingeführt und Scriptverbesserungen durchgeführt 
+inclusive des gebrauchts von CURL und fsockopen </li>
+	<li>3.5 Dezember 2008 Verbesserungen inclusive einzelne Ausführung, einfacher Datenbankkonnect, Ausführungszeit in Minuten </li>
+	<li>3.6 Oktober 2009 Versionscheck hinzugefügt </li>
+	<li>3.7 Februar 2011 - DEBUG als Hilfe eingeführt, nun wird auch nur eine Instanz des selben Scripts zur gleichen Zeit ausgeführt </li>
+	<li>3.8 April 2012 - Korrekturen bei der Datenbankaktualisierung und des Protokolls. Änderung der Datenbankstruktur, um bei gleichzeitigen Ausführungen von Jobs die Protokke gespeichert werden. </li>
+	<li>3.9 April 2014 - Dantenbankverbindunge auf den Gebrauch von PDO umgestellt. PHP MySQL Funktionen( wie mysql_connect) wurde herausgenommen.&nbsp; Nun gibt es die Möglcihkeit den Job auf Pause zu stellen. </li>
+	<li>.... Juli 2015 deutsche Version von Rolf Joseph / ErdemCan verfügbar, inclusive deutscher Zeit und der Konvertierung des Zeichens &  </li>
+</ul>
+</blockquote>
+<hr width="100%" color="#808080" align="center">
+
+<p align="left"><strong>DISCLAIMER</strong><a name="disclaimer"></a></p>
+<blockquote>
+phpJobScheduler IS PROVIDED &quot;AS IS&quot; WITHOUT REPRESENTATION OR WARRANTY OF ANY
+KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING WITHOUT LIMITATION, ANY REPRESENTATIONS OR
+ENDORSEMENTS REGARDING THE USE OF, THE RESULTS OF, OR PERFORMANCE OF THE INFORMATION, ITS
+APPROPRIATENESS, ACCURACY, RELIABILITY, OR CORRECTNESS.<br>
+THE ENTIRE RISK AS TO THE USE OF phpJobScheduler IS ASSUMED BY THE USER.&nbsp; IN NO EVENT
+I BE LIABLE FOR ANY DAMAGES, DIRECT, INDIRECT, INCIDENTAL OR CONSEQUENTIAL, RESULTING FROM
+ANY DEFECT IN phpJobScheduler, EVEN IF THE POSSIBILITY OF SUCH DAMAGES HAS BEEN ADVISED.
+&nbsp; THIS DISCLAIMER SHALL SUPERSEDE ANY VERBAL OR WRITTEN STATEMENT TO THE CONTRARY. IF
+YOU DO NOT ACCEPT THESE TERMS YOU MUST CEASE AND DESIST USING phpJobScheduler IMMEDIATELY.
+</blockquote>
+<p align="left">&nbsp;</p>
+
+<div align="center">
+  <div style="background-color:#CCCCCC;"> <strong>My applications:</strong> <br />
+    <br />
+    <table border="0">
+      <tr>
+        <th scope="col" style="width: 296px">
+		<div id="logo-bk">
+	  <div align="center"><a href="http://www.dwalker.co.uk/phpautomembersarea/"><img src="http://www.dwalker.co.uk/phpautomembersarea/pamalogo.gif" alt="phpAMA - create a members area using PHP MySQL, protect your members only or adult content" border="0"></a></div>
+	</div>		
+	<a href="http://www.dwalker.co.uk/phpautomembersarea/" >phpAutoMembersArea</a></th>
+        <th scope="col" style="width: 315px">
+		    <div id="logo-bk0">
+	  <div align="center"><a href="http://www.dwalker.co.uk/phpmysqlautobackup/"><img
+    src="http://www.dwalker.co.uk/phpmysqlautobackup/logo.gif"
+    alt="phpMySQLAutoBackup - automate the backup of your MySQL databases and email a copy to yourself" width="165" height="75"
+    border="0"></a> </div>
+	</div>	<a href="http://www.dwalker.co.uk/phpmysqlautobackup/">phpMySQLAutoBackup</a>		  </th>
+        <th scope="col" style="width: 342px">
+		         <div align="center">
+	  <div style="background-color:white;width:165px;"><a href="http://www.phpjobscheduler.co.uk/"><img src="http://www.phpjobscheduler.co.uk/pjslogo.gif" alt="phpJobScheduler - scheduling PHP scripts to run at set intervals your replacement for cron jobs.&nbsp; " border="0" height="75" width="165"></a> </div>
+	</div>	
+		<a href="http://www.phpjobscheduler.co.uk">phpJobScheduler</a>
+        </th>
+      </tr>
+  </table>
+  <br>  <br>
+</div></div>
+</div>
+</body>
+</html>

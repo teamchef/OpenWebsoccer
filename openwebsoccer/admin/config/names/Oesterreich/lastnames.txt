@@ -1,0 +1,53 @@
+Gruber - Wohnstättenname
+Huber - Standesname
+Wagner - Berufsname
+Müller - Berufsname
+Pichler
+Moser
+Steiner
+Mayer
+Berger - Wohnstätten- oder Herkunftsname
+Hofer - Standesname
+Eder - Wohnstätten- oder Herkunftsname (Öde)
+Bauer - Standesname
+Winkler - Wohnstätten- oder Herkunftsname
+Schmid 
+Weber 
+Fuchs
+Maier
+Schwarz
+Schneider 
+Reiter
+Leitner
+Mayr
+Fischer 
+Schmidt 
+Wimmer
+Egger 
+Baumgartner
+Brunner 
+Wallner
+Auer -
+Aigner 
+Wolf
+Binder 
+Ebner
+Schuster 
+Lang
+Lechner
+Haas
+Wieser
+Strasser
+Stadler 
+Haider 
+Weiss
+Holzer 
+Koller
+Mair
+Riegler 
+Maurer 
+Lehner
+Winter
+Alaba
+Harnik
+Junozuvic

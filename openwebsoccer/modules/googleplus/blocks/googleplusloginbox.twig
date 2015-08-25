@@ -1,0 +1,21 @@
+{% block stylesheets %}
+	{{ parent() }}
+
+	<style type="text/css">
+		.btn-googleplus {
+			background-color: #dd4b39;
+			background-image: none;
+			color: white;
+			text-shadow: none;
+			border-color: #dd4b39;
+		}
+		.btn-googleplus:hover {
+			background-color: #e74b37;
+			color: white;
+		}
+	</style>
+{% endblock %
+
+<p>
+	<a href="{{ loginurl }}" class="btn btn-googleplus"><i class="icon-google-plus"></i> {{ i18n.getMessage("googleplus_login_button") }}</a>
+</p>

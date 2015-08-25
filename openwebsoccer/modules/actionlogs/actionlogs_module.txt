@@ -1,0 +1,31 @@
+Modul:	actionlogs
+
+
+Neu:	Bei den Benutzeraktivitäten wird nun zusätzlich die Uhrzeit angezeigt
+Neu:	Neue Seite Im Frontend unter Ligen der Punkt "Alle Useraktivitäten"
+
+	User erhalten die Meldung, das der Zugriff nur für den Admin ist.
+	Der Admin erhält eine Liste der aller gespeicherten Useraktivitäten.
+
+	Die Voraussetzung ist, das der Admin zusätzlich als Benutzter registriert ist.
+	Dabei muss der Benutzername und die E-Mail-Adresse bei beiden Accounts gleich sein !
+
+
+
+<pages>
+Neu		template="user-activities-all.twig"		<-	Bereitstellung aller User-Aktivitäten für den Admin	->	model="AllActivitiesModel.class.php"
+
+<blocks>
+		template="user-activities-list.twig"		<-	Anzeige aller Useraktivitäten als Liste			->	model="UserActivitiesModel.php"
+		template="user-activities-box.twig"		<-	Anzeige der letzten Useraktivitäten in einer Box	->	model="AllUserActivitiesModel.php"
+
+
+sonstige Dateien:
+									Handler für die Aktion Useraktivität			->	ActionHandler.class.php
+									Datenservice für die Aktivitäteneinträge		->	ActionLogDataService.class.php
+
+bearbeitet	modul.xml						Modul-Konfigurations-Datei
+bearbeitet	messages_de.xml						Modul-Nachrichten-Datei
+
+Hilfsdatei	columns.php						mehrfach genutzte Komponente für ActionLogDataService.class.php
+Hilfsdatei	logs.php						mehrfach genutzte Komponente für ActionLogDataService.class.php

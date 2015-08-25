@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="phpjobscheduler_navlabel">TLC Jobscheduler</message>
+
+	<message id="settings_tab_tlc">TLC - Features</message>
+
+	<message id="settings_label_amount_aufstellung_enabled">Aufstellungsprämie für eine abgegebenen Aufstellung.</message>
+	<message id="settings_label_amount_aufstellung">Aufstellungsprämie:</message>
+
+	<message id="settings_label_sim_auto_deblock">Automatisches entblocken von Spielen: Der Admin muss die, nach Berechnungsfehlern vorsichtshalber geblockten Spiele, nicht mehr selbst entblocken.</message>
+
+	<message id="settings_label_transferoffersbetweenownteams_enabled">Direkttransfers auch zwischen den eigenen Teams erlauben.</message>
+
+	<message id="settings_label_externlink1">externer Link 1 URL</message>
+	<message id="settings_label_externlink1txt">externer Link 1 Bezeichung</message>
+	<message id="settings_label_externlink2">externer Link 2 URL</message>
+	<message id="settings_label_externlink2txt">externer Link 2 Bezeichung</message>
+	<message id="settings_label_externlinklogout">externer Link 2 URL</message>
+	<message id="settings_label_externlinklogouttxt">externer Link 2 Bezeichung</message>
+
+	<message id="settings_label_addplyr">Vereinslose Spieler auf die Transferliste setzen</message>
+	<message id="settings_label_extransf">Offene Spielertransfers ausführen</message>
+	<message id="settings_label_sim">Offene Spiele simulieren</message>
+	<message id="settings_label_usractv">Benutzerinaktivität berechnen und aktualisieren</message>
+	<message id="settings_label_stats">Ligastatistiken berechnen und aktualisieren</message>
+	<message id="settings_label_stadium">Fällige Stadionerweiterungen und Trainingslager ausführen</message>
+
+	<message id="settings_label_version">TLC-Version</message>
+</messages>

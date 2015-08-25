@@ -1,0 +1,12 @@
+Hinweis zur websoccer_set_mudul.bat
+
+
+Mit dem Tool websoccer_set_mudul.bat, kann man automatiesiert eine mudulatisierte Version des Websoccer-Verzeichnis erstellen.
+Zuerst wird ein Backup-Verzeichnis erstellt und dann mit den Verschiebungen begonnen.
+
+Falls sie diese Batch auf ein Verzeichnis mit fremden Erweiterungen anwenden, so können sie diese eventuell nicht mehr verwendet
+werden. Dennoch sollten die meisten Erweiterungen dennoch ausführbar sein.
+
+
+
+Powered by Rolf Joseph / ErdemCan

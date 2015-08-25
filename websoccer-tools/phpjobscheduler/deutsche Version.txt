@@ -1,0 +1,11 @@
+			deutsche Version des phpjobschedulers
+			=====================================
+
+
+Die deutsche Übersetzung, sowie die Änderung des korrekten Datums für Deutschland
+und der Korrektur bei der Konvertierung von & wurde erstellt durch:
+
+			Rolf Joseph / ErdemCan OpenWebsoccer.de
+
+Der einfachste Weg ist einen Cronjob zur Datei firepjs.php. Damit werden die Jobs
+zeitgesteuert ausgeführt.
