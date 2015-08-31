@@ -177,7 +177,7 @@ if ($forwarded) {
 
       <footer>
  		<div id="footer">
-	        	<p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a> by Ingo Hofmann / <a href="https://github.com/rolfjoseph/open-websoccer-tlc" target="_blank">TLC Version</a> <?php echo $website->getConfig('version');?>
+	        	<p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a> by Ingo Hofmann / <a href="https://github.com/rolfjoseph/open-websoccer-tlc" target="_blank">OpenWebsoccer / Co-Powered by Rolf Joseph / ErdemCan Step </a> <?php echo $website->getConfig('version');?>
 	        	</p></div>
       </footer>
 	</div>

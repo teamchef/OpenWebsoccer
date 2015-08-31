@@ -32,11 +32,9 @@ define("BASE_FOLDER", __DIR__ ."/..");
 
 define("PHP_MIN_VERSION", "5.3.0");
 define("WRITABLE_FOLDERS", "generated/,uploads/club/,uploads/cup/,uploads/player/,uploads/sponsor/,uploads/stadium/,uploads/stadiumbuilder/,uploads/stadiumbuilding/,uploads/users/,cache/,admin/config/adminlog.php,admin/config/entitylog.php,admin/config/config.inc.php,admin/config/imprint.php,admin/config/jobs.xml,admin/config/termsandconditions.xml");
-define("DEFAULT_DB_PREFIX", "ws3");
+define("DEFAULT_DB_PREFIX", "ows");
 define("CONFIGFILE", BASE_FOLDER . "/generated/config.inc.php");
 define("DDL_FULL", "ws3_ddl_full.sql");
-define("DDL_MIGRATION", "ws3_ddl_upgrade.sql");
-define("DDL_INDEX", "ws3_ddl_index.sql");
 
 session_start();
 $supportedLanguages = array("de" => "Deutsch");
@@ -330,6 +328,7 @@ function actionSaveConfig() {
 	$prefix = isset($_POST["db_prefix"]) ? $_POST["db_prefix"] : DEFAULT_DB_PREFIX;
 
 	$filecontent = "<?php" . PHP_EOL;
+	$filecontent .= "\$conf['version'] =\"94\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_host'] = \"". $_POST["db_host"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_user'] = \"". $_POST["db_user"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_passwort'] = \"". $_POST["db_password"] . "\";" . PHP_EOL;
@@ -353,7 +352,7 @@ function actionSaveConfig() {
 }
 
 /**
- * Step 4: Select whether migration or new creation
+ * Step 4: Select new creation
  */
 function printPreDbCreate($messages) {
 
@@ -365,10 +364,6 @@ function printPreDbCreate($messages) {
 		<label class="radio">
 			<input type="radio" name="install" value="new" checked> <?php echo $messages["predb_label_new"]; ?>
 		</label>
-		<label class="radio">
-			<input type="radio" name="install" value="migrate"> <?php echo $messages["predb_label_migrate"]; ?>
-		</label>
-
 		<button type="submit" class="btn btn-primary"><?php echo $messages["button_next"]; ?></button>
 		<input type="hidden" name="action" value="actionCreateDb">
 	</form>
@@ -387,8 +382,6 @@ function actionCreateDb() {
 	try {
 		if ($_POST["install"] == "new") {
 			loadAndExecuteDdl(DDL_FULL, $conf["db_prefix"], $db);
-		} else {
-			loadAndExecuteDdl(DDL_MIGRATION, $conf["db_prefix"], $db);
 		}
 
 	} catch(Exception $e) {
@@ -552,11 +545,11 @@ function printFinalPage($messages) {
 		if (strnatcmp(phpversion(),'5.3.1')<= 0) {
 			echo 'Es muss mindestens PHP 5.3.0 sein, es ist die Version: ' . PHP_VERSION . ' installiert.' ;
 			echo '<p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a></p>';
-			echo '<p>Fork-Version "Open Websoocer-Sim / TLC " Co-Powered by Rolf Joseph / ErdemCan</p>';
+			echo '<p>"OpenWebsoocer / Co-Powered by Rolf Joseph / ErdemCan"</p>';
 			exit;
 		}
 
-		else if (version_compare(PHP_VERSION, '5.7.0', '>=')) {
+		else if (version_compare(PHP_VERSION, '7.0.1', '>=')) {
 			echo 'Ihre PHP Version ' . PHP_VERSION . ' ist zu hoch, daher funktioniert die Installation eventuell nicht.';
 		}
 
@@ -602,7 +595,7 @@ function printFinalPage($messages) {
       <hr>
 
       <footer>
-        <p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a> by Ingo Hofmann / <a href="https://github.com/rolfjoseph/open-websoccer-tlc" target="_blank">TLC Version</a> Step = Commits-Anzahl / Co-Powered by Rolf Joseph / ErdemCan
+        <p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a> by Ingo Hofmann / <a href="https://github.com/rolfjoseph/open-websoccer-tlc" target="_blank">TLC Version</a> Step 94 / Co-Powered by Rolf Joseph / ErdemCan
 	        	</p>
       </footer>
 	</div>

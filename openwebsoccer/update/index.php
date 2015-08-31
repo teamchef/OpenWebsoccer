@@ -77,6 +77,7 @@ function actionSetLanguage() {
 		$_SESSION["lang"] = $lang;
 		return "printSystemCheck";
 	}
+	actionCreateDb();
 
 	return "printWelcomeScreen";
 }
@@ -161,6 +162,41 @@ function actionMoveFiles() {
 	return "printFinalPage";
 }
 
+function actionCreateDb() {
+	include(CONFIGFILE);
+
+	$db = DbConnection::getInstance();
+	$db->connect($conf["db_host"], $conf["db_user"], $conf["db_passwort"], $conf["db_name"]);
+
+	try {
+			loadAndExecuteDdl(DDL_FILE, $conf["db_prefix"], $db);
+
+	} catch(Exception $e) {
+		global $errors;
+		$errors[] = $e->getMessage();
+		return "printWelcomeScreen";
+	}
+
+	$db->close();
+	return;
+
+}
+
+function loadAndExecuteDdl($file, $prefix, DbConnection $db) {
+	$script = file_get_contents($file);
+
+	// replace prefix
+	if ($prefix !== DEFAULT_DB_PREFIX) {
+		$script = str_replace(DEFAULT_DB_PREFIX . "_", $prefix . "_", $script);
+	}
+
+	$queryResult = $db->connection->multi_query($script);
+
+	if (!$queryResult) {
+		throw new Exception("Database Query Error: " . $db->connection->error);
+	}
+
+}
 
 /**
  * Final page
@@ -212,11 +248,11 @@ function printFinalPage($messages) {
 		if (strnatcmp(phpversion(),'5.3.1')<= 0) {
 			echo 'Es muss mindestens PHP 5.3.0 sein, es ist die Version: ' . PHP_VERSION . ' installiert.' ;
 			echo '<p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a></p>';
-			echo '<p>Fork-Version "Open Websoocer-Sim / TLC " Co-Powered by Rolf Joseph / ErdemCan</p>';
+			echo '<p>"OpenWebsoocer / Co-Powered by Rolf Joseph / ErdemCan"</p>';
 			exit;
 		}
 
-		else if (version_compare(PHP_VERSION, '5.7.0', '>=')) {
+		else if (version_compare(PHP_VERSION, '7.0.1', '>=')) {
 			echo 'Ihre PHP Version ' . PHP_VERSION . ' ist zu hoch, daher funktioniert die Installation eventuell nicht.';
 		}
 
@@ -263,7 +299,7 @@ function printFinalPage($messages) {
       <hr>
 
       <footer>
-       <p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a> by Ingo Hofmann / <a href="https://github.com/rolfjoseph/open-websoccer-tlc" target="_blank">TLC Version</a> Step = Commits-Anzahl / Co-Powered by Rolf Joseph / ErdemCan
+       <p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a> by Ingo Hofmann / <a href="https://github.com/rolfjoseph/open-websoccer-tlc" target="_blank">TLC Version</a> Step 94 / Co-Powered by Rolf Joseph / ErdemCan
 	        	</p>
       </footer>
 	</div>

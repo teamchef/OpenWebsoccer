@@ -5,7 +5,7 @@
     <dependencies>
         <dependency module="clubs" version="1.0.0"/>
     </dependencies>
-    
+
     <admin>
         <adminpage
             id="stadiumbuilding"
@@ -23,26 +23,26 @@
                         type="text"
                         sort="true"
                         filter="true" />
-                    
+
                     <column
                         id="entity_stadiumbuilding_required_building_id"
                         field="RequiredBuildingTab.name"
                         type="text"
                         sort="true" />
-                    
+
                     <column
                         id="entity_stadiumbuilding_costs"
                         field="BuildingTab.costs"
                         type="number"
                         sort="true" />
-                    
+
                     <column
                         id="entity_stadiumbuilding_premiumfee"
                         field="BuildingTab.premiumfee"
                         type="number"
                         sort="true" />
-                    
-                	<join type="LEFT" jointable="stadiumbuilding AS RequiredBuildingTab" 
+
+                	<join type="LEFT" jointable="stadiumbuilding AS RequiredBuildingTab"
                 	    joincondition="RequiredBuildingTab.id = BuildingTab.required_building_id" />
                 </overview>
 
@@ -50,25 +50,26 @@
                     <field id="name" type="text" required="true" />
                     <field id="description" type="text" />
                     <field id="picture" type="file" />
-                    
-					<field id="required_building_id" type="foreign_key" entity="stadiumbuilding" 
+
+					<field id="required_building_id" type="foreign_key" entity="stadiumbuilding"
 					    jointable="stadiumbuilding" labelcolumns="name" />
-					
+
 					<field id="costs" type="number" required="true" />
 					<field id="construction_time_days" type="number" required="true" default="0" />
 					<field id="premiumfee" type="number" required="true" default="0" />
-					
+
 					<field id="effect_training" type="number" required="true" default="0" />
 					<field id="effect_youthscouting" type="number" required="true" default="0" />
 					<field id="effect_tickets" type="number" required="true" default="0" />
 					<field id="effect_fanpopularity" type="number" required="true" default="0" />
 					<field id="effect_injury" type="number" required="true" default="0" />
 					<field id="effect_income" type="number" required="true" default="0" />
+					<field id="status" type="boolean" />
                 </editform>
             </entity>
         </adminpage>
 	</admin>
-	
+
     <pages>
         <page
             id="stadiumenvironment"
@@ -81,13 +82,13 @@
         </page>
 
     </pages>
-    
+
     <actions>
 	    <action id="order-building" controller="OrderBuildingController" role="user" log="true">
 			<param id="id" type="number" required="true" />
 		</action>
 	</actions>
-	
+
     <plugins>
 		<eventlistener event="PlayerTrainedEvent" class="StadiumEnvironmentPlugin" method="addTrainingBonus" />
 		<eventlistener event="YouthPlayerScoutedEvent" class="StadiumEnvironmentPlugin" method="addYouthPlayerSkillBonus" />

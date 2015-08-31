@@ -2,6 +2,7 @@
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
     <message id="entity_randomevent">Zufallsereignisse</message>
+    <message id="entity_randomevent_status">Aktiv</message>
 	<message id="entity_randomevent_message">Nachricht</message>
 	<message id="entity_randomevent_message_help">Kann auch ein Messages-Key sein. Nachricht kann Platzhalter "{playername}" enthalten bei spielerspezifischen Ereignissen.</message>
 	<message id="entity_randomevent_effect">Auswirkung</message>

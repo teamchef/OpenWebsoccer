@@ -47,7 +47,7 @@ $messages["err_already_installed"] = "Die Installation wurde offensichtlich bere
 
 $messages["invalid_db_credentials"] = "Es konnte keine Verbindung mit der Datenbank aufgebaut werden. Prüfen Sie die eingegebenen Daten.";
 
-$messages["predb_title"] = "Neuinstallation oder Migration?";
+$messages["predb_title"] = "Neuinstallation";
 
 $messages["predb_label_new"] = "Software komplett erstmals auf diesem Server installieren.";
 $messages["predb_label_migrate"] = "Bestehende Originadatentabellen der Version <i>H&amp;H WebSoccer 2.91</i> anpassen und weiterverwenden.";

@@ -1,4 +1,4 @@
-CREATE TABLE ws3_admin (
+CREATE TABLE _admin (
   id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(40) NULL,
   passwort VARCHAR(64) NULL,
@@ -22,7 +22,7 @@ CREATE TABLE ws3_admin (
   r_demo ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_user (
+CREATE TABLE _user (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   nick VARCHAR(50) NULL,
   passwort VARCHAR(64) NULL,
@@ -63,7 +63,7 @@ CREATE TABLE ws3_user (
   status ENUM('1','2','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_user_inactivity (
+CREATE TABLE _user_inactivity (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT(10) NOT NULL,
   login TINYINT(3) NOT NULL DEFAULT '0',
@@ -75,7 +75,7 @@ CREATE TABLE ws3_user_inactivity (
   vertragsauslauf TINYINT(3) NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_briefe (
+CREATE TABLE _briefe (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   empfaenger_id INT(10) NOT NULL,
   absender_id INT(10) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE ws3_briefe (
   typ ENUM('eingang','ausgang') NOT NULL DEFAULT 'eingang'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_news (
+CREATE TABLE _news (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   datum INT(10) NOT NULL,
   autor_id SMALLINT(5) NOT NULL,
@@ -106,7 +106,7 @@ CREATE TABLE ws3_news (
   status ENUM('1','2','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_liga (
+CREATE TABLE _liga (
   id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NULL,
   kurz VARCHAR(5) NULL,
@@ -122,7 +122,7 @@ CREATE TABLE ws3_liga (
   admin_id SMALLINT(5) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_tabelle_markierung (
+CREATE TABLE _tabelle_markierung (
   id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   liga_id SMALLINT(5) NOT NULL,
   bezeichnung VARCHAR(50) NULL,
@@ -132,7 +132,7 @@ CREATE TABLE ws3_tabelle_markierung (
   target_league_id INT(10) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_saison (
+CREATE TABLE _saison (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(20) NULL,
   liga_id SMALLINT(5) NOT NULL,
@@ -144,7 +144,7 @@ CREATE TABLE ws3_saison (
   beendet ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_verein (
+CREATE TABLE _verein (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(50) NULL,
   kurz VARCHAR(5) NULL,
@@ -193,7 +193,7 @@ CREATE TABLE ws3_verein (
   status ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_spieler (
+CREATE TABLE _spieler (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   vorname VARCHAR(30) NULL,
   nachname VARCHAR(30) NULL,
@@ -246,7 +246,7 @@ CREATE TABLE ws3_spieler (
   status ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_transfer_angebot (
+CREATE TABLE _transfer_angebot (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   spieler_id INT(10) NOT NULL,
   verein_id INT(10) NULL,
@@ -260,7 +260,7 @@ CREATE TABLE ws3_transfer_angebot (
   ishighest ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_stadion (
+CREATE TABLE _stadion (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) NULL,
   stadt VARCHAR(30) NULL,
@@ -281,7 +281,7 @@ CREATE TABLE ws3_stadion (
   picture VARCHAR(128) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_konto (
+CREATE TABLE _konto (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   verein_id INT(10) NOT NULL,
   absender VARCHAR(150) NULL,
@@ -290,7 +290,7 @@ CREATE TABLE ws3_konto (
   verwendung VARCHAR(200) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_sponsor (
+CREATE TABLE _sponsor (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) NULL,
   bild VARCHAR(100) NULL,
@@ -303,7 +303,7 @@ CREATE TABLE ws3_sponsor (
   min_platz TINYINT(3) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_training (
+CREATE TABLE _training (
   id SMALLINT(5) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(30) NULL,
   w_staerke TINYINT(3) NOT NULL,
@@ -313,7 +313,7 @@ CREATE TABLE ws3_training (
   w_zufriedenheit TINYINT(3) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_trainingslager (
+CREATE TABLE _trainingslager (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(100) NULL,
   land VARCHAR(30) NULL,
@@ -326,7 +326,7 @@ CREATE TABLE ws3_trainingslager (
   p_zufriedenheit TINYINT(3) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_trainingslager_belegung (
+CREATE TABLE _trainingslager_belegung (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   verein_id INT(10) NOT NULL,
   lager_id INT(10) NOT NULL,
@@ -334,7 +334,7 @@ CREATE TABLE ws3_trainingslager_belegung (
   datum_ende INT(10) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_aufstellung (
+CREATE TABLE _aufstellung (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   verein_id INT(10) NOT NULL,
   datum INT(11) NOT NULL,
@@ -385,11 +385,11 @@ CREATE TABLE ws3_aufstellung (
   spieler9_position VARCHAR(4) NOT NULL,
   spieler10_position VARCHAR(4) NOT NULL,
   spieler11_position VARCHAR(4) NOT NULL,
-  match_id INT(10) NULL REFERENCES ws3_spiel(id) ON DELETE CASCADE,
+  match_id INT(10) NULL REFERENCES _spiel(id) ON DELETE CASCADE,
   templatename VARCHAR(24) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_spiel (
+CREATE TABLE _spiel (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   spieltyp ENUM('Ligaspiel','Pokalspiel','Freundschaft') NOT NULL DEFAULT 'Ligaspiel',
   elfmeter ENUM('1','0') NOT NULL DEFAULT '0',
@@ -495,7 +495,7 @@ CREATE TABLE ws3_spiel (
   blocked ENUM('1', '0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_spiel_berechnung (
+CREATE TABLE _spiel_berechnung (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   spiel_id INT(10) NOT NULL,
   spieler_id INT(10) NOT NULL,
@@ -526,13 +526,13 @@ CREATE TABLE ws3_spiel_berechnung (
   losttackles TINYINT(3) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_spiel_text (
+CREATE TABLE _spiel_text (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   aktion ENUM(  'Tor',  'Auswechslung',  'Zweikampf_gewonnen',  'Zweikampf_verloren',  'Pass_daneben',  'Torschuss_daneben',  'Torschuss_auf_Tor',  'Karte_gelb',  'Karte_rot',  'Karte_gelb_rot',  'Verletzung', 'Elfmeter_erfolg',  'Elfmeter_verschossen', 'Taktikaenderung', 'Ecke', 'Freistoss_daneben', 'Freistoss_treffer', 'Tor_mit_vorlage' ),
   nachricht VARCHAR(250) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_transfer (
+CREATE TABLE _transfer (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   spieler_id INT(10) NOT NULL,
   seller_user_id INT(10) NULL,
@@ -546,13 +546,13 @@ CREATE TABLE ws3_transfer (
   directtransfer_player2 INT(10) NOT NULL DEFAULT 0
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_session (
+CREATE TABLE _session (
   session_id CHAR(32) NOT NULL PRIMARY KEY,
   session_data TEXT NOT NULL,
   expires INT(11) NOT NULL
 )  DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_matchreport (
+CREATE TABLE _matchreport (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   match_id INT(10) NOT NULL,
   message_id INT(10) NOT NULL,
@@ -562,7 +562,7 @@ CREATE TABLE ws3_matchreport (
   active_home TINYINT(1) NOT NULL DEFAULT 0
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_trainer (
+CREATE TABLE _trainer (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(64) NOT NULL,
   salary INT(10) NOT NULL,
@@ -571,7 +571,7 @@ CREATE TABLE ws3_trainer (
   premiumfee INT(10) NOT NULL DEFAULT 0
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_training_unit (
+CREATE TABLE _training_unit (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   team_id INT(10) NOT NULL,
   trainer_id INT(10) NOT NULL,
@@ -580,7 +580,7 @@ CREATE TABLE ws3_training_unit (
   date_executed INT(10) NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_cup (
+CREATE TABLE _cup (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(64) NOT NULL UNIQUE,
   winner_id INT(10) NULL,
@@ -591,7 +591,7 @@ CREATE TABLE ws3_cup (
   archived ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_cup_round (
+CREATE TABLE _cup_round (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   cup_id INT(10) NOT NULL,
   name VARCHAR(64) NOT NULL,
@@ -603,13 +603,13 @@ CREATE TABLE ws3_cup_round (
   groupmatches ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_cup_round_pending (
+CREATE TABLE _cup_round_pending (
   team_id INT(10) NOT NULL,
   cup_round_id INT(10) NOT NULL,
   PRIMARY KEY(team_id, cup_round_id)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_cup_round_group (
+CREATE TABLE _cup_round_group (
   cup_round_id INT(10) NOT NULL,
   team_id INT(10) NOT NULL,
   name VARCHAR(64) NOT NULL,
@@ -622,7 +622,7 @@ CREATE TABLE ws3_cup_round_group (
   PRIMARY KEY(cup_round_id, team_id)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_cup_round_group_next (
+CREATE TABLE _cup_round_group_next (
   cup_round_id INT(10) NOT NULL,
   groupname VARCHAR(64) NOT NULL,
   rank INT(4) NOT NULL DEFAULT 0,
@@ -630,7 +630,7 @@ CREATE TABLE ws3_cup_round_group_next (
   PRIMARY KEY(cup_round_id, groupname, rank)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_team_league_statistics (
+CREATE TABLE _team_league_statistics (
   team_id INT(10) NOT NULL,
   season_id INT(10) NOT NULL,
   total_points INT(6) NOT NULL DEFAULT 0,
@@ -657,7 +657,7 @@ CREATE TABLE ws3_team_league_statistics (
   PRIMARY KEY(team_id, season_id)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_transfer_offer (
+CREATE TABLE _transfer_offer (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   player_id INT(10) NOT NULL,
   sender_user_id INT(10) NOT NULL,
@@ -674,7 +674,7 @@ CREATE TABLE ws3_transfer_offer (
   admin_approval_pending ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_notification (
+CREATE TABLE _notification (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT(10) NOT NULL,
   eventdate INT(11) NOT NULL,
@@ -684,10 +684,10 @@ CREATE TABLE ws3_notification (
   target_pageid VARCHAR(128) NULL,
   target_querystr VARCHAR(255) NULL,
   seen ENUM('1','0') NOT NULL DEFAULT '0',
-  team_id INT(10) NULL REFERENCES ws3_verein(id) ON DELETE CASCADE
+  team_id INT(10) NULL REFERENCES _verein(id) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_youthplayer (
+CREATE TABLE _youthplayer (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   team_id INT(10) NOT NULL,
   firstname VARCHAR(32) NOT NULL,
@@ -706,7 +706,7 @@ CREATE TABLE ws3_youthplayer (
   transfer_fee INT(10) NOT NULL DEFAULT 0
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_youthscout (
+CREATE TABLE _youthscout (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(32) NOT NULL,
   expertise TINYINT(3) NOT NULL,
@@ -714,14 +714,14 @@ CREATE TABLE ws3_youthscout (
   speciality ENUM('Torwart','Abwehr','Mittelfeld','Sturm') NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_youthmatch_request (
+CREATE TABLE _youthmatch_request (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   team_id INT(10) NOT NULL,
   matchdate INT(11) NOT NULL,
   reward INT(10) NOT NULL DEFAULT 0
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_youthmatch (
+CREATE TABLE _youthmatch (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   matchdate INT(11) NOT NULL,
   home_team_id INT(10) NOT NULL,
@@ -763,7 +763,7 @@ CREATE TABLE ws3_youthmatch (
   simulated ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_youthmatch_player (
+CREATE TABLE _youthmatch_player (
   match_id INT(10) NOT NULL,
   team_id INT(10) NOT NULL,
   player_id INT(10) NOT NULL,
@@ -784,21 +784,21 @@ CREATE TABLE ws3_youthmatch_player (
   passes_failed TINYINT(3) NOT NULL DEFAULT 0,
   assists TINYINT(3) NOT NULL DEFAULT 0,
   name VARCHAR(128) NOT NULL,
-  FOREIGN KEY (match_id) REFERENCES ws3_youthmatch(id) ON DELETE CASCADE,
+  FOREIGN KEY (match_id) REFERENCES _youthmatch(id) ON DELETE CASCADE,
   PRIMARY KEY (match_id, player_id)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_youthmatch_reportitem (
+CREATE TABLE _youthmatch_reportitem (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   match_id INT(10) NOT NULL,
   minute TINYINT(3) NOT NULL,
   message_key VARCHAR(32) NOT NULL,
   message_data VARCHAR(255) NULL,
   home_on_ball ENUM('1','0') NOT NULL DEFAULT '0',
-  FOREIGN KEY (match_id) REFERENCES ws3_youthmatch(id) ON DELETE CASCADE
+  FOREIGN KEY (match_id) REFERENCES _youthmatch(id) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_stadium_builder (
+CREATE TABLE _stadium_builder (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(32) NOT NULL,
   picture VARCHAR(128) NULL,
@@ -812,7 +812,7 @@ CREATE TABLE ws3_stadium_builder (
   premiumfee INT(10) NOT NULL DEFAULT 0
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_stadium_construction (
+CREATE TABLE _stadium_construction (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   team_id INT(10) NOT NULL,
   builder_id INT(10) NOT NULL,
@@ -823,10 +823,10 @@ CREATE TABLE ws3_stadium_construction (
   p_haupt_steh INT(6) NOT NULL DEFAULT 0,
   p_haupt_sitz INT(6) NOT NULL DEFAULT 0,
   p_vip INT(6) NOT NULL DEFAULT 0,
-  FOREIGN KEY (builder_id) REFERENCES ws3_stadium_builder(id) ON DELETE RESTRICT
+  FOREIGN KEY (builder_id) REFERENCES _stadium_builder(id) ON DELETE RESTRICT
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_teamoftheday (
+CREATE TABLE _teamoftheday (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   season_id INT(10) NOT NULL,
   matchday TINYINT(3) NOT NULL,
@@ -835,13 +835,13 @@ CREATE TABLE ws3_teamoftheday (
   position_main VARCHAR(20) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_nationalplayer (
+CREATE TABLE _nationalplayer (
   team_id INT(10) NOT NULL,
   player_id INT(10) NOT NULL,
   PRIMARY KEY (team_id, player_id)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_premiumstatement (
+CREATE TABLE _premiumstatement (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT(10) NOT NULL,
   action_id VARCHAR(255) NULL,
@@ -850,75 +850,76 @@ CREATE TABLE ws3_premiumstatement (
   subject_data VARCHAR(255) NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_premiumpayment (
+CREATE TABLE _premiumpayment (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT(10) NOT NULL,
   amount INT(10) NOT NULL,
   created_date INT(11) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_useractionlog (
+CREATE TABLE _useractionlog (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT(10) NOT NULL,
   action_id VARCHAR(255) NULL,
   created_date INT(11) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE
+  FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_shoutmessage (
+CREATE TABLE _shoutmessage (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT(10) NOT NULL,
   message VARCHAR(255) NOT NULL,
   created_date INT(11) NOT NULL,
   match_id INT(10) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE,
-  FOREIGN KEY (match_id) REFERENCES ws3_spiel(id) ON DELETE CASCADE
+  FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE CASCADE,
+  FOREIGN KEY (match_id) REFERENCES _spiel(id) ON DELETE CASCADE
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_userabsence (
+CREATE TABLE _userabsence (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   user_id INT(10) NOT NULL,
   deputy_id INT(10) NULL,
   from_date INT(11) NOT NULL,
   to_date INT(11) NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE,
-  FOREIGN KEY (deputy_id) REFERENCES ws3_user(id) ON DELETE SET NULL
+  FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE CASCADE,
+  FOREIGN KEY (deputy_id) REFERENCES _user(id) ON DELETE SET NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_leaguehistory (
+CREATE TABLE _leaguehistory (
   team_id INT(10) NOT NULL,
   season_id INT(10) NOT NULL,
   user_id INT(10) NULL,
   matchday TINYINT(3) NULL,
   rank TINYINT(3) NULL,
-  FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE,
-  FOREIGN KEY (season_id) REFERENCES ws3_saison(id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE SET NULL,
+  FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE,
+  FOREIGN KEY (season_id) REFERENCES _saison(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE SET NULL,
   PRIMARY KEY(team_id, season_id, matchday)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_randomevent (
+CREATE TABLE _randomevent (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   message VARCHAR(255) NULL,
   effect ENUM('money', 'player_injured', 'player_blocked', 'player_happiness', 'player_fitness', 'player_stamina') NOT NULL,
   effect_money_amount INT(10) NOT NULL DEFAULT 0,
   effect_blocked_matches INT(10) NOT NULL DEFAULT 0,
   effect_skillchange TINYINT(3) NOT NULL DEFAULT 0,
-  weight TINYINT(3) NOT NULL DEFAULT 1
+  weight TINYINT(3) NOT NULL DEFAULT 1,
+  status ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_randomevent_occurrence (
+CREATE TABLE _randomevent_occurrence (
   user_id INT(10) NOT NULL,
   team_id INT(10) NOT NULL,
   event_id INT(10) NOT NULL,
   occurrence_date INT(10) NOT NULL,
-  FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE,
-  FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE,
-  FOREIGN KEY (event_id) REFERENCES ws3_randomevent(id) ON DELETE CASCADE,
+  FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE CASCADE,
+  FOREIGN KEY (event_id) REFERENCES _randomevent(id) ON DELETE CASCADE,
   PRIMARY KEY(user_id, team_id, occurrence_date)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_badge (
+CREATE TABLE _badge (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(128) NOT NULL,
   description VARCHAR(255) NULL,
@@ -927,85 +928,85 @@ CREATE TABLE ws3_badge (
   event_benchmark INT(10) NOT NULL DEFAULT 0
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_badge_user (
-  user_id INT(10) NOT NULL REFERENCES ws3_user(id) ON DELETE CASCADE,
-  badge_id INT(10) NOT NULL REFERENCES ws3_badge(id) ON DELETE CASCADE,
+CREATE TABLE _badge_user (
+  user_id INT(10) NOT NULL REFERENCES _user(id) ON DELETE CASCADE,
+  badge_id INT(10) NOT NULL REFERENCES _badge(id) ON DELETE CASCADE,
   date_rewarded INT(10) NOT NULL,
   PRIMARY KEY(user_id, badge_id)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_achievement (
+CREATE TABLE _achievement (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
-  user_id INT(10) NOT NULL REFERENCES ws3_user(id) ON DELETE CASCADE,
-  team_id INT(10) NOT NULL REFERENCES ws3_verein(id) ON DELETE CASCADE,
-  season_id INT(10) NULL REFERENCES ws3_saison(id) ON DELETE CASCADE,
-  cup_round_id INT(10) NULL REFERENCES ws3_cup_round(id) ON DELETE CASCADE,
+  user_id INT(10) NOT NULL REFERENCES _user(id) ON DELETE CASCADE,
+  team_id INT(10) NOT NULL REFERENCES _verein(id) ON DELETE CASCADE,
+  season_id INT(10) NULL REFERENCES _saison(id) ON DELETE CASCADE,
+  cup_round_id INT(10) NULL REFERENCES _cup_round(id) ON DELETE CASCADE,
   rank TINYINT(3) NULL,
   date_recorded INT(10) NOT NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-ALTER TABLE ws3_user_inactivity ADD CONSTRAINT ws3_user_inactivity_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_briefe ADD CONSTRAINT ws3_briefe_user_id_fk FOREIGN KEY (absender_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_stadion_id_fk FOREIGN KEY (stadion_id) REFERENCES ws3_stadion(id) ON DELETE SET NULL;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_sponsor_id_fk FOREIGN KEY (sponsor_id) REFERENCES ws3_sponsor(id) ON DELETE SET NULL;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_liga_id_fk FOREIGN KEY (liga_id) REFERENCES ws3_liga(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spieler ADD CONSTRAINT ws3_spieler_verein_id_fk FOREIGN KEY (verein_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_konto ADD CONSTRAINT ws3_konto_verein_id_fk FOREIGN KEY (verein_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer_angebot ADD CONSTRAINT ws3_transfer_angebot_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_trainingslager_belegung ADD CONSTRAINT ws3_trainingslager_belegung_fk FOREIGN KEY (lager_id) REFERENCES ws3_trainingslager(id) ON DELETE CASCADE;
-ALTER TABLE ws3_trainingslager_belegung ADD CONSTRAINT ws3_trainingslager_verein_fk FOREIGN KEY (verein_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_aufstellung ADD CONSTRAINT ws3_aufstellung_verein_id_fk FOREIGN KEY (verein_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_spiel_saison_id_fk FOREIGN KEY (saison_id) REFERENCES ws3_saison(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_spiel_home_id_fk FOREIGN KEY (home_verein) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_spiel_gast_id_fk FOREIGN KEY (gast_verein) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel_berechnung ADD CONSTRAINT ws3_berechnung_spiel_id_fk FOREIGN KEY (spiel_id) REFERENCES ws3_spiel(id) ON DELETE CASCADE;
-ALTER TABLE ws3_spiel_berechnung ADD CONSTRAINT ws3_berechnung_spieler_id_fk FOREIGN KEY (spieler_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_spieler_id_fk FOREIGN KEY (spieler_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_selleruser_fk FOREIGN KEY (seller_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_sellerclub_fk FOREIGN KEY (seller_club_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_buyeruser_fk FOREIGN KEY (buyer_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_transfer ADD CONSTRAINT ws3_transfer_buyerclub_fk FOREIGN KEY (buyer_club_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_matchreport ADD CONSTRAINT ws3_matchreport_spiel_id_fk FOREIGN KEY (match_id) REFERENCES ws3_spiel(id) ON DELETE CASCADE;
-ALTER TABLE ws3_matchreport ADD CONSTRAINT ws3_matchreport_message_id_fk FOREIGN KEY (message_id) REFERENCES ws3_spiel_text(id) ON DELETE CASCADE;
-ALTER TABLE ws3_training_unit ADD CONSTRAINT ws3_training_verein_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup ADD CONSTRAINT ws3_cup_winner_id_fk FOREIGN KEY (winner_id) REFERENCES ws3_verein(id) ON DELETE SET NULL;
-ALTER TABLE ws3_cup_round ADD CONSTRAINT ws3_cupround_cup_id_fk FOREIGN KEY (cup_id) REFERENCES ws3_cup(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round ADD CONSTRAINT ws3_cupround_fromwinners_id_fk FOREIGN KEY (from_winners_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round ADD CONSTRAINT ws3_cupround_fromloosers_id_fk FOREIGN KEY (from_loosers_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round_pending ADD CONSTRAINT ws3_cuproundpending_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round_pending ADD CONSTRAINT ws3_cuproundpending_round_fk FOREIGN KEY (cup_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round_group ADD CONSTRAINT ws3_cupgroup_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round_group_next ADD CONSTRAINT ws3_groupnext_round_fk FOREIGN KEY (cup_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
-ALTER TABLE ws3_cup_round_group_next ADD CONSTRAINT ws3_groupnext_tagetround_fk FOREIGN KEY (target_cup_round_id) REFERENCES ws3_cup_round(id) ON DELETE CASCADE;
-ALTER TABLE ws3_team_league_statistics ADD CONSTRAINT ws3_statistics_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_team_league_statistics ADD CONSTRAINT ws3_statistics_season_id_fk FOREIGN KEY (season_id) REFERENCES ws3_saison(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_spieler_id_fk FOREIGN KEY (player_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_selleruser_fk FOREIGN KEY (sender_user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_sellerclub_fk FOREIGN KEY (sender_club_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_transfer_offer ADD CONSTRAINT ws3_toffer_buyerclub_fk FOREIGN KEY (receiver_club_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_notification ADD CONSTRAINT ws3_notification_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthplayer ADD CONSTRAINT ws3_youthplayer_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch_request ADD CONSTRAINT ws3_youthrequest_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch ADD CONSTRAINT ws3_youthmatch_home_id_fk FOREIGN KEY (home_team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch ADD CONSTRAINT ws3_youthmatch_guest_id_fk FOREIGN KEY (guest_team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch_player ADD CONSTRAINT ws3_ymatchplayer_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch_player ADD CONSTRAINT ws3_ymatchplayer_player_id_fk FOREIGN KEY (player_id) REFERENCES ws3_youthplayer(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch_player ADD CONSTRAINT ws3_ymatchplayer_match_id_fk FOREIGN KEY (match_id) REFERENCES ws3_youthmatch(id) ON DELETE CASCADE;
-ALTER TABLE ws3_youthmatch_reportitem ADD CONSTRAINT ws3_ymatchreport_match_id_fk FOREIGN KEY (match_id) REFERENCES ws3_youthmatch(id) ON DELETE CASCADE;
-ALTER TABLE ws3_stadium_construction ADD CONSTRAINT ws3_construction_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_stadium_construction ADD CONSTRAINT ws3_construction_builder_id_fk FOREIGN KEY (builder_id) REFERENCES ws3_stadium_builder(id) ON DELETE CASCADE;
-ALTER TABLE ws3_teamoftheday ADD CONSTRAINT ws3_teamofday_season_id_fk FOREIGN KEY (season_id) REFERENCES ws3_saison(id) ON DELETE CASCADE;
-ALTER TABLE ws3_teamoftheday ADD CONSTRAINT ws3_teamofday_player_id_fk FOREIGN KEY (player_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
-ALTER TABLE ws3_nationalplayer ADD CONSTRAINT ws3_nationalp_player_id_fk FOREIGN KEY (player_id) REFERENCES ws3_spieler(id) ON DELETE CASCADE;
-ALTER TABLE ws3_nationalplayer ADD CONSTRAINT ws3_nationalp_team_id_fk FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE;
-ALTER TABLE ws3_premiumstatement ADD CONSTRAINT ws3_premium_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_premiumpayment ADD CONSTRAINT ws3_premiumpayment_user_id_fk FOREIGN KEY (user_id) REFERENCES ws3_user(id) ON DELETE CASCADE;
-ALTER TABLE ws3_verein ADD CONSTRAINT ws3_verein_original_user_id_fk FOREIGN KEY (user_id_actual) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_match_home_user_id_fk FOREIGN KEY (home_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
-ALTER TABLE ws3_spiel ADD CONSTRAINT ws3_match_guest_user_id_fk FOREIGN KEY (gast_user_id) REFERENCES ws3_user(id) ON DELETE SET NULL;
+ALTER TABLE _user_inactivity ADD CONSTRAINT _user_inactivity_user_id_fk FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE CASCADE;
+ALTER TABLE _briefe ADD CONSTRAINT _briefe_user_id_fk FOREIGN KEY (absender_id) REFERENCES _user(id) ON DELETE CASCADE;
+ALTER TABLE _verein ADD CONSTRAINT _verein_user_id_fk FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE SET NULL;
+ALTER TABLE _verein ADD CONSTRAINT _verein_stadion_id_fk FOREIGN KEY (stadion_id) REFERENCES _stadion(id) ON DELETE SET NULL;
+ALTER TABLE _verein ADD CONSTRAINT _verein_sponsor_id_fk FOREIGN KEY (sponsor_id) REFERENCES _sponsor(id) ON DELETE SET NULL;
+ALTER TABLE _verein ADD CONSTRAINT _verein_liga_id_fk FOREIGN KEY (liga_id) REFERENCES _liga(id) ON DELETE CASCADE;
+ALTER TABLE _spieler ADD CONSTRAINT _spieler_verein_id_fk FOREIGN KEY (verein_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _konto ADD CONSTRAINT _konto_verein_id_fk FOREIGN KEY (verein_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _transfer_angebot ADD CONSTRAINT _transfer_angebot_user_id_fk FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE CASCADE;
+ALTER TABLE _trainingslager_belegung ADD CONSTRAINT _trainingslager_belegung_fk FOREIGN KEY (lager_id) REFERENCES _trainingslager(id) ON DELETE CASCADE;
+ALTER TABLE _trainingslager_belegung ADD CONSTRAINT _trainingslager_verein_fk FOREIGN KEY (verein_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _aufstellung ADD CONSTRAINT _aufstellung_verein_id_fk FOREIGN KEY (verein_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _spiel ADD CONSTRAINT _spiel_saison_id_fk FOREIGN KEY (saison_id) REFERENCES _saison(id) ON DELETE CASCADE;
+ALTER TABLE _spiel ADD CONSTRAINT _spiel_home_id_fk FOREIGN KEY (home_verein) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _spiel ADD CONSTRAINT _spiel_gast_id_fk FOREIGN KEY (gast_verein) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _spiel_berechnung ADD CONSTRAINT _berechnung_spiel_id_fk FOREIGN KEY (spiel_id) REFERENCES _spiel(id) ON DELETE CASCADE;
+ALTER TABLE _spiel_berechnung ADD CONSTRAINT _berechnung_spieler_id_fk FOREIGN KEY (spieler_id) REFERENCES _spieler(id) ON DELETE CASCADE;
+ALTER TABLE _transfer ADD CONSTRAINT _transfer_spieler_id_fk FOREIGN KEY (spieler_id) REFERENCES _spieler(id) ON DELETE CASCADE;
+ALTER TABLE _transfer ADD CONSTRAINT _transfer_selleruser_fk FOREIGN KEY (seller_user_id) REFERENCES _user(id) ON DELETE SET NULL;
+ALTER TABLE _transfer ADD CONSTRAINT _transfer_sellerclub_fk FOREIGN KEY (seller_club_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _transfer ADD CONSTRAINT _transfer_buyeruser_fk FOREIGN KEY (buyer_user_id) REFERENCES _user(id) ON DELETE SET NULL;
+ALTER TABLE _transfer ADD CONSTRAINT _transfer_buyerclub_fk FOREIGN KEY (buyer_club_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _matchreport ADD CONSTRAINT _matchreport_spiel_id_fk FOREIGN KEY (match_id) REFERENCES _spiel(id) ON DELETE CASCADE;
+ALTER TABLE _matchreport ADD CONSTRAINT _matchreport_message_id_fk FOREIGN KEY (message_id) REFERENCES _spiel_text(id) ON DELETE CASCADE;
+ALTER TABLE _training_unit ADD CONSTRAINT _training_verein_id_fk FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _cup ADD CONSTRAINT _cup_winner_id_fk FOREIGN KEY (winner_id) REFERENCES _verein(id) ON DELETE SET NULL;
+ALTER TABLE _cup_round ADD CONSTRAINT _cupround_cup_id_fk FOREIGN KEY (cup_id) REFERENCES _cup(id) ON DELETE CASCADE;
+ALTER TABLE _cup_round ADD CONSTRAINT _cupround_fromwinners_id_fk FOREIGN KEY (from_winners_round_id) REFERENCES _cup_round(id) ON DELETE CASCADE;
+ALTER TABLE _cup_round ADD CONSTRAINT _cupround_fromloosers_id_fk FOREIGN KEY (from_loosers_round_id) REFERENCES _cup_round(id) ON DELETE CASCADE;
+ALTER TABLE _cup_round_pending ADD CONSTRAINT _cuproundpending_team_id_fk FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _cup_round_pending ADD CONSTRAINT _cuproundpending_round_fk FOREIGN KEY (cup_round_id) REFERENCES _cup_round(id) ON DELETE CASCADE;
+ALTER TABLE _cup_round_group ADD CONSTRAINT _cupgroup_team_id_fk FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _cup_round_group_next ADD CONSTRAINT _groupnext_round_fk FOREIGN KEY (cup_round_id) REFERENCES _cup_round(id) ON DELETE CASCADE;
+ALTER TABLE _cup_round_group_next ADD CONSTRAINT _groupnext_tagetround_fk FOREIGN KEY (target_cup_round_id) REFERENCES _cup_round(id) ON DELETE CASCADE;
+ALTER TABLE _team_league_statistics ADD CONSTRAINT _statistics_team_id_fk FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _team_league_statistics ADD CONSTRAINT _statistics_season_id_fk FOREIGN KEY (season_id) REFERENCES _saison(id) ON DELETE CASCADE;
+ALTER TABLE _transfer_offer ADD CONSTRAINT _toffer_spieler_id_fk FOREIGN KEY (player_id) REFERENCES _spieler(id) ON DELETE CASCADE;
+ALTER TABLE _transfer_offer ADD CONSTRAINT _toffer_selleruser_fk FOREIGN KEY (sender_user_id) REFERENCES _user(id) ON DELETE CASCADE;
+ALTER TABLE _transfer_offer ADD CONSTRAINT _toffer_sellerclub_fk FOREIGN KEY (sender_club_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _transfer_offer ADD CONSTRAINT _toffer_buyerclub_fk FOREIGN KEY (receiver_club_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _notification ADD CONSTRAINT _notification_user_id_fk FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE CASCADE;
+ALTER TABLE _youthplayer ADD CONSTRAINT _youthplayer_team_id_fk FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _youthmatch_request ADD CONSTRAINT _youthrequest_team_id_fk FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _youthmatch ADD CONSTRAINT _youthmatch_home_id_fk FOREIGN KEY (home_team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _youthmatch ADD CONSTRAINT _youthmatch_guest_id_fk FOREIGN KEY (guest_team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _youthmatch_player ADD CONSTRAINT _ymatchplayer_team_id_fk FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _youthmatch_player ADD CONSTRAINT _ymatchplayer_player_id_fk FOREIGN KEY (player_id) REFERENCES _youthplayer(id) ON DELETE CASCADE;
+ALTER TABLE _youthmatch_player ADD CONSTRAINT _ymatchplayer_match_id_fk FOREIGN KEY (match_id) REFERENCES _youthmatch(id) ON DELETE CASCADE;
+ALTER TABLE _youthmatch_reportitem ADD CONSTRAINT _ymatchreport_match_id_fk FOREIGN KEY (match_id) REFERENCES _youthmatch(id) ON DELETE CASCADE;
+ALTER TABLE _stadium_construction ADD CONSTRAINT _construction_team_id_fk FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _stadium_construction ADD CONSTRAINT _construction_builder_id_fk FOREIGN KEY (builder_id) REFERENCES _stadium_builder(id) ON DELETE CASCADE;
+ALTER TABLE _teamoftheday ADD CONSTRAINT _teamofday_season_id_fk FOREIGN KEY (season_id) REFERENCES _saison(id) ON DELETE CASCADE;
+ALTER TABLE _teamoftheday ADD CONSTRAINT _teamofday_player_id_fk FOREIGN KEY (player_id) REFERENCES _spieler(id) ON DELETE CASCADE;
+ALTER TABLE _nationalplayer ADD CONSTRAINT _nationalp_player_id_fk FOREIGN KEY (player_id) REFERENCES _spieler(id) ON DELETE CASCADE;
+ALTER TABLE _nationalplayer ADD CONSTRAINT _nationalp_team_id_fk FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE;
+ALTER TABLE _premiumstatement ADD CONSTRAINT _premium_user_id_fk FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE CASCADE;
+ALTER TABLE _premiumpayment ADD CONSTRAINT _premiumpayment_user_id_fk FOREIGN KEY (user_id) REFERENCES _user(id) ON DELETE CASCADE;
+ALTER TABLE _verein ADD CONSTRAINT _verein_original_user_id_fk FOREIGN KEY (user_id_actual) REFERENCES _user(id) ON DELETE SET NULL;
+ALTER TABLE _spiel ADD CONSTRAINT _match_home_user_id_fk FOREIGN KEY (home_user_id) REFERENCES _user(id) ON DELETE SET NULL;
+ALTER TABLE _spiel ADD CONSTRAINT _match_guest_user_id_fk FOREIGN KEY (gast_user_id) REFERENCES _user(id) ON DELETE SET NULL;
 
-CREATE TABLE ws3_stadiumbuilding (
+CREATE TABLE _stadiumbuilding (
   id INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL,
   description VARCHAR(255) NULL,
@@ -1020,15 +1021,16 @@ CREATE TABLE ws3_stadiumbuilding (
   effect_fanpopularity TINYINT(3) NOT NULL DEFAULT 0,
   effect_injury TINYINT(3) NOT NULL DEFAULT 0,
   effect_income INT(10) NOT NULL DEFAULT 0,
-  FOREIGN KEY (required_building_id) REFERENCES ws3_stadiumbuilding(id) ON DELETE SET NULL
+  status ENUM('1','0') NOT NULL DEFAULT '0',
+  FOREIGN KEY (required_building_id) REFERENCES _stadiumbuilding(id) ON DELETE SET NULL
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
-CREATE TABLE ws3_buildings_of_team (
+CREATE TABLE _buildings_of_team (
   building_id INT(10) NOT NULL,
   team_id INT(10) NOT NULL,
   construction_deadline INT(11) NULL,
-  FOREIGN KEY (building_id) REFERENCES ws3_stadiumbuilding(id) ON DELETE CASCADE,
-  FOREIGN KEY (team_id) REFERENCES ws3_verein(id) ON DELETE CASCADE,
+  FOREIGN KEY (building_id) REFERENCES _stadiumbuilding(id) ON DELETE CASCADE,
+  FOREIGN KEY (team_id) REFERENCES _verein(id) ON DELETE CASCADE,
   PRIMARY KEY (building_id, team_id)
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 
@@ -1333,3 +1335,157 @@ INSERT INTO `_spiel_text` (`aktion`, `nachricht`) VALUES
 ( 'Taktikaenderung', '<b>{ma1} : </b>Mit dieser Änderung von {sp1} sollte das Spiel mehr Pep bekommen.'),
 ( 'Taktikaenderung', '<b>{ma1} : </b>{sp1} ist der Geduldsfaden gerissen. Neue Laufwege sollen dem Gegner Schwierigkeiten bereiten.'),
 ( 'Taktikaenderung', '<b>{ma1} : </b>{sp1} gibt die Anweisung, das mehr Druck aufgebaut werden soll.');
+
+SET foreign_key_checks = 0;
+INSERT INTO `_stadiumbuilding` (`id`, `name`, `description`, `picture`, `required_building_id`, `costs`, `premiumfee`, `construction_time_days`, `effect_training`, `effect_youthscouting`, `effect_tickets`, `effect_fanpopularity`, `effect_injury`, `effect_income`, `status`) VALUES
+('', 'Parkplatz (niedrig)', 'Parkplätze', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Parkhaus (mittel)', 'Parkhaus', NULL, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Parkhaus (hoch)', 'Parkhaus', NULL, 2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Trainingsplatz (niedrig)', 'Trainingsplatz ohne Rasenheizung', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Trainingsplatz (mittel)', 'Trainingsplatz mit Rasenheizung', NULL, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Trainingsplatz (hoch', 'Trainingszentrum mit Sporthalle', NULL, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fanshopmobil (niedrig)', 'Fanshop ', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fanshop (mittel)', 'Fanshop ', NULL, 7, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fancenter (hoch)', 'Fancenter ', NULL, 8, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Pommesbude (niedrig)', 'Pommesbude', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fast-Food Shop (mittel)', 'Fast Food Shop', NULL, 10, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Restaurant (hoch)', 'Restaurant', NULL, 11, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Vereinshaus (niedrig)', 'Vereinshaus', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Vereinszentrum (mittel)', 'Vereinszentrum', NULL, 13, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Vereinskomplex (hoch)', 'Vereinskomplex', NULL, 14, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Jugendhaus (niedrig)', 'Jugendhaus', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Jugendhaus (mittel)', 'Jugendhaus mit Sportplatz', NULL, 16, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Jugendinternat (hoch)', 'Jugendinternat', NULL, 17, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Vereinsmuseum (niedrig)', 'Museum', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Vereinsmuseum (mittel)', 'Vereinsmuseum mit Unikaten', NULL, 19, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Vereinsmuseum (hoch)', 'Historisches Vereinsmuseum ', NULL, 20, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fanclubverwaltung (niedrig)', 'Fanclubverwaltung', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fanclubverwaltung (mittel)', 'Fanclubverwaltung mit Poststelle', NULL, 22, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fanclubverwaltung (hoch)', 'Fanclubverwaltung mit EDV Abteilung', NULL, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'EDV Raum (niedrig)', 'EDV Raum', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'EDV Lager (mittel)', 'EDV Lager', NULL, 25, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'EDV Komplex (hoch)', 'EDV Komplex', NULL, 26, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Scoutingraum (niedrig)', 'Scoutingraum', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Scoutinghaus (mittel)', 'Scoutinghaus ', NULL, 28, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Scoutingkomplex (hoch)', 'Scoutingbereich mit modernster Ausstattung', NULL, 29, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fahrradständer (niedrig)', 'Anreise per Fahrrad', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Busbahnhof (mittel)', 'Busbahnhof zur Anreise', NULL, 31, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'S-Bahn (hoch)', 'Straßenbahn zur Anreise', NULL, 32, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'U-Bahnhof (Luxus)', 'U-Bahn zur Anreise', NULL, 33, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Tiefgarage (Luxus)', 'Tiefgarage ', NULL, 3, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Arztraum (niedrig)', 'Arztraum zur Heilung der Spieler', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Arzthaus (mittel)', 'Arzthaus', NULL, 36, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Arztpraxis (hoch)', 'Arztpraxis', NULL, 37, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Krankenhaus (Luxus)', 'Krankenhaus', NULL, 38, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Wellnessraum (niedrig)', 'Wellnessraum ', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Wellnessoase (mittel)', 'Wellnessoase ', NULL, 40, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Wellnessbereich (hoch)', 'Wellnessbereich ', NULL, 41, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Wellnesskomplex (Luxus)', 'Wellnesskomplex', NULL, 42, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Kiosk (niedrig)', 'Kiosk ', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Kioskladen (mittel)', 'Kioskladen ', NULL, 44, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Kioskkomplex (hoch)', 'Großer Kiosk-Store', NULL, 45, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Dixie Klo (niedrig)', 'Dixie Klo', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Toilettenwagen (mittel)', 'Toilettenwagen', NULL, 47, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Toiletten (hoch)', 'Toiletten', NULL, 48, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Toiletten modern (Luxus)', 'Toiletten modern', NULL, 49, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Flutlichtmast (niedrig)', 'Flutlichtmast', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Flutlicht (mittel)', 'Flutlich', NULL, 51, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Flutlichtanlage (hoch)', 'Flutlichtanlage', NULL, 52, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Manufaktur (niedrig)', 'Manufaktur zur Herstellung von Merchandising ', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Werkhalle (mittel)', 'Werkhalle zur Herstellung von Merchandising ', NULL, 54, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Maschinenhalle (hoch)', 'Maschinenhalle zur Herstellung von Merchandising ', NULL, 55, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Moderne Fabrik (Luxus)', 'Automatisierte Maschinenhalle zur Herstellung von Merchandising ', NULL, 56, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Drive-In-Resturant (Luxus)', 'Restaurant', NULL, 12, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Vereinszentrale (Luxus)', 'Vereinszentrale', NULL, 15, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Kraftraum (niedrig)', 'Kraftraum', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Krafträume (mittel)', 'Krafträume', NULL, 60, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fitnessstudio (hoch)', 'Fitnessstudio', NULL, 61, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Sportleistungszentrum (Luxus)', 'Sportleistungszentrum', NULL, 62, 1, 10, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Fanstatue', 'Fanstatue', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+('', 'Parkplätze','Parkplatzausbau', NULL, NULL, 500000, 0, 50, 0, 0, 10, 20, 0, 0, 0),
+('', 'Fanshop', 'Alles was der Fan begehrt', NULL, 69, 50000, 0, 10, 0, 0, 5, 10, 0, 500, 0),
+('', 'Aachener Printen Ecke im Fanshop', 'Gentleman lädt zum Naschen ein', NULL, 66, 1000, 0, 2, 0, 0, 0, 1, 0, 100, 0),
+('', 'Bushaltestelle', 'direkte Anbindung zum Busnetz', NULL, NULL, 20000, 0, 3, 0, 0, 2, 5, 0, 0, 0),
+('', 'Stadion-Center', 'Center für Shopvermietung', NULL, NULL, 1000000, 0, 50, 0, 0, 10, 20, 0, 0, 0),
+('', 'Sport-Center', 'Center für die Spielerbetreuung', NULL, NULL, 1000000, 0, 50, 0, 0, 0, 0, 0, 0, 0),
+('', 'Getränke-Shop', NULL, NULL, 69, 10000, 0, 20, 0, 0, 0, 10, 0, 1000, 0),
+('', 'Imbiss', NULL, NULL, 69, 5000, 0, 10, 0, 0, 0, 5, 0, 500, 0),
+('', 'Reha-Abteilung', 'Förderung der Genesung', NULL, 70, 200000, 0, 20, 0, 0, 0, 0, 1, 0, 0),
+('', 'Scouting Abteilung', 'Management für das Scouting von Jugendspielern', NULL, 70, 100000, 0, 10, 0, 10, 0, 0, 0, 0, 0),
+('', 'Fitness- und Relax Bereich', 'zusätzliche  Frische und Zufriedenheit pro Trainingseinheit', NULL, 70, 100000, 0, 0, 1, 0, 0, 0, 0, 0, 0),
+('', 'U-Bahn Anschluss', NULL, NULL, NULL, 500000, 0, 50, 0, 0, 15, 15, 0, 0, 0),
+('', 'Restaurant', 'Erlebnis Essen', NULL, 69, 100000, 0, 30, 0, 0, 0, 5, 0, 5000, 0),
+('', 'Parkanlage', 'Das grüne Erlebnis für die ganze Familie', NULL, NULL, 1000000, 0, 90, 0, 0, 10, 10, 0, 0, 0),
+('', 'Therme', NULL, NULL, NULL, 500000, 0, 90, 1, 0, 1, 10, 0, 10000, 0),
+('', 'Salinen', 'Die Lunge wird sich freuen.', NULL, NULL, 200000, 0, 30, 0, 0, 5, 5, 0, 0, 0),
+('', 'Polizeiwache', 'Mehr Zuschauer, aber kostet dafür auch Geld.', NULL, NULL, 500000, 0, 50, 0, 0, 10, 0, 0, '-10000', 0),
+('', 'Fanbetreungs Punkt', 'Kostet etwas, aber bringt auch mehr Zuschauer.', NULL, NULL, 50000, 0, 30, 0, 0, 5, 0, 0, '-1000', 0);
+SET foreign_key_checks = 1;
+
+INSERT INTO `_randomevent` (`id`, `message`, `effect`, `effect_money_amount`, `effect_blocked_matches`, `effect_skillchange`, `weight`, `status`) VALUES
+('', 'Sie gewinnen im Lotto', 'money', 100000, 0, 0, 3, 0),
+('', 'Sie finden Geld auf der Straße. Sie sind ein Glückspilz', 'money', 500, 0, 0, 3, 0),
+('', 'Sie bekommen Steuern erstattet!', 'money', 15000, 0, 0, 3, 0),
+('', 'Ein Sponsor überweißt Ihnen einen Bonus', 'money', 25000, 0, 0, 3, 0),
+('', 'Sie sind der Sieger eines Fotowettbewerbes', 'money', 1000, 0, 0, 3, 0),
+('', 'Für eine Homestory bekommen Sie einen Bonus', 'money', 50000, 0, 0, 3, 0),
+('', '{playername} fällt nach einer Disconacht aus.', 'player_injured', 0, 1, -1, 3, 0),
+('', '{playername} lässt sich von seiner Frau scheiden', 'player_happiness', 0, 0, -2, 3, 0),
+('', '{playername} heiratet seine Freundin', 'player_happiness', 0, 0, 2, 3, 0),
+('', '{playername} trainiert neben dem Training im Kraftraum.', 'player_stamina', 0, 0, 2, 3, 0),
+('', '{playername} stolpert die Treppe runter und verletzt sich', 'player_injured', 0, 2, -1, 3, 0),
+('', '{playername} bekommt ein Kind', 'player_fitness', 0, 0, -2, 3, 0),
+('', '{playername} bekommt mit seiner Frau Zwillinge', 'player_happiness', 0, 0, 2, 3, 0),
+('', 'Durch eine Fanleihe gewinnen Sie Geld', 'money', 250000, 0, 0, 3, 0),
+('', 'Deine Mitarbeiter erwirtschaften ein dickes Plus in der Kasser', 'money', 75000, 0, 0, 3, 0),
+('', 'Deine Mitarbeiter streiken vorm Vereinshaus', 'money', -50000, 0, 0, 3, 0),
+('', 'Ein Angestellter des Vereins brennt mit dem Tagesgeld durch', 'money', -150000, 0, 0, 3, 0),
+('', 'Ein anonymer Fan spendet Ihrem Verein', 'money', 5000, 0, 0, 3, 0),
+('', 'Ein Hacker legt die EDV Abteilung des Vereins lahm', 'money', -15000, 0, 0, 3, 0),
+('', 'Ein Mitarbeiter telefoniert auf Vereinskosten', 'money', -1000, 0, 0, 3, 0),
+('', 'Ein Brand im Lagerraum zerstört die gesamte EDV Anlage', 'money', -225000, 0, 0, 3, 0),
+('', 'Wegen Hooligans wird ihr Verein zu einer Geldstrafe verdonnert', 'money', -275000, 0, 0, 3, 0),
+('', 'Renovierungen im Stadionumfeld sind von Nöten', 'money', -200000, 0, 0, 3, 0),
+('', 'Ihr Sponsor ist sehr zufrieden und zahlt dem Verein einen Bonus', 'money', 350000, 0, 0, 3, 0),
+('', 'Ihr Verein bekommt eine Spende von einem Fanclub', 'money', 100000, 0, 0, 3, 0),
+('', 'Ihr Verein steht in der Presse schlecht da. Sie starten eine Imagekapampagne', 'money', -15000, 0, 0, 3, 0),
+('', 'Ihr Verein wird für vorbildliche Fans ausgezeichnet', 'money', 300000, 0, 0, 3, 0),
+('', '{playername} fällt nach einer Schiedsrichterbeleidigung aus', 'player_blocked', 0, 2, 0, 3, 0),
+('', '{playername} fällt nach einer Trainingskeilerei aus', 'player_injured', 0, 1, 0, 3, 0),
+('', '{playername} verdreht sich das Knie beim Joggen', 'player_injured', 0, 4, 0, 3, 0),
+('', '{playername} plaudert Internas aus und wird suspendiert', 'player_blocked', 0, 5, 0, 3, 0),
+('', '{playername} trauert seiner Ex-Freundin hinterher', 'player_fitness', 0, 0, -2, 3, 0),
+('', '{playername} bekommt viel Lob von der Presse', 'player_happiness', 0, 0, 3, 3, 0),
+('', '{playername} geht nach dem Training zum Wasseraerobic', 'player_fitness', 0, 0, 2, 3, 0),
+('', '{playername} holt sich ein Hexenschuss als er sein Kind hebt', 'player_injured', 0, 0, -1, 3, 0),
+('', 'Sie gewinnen im Casino', 'money', 750000, 0, 0, 3, 0),
+('', 'Sie erhalten einen Preis eines Sportmagazines', 'money', 75000, 0, 0, 3, 0),
+('', 'Sie veräußern eine Immobilie gewinnbringend', 'money', 125000, 0, 0, 3, 0),
+('', '{playername} streitet sich mit mehreren Mitspielern', 'player_happiness', 0, 0, -2, 3, 0),
+('', '{playername} lädt seine Mannschaftskollegen zum Mannschaftsabend ein', 'player_happiness', 0, 0, 2, 3, 0),
+('', '{playername} lädt seine Teamkollegen zum gemeinsamen Essen ein', 'player_happiness', 0, 0, 2, 3, 0),
+('', '{playername} bekommt einen neuen Ausrüstervertrag', 'player_happiness', 0, 0, 2, 3, 0),
+('', '{playername} verliert einen Ausrüstervertrag', 'player_happiness', 0, 0, -2, 3, 0),
+('', '{playername} erkrankt schwer', 'player_injured', 0, 2, 0, 3, 0),
+('', '{playername} knickt unglücklich um als er einen Trick ausprobiert', 'player_injured', 0, 1, 0, 3, 0),
+('', '{playername} wird beim Rückwärts ausparken von seinem Teamkollegen übersehen. Sein Fuß ist danach kaputt.', 'player_injured', 0, 1, 0, 3, 0),
+('', '{playername} geht privat sehr viel Joggen,was sich auf die Kondition auswirkt.', 'player_stamina', 0, 0, 2, 3, 0),
+('', '{playername} diskutiert viel mit seinem Trainer und lernt wertvolles.', 'player_happiness', 0, 0, 2, 3, 0),
+('', '{playername} wütet nach der Niederlage gegen seine Mitspieler. Sie suspendieren Ihn.', 'player_blocked', 0, 2, 0, 3, 0),
+('', '{playername} verbessert sein Standing im Team', 'player_happiness', 0, 0, 1, 3, 0),
+('', 'Sie verlieren eine Sportwette gegen ein alten Trainerkollegen. Und werden zur Kasse gebeten.', 'money', -1000, 0, 0, 3, 0),
+('', 'Sie laden ihre Spieler zum Bowlingabend ein und zahlen diesen.', 'money', -1250, 0, 0, 3, 0),
+('', 'Sie laden ihr Team zum Kanu-Trip ein.', 'money', -800, 0, 0, 3, 0),
+('', 'Sie kommen zu spät zum Training und zahlen dafür in die Mannschaftskasse ein', 'money', 500, 0, 0, 3, 0),
+('', 'Sie beschaffen sich eine Taktik Tafel für zu Hause', 'money', -375, 0, 0, 3, 0),
+('', '{playername} wird viel mit Vereinen in Verbindung gebracht. Seine Vorbereitung schleift dadurch', 'player_happiness', 0, 0, -2, 3, 0),
+('', '{playername} wird mit großen Clubs in Verbindung gebracht. Das imponiert ihm sehr und er hängt sich mehr rein.', 'player_happiness', 0, 0, 3, 3, 0),
+('', '{playername} verkracht sich mit seinem besten Kumpel.', 'player_fitness', 0, 0, -2, 3, 0),
+('', '{playername} kommt verspätet zum Training', 'player_blocked', 0, 1, 0, 3, 0),
+('', '{playername} trauert um seine Oma', 'player_happiness', 0, 0, -2, 3, 0),
+('', 'Durch eine Fehl-Bestellung entstehen erhöhte Kosten', 'money', -3500, 0, 0, 3, 0),
+('', 'Sie gewinnen einen Preis für die Beste Jugendabteilung', 'money', 30000, 0, 0, 3, 0),
+('', 'Sie platzieren eine Sportwette und gewinnen diese auch noch.', 'money', 1750, 0, 0, 3, 0),
+('', 'Sie finden einen Alukoffer und öffnen diesen', 'money', 75750, 0, 0, 3, 0),
+('', 'Ein Mitarbeiter verletzt sich im Büro. Sie kaufen Ihn eine Aufmerksamkeit.', 'money', -500, 0, 0, 3, 0);
+ALTER TABLE `_randomevent` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=67;
