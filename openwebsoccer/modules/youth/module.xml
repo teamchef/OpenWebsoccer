@@ -282,12 +282,6 @@
 		            template="youth_formation"
 		            model="YouthMatchFormationModel"
 		            role="user">
-					<script file="jquery-ui-1.10.2.custom.min.js" debugonly="true"/>
-		            <script file="formationws4.js" debugonly="true"/>
-		            <script file="formation.min.js" productiononly="true"/>
-
-		            <script file="bootstrap-slider.js" />
-		            <script file="bootstrap-switch.js" />
 
 		            <css file="slider.css"/>
 		        	<css file="bootstrap-switch.css"/>

@@ -154,7 +154,6 @@
             role="user,guest"
             parentItem="team">
             <script file="flot/jquery.flot.min.js" />
-            <script file="charts.js" />
         </page>
 
         <page
@@ -174,7 +173,7 @@
             navitem="true"
             navweight="12"
             parentItem="leagues" />
-            
+
 		<page
             id="topscorers"
             template="scorers"

@@ -61,15 +61,7 @@ class DefaultBootstrapSkin implements ISkin {
 	 */
 	public function getJavaScriptSources() {
 		$dir = $this->_websoccer->getConfig('context_root') . '/js/';
-		$files[] = '//code.jquery.com/jquery-1.11.1.min.js';
-
-		if (DEBUG) {
-			$files[] = $dir . 'bootstrap.min.js';
-			$files[] = $dir . 'jquery.blockUI.js';
-			$files[] = $dir . 'wsbase.js';
-		} else {
-			$files[] = $dir . 'websoccer.min.js';
-		}
+		$files[] = $dir . 'websoccer.min.js';
 
 		return $files;
 	}
