@@ -8,12 +8,9 @@
 	<input type="hidden" name="block" value="shoutbox"/>
 	<input type="hidden" name="id" value="{{ env.getRequestParameter("id") }}"/>
 
-	<input class="span3" id="msgtext" name="msgtext" type="text" placeholder="{{ i18n.getMessage("shoutbox_messageinput_placeholder") }}" required="true"
-		value="{% if validationMsg["msgtext"] is defined %}{{ env.getRequestParameter("msgtext") }}{% endif %}">
-	<input type="submit" class="btn ajaxSubmit"
-		data-ajaxtarget="shoutbox_block" data-messagetarget="shoutboxvalmessages" value="{{ i18n.getMessage("shoutbox_button_go") }}"/>
-
-	{% if validationMsg["msgtext"] is defined %}<p class="text-error">{{ validationMsg["msgtext"] }}</p>{% endif %}
+	<input class="span3" id="msgtext" name="msgtext" type="text" required="true" value=""/>
+	<input type="submit" class="btn ajaxSubmit" data-ajaxtarget="shoutbox_block" data-messagetarget="shoutboxvalmessages" value="{{ i18n.getMessage("shoutbox_button_go") }}"/>
+	<input type="button" name="reset_form" value="Reset Form" onclick="this.form.reset();"/>
 </form>
 {% else %}
 	<p><small>{{ i18n.getMessage('shoutbox_hiddensubmit_note') }}</small></p>

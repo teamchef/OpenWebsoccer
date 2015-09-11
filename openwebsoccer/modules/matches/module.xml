@@ -190,7 +190,8 @@
 	            model="MatchChangesModel"
 	            role="user">
 
-	            <css file="ws.css"/>
+            	<css file="slider.css"/>
+        		<css file="bootstrap-switch.css"/>
             </page>
 
             <script file="flot/jquery.flot.min.js" />
