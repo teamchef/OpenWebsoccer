@@ -534,7 +534,7 @@ function printFinalPage($messages) {
 
 	<div class="container">
 
-		<h1>OpenWebSoccer Installation</h1>
+		<h1>OpenWebsoccer Installation</h1>
 
 		<hr>
 
@@ -595,8 +595,7 @@ function printFinalPage($messages) {
       <hr>
 
       <footer>
-        <p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a> by Ingo Hofmann / <a href="https://github.com/rolfjoseph/open-websoccer-tlc" target="_blank">TLC Version</a> Step 94 / Co-Powered by Rolf Joseph / ErdemCan
-	        	</p>
+       <a href="https://github.com/rolfjoseph/OpenWebsoccer" target="_blank"> <?php readfile('../admin/config/version.txt'); readfile('../modules/core/step.txt'); ?>
       </footer>
 	</div>
 

@@ -177,8 +177,8 @@ if ($forwarded) {
 
       <footer>
  		<div id="footer">
-	        	<p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a> by Ingo Hofmann / <a href="https://github.com/rolfjoseph/open-websoccer-tlc" target="_blank">OpenWebsoccer / Co-Powered by Rolf Joseph / ErdemCan Step </a> <?php echo $website->getConfig('version');?>
-	        	</p></div>
+	         <a href="https://github.com/rolfjoseph/OpenWebsoccer" target="_blank"> <?php readfile('../admin/config/version.txt'); readfile('../modules/core/step.txt'); ?>
+	    </div>
       </footer>
 	</div>
 

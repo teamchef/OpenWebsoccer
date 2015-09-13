@@ -222,7 +222,7 @@ function printFinalPage($messages) {
 <!DOCTYPE html>
 <html lang="de">
   <head>
-    <title>Open WebSoccer-Sim Update Installation</title>
+    <title>OpenWebsoccer Update Installation</title>
     <link href="../admin/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
     <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
     <meta charset="UTF-8">
@@ -237,7 +237,7 @@ function printFinalPage($messages) {
 
 	<div class="container">
 
-		<h1>OpenWebSoccer Update Installation</h1>
+		<h1>OpenWebsoccer Update Installation</h1>
 
 		<hr>
 
@@ -299,8 +299,7 @@ function printFinalPage($messages) {
       <hr>
 
       <footer>
-       <p>Powered by <a href="http://www.websoccer-sim.com" target="_blank">OpenWebSoccer-Sim</a> by Ingo Hofmann / <a href="https://github.com/rolfjoseph/open-websoccer-tlc" target="_blank">TLC Version</a> Step 94 / Co-Powered by Rolf Joseph / ErdemCan
-	        	</p>
+      	<a href="https://github.com/rolfjoseph/OpenWebsoccer" target="_blank"> <?php readfile('../admin/config/version.txt'); readfile('../modules/core/step.txt'); ?>
       </footer>
 	</div>
 
