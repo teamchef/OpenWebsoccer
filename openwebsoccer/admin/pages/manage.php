@@ -3,19 +3,19 @@
 
   This file is part of OpenWebSoccer-Sim.
 
-  OpenWebSoccer-Sim is free software: you can redistribute it 
-  and/or modify it under the terms of the 
-  GNU Lesser General Public License 
+  OpenWebSoccer-Sim is free software: you can redistribute it
+  and/or modify it under the terms of the
+  GNU Lesser General Public License
   as published by the Free Software Foundation, either version 3 of
   the License, or any later version.
 
   OpenWebSoccer-Sim is distributed in the hope that it will be
   useful, but WITHOUT ANY WARRANTY; without even the implied
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
+  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
   See the GNU Lesser General Public License for more details.
 
-  You should have received a copy of the GNU Lesser General Public 
-  License along with OpenWebSoccer-Sim.  
+  You should have received a copy of the GNU Lesser General Public
+  License along with OpenWebSoccer-Sim.
   If not, see <http://www.gnu.org/licenses/>.
 
 ******************************************************/
@@ -75,17 +75,17 @@ $showOverview = TRUE;
 if ($show == "add" || $show == "edit") {
 	$showOverview = FALSE;
 	$enableFileUpload = FALSE;
-	
+
 	// field config
 	$fields = $entityConfig[0]->xpath("editform/field");
 	$formFields = array();
 	foreach($fields as $field) {
 		$attrs = $field->attributes();
-		
+
 		if ($show == "add" && (boolean) $attrs["editonly"]) {
 			continue;
 		}
-		
+
 		// check permission
 		$roles = (string) $attrs["roles"];
 		if (strlen($roles) && (!isset($admin["r_admin"]) || !$admin["r_admin"])) {
@@ -97,12 +97,12 @@ if ($show == "add" || $show == "edit") {
 					break;
 				}
 			}
-			
+
 			if ($hasRole === FALSE) {
 				continue;
 			}
 		}
-		
+
 		$fieldId = (string) $attrs["id"];
 		$fieldInfo = array();
 		$fieldInfo["type"] = (string) $attrs["type"];
@@ -115,32 +115,32 @@ if ($show == "add" || $show == "edit") {
 		$fieldInfo["converter"] = (string) $attrs["converter"];
 		$fieldInfo["validator"] = (string) $attrs["validator"];
 		$fieldInfo["default"] = (string) $attrs["default"];
-		
+
 		if ($fieldInfo["type"] == "file") {
 			$enableFileUpload = TRUE;
 		}
-	
+
 		$formFields[$fieldId] = $fieldInfo;
 	}
 	$labelPrefix = "entity_". $entity ."_";
-	
+
 	// save
 	if ($action == "save") {
 		try {
 			if ($admin['r_demo']) {
 				throw new Exception($i18n->getMessage("validationerror_no_changes_as_demo"));
 			}
-	
+
 			// validate
 			$dbcolumns = array();
 			foreach ($formFields as $fieldId => $fieldInfo) {
-				
+
 				if ($fieldInfo["readonly"]) {
 					continue;
 				}
-				
+
 				if ($fieldInfo["type"] == "timestamp") {
-					$dateObj = DateTime::createFromFormat($website->getConfig("date_format") .", H:i", 
+					$dateObj = DateTime::createFromFormat($website->getConfig("date_format") .", H:i",
 							$_POST[$fieldId ."_date"] .", ". $_POST[$fieldId ."_time"]);
 					$fieldValue = ($dateObj) ? $dateObj->getTimestamp() : 0;
 				} elseif ($fieldInfo["type"] == "boolean") {
@@ -148,15 +148,15 @@ if ($show == "add" || $show == "edit") {
 				} else {
 					$fieldValue = (isset($_POST[$fieldId])) ? $_POST[$fieldId] : "";
 				}
-				
+
 				FormBuilder::validateField($i18n, $fieldId, $fieldInfo, $fieldValue, $labelPrefix);
-					
+
 				// apply converter
 				if (strlen($fieldInfo["converter"])) {
 					$converter = new $fieldInfo["converter"]($i18n, $website);
 					$fieldValue = $converter->toDbValue($fieldValue);
 				}
-				
+
 				// convert date
 				if (strlen($fieldValue) && $fieldInfo["type"] == "date") {
 					$dateObj = DateTime::createFromFormat($website->getConfig("date_format"), $fieldValue);
@@ -165,40 +165,45 @@ if ($show == "add" || $show == "edit") {
 					$fieldValue = $website->getNowAsTimestamp();
 				} else if ($fieldInfo["type"] == "file") {
 					if (isset($_FILES[$fieldId]) && isset($_FILES[$fieldId]["tmp_name"]) && strlen($_FILES[$fieldId]["tmp_name"])) {
-						$fieldValue = md5($entity . "-". $website->getNowAsTimestamp());
+						if ($_FILES["picture"]["name"]) {
+						$fieldValue = substr($_FILES["picture"]["name"], 0, -4);
+						}
+						else if ($_FILES["bild"]["name"]) {
+						$fieldValue = substr($_FILES["bild"]["name"], 0, -4);
+						}
 						$fieldValue .= "." . FileUploadHelper::uploadImageFile($i18n, $fieldId, $fieldValue, $entity);
 					} else {
 						continue;
 					}
 
 				}
-				
+
 				// do not store read-only, except generated timestamp on adding
 				if (!$fieldInfo["readonly"] or $fieldInfo["readonly"] && $fieldInfo["type"] == "timestamp"  && $show == "add") {
 					$dbcolumns[$fieldId] = $fieldValue;
 				}
-				
+
 			}
-	
+
 			if ($show == "add") {
 				$db->queryInsert($dbcolumns, $dbTable);
 			} else {
 				$whereCondition = "id = %d";
 				$parameter = $id;
 				$db->queryUpdate($dbcolumns, $dbTable, $whereCondition, $parameter);
-				
+
 				// log action
 				if ($loggingEnabled) {
 					$result = $db->querySelect($loggingColumns, $dbTable, $whereCondition, $parameter);
 					$item = $result->fetch_array(MYSQLI_ASSOC);
 					$result->free();
-						
+
 					logAdminAction($website, LOG_TYPE_EDIT, $admin["name"], $entity, json_encode($item));
 				}
 			}
-	
+
 			echo createSuccessMessage($i18n->getMessage("alert_save_success"), "");
-	
+
 			$showOverview = TRUE;
 		} catch (Exception $e) {
 			echo createErrorMessage($i18n->getMessage("subpage_error_alertbox_title"), $e->getMessage());
@@ -210,7 +215,7 @@ if ($show == "add") {
 	include(__DIR__ . "/manage-add.inc.php");
 } else if($show == "edit") {
 	include(__DIR__ . "/manage-edit.inc.php");
-} 
+}
 
 if ($showOverview) {
 	include(__DIR__ . "/manage-overview.inc.php");
