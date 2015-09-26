@@ -27,7 +27,7 @@
 <div class="row-fluid">
 	<div class="span6">
 		{% if latestMatchesHome|length > 0 %}
-			{% if match.match_home_picture|length %}<p class="text-center"><img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_home_picture }}" style="max-height: 120px; max-width: 120px"/></p>{% endif %}
+			{% if match.match_home_picture|length %}<p class="text-center"><img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.match_home_picture }}" style="max-height: 120px; max-width: 120px"/></p>{% endif %}
 			<table class="table table-striped">
 			{% for previousMatch in latestMatchesHome %}
 				<tr>
@@ -43,7 +43,7 @@
 	</div>
 	<div class="span6">
 		{% if latestMatchesGuest|length > 0 %}
-			{% if match.match_guest_picture|length %}<p class="text-center"><img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_guest_picture }}" style="max-height: 120px; max-width: 120px"/></p>{% endif %}
+			{% if match.match_guest_picture|length %}<p class="text-center"><img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.match_guest_picture }}" style="max-height: 120px; max-width: 120px"/></p>{% endif %}
 			<table class="table table-striped">
 			{% for previousMatch in latestMatchesGuest %}
 				<tr>

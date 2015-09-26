@@ -40,16 +40,10 @@ class SchedioartFootballSkin extends DefaultBootstrapSkin {
 	 */
 	public function getCssSources() {
 
-		$dir = $this->_websoccer->getConfig('context_root') . '/css/';
+		$dir = $this->_websoccer->getConfig('cdn_root') . '/css/';
 
-		if (DEBUG) {
-			$files[] = $dir . 'schedioart/bootstrap.css';
-			$files[] = $dir . 'schedioart/schedioartskin.css';
-			$files[] = $dir . 'bootstrap-responsive.min.css';
-		} else {
-			$files[] = $dir . 'schedioart/theme.min.css';
-		}
-
+		$files[] = $dir . 'schedioart/theme.min.css';
+		
 		$files[] = '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css';
 
 		return $files;

@@ -24,11 +24,11 @@
 		{% endfor %}
 		{% if cssReferences is defined %}
 			{% for cssSource in cssReferences %}
-			<link href="{{ env.getConfig("context_root") }}/css/{{ cssSource }}" media="all" rel="stylesheet" type="text/css" />
+			<link href="{{ env.getConfig("cdn_root") }}/css/{{ cssSource }}" media="all" rel="stylesheet" type="text/css" />
 			{% endfor %}
 		{% endif %}
 
-		<link rel="shortcut icon" type="image/x-icon" href="{{ env.getConfig("context_root") }}/favicon.ico" />
+		<link rel="shortcut icon" type="image/x-icon" href="{{ env.getConfig("cdn_root") }}/favicon.ico" />
 
 		{% if env.getConfig("facebook_appid") %}
 		<meta property="fb:app_id" content="{{ env.getConfig("facebook_appid") }}"/>
@@ -47,8 +47,10 @@
 			{% endblock %}
 
 			{% block page_columns %}
-			<div class="row">
-				<div class="span8" id="contentArea">
+			
+			<raw>
+			<div class="row"">
+				<div class="span7" id="contentArea">
 					<div class="box">
 
 						{% include 'breadcrumb.twig' %}
@@ -105,6 +107,7 @@
 
 				</div>
 			</div>
+			</raw>
 			{% endblock %}
 
 			<hr/>
@@ -126,12 +129,13 @@
 		{% endfor %}
 		{% if scriptReferences is defined %}
 			{% for jsSource in scriptReferences %}
-			<script src="{{ env.getConfig("context_root") }}/js/{{ jsSource }}" ></script>
+			<script src="{{ env.getConfig("cdn_root") }}/js/{{ jsSource }}" ></script>
 			{% endfor %}
 		{% endif %}
 
 		<!--[if lt IE 9]>
-		<script src="js/extcanvas/excanvas.compiled.js"></script>
+		<script src="{{ env.getConfig("cdn_root") }}/js/extcanvas/excanvas.compiled.js"></script>
 		<![endif]-->
+		
 	</body>
 </html>

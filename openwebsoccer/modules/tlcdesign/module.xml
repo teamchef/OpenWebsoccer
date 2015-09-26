@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../module.dtd">
+<module version="2.0.0">
+
+	<admin>
+		<adminpage id="phpjobscheduler" permissionrole="r_admin" navcategory="settings" filename="phpjobscheduler"/>
+	</admin>
+
+	<settings>
+		<setting id="bild_hintergrund" category="tlcdesign" type="text" default="" />
+		<setting id="bild_navbar" category="tlcdesign" type="text" default="" />
+		<setting id="color_navbar" category="tlcdesign" type="text" default="darkblue" />
+		<setting id="bild_spoiler" category="tlcdesign" type="text" default="" />
+		<setting id="color_spoiler" category="tlcdesign" type="text" default="darkblue" />
+		<setting id="bild_infolabel" category="tlcdesign" type="text" default="" />
+		<setting id="color_infolabel" category="tlcdesign" type="text" default="darkblue" />
+		<setting id="color_container" category="tlcdesign" type="text" default="" />
+		<setting id="bild_footer" category="tlcdesign" type="text" default="" />
+		<setting id="color_footer" category="tlcdesign" type="text" default="" />
+	</settings>
+</module>

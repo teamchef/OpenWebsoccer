@@ -38,7 +38,7 @@
 				<p>{{ buildingDescription }}</p>
 
 				{% if building.picture|length > 0 %}
-					<p><img src="{{ env.getConfig("context_root") }}/uploads/stadiumbuilding/{{ building.picture }}"></p>
+					<p><img src="{{ env.getConfig("cdn_root") }}/uploads/stadiumbuilding/{{ building.picture }}"></p>
 				{% endif %}
 
 				<dl class="dl-horizontal">
@@ -92,7 +92,7 @@
 			<tr{% if building.under_construction %} class="warning"{% endif %}>
 				<td>
 				{% if building.picture|length > 0 %}
-				<img src="{{ env.getConfig("context_root") }}/uploads/stadiumbuilding/{{ building.picture }}">
+				<img src="{{ env.getConfig("cdn_root") }}/uploads/stadiumbuilding/{{ building.picture }}">
 				{% endif %}
 				</td>
 				<td>

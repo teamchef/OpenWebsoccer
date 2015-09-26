@@ -21,7 +21,7 @@
 						<i class="icon-share-alt" title="{{ i18n.getMessage("lending_player_marker_lendable") }}"></i>
 					{% endif %}
 				</td>
-				
+
 				{% if env.getConfig("hide_strength_attributes") != "1" %}
 				<td {{ playerlists.strengthClass(player.strength) }} title="{{ i18n.getMessage("playertable_head_strength") }}"><strong>{{ player.strength }}</strong></td>
 				<td {{ playerlists.strengthClass(player.strength_technic) }} title="{{ i18n.getMessage("playertable_head_strength_technic") }}">{{ player.strength_technic }}</td>
@@ -29,7 +29,7 @@
 				<td {{ playerlists.strengthClass(player.strength_stamina) }} title="{{ i18n.getMessage("playertable_head_strength_stamina") }}">{{ player.strength_stamina }}</td>
 				<td {{ playerlists.strengthClass(player.strength_satisfaction) }} title="{{ i18n.getMessage("playertable_head_strength_satisfaction") }}">{{ player.strength_satisfaction }}</td>
 				{% endif %}
-				
+
 				<td>{{ player.age }}</td>
 				<td>
 				{% if player.matches_injured > 0 %}
@@ -69,25 +69,41 @@
 					<td title="{{ i18n.getMessage("option_" ~ player.position) }}">{{ i18n.getMessage("option_" ~ player.position)|slice(0, 2)|upper }}</td>
 					{% endif %}
 					<td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{% if player.pseudonym|length > 0 %}{{ player.pseudonym }}{% else %}{{ player.firstName }} {{ player.lastName }}{% endif %}</a>
-					
+
 					{% if player.yellowCards > 0 %}
-					<img src="{{ skin.getImage("icons/card_yellow.png") }}" style="width: 16px; height: 16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
-					
+						{% if env.getConfig("cdn_root_set") %}
+								<img src="{{env.getConfig("cdn_root")}}./img/card_yellow.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+							{% else %}
+								<img src="{{env.getConfig("context_root")}}/img/card_yellow.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+						{% endif %}
+
 						{% if player.yellowCards > 1 %}
-						<img src="{{ skin.getImage("icons/card_red.png") }}" style="width: 16px; height: 16px" alt="{{ i18n.getMessage("player_yellowredcard") }}" title="{{ i18n.getMessage("player_yellowredcard") }}" />
+							{% if env.getConfig("cdn_root_set") %}
+								<img src="{{env.getConfig("cdn_root")}}./img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowredcard") }}" title="{{ i18n.getMessage("player_yellowredcard") }}" />
+							{% else %}
+								<img src="{{env.getConfig("context_root")}}/img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowredcard") }}" title="{{ i18n.getMessage("player_yellowredcard") }}" />
+							{% endif %}
 						{% endif %}
 					{% endif %}
-					
+
 					{% if player.redCard > 0 %}
-						<img src="{{ skin.getImage("icons/card_red.png") }}" width="16" height="16" alt="{{ i18n.getMessage("player_redcard") }}" title="{{ i18n.getMessage("player_redcard") }}" />
+						{% if env.getConfig("cdn_root_set") %}
+							<img src="{{env.getConfig("cdn_root")}}./img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_redcard") }}" title="{{ i18n.getMessage("player_redcard") }}" />
+						{% else %}
+							<img src="{{env.getConfig("context_root")}}/img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_redcard") }}" title="{{ i18n.getMessage("player_redcard") }}" />
+						{% endif %}
 					{% endif %}
-					
+
 					{% if player.goals > 0 %}
 					{% for i in 1..player.goals %}
-					<img src="{{ skin.getImage("icons/goal_scorer.png") }}" style="width: 16px; height: 15px" alt="{{ i18n.getMessage("player_goalscorer") }}" title="{{ i18n.getMessage("player_goalscorer") }}" />
+						{% if env.getConfig("cdn_root_set") %}
+							<img src="{{env.getConfig("cdn_root")}}./img/goal_scorer.png" style="width: 16px; height: 15px" alt="{{ i18n.getMessage("player_goalscorer") }}" title="{{ i18n.getMessage("player_goalscorer") }}"/>
+						{% else %}
+							<img src="{{env.getConfig("context_root")}}/img/goal_scorer.png" style="width: 16px; height: 15px" alt="{{ i18n.getMessage("player_goalscorer") }}" title="{{ i18n.getMessage("player_goalscorer") }}" />
+						{% endif %}
 					{% endfor %}
 					{% endif %}
-					
+
 					{% if player.assists %}
 					<span title="{{ i18n.getMessage("player_assists") }}">
 						{% for i in 1..player.assists %}
@@ -95,17 +111,17 @@
 						{% endfor %}
 					</span>
 					{% endif %}
-					
+
 					{% if player.injured > 0 %}
 						<i class="icon-medkit" title="{{ i18n.getMessage("player_injured") }}"></i>
 					{% endif %}
-					
+
 					{% if player.playstatus == 'Ausgewechselt' %}
 					<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_out") }}"><i class="icon-arrow-down"></i>{{ player.minutesPlayed + 1 }}'</span>
 					{% elseif player.minutesPlayed < match.match_minutes %}
 					<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_in") }}"><i class="icon-arrow-up"></i>{{ match.match_minutes - player.minutesPlayed + 1 }}'</span>
 					{% endif %}
-					
+
 					{% if player.is_best_player_of_day is defined and player.is_best_player_of_day %}
 						<a href="{{ env.getInternalUrl("teamoftheday", "leagueid=" ~ match.match_league_id ~ "&seasonid=" ~ match.match_season_id ~ "&matchday=" ~ match.match_matchday) }}" title="{{ i18n.getMessage("teamoftheday_matchreport_tooltip") }}"><i class="icon-heart-empty darkIcon"></i></a>
 					{% endif %}
@@ -113,13 +129,13 @@
 						<dl>
 							<dt>{{ i18n.getMessage("match_details_statistic_shoots") }}</dt>
 							<dd>{{ player.shoots }}</dd>
-							
+
 							<dt>{{ i18n.getMessage("match_details_statistic_ballcontacts_player") }}</dt>
 							<dd>{{ player.ballcontacts }}</dd>
-							
+
 							<dt>{{ i18n.getMessage("match_details_statistic_successfulpasses") }}</dt>
 							<dd>{{  player.passes_successed }}/{{ (player.passes_successed + player.passes_failed) }}</dd>
-							
+
 							<dt>{{ i18n.getMessage("match_details_statistic_tackles_player") }}</dt>
 							<dd>{{ player.wontackles }}{% if player.losttackles|length %}/{{ (player.losttackles + player.wontackles) }}{% endif %}</dd>
 						</dl>
@@ -130,7 +146,7 @@
 			{% endfor %}
 			</tbody>
 		</table>
-		
+
 		<p><strong>&#216; {{ i18n.getMessage("match_details_players_grade") }}:</strong> {{ (gradeSum/players|length)|number_format(2) }}</p>
 		<p><strong>&#216; {{ i18n.getMessage("match_details_players_age") }}:</strong> {{ (ageSum/players|length)|number_format(2) }}</p>
 		{% if env.getConfig("hide_strength_attributes") != "1" %}

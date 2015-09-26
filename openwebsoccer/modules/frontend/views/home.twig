@@ -8,6 +8,8 @@
 
 {% block page_header %}
 
+<center><i class="fa-li fa fa-spinner fa-spin"></center>
+
 {% if env.user.id == null %}
 
 <div class="top_spoiler" style="color:white" >
@@ -37,8 +39,8 @@
 <div class="row">
 
 	<div class="span3">
-		{{ viewHandler.renderBlock('news')|raw }}
 		<div class="ajaxLoadedBlock" id="projectStatisticsBlock" data-ajaxblock="projectstatistics" data-ignoreemptymessages="true"  data-refreshperiod="30"></div>
+		{{ viewHandler.renderBlock('news')|raw }}
 	</div>
 
 	<div class="span5">

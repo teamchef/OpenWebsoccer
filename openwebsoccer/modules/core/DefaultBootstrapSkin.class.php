@@ -47,11 +47,13 @@ class DefaultBootstrapSkin implements ISkin {
 	 * @see ISkin::getCssSources()
 	 */
 	public function getCssSources() {
-		$files[] = '//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css';
-		$files[] = '//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css';
-
-		$dir = $this->_websoccer->getConfig('context_root') . '/css/';
-		$files[] = $dir . 'bootstrap-responsive.min.css';
+		if ($this->_websoccer->getConfig('cdn_root_set')) {
+			$files[] = $this->_websoccer->getConfig('cdn_root').'/css/font-awesome.css';
+			$files[] = $this->_websoccer->getConfig('cdn_root').'/css/bootstrap-combined.no-icons.min.css';
+		} else {
+			$files[] = $this->_websoccer->getConfig('context_root').'/css/font-awesome.css';
+			$files[] = $this->_websoccer->getConfig('context_root').'/css/bootstrap-combined.no-icons.min.css';
+		}
 
 		return $files;
 	}
@@ -60,8 +62,11 @@ class DefaultBootstrapSkin implements ISkin {
 	 * @see ISkin::getJavaScriptSources()
 	 */
 	public function getJavaScriptSources() {
-		$dir = $this->_websoccer->getConfig('context_root') . '/js/';
-		$files[] = $dir . 'websoccer.min.js';
+		if ($this->_websoccer->getConfig('cdn_root_set')) {
+			$files[] = $this->_websoccer->getConfig('cdn_root').'/js/websoccer.min.js';
+		} else {
+			$files[] = $this->_websoccer->getConfig('context_root').'/js/websoccer.min.js';
+		}
 
 		return $files;
 	}
@@ -77,8 +82,10 @@ class DefaultBootstrapSkin implements ISkin {
 	 * @see ISkin::getImage()
 	 */
 	public function getImage($fileName) {
-		if (file_exists(BASE_FOLDER . '/img/' . $fileName)) {
-			return $this->_websoccer->getConfig('context_root') . '/img/' . $fileName;
+		if ($this->_websoccer->getConfig('cdn_root_set')) {
+			$files[] = $this->_websoccer->getConfig('cdn_root').'/img/' . $fileName;
+		} else {
+			$files[] = $this->_websoccer->getConfig('context_root').'/img/' . $fileName;
 		}
 
 		return FALSE;

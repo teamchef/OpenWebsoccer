@@ -26,7 +26,7 @@
 					{{ i18n.getMessage("who_is_online_anonymous") }}
 				{% else %}
 					{% if user.picture|length > 0 %}
-						<a href="{{ env.getInternalUrl("user", "id=" ~ user.id) }}" 
+						<a href="{{ env.getInternalUrl("user", "id=" ~ user.id) }}"
 						title="{{ i18n.getMessage("user_navlabel") }}"><img src="{{ user.picture }}" alt="{{ user.nick }}" style="width: 40px; height: 40px"/></a>
 					{% endif %}
 					<a href="{{ env.getInternalUrl("user", "id=" ~ user.id) }}">{{ user.nick }}</a>
@@ -36,11 +36,11 @@
 			<td>
 				{% if user.team_id > 0 and not user.hideinonlinelist %}
 					{% if user.team_picture|length > 0 %}
-						<a href="{{ env.getInternalUrl("team", "id=" ~ user.team_id) }}" 
-						title="{{ i18n.getMessage("team_navlabel") }}"><img src="{{ env.getConfig("context_root") }}/uploads/club/{{ user.team_picture }}" alt="{{ user.team_name }}" style="max-width: 40px;"/></a>
+						<a href="{{ env.getInternalUrl("team", "id=" ~ user.team_id) }}"
+						title="{{ i18n.getMessage("team_navlabel") }}"><img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ user.team_picture }}" alt="{{ user.team_name }}" style="max-width: 40px;"/></a>
 					{% endif %}
-					
-					<a href="{{ env.getInternalUrl("team", "id=" ~ user.team_id) }}" 
+
+					<a href="{{ env.getInternalUrl("team", "id=" ~ user.team_id) }}"
 						title="{{ i18n.getMessage("team_navlabel") }}">{{ user.team_name }}</a>
 				{% else %}
 					-
@@ -52,7 +52,7 @@
 		{% endfor %}
 		</tbody>
 	</table>
-	
+
 	{{ pagination.paginator(paginator) }}
 
 {% endif %}

@@ -12,6 +12,9 @@
 
 		<setting id="sim_auto_deblock" category="tlc" type="boolean" default="1" />
 
+		<setting id="cdn_root_set" category="tlc" type="boolean" default="0" />
+		<setting id="cdn_root" category="tlc" type="text" default="" />
+
 		<setting id="externlink1" category="tlc" type="text" default="" />
 		<setting id="externlink1txt" category="tlc" type="text" default="" />
 		<setting id="externlink2" category="tlc" type="text" default="" />

@@ -2,7 +2,7 @@
 {% import "macros/paginator.twig" as pagination %}
 
 {% if matches is defined and matches|length > 0 %}
-	
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -27,7 +27,7 @@
 				</td>
 				<td>
 					{% if match.home_team_picture|length %}
-						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px"/>
+						<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px"/>
 					{% endif %}
 					<a href="{{ env.getInternalUrl("team", "id=" ~ match.home_id) }}">{{ match.home_team }}</a>
 					{% if match.home_noformation %}
@@ -43,7 +43,7 @@
 				</td>
 				<td>
 					{% if match.guest_team_picture|length %}
-						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
+						<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
 					{% endif %}
 					<a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_id) }}">{{ match.guest_team }}</a>
 					{% if match.guest_noformation %}
@@ -70,11 +70,11 @@
 		{% endfor %}
 		</tbody>
 	</table>
-	
+
 	{% if paginator is defined and paginator is not null %}
 		{{ pagination.paginator(paginator) }}
 	{% endif %}
-	
+
 {% else %}
 	{{ messagebox.box(i18n.getMessage("results_no_matches_found"), "", "info") }}
 {% endif %}

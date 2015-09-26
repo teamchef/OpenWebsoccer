@@ -4,10 +4,12 @@
 {% import "macros/statisticelements.twig" as statisticelements %}
 
 	{% block stylesheets %}
+		{% include 'css.twig' %}
 		{% include 'formation_css.twig' %}
 	{% endblock %}
 
 {% block page_title %}
+<br>
 {{ i18n.getMessage("formation_title") }}
 {% endblock %}
 
@@ -317,7 +319,7 @@
 									data-strengthwrong="{{ (player.strength * (1 - env.getConfig("sim_strength_reduction_wrongposition") / 100))|number_format }}"
 									{% endif %}
 									{% if player.picture is defined and player.picture|length > 0 %}
-									data-picture="{{ env.getConfig("context_root") }}/uploads/player/{{ player.picture }}"
+									data-picture="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.picture }}"
 									{% endif %}
 									>
 									<div class="playerinfoBar">

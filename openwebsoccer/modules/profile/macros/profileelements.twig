@@ -7,13 +7,18 @@
 			}
 			.infolabel {
 				font-weight: bold;
-				background: #f5f5f5;
+				background-image:url({{env.getConfig("bild_hintergrund")}});background-repeat:no-repeat;
 				padding: 8px;
 				border-radius: 4px;
 			}
 			.infovalue {
 				padding: 8px;
 			}
+			.alert-info {
+				background-color: #FF0000;
+				border-color: #FF0000;
+				color: #FFFFFF;
+}
 		</style>
 	{% endblock %}
 

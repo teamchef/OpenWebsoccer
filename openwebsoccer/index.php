@@ -20,8 +20,8 @@
 
 ******************************************************/
 
-if (file_exists(BASE_FOLDER . '/install')){ require '../admin/pages/deldir.inc.php'; deldir (BASE_FOLDER . '/cache'); mkdir  (BASE_FOLDER . '/cache'); header('Location: /install/'); }
-if (file_exists(BASE_FOLDER . '/update')){ require '../admin/pages/deldir.inc.php'; deldir (BASE_FOLDER . '/cache'); mkdir  (BASE_FOLDER . '/cache'); header('Location: /update/'); }
+if (file_exists('/install')){ require './admin/pages/deldir.inc.php'; deldir (BASE_FOLDER . '/cache'); mkdir  (BASE_FOLDER . '/cache'); header('Location: /install/'); }
+if (file_exists('/update')){ require './admin/pages/deldir.inc.php'; deldir (BASE_FOLDER . '/cache'); mkdir  (BASE_FOLDER . '/cache'); header('Location: /update/'); }
 
 define('BASE_FOLDER', __DIR__);
 

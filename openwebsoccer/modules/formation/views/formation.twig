@@ -5,13 +5,13 @@
 		<input type="hidden" name="page" value="formation" />
 		<input type="hidden" name="templateid" value="" />
 		<input type="hidden" name="nationalteam" value="{{ env.getRequestParameter("nationalteam") }}" />
-		
+
 		<select class="input-xxlarge" name="id">
 			{% for nextMatch in nextMatches %}
 				<option value="{{ nextMatch.match_id }}"{% if env.getRequestParameter("id") == nextMatch.match_id %} selected{% endif %}>({{ env.getFormattedDatetime(nextMatch.match_date) }}) {{ nextMatch.match_home_name }} - {{ nextMatch.match_guest_name }}</option>
 			{% endfor %}
 		</select>
-		
+
 		<button type="submit" class="btn">{{ i18n.getMessage("button_choose") }}</button>
 	</form>
 
@@ -42,9 +42,9 @@
 		<input type="hidden" id="preselect" name="preselect" value="" />
 		<input type="hidden" name="nationalteam" value="{{ env.getRequestParameter("nationalteam") }}" />
 		<input type="hidden" name="id" value="{{ next_match.match_id }}" />
-		
+
 		<h4>{{ i18n.getMessage("formation_setup_title") }}</h4>
-		
+
 		<select class="input-mini wstooltip" name="formation_defense" title="{{ i18n.getMessage("player_position_defense") }}">
 			{% for i in 1..4 %}
 				<option value="{{ i }}"{% if setup.defense == i %} selected{% endif %}>{{ i }}</option>
@@ -80,10 +80,10 @@
 				<option value="{{ i }}"{% if setup.outsideforward == i %} selected{% endif %}>{{ i }}</option>
 			{% endfor %}
 		</select>
-		
+
 		<div class="btn-group">
 			<button type="submit" class="btn" name="buttonSetupChange" value="1">{{ i18n.getMessage("formation_setup_button") }}</button>
-			
+
 			{% if env.getConfig("hide_strength_attributes") != "1" %}
 			<button class="btn dropdown-toggle" data-toggle="dropdown">
 				<span class="caret"></span>
@@ -102,8 +102,8 @@
 		{% endif %}
 		<a class="btn clearAllBtn" href="#"><i class="icon-trash"></i> {{ i18n.getMessage("formation_clearall") }}</a>
 	</form>
-	
-	<div id="templatesModal" class="modal hide fade" tabindex="-1" role="dialog" 
+
+	<div id="templatesModal" class="modal hide fade" tabindex="-1" role="dialog"
 		aria-labelledby="templatesModalLabel" aria-hidden="true">
 	  <div class="modal-header">
 	    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -134,19 +134,19 @@
 		<div class="control-group">
 			<label class="control-label" for="longpasses">{{ i18n.getMessage("formation_option_longpasses") }} <i class="icon-question-sign wstooltip" data-toggle="tooltip" title="{{ i18n.getMessage('formation_option_longpasses_help') }}"></i></label>
 			<div class="controls">
-				<div class="make-switch" 
-					data-on-label="{{ i18n.getMessage("formation_switch_on") }}" data-off-label="{{ i18n.getMessage("formation_switch_off") }}" 
+				<div class="make-switch"
+					data-on-label="{{ i18n.getMessage("formation_switch_on") }}" data-off-label="{{ i18n.getMessage("formation_switch_off") }}"
 					data-on="success" data-off="warning">
 					<input type="checkbox" id="longpasses" name="longpasses" value="1"{% if formation.longpasses is defined and formation.longpasses %} checked{% endif %}>
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="control-group">
 			<label class="control-label" for="counterattacks">{{ i18n.getMessage("formation_option_counterattacks") }} <i class="icon-question-sign wstooltip" data-toggle="tooltip" title="{{ i18n.getMessage('formation_option_counterattacks_help') }}"></i></label>
 			<div class="controls">
-				<div class="make-switch" 
-					data-on-label="{{ i18n.getMessage("formation_switch_on") }}" data-off-label="{{ i18n.getMessage("formation_switch_off") }}" 
+				<div class="make-switch"
+					data-on-label="{{ i18n.getMessage("formation_switch_on") }}" data-off-label="{{ i18n.getMessage("formation_switch_off") }}"
 					data-on="success" data-off="warning">
 					<input type="checkbox" id="counterattacks" name="counterattacks" value="1"{% if formation.counterattacks is defined and formation.counterattacks %} checked{% endif %}>
 				</div>
@@ -164,7 +164,7 @@
 		{% else %}
 		<a href="#disabledSave" id="disabledSave" class="btn btn-primary disabled">{{ i18n.getMessage('button_save') }}</a>
 		{% endif %}
-		
+
 		<a href="{{ env.getInternalUrl(env.getPageId()) }}" class="btn">{{ i18n.getMessage('button_reset') }}</a>
 	</div>
 	<input type="hidden" name="setup" value="{{ setup.defense }}-{{ setup.dm }}-{{ setup.midfield }}-{{ setup.om }}-{{ setup.striker }}-{{ setup.outsideforward }}"/>
@@ -172,5 +172,5 @@
 	<input type="hidden" name="action" value="save-formation"/>
 	<input type="hidden" name="id" value="{{ next_match.match_id }}"/>
 	<input type="hidden" name="nationalteam" value="{{ env.getRequestParameter("nationalteam") }}" />
-	
+
 {% endblock %}

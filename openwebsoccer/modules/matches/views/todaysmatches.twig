@@ -38,10 +38,10 @@
 				<i class="icon-check-sign wstooltip" title="{{ i18n.getMessage("formation_submitted_tooltip") }}"></i>
 			{% else %}
 				{# <i class="icon-minus-sign-alt wstooltip" title="{{ i18n.getMessage("formation_notsubmitted_tooltip") }}"></i> #}
-			{% endif %} 
+			{% endif %}
 
 					{% if match.home_team_picture|length %}
-						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px"/>
+						<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px"/>
 					{% endif %}
 					<a href="{{ env.getInternalUrl("team", "id=" ~ match.home_id) }}">{{ match.home_team }}</a>
 					{% if match.home_noformation %}
@@ -62,10 +62,10 @@
 				<i class="icon-check-sign wstooltip" title="{{ i18n.getMessage("formation_submitted_tooltip") }}"></i>
 			{% else %}
 				{# <i class="icon-minus-sign-alt wstooltip" title="{{ i18n.getMessage("formation_notsubmitted_tooltip") }}"></i> #}
-			{% endif %} 
+			{% endif %}
 
 					{% if match.guest_team_picture|length %}
-						<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
+						<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
 					{% endif %}
 					<a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_id) }}">{{ match.guest_team }}</a>
 					{% if match.guest_noformation %}
@@ -92,11 +92,11 @@
 		{% endfor %}
 		</tbody>
 	</table>
-	
+
 	{% if paginator is defined and paginator is not null %}
 		{{ pagination.paginator(paginator) }}
 	{% endif %}
-	
+
 {% else %}
 	{{ messagebox.box(i18n.getMessage("results_no_matches_found"), "", "info") }}
 {% endif %}

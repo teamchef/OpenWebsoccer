@@ -55,67 +55,67 @@
 			color: #FF6600;
 		}
 		.websoccericon-shoot {
-			background: url('./img/icons-websoccer-32.png') no-repeat -95px -225px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -95px -225px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-attempt {
-			background: url('./img/icons-websoccer-32.png') no-repeat -31px -225px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -31px -225px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-goal {
-			background: url('./img/icons-websoccer-32.png') no-repeat -95px -32px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -95px -32px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-yellowcard {
-			background: url('./img/icons-websoccer-32.png') no-repeat -223px -96px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -96px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-redcard {
-			background: url('./img/icons-websoccer-32.png') no-repeat -160px -96px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -160px -96px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-substitution {
-			background: url('./img/icons-websoccer-32.png') no-repeat -223px -163px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -163px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-injury {
-			background: url('./img/icons-websoccer-32.png') no-repeat -222px -224px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -222px -224px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-penalty {
-			background: url('./img/icons-websoccer-32.png') no-repeat -160px -224px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -160px -224px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-matchcompleted {
-			background: url('./img/icons-websoccer-32.png') no-repeat -159px -30px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -159px -30px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-corner {
-			background: url('./img/icons-websoccer-32.png') no-repeat -31px -160px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -31px -160px;
 			width: 34px;
 			height: 32px;
 			display: inline-block;
 		}
 		.websoccericon-tacticschange {
-			background: url('./img/icons-websoccer-32.png') no-repeat -95px -160px;
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -95px -160px;
 			width: 34px;
 			height: 34px;
 			display: inline-block;
@@ -159,14 +159,14 @@
 
 	<div id="report_result">
 		<span id="report_goals_home">
-		{% if match.match_home_picture|length %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_home_picture }}" style="max-height: 120px; margin-right: 20px"/>{% endif %}
+		{% if match.match_home_picture|length %}<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.match_home_picture }}" style="max-height: 120px; margin-right: 20px"/>{% endif %}
 		{{ match.match_goals_home }}</span>
 		<span id="report_goals_separator">-</span>
 		<span id="report_goals_guest">{{ match.match_goals_guest }}
-		{% if match.match_guest_picture|length %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_guest_picture }}" style="max-height: 120px; margin-left: 20px"/>{% endif %}
+		{% if match.match_guest_picture|length %}<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.match_guest_picture }}" style="max-height: 120px; margin-left: 20px"/>{% endif %}
 		</span>
-		<div class="row" style="margin: -10px 0 10px 0">
-			<div style="width: 50%; float: left;">
+		<div class="row" style="margin: 10px 0 60px 0">
+			<div style="width: 30%; float: left;">
 				{% for goalMessage in homeStrikerMessages %}
 				<small style="font-weight: bold">{{ goalMessage.playerNames|split(';')[0] }} ({{ goalMessage.minute }}.{% if goalMessage.type == "Elfmeter_erfolg" %}, {{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0, 1) }}.{% endif %})<br></small>
 				{% endfor %}

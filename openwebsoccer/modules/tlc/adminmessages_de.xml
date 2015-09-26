@@ -10,6 +10,9 @@
 
 	<message id="settings_label_sim_auto_deblock">Automatisches entblocken von Spielen: Der Admin muss die, nach Berechnungsfehlern vorsichtshalber geblockten Spiele, nicht mehr selbst entblocken.</message>
 
+	<message id="settings_label_cdn_root_set">cookie-free Domain aktivieren</message>
+	<message id="settings_label_cdn_root">Verzeichnis für cookie-free Domain</message>
+
 	<message id="settings_label_transferoffersbetweenownteams_enabled">Direkttransfers auch zwischen den eigenen Teams erlauben.</message>
 
 	<message id="settings_label_externlink1">externer Link 1 URL</message>
