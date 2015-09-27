@@ -21,9 +21,6 @@
             navweight="0"
             role="user"
             parentItem="office">
-
-            <css file="slider.css"/>
-        	<css file="bootstrap-switch.css"/>
         </page>
 
     </pages>

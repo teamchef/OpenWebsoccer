@@ -80,8 +80,6 @@
 	            template="training-trainerdetails"
 	            model="TrainerDetailsModel"
 	            role="user" />
-
-	        <css file="slider.css"/>
         </page>
 
     </pages>

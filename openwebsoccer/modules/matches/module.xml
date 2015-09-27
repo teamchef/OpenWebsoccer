@@ -189,9 +189,6 @@
 	            template="match_live_changes"
 	            model="MatchChangesModel"
 	            role="user">
-
-            	<css file="slider.css"/>
-        		<css file="bootstrap-switch.css"/>
             </page>
 
             <script file="flot/jquery.flot.min.js" />

@@ -48,11 +48,9 @@ class DefaultBootstrapSkin implements ISkin {
 	 */
 	public function getCssSources() {
 		if ($this->_websoccer->getConfig('cdn_root_set')) {
-			$files[] = $this->_websoccer->getConfig('cdn_root').'/css/font-awesome.css';
-			$files[] = $this->_websoccer->getConfig('cdn_root').'/css/bootstrap-combined.no-icons.min.css';
+			$files[] = $this->_websoccer->getConfig('cdn_root').'/css/openwebsoccer.min.css';
 		} else {
-			$files[] = $this->_websoccer->getConfig('context_root').'/css/font-awesome.css';
-			$files[] = $this->_websoccer->getConfig('context_root').'/css/bootstrap-combined.no-icons.min.css';
+			$files[] = $this->_websoccer->getConfig('context_root').'/css/openwebsoccer.min.css';
 		}
 
 		return $files;

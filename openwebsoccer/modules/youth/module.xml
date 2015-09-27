@@ -282,9 +282,6 @@
 		            template="youth_formation"
 		            model="YouthMatchFormationModel"
 		            role="user">
-
-		            <css file="slider.css"/>
-		        	<css file="bootstrap-switch.css"/>
 	            </page>
 
 	            <page

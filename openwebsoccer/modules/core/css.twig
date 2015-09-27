@@ -1,4 +1,3 @@
-{% block stylesheets %}
 {% if env.getConfig("cdn_root_set") %}
 	#ajaxLoaderPage 					{display: none;background:url('{{env.getConfig("cdn_root")}}/img/ajaxloaderbar.gif') no-repeat center center;height: 15px;width:100%;position:fixed;bottom:10px;}
 	#stadium 							{background: url('{{env.getConfig("cdn_root")}}/img/pitch_bg.png') no-repeat 110px 90px;}
@@ -14,7 +13,7 @@
 										 20px;padding-right:60px;padding-bottom:20px;padding-left:60px;margin-bottom:30px;font-size:16px;font-weight:200;line-height:30px;color:inherit;}
 	#footer 							{background-color:{{env.getConfig("color_footer")}};background-image:url({{env.getConfig("bild_footer")}});background-repeat:no-repeat;position:fixed;bottom:0px; left:0px; right:0px;
 										text-align:center;padding:0px;padding-top:30px;}
-	.row								{position: relative;left:50px;top:30px;}
+	.row								{position: relative;left:50px;top:40px;}
 	.span12								{position: relative;left:-50px;}
 	.sidebar-nav 						{padding:9px 0;}
 	.box 								{padding:8px 10px;background:#fdfdfd;border:1px solid #eeeeee;border-bottom:3px solid #eee;border-radius:6px;margin-bottom:30px;} .box table {margin-bottom:10px;}
@@ -29,4 +28,3 @@
 	@media all and (min-height: 450px) 	{.modal-body {max-height:300px;}}
 	@media all and (min-height: 700px) 	{.modal-body {max-height:550px;}}
 	#report_result 						{border-top:1px solid black;border-bottom:1px solid black;text-align:center;}
-{% endblock %}
