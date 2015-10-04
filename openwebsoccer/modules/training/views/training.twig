@@ -1,8 +1,8 @@
-{% import "macros/formelements.twig" as formelements %}
-{% import "macros/statisticelements.twig" as statisticelements %}
-{% import "macros/paginator.twig" as pagination %}
-{% import "macros/profileelements.twig" as profile %}
-{% import "macros/premium.twig" as premium %}
+{% import "formelements.twig" as formelements %}
+{% import "statisticelements.twig" as statisticelements %}
+{% import "paginator.twig" as pagination %}
+{% import "profileelements.twig" as profile %}
+{% import "premium.twig" as premium %}
 
 {% extends "base.twig" %}
 
@@ -22,12 +22,12 @@
 
 {% if env.getConfig("training_min_hours_between_execution") > 0 %}
 <p style="margin-top: 10px; margin-bottom: 20px;"><i class="icon-info-sign"></i> {{ i18n.getMessage('training_execute_training_note', env.getConfig("training_min_hours_between_execution")) }}</p>
-{% endif %}	
+{% endif %}
 
 {# Show result of executed training unit #}
 {% if trainingEffects|length > 0 %}
 	<h3>{{ i18n.getMessage("training_execute_effects_title") }}</h3>
-	
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -103,7 +103,7 @@
 	<h3>{{ i18n.getMessage("training_choose_trainer") }}</h3>
 
 	{% if trainers is defined and trainers|length > 0 %}
-	
+
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -128,9 +128,9 @@
 		{% endfor %}
 		</tbody>
 	</table>
-	
+
 	{{ pagination.paginator(paginator) }}
-	
+
 	{% else %}
 		<p>{{ i18n.getMessage("training_no_trainers_available") }}</p>
 	{% endif %}
@@ -142,15 +142,15 @@
 
 	{% set bar_tech = statisticelements.progressbar(training_unit.trainer.p_technique) %}
 	{% set bar_stamina = statisticelements.progressbar(training_unit.trainer.p_stamina) %}
-	
+
 	{{ profile.infofield(i18n.getMessage("entity_trainer_name"), training_unit.trainer.name) }}
 	{{ profile.infofield(i18n.getMessage("entity_trainer_p_technique"), bar_tech|raw, true) }}
 	{{ profile.infofield(i18n.getMessage("entity_trainer_p_stamina"), bar_stamina|raw, true) }}
-	
+
 	<form class="form-horizontal" method="post">
 		<fieldset>
 	    	<legend>{{ i18n.getMessage('training_execute_training_title') }}</legend>
-		
+
 			<div class="control-group">
 				<label class="control-label" for="focus">
 					<strong>{{ i18n.getMessage('training_execute_focus') }}</strong>
@@ -164,7 +164,7 @@
   					</select>
 				</div>
 			</div>
-			
+
 			<div class="control-group">
 				<label class="control-label" for="intensity">
 					<strong>{{ i18n.getMessage('training_execute_intensity') }}</strong>
@@ -173,7 +173,7 @@
 					{{ formelements.slider("intensity", (env.getRequestParameter("intensity") > 0) ? env.getRequestParameter("intensity") : 90 ) }}
 				</div>
 			</div>
-			
+
 		</fieldset>
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">{{ i18n.getMessage('training_execute_button') }}</button>

@@ -94,13 +94,13 @@
 	<message id="match_livematch_title">Jetzt live!</message>
 	<message id="match_live_label">Läuft gerade</message>
 
-	<message id="todaysmatches_navlabel">Heutige Spiele</message>
+	<message id="todaysmatches_navlabel">Spiele</message>
 
-	<message id="myschedule_navlabel">Spielplan</message>
+	<message id="myschedule_navlabel">Mein Spielplan</message>
 
 	<message id="matchpreview_last_matches">Letzte Spiele im Wettbewerb</message>
 	<message id="matchpreview_nolastmatches">%s hat in diesem Wettbewerb noch nicht gespielt.</message>
 	<message id="matchpreview_nouser">%s hat derzeit keinen Manager.</message>
-	
-	<message id="matches_today_title">Heutige Spiele</message>	
+
+	<message id="matches_today_title">Heutige Spiele</message>
 </messages>

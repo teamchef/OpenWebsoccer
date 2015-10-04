@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% import "macros/messagebox.twig" as messagebox %}
+{% import "messagebox.twig" as messagebox %}
 
 	{% block stylesheets %}
 		{{ parent() }}
@@ -107,9 +107,21 @@
 						{% endif %}
 						<a href="{{ env.getInternalUrl("player", "id=" ~ player.player_id) }}" title="{{ i18n.getMessage("player_navlabel") }}">
 							{% if player.picture|length > 0 %}
-								<img src="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.picture }}" style="max-width: 90px; max-height: 60px;">
+							
+								{% if env.getConfig("cdn_root_set") %}
+									<img src="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.picture }}" style="max-width: 90px; max-height: 60px;">
+								{% else %}
+									<img src="{{ env.getConfig("context_root") }}/uploads/player/{{ player.picture }}" style="max-width: 90px; max-height: 60px;">
+								{% endif %}
+								
 							{% elseif player.team_picture|length > 0 %}
-								<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ player.team_picture }}" style="max-width: 90px; max-height: 60px;">
+							
+								{% if env.getConfig("cdn_root_set") %}
+									<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ player.team_picture }}" style="max-width: 90px; max-height: 60px;">
+								{% else %}
+									<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ player.team_picture }}" style="max-width: 90px; max-height: 60px;">
+								{% endif %}
+								
 							{% else %}
 								<i class="icon-user" style="font-size: 60px; color: white;"></i>
 							{% endif %}

@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% import "macros/formelements.twig" as formelements %}
+{% import "formelements.twig" as formelements %}
 
 {% block page_title %}
 {{ i18n.getMessage("premium-exchange_navlabel") }}
@@ -17,7 +17,7 @@
 <form class="form-horizontal" method="post">
 
 	{{ formelements.textfield('amount', i18n.getMessage('premium-exchange_amount_label'), env.getRequestParameter('amount'), true, validationMsg, 'number', env.getConfig("premium_credit_unit")) }}
-	
+
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
 		<a href="{{ env.getInternalUrl("premiumaccount") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>

@@ -24,6 +24,8 @@ if (file_exists('/install')){ require './admin/pages/deldir.inc.php'; deldir (BA
 if (file_exists('/update')){ require './admin/pages/deldir.inc.php'; deldir (BASE_FOLDER . '/cache'); mkdir  (BASE_FOLDER . '/cache'); header('Location: /update/'); }
 
 define('BASE_FOLDER', __DIR__);
+define('PHP_VERSION',phpversion());
+define('OPENWEBSOCCER_VERSION', 'Step 102');
 
 include(BASE_FOLDER . '/frontbase.inc.php');
 

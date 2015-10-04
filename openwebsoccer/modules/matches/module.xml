@@ -174,45 +174,6 @@
         </adminpage>
     </admin>
 
-    <pages>
-        <page
-            id="match"
-            template="match-details"
-            model="MatchDetailsModel"
-            navitem="true"
-            navweight="0"
-            role="user,guest"
-            parentItem="results">
-
-            <page
-	            id="match-live-changes"
-	            template="match_live_changes"
-	            model="MatchChangesModel"
-	            role="user">
-            </page>
-
-            <script file="flot/jquery.flot.min.js" />
-            <script file="flot/jquery.flot.pie.min.js" />
-        </page>
-
-        <page
-            id="todaysmatches"
-            template="todaysmatchespage"
-            navitem="true"
-            navweight="4"
-            role="user,guest"
-            parentItem="leagues" />
-
-        <page
-            id="myschedule"
-            template="myschedule"
-            navitem="true"
-            navweight="4"
-            role="user"
-            parentItem="office"
-            model="MyScheduleModel" />
-    </pages>
-
     <blocks>
 
         <block

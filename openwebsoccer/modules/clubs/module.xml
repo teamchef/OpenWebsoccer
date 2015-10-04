@@ -6,7 +6,7 @@
         <dependency module="users" version="1.0.0"/>
         <dependency module="leagues" version="1.0.0"/>
     </dependencies>
-    
+
     <admin>
         <adminpage
             id="club"
@@ -24,45 +24,45 @@
                         type="text"
                         sort="true"
                         filter="true" />
-                    
+
                     <column
                         id="entity_club_liga_id"
                         field="LeagueTab.name"
                         type="text"
                         sort="true"
                         filter="true" />
-                    
+
                     <column
                         id="entity_club_nationalteam"
                         field="ClubTab.nationalteam"
                         type="boolean"
                         sort="true"
                         filter="true" />
-                    
+
                     <column
                         id="entity_club_user_id"
                         field="UserTab.nick"
                         type="text"
                         sort="true"
                         filter="true" />
-                    
+
                     <column
                         id="entity_club_finanz_budget"
                         field="ClubTab.finanz_budget"
                         type="number"
                         sort="true" />
-                    
+
                     <column
                         id="entity_player"
                         field="(SELECT COUNT(*) FROM {tablePrefix}_spieler AS PlayerTab WHERE PlayerTab.verein_id = ClubTab.id)"
                         type="number"
                         sort="true" />
-                    
+
                     <column
                         id="entity_club_status"
                         field="ClubTab.status"
                         type="boolean" />
-                    
+
                 	<join type="LEFT" jointable="liga AS LeagueTab" joincondition="ClubTab.liga_id = LeagueTab.id" />
 		    		<join type="LEFT" jointable="user AS UserTab" joincondition="ClubTab.user_id = UserTab.id" />
                 </overview>
@@ -113,17 +113,7 @@
             </entity>
         </adminpage>
     </admin>
-    
-    <pages>
-        <page
-            id="team"
-            template="team-details"
-            model="TeamDetailsModel"
-            role="user,guest"
-            parentItem="leagues" />
 
-    </pages> 
-    
     <blocks>
 
         <block
@@ -134,7 +124,7 @@
             area="custom"
             weight="0"
             role="user,guest" />
-        
+
 
         <block
             id="team-results"
@@ -144,7 +134,7 @@
             area="custom"
             weight="0"
             role="user,guest" />
-        
+
         <block
             id="team-history"
             template="team_history"

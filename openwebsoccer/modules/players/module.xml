@@ -146,45 +146,6 @@
       <setting id="players_aging" category="game" type="select" selection="birthday,static" default="birthday" />
   </settings>
 
-    <pages>
-        <page
-            id="player"
-            template="player-details"
-            model="PlayerDetailsWithDependenciesModel"
-            role="user,guest"
-            parentItem="team">
-            <script file="flot/jquery.flot.min.js" />
-        </page>
-
-        <page
-            id="topstrikers"
-            template="strikers"
-            model="TopStrikersModel"
-            role="user,guest"
-            navitem="true"
-            navweight="11"
-            parentItem="leagues" />
-
-		<page
-            id="topassist"
-            template="assist"
-            model="TopAssistModel"
-            role="user,guest"
-            navitem="true"
-            navweight="12"
-            parentItem="leagues" />
-
-		<page
-            id="topscorers"
-            template="scorers"
-            model="TopScorersModel"
-            role="user,guest"
-            navitem="true"
-            navweight="13"
-            parentItem="leagues" />
-
-    </pages>
-
     <blocks>
 
         <block

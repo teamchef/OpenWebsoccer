@@ -66,24 +66,6 @@
       <setting id="training_min_hours_between_execution" category="game" type="number" default="24" />
   </settings>
 
-    <pages>
-        <page
-            id="training"
-            template="training"
-            model="TrainingModel"
-            parentItem="office"
-            navitem="true"
-            navweight="4"
-            role="user">
-	        <page
-	            id="trainer-details"
-	            template="training-trainerdetails"
-	            model="TrainerDetailsModel"
-	            role="user" />
-        </page>
-
-    </pages>
-
   <actions>
 	<action id="choose-trainer" controller="ChooseTrainerController" role="user">
 	    <param id="id" type="number" required="true" min="1" max="2000000000" />

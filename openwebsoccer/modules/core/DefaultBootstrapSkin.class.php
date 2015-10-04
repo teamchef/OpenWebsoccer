@@ -62,8 +62,12 @@ class DefaultBootstrapSkin implements ISkin {
 	public function getJavaScriptSources() {
 		if ($this->_websoccer->getConfig('cdn_root_set')) {
 			$files[] = $this->_websoccer->getConfig('cdn_root').'/js/websoccer.min.js';
+			$files[] = $this->_websoccer->getConfig('cdn_root').'/js/flot/jquery.flot.min.js';
+			$files[] = $this->_websoccer->getConfig('cdn_root').'/js/flot/jquery.flot.pie.min.js';
 		} else {
 			$files[] = $this->_websoccer->getConfig('context_root').'/js/websoccer.min.js';
+			$files[] = $this->_websoccer->getConfig('context_root').'/js/flot/jquery.flot.min.js';
+			$files[] = $this->_websoccer->getConfig('context_root').'/js/flot/jquery.flot.pie.min.js';
 		}
 
 		return $files;

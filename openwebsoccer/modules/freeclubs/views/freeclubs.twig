@@ -40,7 +40,13 @@
 						<tr>
 							<td>
 								{% if club.team_picture|length %}
-									<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ club.team_picture }}" style="max-width: 40px"/>
+								
+									{% if env.getConfig("cdn_root_set") %}
+										<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ club.team_picture }}" style="max-width: 40px"/>
+									{% else %}
+										<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ club.team_picture }}" style="max-width: 40px"/>
+									{% endif %}
+									
 								{% endif %}
 								<a href="{{ env.getInternalUrl("team", "id=" ~ club.team_id ) }}">{{ club.team_name }}</a>
 							</td>

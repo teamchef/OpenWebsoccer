@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
-{% import "macros/messagebox.twig" as msgbox %}
-{% import "macros/premium.twig" as premium %}
+{% import "messagebox.twig" as msgbox %}
+{% import "premium.twig" as premium %}
 
 {% block page_title %}
 {{ i18n.getMessage("stadium_extend_title") }}
@@ -21,7 +21,13 @@
 					<h4>{{ offer.builder_name }}</h4>
 
 					{% if offer.builder_picture|length > 0 %}
-						<img src="{{ env.getConfig("cdn_root") }}/uploads/stadiumbuilder/{{ offer.builder_picture }}" style="max-width: 140px;">
+					
+						{% if env.getConfig("cdn_root_set") %}
+							<img src="{{ env.getConfig("cdn_root") }}/uploads/stadiumbuilder/{{ offer.builder_picture }}" style="max-width: 140px;">
+						{% else %}
+							<img src="{{ env.getConfig("context_root") }}/uploads/stadiumbuilder/{{ offer.builder_picture }}" style="max-width: 140px;">
+						{% endif %}
+						
 					{% endif %}
 					{% if offer.builder_premiumfee > 0 %}
 						<p>{{ premium.premiumbadge(offer.builder_premiumfee) }}</p>

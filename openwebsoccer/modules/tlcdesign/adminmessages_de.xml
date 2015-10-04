@@ -3,19 +3,28 @@
 <messages>
 	<message id="settings_tab_tlcdesign">TLC - Design</message>
 
-	<message id="settings_label_bild_hintergrund">Hintergrund-Bild</message>
-	
-	<message id="settings_label_bild_navbar">Navbar-Bild</message>
-	<message id="settings_label_color_navbar">Navbar-Farbe</message>
-	
-	<message id="settings_label_bild_spoiler">Spoiler-Bild</message>
-	<message id="settings_label_color_spoiler">Spoiler-Farbe</message>
-	
-	<message id="settings_label_bild_infolabel">Infolabel-Bild</message>
-	<message id="settings_label_color_infolabel">Infolabel-Farbe</message>
-	
-	<message id="settings_label_color_container">Container-Farbe</message>
-	
-	<message id="settings_label_bild_footer">Footer-Bild</message>
-	<message id="settings_label_color_footer">Footer-Farbe</message>
+	<message id="settings_label_bild_hintergrund">Hintergrund Bild</message>
+
+	<message id="settings_label_bild_navbar">Navbar Bild</message>
+	<message id="settings_label_color_navbar">Navbar Farbe</message>
+
+	<message id="settings_label_bild_spoiler">Spoiler Bild</message>
+	<message id="settings_label_color_spoiler">Spoiler Farbe</message>
+
+	<message id="settings_label_bild_infolabel">Infolabel Bild</message>
+	<message id="settings_label_color_infolabel">Infolabel Farbe</message>
+
+	<message id="settings_label_color_container">Container Farbe</message>
+
+	<message id="settings_label_bild_footer">Footer Bild</message>
+	<message id="settings_label_color_footer">Footer Farbe</message>
+
+	<message id="settings_label_box_background_image">Box Bild</message>
+	<message id="settings_label_box_background_color">Box Farbe</message>
+	<message id="settings_label_box_border">Box Border</message>
+	<message id="settings_label_box_border_color">Box Borderfarbe</message>
+	<message id="settings_label_navbar_brand_color">Brand Schriftfarbe</message>
+	<message id="settings_label_navbar_brand_color_shadow">Brand Schriftschatten</message>
+	<message id="settings_label_navbar_text_color">Menü Schriftfarbe</message>
+	<message id="settings_label_navbar_text_color_shadow">Menü Schriftschatten</message>
 </messages>

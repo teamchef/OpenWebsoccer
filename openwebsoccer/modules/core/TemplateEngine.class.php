@@ -72,6 +72,7 @@ class TemplateEngine {
 	 * deletes all cached templates.
 	 */
 	public function clearCache() {
+
 		if (file_exists(CACHE_FOLDER)) {
 			$this->_environment->clearCacheFiles();
 		}

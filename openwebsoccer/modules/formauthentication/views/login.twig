@@ -1,4 +1,4 @@
-{% import "macros/formelements.twig" as formelements %}
+{% import "formelements.twig" as formelements %}
 
 {% extends "base.twig" %}
 
@@ -17,9 +17,9 @@
  	{% endif %}
 
 	{{ formelements.textfield('loginpassword', i18n.getMessage('entity_users_passwort'), '', true, validationMsg, 'password') }}
-	
+
 	{{ formelements.checkbox('rememberme', i18n.getMessage('formlogin_option_rememberme'), env.getRequestParameter('rememberme')) }}
-	
+
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('formlogin_submit_button') }}</button>
 	</div>

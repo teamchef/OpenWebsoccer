@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="nationalteam_navlabel">Nationalmannschaft</message>
+    <message id="nationalteam_navlabel">Nationalteam</message>
     <message id="nationalmatches_navlabel">Spiele</message>
     <message id="nominate-national-players_navlabel">Spieler nominieren</message>
     <message id="nationalteams_user_requires_team">Sie müssen Manager eines Nationalteams sein, um diese Funktion nutzen zu können.</message>
@@ -16,6 +16,6 @@
 	<message id="nationalmatches_title">Spiele der Nationalmannschaft</message>
 	<message id="nationalmatches_next_title">Nächste Spiele</message>
 	<message id="nationalmatches_results_title">Ergebnisse</message>
-	
+
 	<message id="nationalmatches_nextmatch_title">Nächstes Länderspiel</message>
 </messages>

@@ -5,18 +5,23 @@
 	#ajaxLoaderPage 					{display: none;background:url('{{env.getConfig("context_root")}}/img/ajaxloaderbar.gif') no-repeat center center;height: 15px;width:100%;position:fixed;bottom:10px;}
 	#stadium 							{background: url('{{env.getConfig("context_root")}}/img/pitch_bg.png') no-repeat 110px 90px;}
 {% endif %}
+
 	body 								{background-image:url({{env.getConfig("bild_hintergrund")}});background-repeat:no-repeat;background-size:cover;padding-top:60px;}
 	#navbar 							{background-image:url({{env.getConfig("bild_navbar")}});background-repeat:no-repeat;position:fixed;top:0px;left:0px;right:0px;z-index:2;}
 	.navbar-fixed-top					{background-color:{{env.getConfig("color_navbar")}};}
 	.container							{background-color:{{env.getConfig("color_container")}};}
-	.top_spoiler 						{background-color:{{env.getConfig("color_spoiler")}};background-image:url({{env.getConfig("bild_spoiler")}});background-repeat:no-repeat;padding:60px;padding-top:
-										 20px;padding-right:60px;padding-bottom:20px;padding-left:60px;margin-bottom:30px;font-size:16px;font-weight:200;line-height:30px;color:inherit;}
+	.top_spoiler 						{background-color:{{env.getConfig("color_spoiler")}};background-image:url({{env.getConfig("bild_spoiler")}});background-repeat:no-repeat;
+										 padding-right:60px;padding-left:60px;font-size:16px;font-weight:200;line-height:30px;color:inherit;}
+
 	#footer 							{background-color:{{env.getConfig("color_footer")}};background-image:url({{env.getConfig("bild_footer")}});background-repeat:no-repeat;position:fixed;bottom:0px; left:0px; right:0px;
 										text-align:center;padding:0px;padding-top:30px;}
 	.row								{position: relative;left:50px;top:40px;}
 	.span12								{position: relative;left:-50px;}
 	.sidebar-nav 						{padding:9px 0;}
-	.box 								{padding:8px 10px;background:#fdfdfd;border:1px solid #eeeeee;border-bottom:3px solid #eee;border-radius:6px;margin-bottom:30px;} .box table {margin-bottom:10px;}
+	.box 								{padding:8px 10px;background-color:{{env.getConfig("box_background_color")}};background-image:url({{env.getConfig("box_background_image")}});background-repeat:no-repeat;border:1px solid
+										 #eeeeee;
+										 border-bottom:3px solid #eee;border-radius:6px;margin-bottom:30px;border-width:{{env.getConfig("box_border")}}px;border-color:{{env.getConfig("box_border_color")}};}
+	.box table							{margin-bottom:10px;}
 	.box > h4 							{border-bottom:1px solid #eeeeee;padding-bottom: 7px;}
 	.darkIcon 							{color:black;}
 	.collapse 							{overflow:hidden;}
@@ -28,3 +33,6 @@
 	@media all and (min-height: 450px) 	{.modal-body {max-height:300px;}}
 	@media all and (min-height: 700px) 	{.modal-body {max-height:550px;}}
 	#report_result 						{border-top:1px solid black;border-bottom:1px solid black;text-align:center;}
+	.navbar .nav>li>a					{float:none;padding:10px 15px 10px;color:{{env.getConfig("navbar_text_color")}};text-decoration:none;text-shadow:0 1px 0 {{env.getConfig("navbar_text_color_shadow")}};}
+	.navbar .brand						{float:left;display:block;padding:10px 20px 10px;margin-left:-20px;font-size:20px;font-weight:200;color:{{env.getConfig("navbar_brand_color")}};
+										 text-shadow:0 1px 0 {{env.getConfig("navbar_brand_color_shadow")}};}.navbar .brand:hover,.navbar .brand:focus{text-decoration:none;}

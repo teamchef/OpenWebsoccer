@@ -1,4 +1,4 @@
-{% import "macros/profileelements.twig" as profile %}
+{% import "profileelements.twig" as profile %}
 
 <h3>{{ player.firstname }} {{ player.lastname }}</h3>
 
@@ -13,7 +13,7 @@
 {{ profile.infofield(i18n.getMessage("entity_player_vertrag_gehalt"), (player.strength * env.getConfig("youth_salary_per_strength"))|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
 
 {% if player.transfer_fee > 0 %}
-	{{ profile.infofield(i18n.getMessage("entity_youthplayer_transfer_fee"), 
+	{{ profile.infofield(i18n.getMessage("entity_youthplayer_transfer_fee"),
 		player.transfer_fee|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency")) }}
 {% endif %}
 

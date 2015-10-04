@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% import "macros/formelements.twig" as formelements %}
+{% import "formelements.twig" as formelements %}
 
 {% block page_title %}
 {{ i18n.getMessage("playerssearch_navlabel") }}
@@ -11,11 +11,11 @@
 <form class="form-horizontal" method="post">
 
 	{{ formelements.textfield('fname', i18n.getMessage('entity_player_vorname'), env.getRequestParameter('fname'), false, validationMsg, 'text') }}
-	
+
 	{{ formelements.textfield('lname', i18n.getMessage('entity_player_nachname'), env.getRequestParameter('lname'), false, validationMsg, 'text') }}
-	
+
 	{{ formelements.autocomplete("club", i18n.getMessage("entity_player_verein_id"), env.getRequestParameter('club'), false, validationMsg, "clubsearch") }}
-  
+
 	<div class="control-group">
 		<label class="control-label" for="position">
 			{{ i18n.getMessage("entity_player_position") }}
@@ -30,7 +30,7 @@
 	  		</select>
 		</div>
 	</div>
-	
+
 	{% if env.getConfig("hide_strength_attributes") != "1" %}
 	<div class="control-group">
 		<label class="control-label" for="strength">
@@ -48,12 +48,12 @@
 		</div>
 	</div>
 	{% endif %}
-	
+
 	{% if env.getConfig("lending_enabled") %}
 		{{ formelements.checkbox('lendable', i18n.getMessage('lending_player_marker_lendable'), env.getRequestParameter('lendable')) }}
 	{% endif %}
 	<div class="form-actions">
-		<button type="submit" class="btn btn-primary ajaxSubmit" 
+		<button type="submit" class="btn btn-primary ajaxSubmit"
 		data-ajaxblock="playerssearch-results"
 		data-ajaxtarget="playerssearch-results_block">{{ i18n.getMessage('playerssearch_submit') }}</button>
 	</div>

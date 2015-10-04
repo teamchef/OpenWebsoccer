@@ -1,6 +1,6 @@
 {% extends "box.twig" %}
 
-{% import "macros/statisticelements.twig" as statisticelements %}
+{% import "statisticelements.twig" as statisticelements %}
 
 {% block box_title %}
 {{ i18n.getMessage('userprofile_block_title') }}
@@ -33,7 +33,13 @@
 {% if env.getUser().clubId > 0 %}
 <p><em>{{ i18n.getMessage('entity_club') }}</em>
 {% if userteam.team_picture|length %}
-	{% set teamPicture = "<img src=\""~ env.getConfig("cdn_root") ~ "/uploads/club/" ~ userteam.team_picture ~ "\" style=\"width: 20px; height: 20px;\" />" %}
+
+	{% if env.getConfig("cdn_root_set") %}
+		{% set teamPicture = "<img src=\""~ env.getConfig("cdn_root") ~ "/uploads/club/" ~ userteam.team_picture ~ "\" style=\"width: 20px; height: 20px;\" />" %}
+	{% else %}
+		{% set teamPicture = "<img src=\""~ env.getConfig("context_root") ~ "/uploads/club/" ~ userteam.team_picture ~ "\" style=\"width: 20px; height: 20px;\" />" %}
+	{% endif %}
+	
 {% else %}
 	{% set teamPicture = "" %}
 {% endif %}

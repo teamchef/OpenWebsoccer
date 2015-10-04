@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% import "macros/profileelements.twig" as profile %}
+{% import "profileelements.twig" as profile %}
 
 {% block page_title %}
 {{ team.team_name }}
@@ -15,7 +15,13 @@
 
 {% if team.team_logo|length > 0 %}
 <div style="text-align: center; margin-bottom: 10px;">
-<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ team.team_logo }}" class="img-rounded" style="max-width: 120px; max-height: 120px">
+
+{% if env.getConfig("cdn_root_set") %}
+	<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ team.team_logo }}" class="img-rounded" style="max-width: 120px; max-height: 120px">
+{% else %}
+	<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ team.team_logo }}" class="img-rounded" style="max-width: 120px; max-height: 120px">
+{% endif %}
+
 </div>
 {% endif %}
 
@@ -96,7 +102,13 @@
 	  {{ profile.infofield(i18n.getMessage("entity_club_stadion_id"), stadiumLabel, true) }}
 	  {% if stadium.stadium_id is defined and stadium.stadium_id > 0 and stadium.picture|length > 0 %}
 		<div style="text-align: center; margin: 10px;">
-		<img src="{{ env.getConfig("cdn_root") }}/uploads/stadium/{{ stadium.picture }}" class="img-rounded">
+
+		{% if env.getConfig("cdn_root_set") %}
+			<img src="{{ env.getConfig("cdn_root") }}/uploads/stadium/{{ stadium.picture }}" class="img-rounded">
+		{% else %}
+			<img src="{{ env.getConfig("context_root") }}/uploads/stadium/{{ stadium.picture }}" class="img-rounded">
+		{% endif %}
+
 		</div>
 	  {% endif %}
 
@@ -104,7 +116,13 @@
 			{{ profile.infofield(i18n.getMessage("entity_club_sponsor_id"), team.team_sponsor_name) }}
 			{% if team.team_sponsor_picture|length > 0 %}
 				<div style="text-align: center; margin: 10px;">
-				<img src="{{ env.getConfig("cdn_root") }}/uploads/sponsor/{{ team.team_sponsor_picture }}" class="img-rounded">
+
+				{% if env.getConfig("cdn_root_set") %}
+					<img src="{{ env.getConfig("cdn_root") }}/uploads/sponsor/{{ team.team_sponsor_picture }}" class="img-rounded">
+				{% else %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/sponsor/{{ team.team_sponsor_picture }}" class="img-rounded">
+				{% endif %}
+
 				</div>
 			{% endif %}
 		{% endif %}

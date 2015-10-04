@@ -12,19 +12,6 @@
       <setting id="formation_max_templates" category="game" type="number" default="10" />
     </settings>
 
-    <pages>
-        <page
-            id="formation"
-            template="formation"
-            model="FormationModel"
-            navitem="true"
-            navweight="0"
-            role="user"
-            parentItem="office">
-        </page>
-
-    </pages>
-
     <blocks>
 
         <block

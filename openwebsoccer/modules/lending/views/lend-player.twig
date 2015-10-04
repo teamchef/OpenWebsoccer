@@ -1,5 +1,5 @@
 {% extends "base.twig" %}
-{% import "macros/formelements.twig" as formelements %}
+{% import "formelements.twig" as formelements %}
 
 {% block page_title %}
 	{{ i18n.getMessage("lend-player_navlabel") }}:
@@ -18,10 +18,10 @@
 
   <dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
   <dd>{{ player.player_contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
-  
+
   <dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
   <dd>{{ player.player_contract_goalbonus|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
-  
+
   <dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
   <dd>{{ player.player_contract_matches  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 </dl>
@@ -33,7 +33,7 @@
 <form class="form-horizontal" method="post">
 
 	{{ formelements.textfield('fee', i18n.getMessage('entity_player_lending_fee'), env.getRequestParameter('fee'), true, validationMsg, 'number') }}
-	
+
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_submit') }}</button>
 		<a href="{{ env.getInternalUrl("myteam") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>

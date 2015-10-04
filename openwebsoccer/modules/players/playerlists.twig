@@ -72,14 +72,26 @@
 
 					{% if player.yellowCards > 0 %}
 						{% if env.getConfig("cdn_root_set") %}
-								<img src="{{env.getConfig("cdn_root")}}./img/card_yellow.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+						
+								{% if env.getConfig("cdn_root_set") %}
+									<img src="{{env.getConfig("cdn_root")}}/img/card_yellow.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+								{% else %}
+									<img src="{{env.getConfig("context_root")}}/img/card_yellow.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+								{% endif %}
+								
 							{% else %}
-								<img src="{{env.getConfig("context_root")}}/img/card_yellow.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+							
+								{% if env.getConfig("cdn_root_set") %}
+									<img src="{{env.getConfig("cdn_root")}}/img/card_yellow.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+								{% else %}
+									<img src="{{env.getConfig("context_root")}}/img/card_yellow.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+								{% endif %}
+								
 						{% endif %}
 
 						{% if player.yellowCards > 1 %}
 							{% if env.getConfig("cdn_root_set") %}
-								<img src="{{env.getConfig("cdn_root")}}./img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowredcard") }}" title="{{ i18n.getMessage("player_yellowredcard") }}" />
+								<img src="{{env.getConfig("cdn_root")}}/img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowredcard") }}" title="{{ i18n.getMessage("player_yellowredcard") }}" />
 							{% else %}
 								<img src="{{env.getConfig("context_root")}}/img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowredcard") }}" title="{{ i18n.getMessage("player_yellowredcard") }}" />
 							{% endif %}
@@ -88,7 +100,7 @@
 
 					{% if player.redCard > 0 %}
 						{% if env.getConfig("cdn_root_set") %}
-							<img src="{{env.getConfig("cdn_root")}}./img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_redcard") }}" title="{{ i18n.getMessage("player_redcard") }}" />
+							<img src="{{env.getConfig("cdn_root")}}/img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_redcard") }}" title="{{ i18n.getMessage("player_redcard") }}" />
 						{% else %}
 							<img src="{{env.getConfig("context_root")}}/img/card_red.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_redcard") }}" title="{{ i18n.getMessage("player_redcard") }}" />
 						{% endif %}
@@ -97,7 +109,7 @@
 					{% if player.goals > 0 %}
 					{% for i in 1..player.goals %}
 						{% if env.getConfig("cdn_root_set") %}
-							<img src="{{env.getConfig("cdn_root")}}./img/goal_scorer.png" style="width: 16px; height: 15px" alt="{{ i18n.getMessage("player_goalscorer") }}" title="{{ i18n.getMessage("player_goalscorer") }}"/>
+							<img src="{{env.getConfig("cdn_root")}}/img/goal_scorer.png" style="width: 16px; height: 15px" alt="{{ i18n.getMessage("player_goalscorer") }}" title="{{ i18n.getMessage("player_goalscorer") }}"/>
 						{% else %}
 							<img src="{{env.getConfig("context_root")}}/img/goal_scorer.png" style="width: 16px; height: 15px" alt="{{ i18n.getMessage("player_goalscorer") }}" title="{{ i18n.getMessage("player_goalscorer") }}" />
 						{% endif %}

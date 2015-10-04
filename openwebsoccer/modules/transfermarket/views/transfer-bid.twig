@@ -1,6 +1,6 @@
 
 {% extends "base.twig" %}
-{% import "macros/formelements.twig" as formelements %}
+{% import "formelements.twig" as formelements %}
 
 {% block page_title %}
 {{ i18n.getMessage("transfer_bid_title", player.player_firstname ~ " " ~ player.player_lastname) }}
@@ -8,10 +8,10 @@
 
 {% block page_content %}
 
-<h3>{{ i18n.getMessage("transfermarket_head_deadline") }}: 
+<h3>{{ i18n.getMessage("transfermarket_head_deadline") }}:
 	<span class="countdown" data-date="{{ player.transfer_end|date("Y/m/d H:i:s") }}">
 	        <span id="days"></span>
-	        {{ i18n.getMessage("transfermarket_countdown_days") }}, 
+	        {{ i18n.getMessage("transfermarket_countdown_days") }},
 	        <span id="hours"></span>:<span id="minutes"></span>:<span id="seconds"></span>
 	</span>
 </h3>
@@ -30,10 +30,10 @@
 
   <dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
   <dd>{{ player.player_contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
-  
+
   <dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
   <dd>{{ player.player_contract_goalbonus|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
-  
+
   <dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
   <dd>{{ player.player_contract_matches  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
 </dl>

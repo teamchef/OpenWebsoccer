@@ -1,4 +1,4 @@
-{% import "macros/premium.twig" as premium %}
+{% import "premium.twig" as premium %}
 {% extends "base.twig" %}
 
 {% block page_title %}
@@ -38,7 +38,13 @@
 				<p>{{ buildingDescription }}</p>
 
 				{% if building.picture|length > 0 %}
-					<p><img src="{{ env.getConfig("cdn_root") }}/uploads/stadiumbuilding/{{ building.picture }}"></p>
+				
+					{% if env.getConfig("cdn_root_set") %}
+						<p><img src="{{ env.getConfig("cdn_root") }}/uploads/stadiumbuilding/{{ building.picture }}"></p>
+					{% else %}
+						<p><img src="{{ env.getConfig("context_root") }}/uploads/stadiumbuilding/{{ building.picture }}"></p>
+					{% endif %}
+					
 				{% endif %}
 
 				<dl class="dl-horizontal">
@@ -92,7 +98,13 @@
 			<tr{% if building.under_construction %} class="warning"{% endif %}>
 				<td>
 				{% if building.picture|length > 0 %}
-				<img src="{{ env.getConfig("cdn_root") }}/uploads/stadiumbuilding/{{ building.picture }}">
+				
+					{% if env.getConfig("cdn_root_set") %}
+						<img src="{{ env.getConfig("cdn_root") }}/uploads/stadiumbuilding/{{ building.picture }}">
+					{% else %}
+						<img src="{{ env.getConfig("context_root") }}/uploads/stadiumbuilding/{{ building.picture }}">
+					{% endif %}
+				
 				{% endif %}
 				</td>
 				<td>

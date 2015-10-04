@@ -70,19 +70,6 @@
         </adminpage>
 	</admin>
 
-    <pages>
-        <page
-            id="stadiumenvironment"
-            template="stadiumenvironment"
-            model="StadiumEnvironmentModel"
-            parentItem="office"
-            navitem="true"
-            navweight="7"
-            role="user">
-        </page>
-
-    </pages>
-
     <actions>
 	    <action id="order-building" controller="OrderBuildingController" role="user" log="true">
 			<param id="id" type="number" required="true" />

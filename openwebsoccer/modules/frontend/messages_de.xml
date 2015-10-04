@@ -27,7 +27,7 @@
 
 
     <message id="home_title">%s</message>
-	<message id="home_teaser">PHP 7.0 RC2 DEMO - Installation / Ein neuer wegweisender Schritt des OpenWebsoccer in die Zukunft</message>
+	<message id="home_teaser">Werden Sie Manager eines virtuellen Fussballvereins und führen Sie Ihr Team gegen andere Benutzer zur Meisterschaft!</message>
 	<message id="home_teaser_link_register">Jetzt anmelden</message>
 
 	<message id="button_save">Speichern</message>

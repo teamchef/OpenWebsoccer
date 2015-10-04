@@ -24,11 +24,21 @@
 		{% endfor %}
 		{% if cssReferences is defined %}
 			{% for cssSource in cssReferences %}
-			<link href="{{ env.getConfig("cdn_root") }}/css/{{ cssSource }}" media="all" rel="stylesheet" type="text/css" />
+
+				{% if env.getConfig("cdn_root_set") %}
+					<link href="{{ env.getConfig("cdn_root") }}/css/{{ cssSource }}" media="all" rel="stylesheet" type="text/css" />
+				{% else %}
+					<link href="{{ env.getConfig("context_root") }}/css/{{ cssSource }}" media="all" rel="stylesheet" type="text/css" />
+				{% endif %}
+
 			{% endfor %}
 		{% endif %}
 
-		<link rel="shortcut icon" type="image/x-icon" href="{{ env.getConfig("cdn_root") }}/favicon.ico" />
+		{% if env.getConfig("cdn_root_set") %}
+			<link rel="shortcut icon" type="image/x-icon" href="{{ env.getConfig("cdn_root") }}/favicon.ico" />
+		{% else %}
+			<link rel="shortcut icon" type="image/x-icon" href="{{ env.getConfig("context_root") }}/favicon.ico" />
+		{% endif %}
 
 		{% if env.getConfig("facebook_appid") %}
 		<meta property="fb:app_id" content="{{ env.getConfig("facebook_appid") }}"/>
@@ -47,7 +57,7 @@
 			{% endblock %}
 
 			{% block page_columns %}
-			
+
 			<raw>
 			<div class="row"">
 				<div class="span7" id="contentArea">
@@ -110,6 +120,7 @@
 			</raw>
 			{% endblock %}
 
+			<br><br>
 			<hr/>
 			<footer>
 				<div id="footer">
@@ -125,17 +136,29 @@
 		<div id="ajaxLoaderPage"></div>
 
 		{% for jsSource in skin.getJavaScriptSources() %}
-		<script src="{{ jsSource }}" ></script>
+			<script src="{{ jsSource }}" ></script>
 		{% endfor %}
 		{% if scriptReferences is defined %}
 			{% for jsSource in scriptReferences %}
-			<script src="{{ env.getConfig("cdn_root") }}/js/{{ jsSource }}" ></script>
+
+			{% if env.getConfig("cdn_root_set") %}
+				<script src="{{ env.getConfig("cdn_root") }}/js/{{ jsSource }}" ></script>
+			{% else %}
+				<script src="{{ env.getConfig("context_root") }}/js/{{ jsSource }}" ></script>
+			{% endif %}
+
 			{% endfor %}
 		{% endif %}
 
 		<!--[if lt IE 9]>
-		<script src="{{ env.getConfig("cdn_root") }}/js/extcanvas/excanvas.compiled.js"></script>
+
+		{% if env.getConfig("cdn_root_set") %}
+			<script src="{{ env.getConfig("cdn_root") }}/js/extcanvas/excanvas.compiled.js"></script>
+		{% else %}
+			<script src="{{ env.getConfig("context_root") }}/js/extcanvas/excanvas.compiled.js"></script>
+		{% endif %}
+
 		<![endif]-->
-		
+
 	</body>
 </html>

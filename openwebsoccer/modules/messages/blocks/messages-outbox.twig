@@ -1,6 +1,6 @@
-{% import "macros/paginator.twig" as pagination %}
+{% import "paginator.twig" as pagination %}
 {% if messages|length > 0 %}
-  	
+
   	<table class="table table-striped">
   		<thead>
   			<tr>
@@ -26,7 +26,7 @@
   		{% endfor %}
   		</tbody>
   	</table>
-  	
+
   	{{ pagination.paginator(paginator, "outboxlist") }}
 {% else %}
   	<p>{{ i18n.getMessage("messages_empty_outbox") }}</p>

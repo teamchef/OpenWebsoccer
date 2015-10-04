@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% import "macros/paginator.twig" as pagination %}
+{% import "paginator.twig" as pagination %}
 
 {% block page_title %}
 {{ i18n.getMessage("premiumaccount_navlabel") }}
@@ -14,7 +14,7 @@
 	<a href="{{ env.getInternalUrl(env.getConfig("premium_infopage")) }}" class="btn"><i class="icon-info-sign"></i> {{ i18n.getMessage("premiumaccount_recharge_button") }}</a>
 	{% if env.getConfig("premium_exchangerate_gamecurrency") > 0 %}
 		<a href="{{ env.getInternalUrl("premium-exchange") }}" class="btn"><i class="icon-money"></i> {{ i18n.getMessage("premiumaccount_exchange_link") }}</a>
-	{% endif %}	
+	{% endif %}
 </p>
 
 {% if statements is defined and statements|length > 0 %}
@@ -48,14 +48,14 @@
 		{% endfor %}
 		</tbody>
 	</table>
-	
+
 	{{ pagination.paginator(paginator) }}
 
 {% endif %}
 
 {% if payments|length > 0 %}
 	<h3>{{ i18n.getMessage("entity_premiumpayment") }}</h3>
-	
+
 	<table class="table table-striped">
 		<thead>
 			<tr>

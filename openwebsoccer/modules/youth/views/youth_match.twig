@@ -1,12 +1,75 @@
 {% extends "base.twig" %}
-{% import "macros/profileelements.twig" as profile %}
-{% import "macros/messagebox.twig" as msgbox %}
-{% import "macros/statisticelements.twig" as statisticelements %}
+{% import "profileelements.twig" as profile %}
+{% import "messagebox.twig" as msgbox %}
+{% import "statisticelements.twig" as statisticelements %}
 
 {% block stylesheets %}
 	{{ parent() }}
 
 	<style type="text/css">
+	{% if env.getConfig("cdn_root_set") %}
+		.websoccericon-goal {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -95px -32px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-yellowcard {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -96px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-redcard {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -160px -96px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-substitution {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -163px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-injury {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -222px -224px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+	{% else %}
+		.websoccericon-goal {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -95px -32px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-yellowcard {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -223px -96px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-redcard {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -160px -96px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-substitution {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -223px -163px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-injury {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -222px -224px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+	{% endif %}
 		#report_result {
 			border-top: 1px solid black;
 			border-bottom: 1px solid black;
@@ -49,36 +112,6 @@
 		}
 		.report_team_guest {
 			color: #FF6600;
-		}
-		.websoccericon-goal {
-			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -95px -32px;
-			width: 34px;
-			height: 32px;
-			display: inline-block;
-		}
-		.websoccericon-yellowcard {
-			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -96px;
-			width: 34px;
-			height: 32px;
-			display: inline-block;
-		}
-		.websoccericon-redcard {
-			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -160px -96px;
-			width: 34px;
-			height: 32px;
-			display: inline-block;
-		}
-		.websoccericon-substitution {
-			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -163px;
-			width: 34px;
-			height: 32px;
-			display: inline-block;
-		}
-		.websoccericon-injury {
-			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -222px -224px;
-			width: 34px;
-			height: 32px;
-			display: inline-block;
 		}
 	</style>
 

@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% import "macros/messagebox.twig" as msgbox %}
+{% import "messagebox.twig" as msgbox %}
 
 {% block browser_title %}
 {{ i18n.getMessage("home_title", env.getConfig("projectname")) }}
@@ -12,18 +12,28 @@
 
 {% if env.user.id == null %}
 
+<br><br>
 <div class="top_spoiler" style="color:white" >
+<table cellpadding="30">
+  <th>
   <h1>{{ block("browser_title") }}</h1>
   <p>{{ i18n.getMessage("home_teaser") }}</p>
-
-  	{% if env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0 %}
+  </th>
+  <th>
+    	{% if env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0 %}
 		{% set registerUrl = env.getInternalUrl("register") %}
 		{% if env.getConfig("registration_url")|length > 0 %}
 			{% set registerUrl = env.getConfig("registration_url") %}
 		{% endif %}
 		<div style="text-align:center;"><a href="{{ registerUrl }}" class="btn btn-large">{{ i18n.getMessage("home_teaser_link_register") }}</a></div>
 	{% endif %}
-
+  </th>
+  <th>
+  OpenWebsoccer {{ constant('OPENWEBSOCCER_VERSION') }}<br>
+  PHP  Version {{ constant('PHP_VERSION') }}<br>
+  Twig Version {{ constant('Twig_Environment::VERSION') }}
+</th>
+</table>
 </div>
 
 {% endif %}

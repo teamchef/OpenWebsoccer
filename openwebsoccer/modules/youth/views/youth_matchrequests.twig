@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
-{% import "macros/paginator.twig" as pagination %}
-{% import "macros/messagebox.twig" as messagebox %}
+{% import "paginator.twig" as pagination %}
+{% import "messagebox.twig" as messagebox %}
 
 {% block page_title %}
 {{ i18n.getMessage("youth-matchrequests_navlabel") }}
@@ -31,10 +31,10 @@
 					title="{{ i18n.getMessage("team_navlabel") }}">{{ request.team_name }}</a></td>
 				<td>
 					{% if request.user_picture|length > 0 %}
-						<a href="{{ env.getInternalUrl("user", "id=" ~ request.user_id) }}" 
+						<a href="{{ env.getInternalUrl("user", "id=" ~ request.user_id) }}"
 						title="{{ i18n.getMessage("user_navlabel") }}"><img src="{{ request.user_picture }}" alt="{{ request.user_nick }}" style="width: 40px; height: 40px"/></a>
 					{% endif %}
-					<a href="{{ env.getInternalUrl("user", "id=" ~ request.user_id) }}" 
+					<a href="{{ env.getInternalUrl("user", "id=" ~ request.user_id) }}"
 						title="{{ i18n.getMessage("user_navlabel") }}">{{ request.user_nick }}</a>
 				</td>
 				<td>

@@ -1,7 +1,7 @@
 {% extends "layoutwithoutsidebar.twig" %}
 
-{% import "macros/formelements.twig" as formelements %}
-{% import "macros/statisticelements.twig" as statisticelements %}
+{% import "formelements.twig" as formelements %}
+{% import "statisticelements.twig" as statisticelements %}
 
 	{% block stylesheets %}
 		{% include 'css.twig' %}
@@ -320,7 +320,13 @@
 									data-strengthwrong="{{ (player.strength * (1 - env.getConfig("sim_strength_reduction_wrongposition") / 100))|number_format }}"
 									{% endif %}
 									{% if player.picture is defined and player.picture|length > 0 %}
-									data-picture="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.picture }}"
+									
+										{% if env.getConfig("cdn_root_set") %}
+											data-picture="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.picture }}"
+										{% else %}
+											data-picture="{{ env.getConfig("context_root") }}/uploads/player/{{ player.picture }}"
+										{% endif %}
+									
 									{% endif %}
 									>
 									<div class="playerinfoBar">

@@ -6,8 +6,8 @@
 
 {% block box_content %}
 
-{% import "macros/messagebox.twig" as messagebox %}
-{% import "macros/paginator.twig" as pagination %}
+{% import "messagebox.twig" as messagebox %}
+{% import "paginator.twig" as pagination %}
 
 {% if matches is defined and matches|length > 0 %}
 	<h6><small><b>
@@ -41,7 +41,13 @@
 			{% endif %}
 
 					{% if match.home_team_picture|length %}
-						<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px"/>
+					
+						{% if env.getConfig("cdn_root_set") %}
+							<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px"/>
+						{% else %}
+							<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px"/>
+						{% endif %}
+						
 					{% endif %}
 					<a href="{{ env.getInternalUrl("team", "id=" ~ match.home_id) }}">{{ match.home_team }}</a>
 					{% if match.home_noformation %}
@@ -65,7 +71,13 @@
 			{% endif %}
 
 					{% if match.guest_team_picture|length %}
-						<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
+					
+						{% if env.getConfig("cdn_root_set") %}
+							<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
+						{% else %}
+							<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
+						{% endif %}
+						
 					{% endif %}
 					<a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_id) }}">{{ match.guest_team }}</a>
 					{% if match.guest_noformation %}

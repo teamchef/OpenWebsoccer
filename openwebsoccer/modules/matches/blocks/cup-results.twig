@@ -1,10 +1,16 @@
-{% import "macros/profileelements.twig" as profile %}
+{% import "profileelements.twig" as profile %}
 
 <h3>{{ env.getRequestParameter("cup") }}</h3>
 
 {% if round|length > 0 and round.cup_logo|length > 0 %}
 <div style="text-align: center; margin-bottom: 10px;">
-	<img src="{{ env.getConfig("cdn_root") }}/uploads/cup/{{ round.cup_logo }}" class="img-rounded">
+
+	{% if env.getConfig("cdn_root_set") %}
+		<img src="{{ env.getConfig("cdn_root") }}/uploads/cup/{{ round.cup_logo }}" class="img-rounded">
+	{% else %}
+		<img src="{{ env.getConfig("context_root") }}/uploads/cup/{{ round.cup_logo }}" class="img-rounded">
+	{% endif %}
+
 </div>
 {% endif %}
 

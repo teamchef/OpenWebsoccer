@@ -15,32 +15,6 @@
       <setting id="transfermarket_max_transactions_between_users" category="transfermarket" type="number" default="2" />
   </settings>
 
-    <pages>
-        <page
-            id="transfermarket"
-            template="transfermarket-overview"
-            model="TransfermarketOverviewModel"
-            role="user"
-            navitem="true"
-            navweight="2"
-            parentItem="office"
-            navitemOnlyForConfigEnabled="transfermarket_enabled">
-	        <page
-	            id="sell-player"
-	            template="sell-player"
-	            model="PlayerDetailsModel"
-	            role="user" />
-
-	        <page
-	            id="transfer-bid"
-	            template="transfer-bid"
-	            model="PlayerDetailsModel"
-	            role="user">
-	         </page>
-        </page>
-
-    </pages>
-
     <blocks>
 
         <block

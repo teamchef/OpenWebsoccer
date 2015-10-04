@@ -5,15 +5,7 @@
     <dependencies>
         <dependency module="matches" version="1.0.0" />
     </dependencies>
-    
-    <pages>
-        <page
-            id="rss-results"
-            template="rss"
-            model="RssResultsOfUserModel"
-            role="user,guest"/>
-    </pages> 
-    
+
     <blocks>
 
         <block
@@ -23,7 +15,7 @@
             area="content_top"
             weight="1"
             role="user" />
-        
+
     </blocks>
-    
+
 </module>

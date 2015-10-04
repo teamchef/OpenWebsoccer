@@ -1,6 +1,6 @@
-{% import "macros/paginator.twig" as pagination %}
-{% import "macros/profileelements.twig" as profile %}
-{% import "macros/messagebox.twig" as messagebox %}
+{% import "paginator.twig" as pagination %}
+{% import "profileelements.twig" as profile %}
+{% import "messagebox.twig" as messagebox %}
 
 {% extends "base.twig" %}
 
@@ -16,7 +16,13 @@
 
 	{% if sponsor.picture|length > 0 %}
 	<div style="text-align: center; margin-bottom: 10px;">
-	<img src="{{ env.getConfig("cdn_root") }}/uploads/sponsor/{{ sponsor.picture }}" class="img-rounded">
+	
+		{% if env.getConfig("cdn_root_set") %}
+			<img src="{{ env.getConfig("cdn_root") }}/uploads/sponsor/{{ sponsor.picture }}" class="img-rounded">
+		{% else %}
+			<img src="{{ env.getConfig("context_root") }}/uploads/sponsor/{{ sponsor.picture }}" class="img-rounded">
+		{% endif %}
+	
 	</div>
 	{% endif %}
 

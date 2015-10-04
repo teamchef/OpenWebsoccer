@@ -1,4 +1,4 @@
-{% import "macros/formelements.twig" as formelements %}
+{% import "formelements.twig" as formelements %}
 
 {% extends "base.twig" %}
 
@@ -12,9 +12,9 @@
 <form class="form-horizontal" method="post">
 
 	{{ formelements.textfield('nick', i18n.getMessage('entity_users_nick'), env.getRequestParameter('nick'), true, validationMsg, 'text') }}
-	
+
 	{{ formelements.checkbox('termsandconditions', i18n.getMessage('termsandconditions_accept', env.getInternalUrl("termsandconditions")), env.getRequestParameter("termsandconditions"), true, validationMsg) }}
-	
+
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
 	</div>

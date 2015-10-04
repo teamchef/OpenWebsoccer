@@ -1,4 +1,4 @@
-{% import "macros/paginator.twig" as pagination %}
+{% import "paginator.twig" as pagination %}
 {% extends "base.twig" %}
 
 {% block page_title %}
@@ -37,7 +37,13 @@
 				{% if user.team_id > 0 and not user.hideinonlinelist %}
 					{% if user.team_picture|length > 0 %}
 						<a href="{{ env.getInternalUrl("team", "id=" ~ user.team_id) }}"
-						title="{{ i18n.getMessage("team_navlabel") }}"><img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ user.team_picture }}" alt="{{ user.team_name }}" style="max-width: 40px;"/></a>
+						
+						{% if env.getConfig("cdn_root_set") %}
+							title="{{ i18n.getMessage("team_navlabel") }}"><img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ user.team_picture }}" alt="{{ user.team_name }}" style="max-width: 40px;"/></a>
+						{% else %}
+							title="{{ i18n.getMessage("team_navlabel") }}"><img src="{{ env.getConfig("context_root") }}/uploads/club/{{ user.team_picture }}" alt="{{ user.team_name }}" style="max-width: 40px;"/></a>
+						{% endif %}
+						
 					{% endif %}
 
 					<a href="{{ env.getInternalUrl("team", "id=" ~ user.team_id) }}"

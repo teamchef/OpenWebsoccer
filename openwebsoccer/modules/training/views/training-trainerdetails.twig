@@ -1,7 +1,7 @@
-{% import "macros/formelements.twig" as formelements %}
-{% import "macros/statisticelements.twig" as statisticelements %}
-{% import "macros/profileelements.twig" as profile %}
-{% import "macros/premium.twig" as premium %}
+{% import "formelements.twig" as formelements %}
+{% import "statisticelements.twig" as statisticelements %}
+{% import "profileelements.twig" as profile %}
+{% import "premium.twig" as premium %}
 
 {% extends "base.twig" %}
 
@@ -25,8 +25,8 @@
 <form class="form-horizontal" method="post">
 	<fieldset>
     	<legend>{{ i18n.getMessage('training_choose_trainer_title') }}</legend>
-    	
-    	
+
+
 		{{ formelements.textfield('units', i18n.getMessage('training_choose_trainer_units'), env.getRequestParameter("units"), true, validationMsg, "number") }}
 	</fieldset>
 	<div class="form-actions">

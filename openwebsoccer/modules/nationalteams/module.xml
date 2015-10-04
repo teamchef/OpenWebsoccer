@@ -5,41 +5,11 @@
     <dependencies>
         <dependency module="clubs" version="1.0.0"/>
     </dependencies>
-    
+
     <settings>
 		<setting id="nationalteams_enabled" category="game" type="boolean" default="1" />
 	</settings>
-    
-    <pages>
-        <page
-            id="nationalteam"
-            template="nationalteam"
-            model="NationalPlayersModel"
-            role="user"
-            navitem="true"
-            navweight="3"
-            navitemOnlyForConfigEnabled="nationalteams_enabled">
-            <page
-	            id="nominate-national-players"
-	            template="nominate_national_players"
-	            model="FindNationalPlayersModel"
-	            role="user"
-	            navitem="true"
-	            navweight="0"
-	            navitemOnlyForConfigEnabled="nationalteams_enabled"/>
-            
-            <page
-	            id="nationalmatches"
-	            template="nationalmatches"
-	            model="NationalTeamMatchesModel"
-	            role="user"
-	            navitem="true"
-	            navweight="1"
-	            navitemOnlyForConfigEnabled="nationalteams_enabled"/>
-        </page>
 
-    </pages> 
-    
     <actions>
         <action id="add-national-player" controller="AddNationalPlayerController" role="user">
             <param type="number" id="id" required="true"/>
@@ -48,7 +18,7 @@
             <param type="number" id="id" required="true"/>
         </action>
     </actions>
-    
+
     <blocks>
 
         <block
@@ -58,7 +28,7 @@
             includepages="custom"
             area="content_top"
             role="user" />
-        
+
         <block
             id="national-next-matches"
             template="results-list"
@@ -66,7 +36,7 @@
             includepages="custom"
             area="content_top"
             role="user" />
-        
+
         <block
             id="national-next-match"
             template="national_next_match"
@@ -75,7 +45,7 @@
             area="content_bottom"
             weight="5"
             role="user" />
-        
+
     </blocks>
-    
+
 </module>

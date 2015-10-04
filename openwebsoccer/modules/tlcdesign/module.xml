@@ -17,5 +17,13 @@
 		<setting id="color_container" category="tlcdesign" type="text" default="" />
 		<setting id="bild_footer" category="tlcdesign" type="text" default="" />
 		<setting id="color_footer" category="tlcdesign" type="text" default="" />
+		<setting id="box_background_image" category="tlcdesign" type="text" default="" />
+		<setting id="box_background_color" category="tlcdesign" type="text" default="" />
+		<setting id="box_border" category="tlcdesign" type="text" default="" />
+		<setting id="box_border_color" category="tlcdesign" type="text" default="" />
+		<setting id="navbar_brand_color" category="tlcdesign" type="text" default="" />
+		<setting id="navbar_brand_color_shadow" category="tlcdesign" type="text" default="" />
+		<setting id="navbar_text_color" category="tlcdesign" type="text" default="" />
+		<setting id="navbar_text_color_shadow" category="tlcdesign" type="text" default="" />
 	</settings>
 </module>

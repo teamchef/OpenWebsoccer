@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% import "macros/statisticelements.twig" as statisticelements %}
+{% import "statisticelements.twig" as statisticelements %}
 
 {% block page_title %}
 {{ player.player_firstname }} {% if player.player_pseudonym|length > 0 %}"{{ player.player_pseudonym }}" {% endif %}{{ player.player_lastname }}
@@ -10,7 +10,13 @@
 
 {% if player.player_picture|length > 0 %}
 <div style="text-align: center; margin-bottom: 10px;">
-<img src="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.player_picture }}" class="img-rounded">
+
+	{% if env.getConfig("cdn_root_set") %}
+		<img src="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.player_picture }}" class="img-rounded">
+	{% else %}
+		<img src="{{ env.getConfig("context_root") }}/uploads/player/{{ player.player_picture }}" class="img-rounded">
+	{% endif %}
+
 </div>
 {% endif %}
 

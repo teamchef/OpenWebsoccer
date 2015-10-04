@@ -33,9 +33,9 @@ $website->resetConfigCache();
 		deldir ('../update');
 	}
 
-	require (BASE_FOLDER . '/admin/pages/deldir.inc.php');
-	deldir (BASE_FOLDER .'/cache');
-	mkdir (BASE_FOLDER .'/cache', 0700);
+	require 'deldir.inc.php';
+	deldir ('./cache');
+	mkdir ('./cache', 0700);
 
 // clear templates cache
 $website->getTemplateEngine($i18n)->clearCache();

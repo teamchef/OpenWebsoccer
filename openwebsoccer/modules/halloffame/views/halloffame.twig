@@ -38,7 +38,13 @@
 								<td>{{ season.season_name }}</td>
 								<td>
 									{% if season.team_picture|length %}
-										<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ season.team_picture }}" style="max-width: 40px"/>
+									
+										{% if env.getConfig("cdn_root_set") %}
+											<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ season.team_picture }}" style="max-width: 40px"/>
+										{% else %}
+											<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ season.team_picture }}" style="max-width: 40px"/>
+										{% endif %}
+										
 									{% endif %}
 									<a href="{{ env.getInternalUrl("team", "id=" ~ season.team_id ) }}">{{ season.team_name }}</a>
 								</td>

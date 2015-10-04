@@ -1,6 +1,6 @@
 {% extends "base.twig" %}
 
-{% import "macros/paginator.twig" as pagination %}
+{% import "paginator.twig" as pagination %}
 
 {% block page_title %}
 {{ i18n.getMessage("finances_navlabel") }}
@@ -48,7 +48,7 @@
 		{% endfor %}
 		</tbody>
 	</table>
-	
+
 	{{ pagination.paginator(paginator) }}
 
 {% endif %}

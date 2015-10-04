@@ -1,11 +1,11 @@
-{% import "macros/formelements.twig" as formelements %}
+{% import "formelements.twig" as formelements %}
 
 {% if env.getConfig("sim_allow_offensivechanges") > 0 %}
-	{{ formelements.textfield('offensive', i18n.getMessage('formation_offensive_title'), offensive, true, validationMsg, 'number', 
+	{{ formelements.textfield('offensive', i18n.getMessage('formation_offensive_title'), offensive, true, validationMsg, 'number',
 		i18n.getMessage("match_details_changes_max_help", env.getConfig("sim_allow_offensivechanges"))) }}
-		
+
 	{{ formelements.checkbox("longpasses", i18n.getMessage("formation_option_longpasses"), longpasses, false, validationMsg) }}
-	
+
 	{{ formelements.checkbox("counterattacks", i18n.getMessage("formation_option_counterattacks"), counterattacks, false, validationMsg) }}
 {% endif %}
 
@@ -34,7 +34,7 @@
   						{% for player in players.bench %}
   						<option value="{{ player.id }}"{% if substitutions[subsNo].in == player.id %} selected{% endif %}>{{ player.name }} ({{ i18n.getMessage("option_" ~ player.position) }})</option>
   						{% endfor %}
-  					</select>	
+  					</select>
   					</p>
   					<p>
   						<select id="sub{{ subsNo }}_condition" name="sub{{ subsNo }}_condition"{% if disabledState %} disabled{% endif %}>
@@ -43,9 +43,9 @@
 							<option value="Leading"{% if substitutions[subsNo].condition == "Leading" %} selected{% endif %}>{{ i18n.getMessage("formation_substitutions_condition_leading") }}</option>
 							<option value="Deficit"{% if substitutions[subsNo].condition == "Deficit" %} selected{% endif %}>{{ i18n.getMessage("formation_substitutions_condition_deficit") }}</option>
 						</select>
-  					</p>	
+  					</p>
   				</td>
-  				<td><input class="input-mini" type="number" id="sub{{ subsNo }}_minute" name="sub{{ subsNo }}_minute" 
+  				<td><input class="input-mini" type="number" id="sub{{ subsNo }}_minute" name="sub{{ subsNo }}_minute"
   					value="{% if substitutions[subsNo].minute > 0 %}{{ substitutions[subsNo].minute }}{% endif %}" min="1" max="90" {% if disabledState %} disabled{% endif %}/></td>
   			</tr>
   			{% endfor %}

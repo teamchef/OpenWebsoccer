@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE module SYSTEM "../module.dtd">
 <module version="1.0.0">
-    
+
     <admin>
         <adminpage
             id="league"
@@ -28,7 +28,7 @@
                         type="text"
                         sort="true"
                         filter="true" />
-                    
+
                     <column
                         id="entity_league_land"
                         field="land"
@@ -48,12 +48,12 @@
                         id="kurz"
                         type="text"
                         required="true"  />
-                    
+
                     <field
                         id="land"
                         type="text"
                         required="true"  />
-                    
+
                     <field
                         id="p_steh"
                         type="percent"
@@ -90,35 +90,13 @@
             </entity>
         </adminpage>
     </admin>
-    
     <pages>
-        <page
-            id="leagues"
-            template="league-details"
-            navitem="true"
-            navweight="3"
-            model="LeagueDetailsModel"
-            role="user,guest">
-	        <page
-	            id="results"
-	            template="results-overview"
-	            navitem="true"
-	            model="LeaguesListModel"
-	            navweight="0"
-	            role="user,guest"/>
-	        
-   
-        </page>
-        
-        <!-- Deprecated page. Only have it for backwards compatibility. -->
         <page
 	            id="league"
 	            template="league-details"
 	            model="LeagueDetailsModel"
-	            role="user,guest"/>	     
-
-    </pages> 
-    
+	            role="user,guest"/>
+    </pages>
     <blocks>
 
         <block
@@ -129,7 +107,7 @@
             area="content_bottom"
             weight="2"
             role="user,guest" />
-        
+
     </blocks>
-    
+
 </module>

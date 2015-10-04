@@ -2,18 +2,6 @@
 <!DOCTYPE module SYSTEM "../module.dtd">
 <module version="1.0.0">
 
-    <pages>
-        <page
-            id="allaktivities"
-            template="user-activities-all"
-            navitem="true"
-            navweight="10"
-            model="AllActivitiesModel"
-            role="user" 
-            parentItem="leagues"/>
-
-    </pages>
-
     <blocks>
 
         <block
@@ -24,7 +12,7 @@
             area="custom"
             weight="8"
             role="user,guest" />
-        
+
         <block
             id="user-activities-all"
             template="user-activities-box"
@@ -33,7 +21,7 @@
             area="custom"
             weight="8"
             role="user,guest" />
-        
+
     </blocks>
 
 </module>

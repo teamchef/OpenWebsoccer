@@ -67,16 +67,4 @@
         </adminpage>
     </admin>
 
-    <pages>
-        <page
-            id="tablehistory"
-            template="tablehistory"
-            model="TableHistoryModel"
-            role="user,guest"
-            parentItem="league">
-            <script file="flot/jquery.flot.min.js" />
-        </page>
-
-    </pages>
-
 </module>

@@ -1,5 +1,5 @@
 
-{% import "macros/messagebox.twig" as messagebox %}
+{% import "messagebox.twig" as messagebox %}
 
 {% if leagues|length == 0 and cups|length == 0 %}
 	{{ messagebox.box("", i18n.getMessage("team_details_noleaguevictories"), "info") }}
@@ -7,7 +7,7 @@
 
 	{% for leagueName,seasons in leagues %}
 		<h4>{{ leagueName }}</h4>
-		
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -27,10 +27,10 @@
 			</tbody>
 		</table>
 	{% endfor %}
-	
+
 	{% if cups|length > 0 %}
 		<h4>{{ i18n.getMessage("entity_cup") }}</h4>
-		
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
