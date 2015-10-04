@@ -53,7 +53,7 @@
 <page id="playerssearch"		role="user"		navitem="true"	navweight="10"	parentItem="myteam"								template="playerssearch"								/>
 <page id="transfermarket"		role="user"		navitem="true"	navweight="11"	parentItem="myteam"		ConfigEnabled="transfermarket_enabled"		template="transfermarket-overview"	model="TransfermarketOverviewModel"		/>
 <page id="transferoffers"		role="user"		navitem="true"	navweight="12"	parentItem="myteam"		ConfigEnabled="transferoffers_enabled"		template="transferoffers"		model="TransferOffersModel"			/>
-<page id="team"				role="user"		navitem="false"	navweight="13"	parentItem="myteam"								template="team-details"			model="TeamDetailsModel"			/>
+<page id="team"				role="user"		navitem="true"	navweight="13"	parentItem="myteam"								template="team-details"			model="TeamDetailsModel"			/>
 
 <page id="todaysmatches"		role="user"		navitem="true"	navweight="9"											template="todaysmatchespage"								/>
 <page id="office"			role="user"		navitem="true"	navweight="1"	parentItem="todaysmatches"							template="office-overview"		model="OfficeModel"				/>
