@@ -318,7 +318,7 @@ function actionSaveConfig() {
 
 	$prefix = isset($_POST["db_prefix"]) ? $_POST["db_prefix"] : DEFAULT_DB_PREFIX;
 
-	$filecontent = "<?php"
+	$filecontent = "<<?php" . PHP_EOL;
 	$filecontent .= "\$conf['head_code'] = \"\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_host'] = \"". $_POST["db_host"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_user'] = \"". $_POST["db_user"] . "\";" . PHP_EOL;
