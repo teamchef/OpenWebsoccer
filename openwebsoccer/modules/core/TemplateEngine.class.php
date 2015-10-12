@@ -167,6 +167,7 @@ class TemplateEngine {
 		TEMPLATE_MODUL_FOLDER . "/" . 'tables',
 		TEMPLATE_MODUL_FOLDER . "/" . 'teamofday',
 		TEMPLATE_MODUL_FOLDER . "/" . 'termsandconditions',
+		TEMPLATE_MODUL_FOLDER . "/" . 'tlcsi',
 		TEMPLATE_MODUL_FOLDER . "/" . 'training',
 		TEMPLATE_MODUL_FOLDER . "/" . 'trainingcamp',
 		TEMPLATE_MODUL_FOLDER . "/" . 'transfermarket',

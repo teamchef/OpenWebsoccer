@@ -2,8 +2,8 @@
 
 {% import "statisticelements.twig" as statisticelements %}
 
-{% block box_title %}
-{{ i18n.getMessage('userprofile_block_title') }}
+{% block box_title %}</h4>
+<h4 class="colour"> {{ i18n.getMessage('userprofile_block_title') }} </h4>
 {% endblock %}
 
 {% block box_content %}
@@ -31,7 +31,7 @@
 {{ statisticelements.progressbar(profile.user_popularity) }}
 
 {% if env.getUser().clubId > 0 %}
-<p><em>{{ i18n.getMessage('entity_club') }}</em>
+<p>
 {% if userteam.team_picture|length %}
 
 	{% if env.getConfig("cdn_root_set") %}
@@ -39,7 +39,7 @@
 	{% else %}
 		{% set teamPicture = "<img src=\""~ env.getConfig("context_root") ~ "/uploads/club/" ~ userteam.team_picture ~ "\" style=\"width: 20px; height: 20px;\" />" %}
 	{% endif %}
-	
+
 {% else %}
 	{% set teamPicture = "" %}
 {% endif %}
@@ -48,22 +48,18 @@
 </p>
 
 <div class="dropdown" style="margin-top: -11px; margin-bottom: 12px;">
-  {{ teamPicture|raw }} <a class="dropdown-toggle ajaxLink" data-toggle="dropdown" href="#" data-ajaxblock="user-clubs-selection" data-ajaxtarget="clubsSelectionList">
-  {{ userteam.team_name }} (<a href="{{ env.getInternalUrl("myteam") }}"> {{ teamsize }} Spieler im Kader</a> )
-    <b class="caret"></b><br>
-  </a>
-  <a href="{{ env.getInternalUrl("team", "id=" ~ userteam.team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}"><i class="icon-info-sign darkIcon"></i> Vereinsprofil </a>
-  <a href="{{ env.getInternalUrl("league", "id=" ~ userteam.team_league_id) }}" title="{{ i18n.getMessage("userprofile_block_link_table") }}"><i class="icon-table darkIcon"></i> Tabelle </a>{{ tableRank }}. Platz
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" id="clubsSelectionList">
-
-  </ul>
+	{{ teamPicture|raw }}
+	<b><a class="dropdown-toggle ajaxLink" data-toggle="dropdown" href="#" data-ajaxblock="user-clubs-selection" data-ajaxtarget="clubsSelectionList">
+	<b class="caret"></b>
+	{{ userteam.team_name }}<a href="{{ env.getInternalUrl("myteam") }}"><br>{{ teamsize }} Spieler im Kader</a><br>
+	<a href="{{ env.getInternalUrl("team", "id=" ~ userteam.team_id) }}"><i class="icon-info-sign darkIcon"></i> Vereinsprofil </a>
+	<a href="{{ env.getInternalUrl("league", "id=" ~ userteam.team_league_id) }}" title="{{ i18n.getMessage("userprofile_block_link_table") }}"><i class="icon-table darkIcon"></i> Tabelle </a>{{ tableRank }}. Platz
+	<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" id="clubsSelectionList"></ul>
 </div>
 {% else %}
-	<br>
-	{{ teamPicture|raw }} <a href="{{ env.getInternalUrl("team", "id=" ~ userteam.team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ userteam.team_name }}</a><br><p>
-	<a href="{{ env.getInternalUrl("team", "id=" ~ userteam.team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}"><i class="icon-info-sign darkIcon"></i> Vereinsprofil </a>
-	<a href="{{ env.getInternalUrl("league", "id=" ~ userteam.team_league_id) }}" title="{{ i18n.getMessage("userprofile_block_link_table") }}"><i class="icon-table darkIcon"></i> Tabelle </a>{{ tableRank }}. Platz
-	</p>
+	{{ teamPicture|raw }}<b>{{ userteam.team_name }}</b><a href="{{ env.getInternalUrl("myteam") }}"><br>{{ teamsize }} Spieler im Kader</a><br>
+	<a href="{{ env.getInternalUrl("team", "id=" ~ userteam.team_id) }}"><i class="icon-info-sign darkIcon"></i> Vereinsprofil </a>
+	<a href="{{ env.getInternalUrl("league", "id=" ~ userteam.team_league_id) }}" title="{{ i18n.getMessage("userprofile_block_link_table") }}"> <i class="icon-table darkIcon"></i> Tabelle </a>{{ tableRank }}. Platz<br></br>
 {% endif %}
 
 {% if nextMatch.match_date is defined %}
@@ -75,11 +71,11 @@
 		<i class="icon-minus-sign-alt wstooltip" title="{{ i18n.getMessage("formation_notsubmitted_tooltip") }}"></i>
 	{% endif %}
 	Aufstellungsabgabe:
-	<p><em>{{ env.getFormattedDatetime(nextMatch.match_date) }} | {{ i18n.getMessage("matchtype_" ~ nextMatch.match_type) }}</em><p>
+	<p><em>{{ env.getFormattedDatetime(nextMatch.match_date) }} | {{ i18n.getMessage("matchtype_" ~ nextMatch.match_type) }}</em><br>
 	<strong><a href="{{ env.getInternalUrl("team", "id=" ~ nextMatch.match_home_id) }}">{{ nextMatch.match_home_name }}</a>	-
-	<a href="{{ env.getInternalUrl("team", "id=" ~ nextMatch.match_guest_id) }}">{{ nextMatch.match_guest_name }}</a></strong></p>
+	<a href="{{ env.getInternalUrl("team", "id=" ~ nextMatch.match_guest_id) }}">{{ nextMatch.match_guest_name }}</a></strong><br>
 {% endif %}
-
+<br>
 {% if secondnextMatch.match_date is defined %}
 	{% if secondnextMatch.match_home_id == userteam.team_id and secondnextMatch.match_home_formation_id %}
 		<i class="icon-check-sign wstooltip" title="{{ i18n.getMessage("formation_submitted_tooltip") }}"></i>
@@ -89,9 +85,9 @@
 		<i class="icon-minus-sign-alt wstooltip" title="{{ i18n.getMessage("formation_notsubmitted_tooltip") }}"></i>
 	{% endif %}
 	Aufstellungsabgabe:
-	<p><em>{{ env.getFormattedDatetime(secondnextMatch.match_date) }} | {{ i18n.getMessage("matchtype_" ~ secondnextMatch.match_type) }}</em><p>
+	<p><em>{{ env.getFormattedDatetime(secondnextMatch.match_date) }} | {{ i18n.getMessage("matchtype_" ~ secondnextMatch.match_type) }}</em><br>
 	<strong><a href="{{ env.getInternalUrl("team", "id=" ~ secondnextMatch.match_home_id) }}">{{ secondnextMatch.match_home_name }}</a>	-
-	<a href="{{ env.getInternalUrl("team", "id=" ~ secondnextMatch.match_guest_id) }}">{{ secondnextMatch.match_guest_name }}</a></strong></p>
+	<a href="{{ env.getInternalUrl("team", "id=" ~ secondnextMatch.match_guest_id) }}">{{ secondnextMatch.match_guest_name }}</a></strong><br>
 {% endif %}
 
 	<form method="post" class="form-inline">
@@ -108,9 +104,9 @@
 		<i class="icon-minus-sign-alt wstooltip" title="{{ i18n.getMessage("formation_notsubmitted_tooltip") }}"></i>
 	{% endif %}
 	Nationalteam-Aufstellungsabgabe:
-	<p><em>{{ env.getFormattedDatetime(nationalMatch.match_date) }} | {{ i18n.getMessage("matchtype_" ~ nationalMatch.match_type) }}</em><p>
+	<p><em>{{ env.getFormattedDatetime(nationalMatch.match_date) }} | {{ i18n.getMessage("matchtype_" ~ nationalMatch.match_type) }}</em><br>
 	<strong><a href="{{ env.getInternalUrl("team", "id=" ~ nationalMatch.match_home_id) }}">{{ nationalMatch.match_home_name }}</a>	-
-	<a href="{{ env.getInternalUrl("team", "id=" ~ nationalMatch.match_guest_id) }}">{{ nationalMatch.match_guest_name }}</a></strong></p>
+	<a href="{{ env.getInternalUrl("team", "id=" ~ nationalMatch.match_guest_id) }}">{{ nationalMatch.match_guest_name }}</a></strong><br>
 {% endif %}
 
 <p><em>{{ i18n.getMessage('entity_club_finanz_budget') }}</em><br/>

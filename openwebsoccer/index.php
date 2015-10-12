@@ -24,9 +24,24 @@ if (file_exists('/install')){ require './admin/pages/deldir.inc.php'; deldir (BA
 if (file_exists('/update')){ require './admin/pages/deldir.inc.php'; deldir (BASE_FOLDER . '/cache'); mkdir  (BASE_FOLDER . '/cache'); header('Location: /update/'); }
 
 define('BASE_FOLDER', __DIR__);
-define('OPENWEBSOCCER_VERSION', 'Step 102');
-
+define('OPENWEBSOCCER_VERSION','OpenWebsoccer.Step.103');
 include(BASE_FOLDER . '/frontbase.inc.php');
+
+$parts = parse_url($_SERVER['HTTP_REFERER']);
+$path_parts= explode('/', $parts[path]);
+$grafref = $path_parts[1];
+$owsref = $path_parts[1];
+
+if ($owsref == 'openwebsoccer') {
+}
+else {
+	if ($grafref !== 'grav') {
+		if ($website->getConfig('grav_enabled') == '1') {
+			header("Location: ../grav/");
+    		exit;
+		}
+	}
+}
 
 // offline mode
 $isOffline = FALSE;

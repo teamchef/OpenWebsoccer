@@ -7,6 +7,10 @@
 	</admin>
 
 	<settings>
+		<setting id="grav_enabled" category="tlc" type="boolean" default="0" />
+		
+		<setting id="hide_latestActivitiesBlock" category="tlc" type="boolean" default="0" />
+
 		<setting id="amount_aufstellung_enabled" category="tlc" type="boolean" default="1" />
 		<setting id="amount_aufstellung" category="tlc" type="text" default="100000" />
 

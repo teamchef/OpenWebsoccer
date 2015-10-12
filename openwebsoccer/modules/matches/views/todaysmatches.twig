@@ -1,7 +1,7 @@
 {% extends "box.twig" %}
 
 {% block box_title %}
-{{ i18n.getMessage('matches_today_title') }}
+<h4 class="colour"> {{ i18n.getMessage('matches_today_title') }}</h4>
 {% endblock %}
 
 {% block box_content %}
@@ -41,13 +41,13 @@
 			{% endif %}
 
 					{% if match.home_team_picture|length %}
-					
+
 						{% if env.getConfig("cdn_root_set") %}
 							<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px"/>
 						{% else %}
 							<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px"/>
 						{% endif %}
-						
+
 					{% endif %}
 					<a href="{{ env.getInternalUrl("team", "id=" ~ match.home_id) }}">{{ match.home_team }}</a>
 					{% if match.home_noformation %}
@@ -71,13 +71,13 @@
 			{% endif %}
 
 					{% if match.guest_team_picture|length %}
-					
+
 						{% if env.getConfig("cdn_root_set") %}
 							<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
 						{% else %}
 							<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px"/>
 						{% endif %}
-						
+
 					{% endif %}
 					<a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_id) }}">{{ match.guest_team }}</a>
 					{% if match.guest_noformation %}

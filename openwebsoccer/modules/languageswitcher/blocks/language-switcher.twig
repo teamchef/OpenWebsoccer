@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	
+
 	<style type="text/css">
 		.languageswitcher {
 			list-style-type: none;
@@ -18,7 +18,7 @@
 {% endblock %}
 
 {% block box_title %}
-{{ i18n.getMessage('langswitcher_block_title') }}
+<h4 class="colour"> {{ i18n.getMessage('langswitcher_block_title') }}</h4>
 {% endblock %}
 
 {% block box_content %}

@@ -61,10 +61,15 @@
 
 	  	{% for player in transferplayers %}
 			<tr>
-				<td><img src="{{ skin.getImage("icons/playertype_" ~ player.position ~ ".png") }}"
-					alt="{{ i18n.getMessage("player_position_" ~ player.position) }}" title="{{ i18n.getMessage("player_position_" ~ player.position) }}" />
-					{% if player.position_main|length > 0 %}<abbr title="{{ i18n.getMessage("option_" ~ player.position_main) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}</abbr>{% endif %}
-					</td>
+				<td>
+				{% if env.getConfig("cdn_root_set") %}
+					<img src="{{ env.getConfig("cdn_root") }}/img/{{ i18n.getMessage("player_position_" ~ player.position) }}.png"	alt="{{ i18n.getMessage("player_position_" ~ player.position) }}"
+					title="{{ i18n.getMessage("player_position_" ~ player.position) }}" />
+				{% else %}
+					<img src="{{ env.getConfig("context_root") }}/img/{{ i18n.getMessage("player_position_" ~ player.position) }}.png"	alt="{{ i18n.getMessage("player_position_" ~ player.position) }}"
+					title="{{ i18n.getMessage("player_position_" ~ player.position) }}" />
+				{% endif %}
+				</td>
 				<td>
 					<p><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.firstname }} {{ player.lastname }}</a></p>
 

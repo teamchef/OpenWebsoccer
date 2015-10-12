@@ -210,7 +210,13 @@
   		{% for cupvictory in team.cupvictories %}
   			<li><strong>{{ i18n.getMessage("entity_cup") }}: {{ cupvictory.cup_name }}</strong>
   			{% if cupvictory.cup_logo|length > 0 %}
-  			<br><img src="{{ env.getConfig("context_root") }}/uploads/cup/{{ cupvictory.cup_logo }}" class="img-rounded">
+  			
+				{% if env.getConfig("cdn_root_set") %}
+					<br><img src="{{ env.getConfig("cdn_root") }}/uploads/cup/{{ cupvictory.cup_logo }}" class="img-rounded">
+				{% else %}
+					<br><img src="{{ env.getConfig("context_root") }}/uploads/cup/{{ cupvictory.cup_logo }}" class="img-rounded">
+				{% endif %}
+  			
   			{% endif %}
   			</li>
   		{% endfor %}

@@ -12,12 +12,13 @@
 
 {% if env.user.id == null %}
 
-<br><br>
-<div class="top_spoiler" style="color:white" >
-<table cellpadding="30">
+<br>
+<div class="top_spoiler" style="color:white;border-style:solid;border-width:{{env.getConfig("spoiler_border")}}px;border-color:{{env.getConfig("spoiler_border_color")}};" >
+<table cellpadding="25">
   <th>
-  <h1>{{ block("browser_title") }}</h1>
-  <p>{{ i18n.getMessage("home_teaser") }}</p>
+	<h1><div style="color:{{ env.getConfig("spoiler_text_header_color") }}"> {{ env.getConfig("spoiler_text_header") }}</div></h1>
+	<div style="color:{{ env.getConfig("spoiler_text_color") }}"> {{ env.getConfig("spoiler_text") }}</div>
+	<div style="color:{{ env.getConfig("spoiler_text_2_color") }}"> {{ env.getConfig("spoiler_text_2") }}</div>
   </th>
   <th>
     	{% if env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0 %}
@@ -29,9 +30,12 @@
 	{% endif %}
   </th>
   <th>
-  OpenWebsoccer {{ constant('OPENWEBSOCCER_VERSION') }}<br>
-  PHP  Version {{ constant('PHP_VERSION') }}<br>
-  Twig Version {{ constant('Twig_Environment::VERSION') }}
+  <FONT SIZE="-3">
+  {{ constant('OPENWEBSOCCER_VERSION')}}<br>
+  PHP  Version {{constant('PHP_VERSION')}}<br>
+  Twig Version {{constant('Twig_Environment::VERSION')}}<br>
+  Feataturing: Grav 0.9.45
+  </FONT>
 </th>
 </table>
 </div>
@@ -56,7 +60,9 @@
 	<div class="span5">
 		<div class="ajaxLoadedBlock" id="todaysmatchesBlock" data-ajaxblock="todaysmatches" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
 		<div class="ajaxLoadedBlock" id="latestResultsBlock" data-ajaxblock="latest-results-summary" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
-		<div class="ajaxLoadedBlock" id="latestActivitiesBlock" data-ajaxblock="user-activities-all" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
+		{% if env.getConfig("hide_latestActivitiesBlock") != "1" %}
+			  <div class="ajaxLoadedBlock" id="latestActivitiesBlock" data-ajaxblock="user-activities-all" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
+		{% endif %}
 	</div>
 
 	<div class="span3">

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-    <message id="freeclubs_navlabel">Freie Vereine</message>
+    <message id="freeclubs_navlabel">Freie Teams</message>
     <message id="freeclubs_title">Vereine ohne Manager</message>
     <message id="freeclubs_no_free_clubs_available">Derzeit gibt es keine freien Vereine.</message>
     <message id="freeclubs_head_choose">Auswahl</message>

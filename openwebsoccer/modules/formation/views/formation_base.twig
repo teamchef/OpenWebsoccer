@@ -320,13 +320,13 @@
 									data-strengthwrong="{{ (player.strength * (1 - env.getConfig("sim_strength_reduction_wrongposition") / 100))|number_format }}"
 									{% endif %}
 									{% if player.picture is defined and player.picture|length > 0 %}
-									
+
 										{% if env.getConfig("cdn_root_set") %}
 											data-picture="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.picture }}"
 										{% else %}
 											data-picture="{{ env.getConfig("context_root") }}/uploads/player/{{ player.picture }}"
 										{% endif %}
-									
+
 									{% endif %}
 									>
 									<div class="playerinfoBar">
@@ -366,9 +366,15 @@
 										{% endif %}
 
 										{% if player.player_nationality_filename is defined %}
-											{% set nationImg = skin.getImage("flags/players/" ~ player.player_nationality_filename ~ ".png") %}
-											{% if nationImg %}<img src="{{ nationImg }}" title="{{ player.player_nationality }}" alt="{{ player.player_nationality }}"
-												style="width: 15px; height: 10px; vertical-align: baseline"/>{% endif %}
+
+											{% if nationImg %}
+												{% if env.getConfig("cdn_root_set") %}
+				  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{ env.getConfig("cdn_root") }}/img/flags/{{ player.player_nationality }}.png"  alt="{{ player.player_nationality }}" style="width: 15px; height: 10px; vertical-align: baseline"/>
+				  {% else %}
+				  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{ env.getConfig("context_root") }}/img/flags/{{ player.player_nationality }}.png"  alt="{{ player.player_nationality }}" style="width: 15px; height: 10px; vertical-align: baseline"/>
+				  {% endif %}
+
+											{% endif %}
 										{% endif %}
 
 										{% if player.matches_injured is defined and player.matches_injured > 0 %}
@@ -377,7 +383,13 @@
 											</span>
 										{% elseif player.matches_blocked is defined and player.matches_blocked > 0 %}
 											<span class="playerBlockedLabel" title="{{ i18n.getMessage("formation_team_blocked_cards") }}">
-												<img src="{{ skin.getImage("icons/blocked_cards.png") }}" alt="{{ i18n.getMessage("formation_team_blocked_cards") }}" style="width: 13px; height: 13px" /> {{ player.matches_blocked }}
+
+											{% if env.getConfig("cdn_root_set") %}
+												<img src="{{ env.getConfig("cdn_root") }}/img/blocked_cards.png") }}" alt="{{ i18n.getMessage("formation_team_blocked_cards") }}" style="width: 13px; height: 13px" /> {{ player.matches_blocked }}
+											{% else %}
+												<img src="{{ env.getConfig("context_root") }}/img/blocked_cards.png") }}" alt="{{ i18n.getMessage("formation_team_blocked_cards") }}" style="width: 13px; height: 13px" /> {{ player.matches_blocked }}
+											{% endif %}
+
 											</span>
 										{% endif %}
 

@@ -5,6 +5,10 @@
 
 	<message id="settings_tab_tlc">TLC - Features</message>
 
+	<message id="settings_label_grav_enabled">Grav CMS nutzen</message>
+
+	<message id="settings_label_hide_latestActivitiesBlock">Benutzeraktivitäten ausblenen</message>
+
 	<message id="settings_label_amount_aufstellung_enabled">Aufstellungsprämie für eine abgegebenen Aufstellung.</message>
 	<message id="settings_label_amount_aufstellung">Aufstellungsprämie:</message>
 

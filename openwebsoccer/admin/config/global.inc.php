@@ -113,6 +113,7 @@ $paths = array(
     BASE_FOLDER . '/modules/' . '/tables/',
     BASE_FOLDER . '/modules/' . '/teamofday/',
     BASE_FOLDER . '/modules/' . '/termsandconditions/',
+    BASE_FOLDER . '/modules/' . '/tlcsi/',
     BASE_FOLDER . '/modules/' . '/training/',
     BASE_FOLDER . '/modules/' . '/trainingcamp/',
     BASE_FOLDER . '/modules/' . '/transfermarket/',

@@ -10,6 +10,8 @@
 
 	<message id="settings_label_bild_spoiler">Spoiler Bild</message>
 	<message id="settings_label_color_spoiler">Spoiler Farbe</message>
+	<message id="settings_label_spoiler_border">Spoiler Border-Rand</message>
+	<message id="settings_label_spoiler_border_color">Spoiler Border-Farbe</message>
 
 	<message id="settings_label_bild_infolabel">Infolabel Bild</message>
 	<message id="settings_label_color_infolabel">Infolabel Farbe</message>
@@ -27,4 +29,14 @@
 	<message id="settings_label_navbar_brand_color_shadow">Brand Schriftschatten</message>
 	<message id="settings_label_navbar_text_color">Menü Schriftfarbe</message>
 	<message id="settings_label_navbar_text_color_shadow">Menü Schriftschatten</message>
+
+	<message id="settings_label_spoiler_text_header">Spoiler Text-Header</message>
+	<message id="settings_label_spoiler_text_header_color">Spoiler Text-Header-Farbe</message>
+	<message id="settings_label_spoiler_text">Spoiler Text</message>
+	<message id="settings_label_spoiler_text_color">Spoiler Text-Farbe</message>
+	<message id="settings_label_spoiler_text_2">Spoiler 2. Text</message>
+	<message id="settings_label_spoiler_text_2_color">Spoiler 2. Text-Farbe</message>
+	
+	<message id="settings_label_header_text_color">h1 bis  h6 Farbe</message>
+	<message id="settings_label_link_text_color">Link-Texte-Farbe</message>
 </messages>

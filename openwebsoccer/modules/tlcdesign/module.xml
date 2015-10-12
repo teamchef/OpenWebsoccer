@@ -10,20 +10,39 @@
 		<setting id="bild_hintergrund" category="tlcdesign" type="text" default="" />
 		<setting id="bild_navbar" category="tlcdesign" type="text" default="" />
 		<setting id="color_navbar" category="tlcdesign" type="text" default="darkblue" />
+
 		<setting id="bild_spoiler" category="tlcdesign" type="text" default="" />
 		<setting id="color_spoiler" category="tlcdesign" type="text" default="darkblue" />
+		<setting id="spoiler_border" category="tlcdesign" type="text" default="darkblue" />
+		<setting id="spoiler_border_color" category="tlcdesign" type="text" default="darkblue" />
+
 		<setting id="bild_infolabel" category="tlcdesign" type="text" default="" />
 		<setting id="color_infolabel" category="tlcdesign" type="text" default="darkblue" />
+
 		<setting id="color_container" category="tlcdesign" type="text" default="" />
+
 		<setting id="bild_footer" category="tlcdesign" type="text" default="" />
 		<setting id="color_footer" category="tlcdesign" type="text" default="" />
+
 		<setting id="box_background_image" category="tlcdesign" type="text" default="" />
 		<setting id="box_background_color" category="tlcdesign" type="text" default="" />
 		<setting id="box_border" category="tlcdesign" type="text" default="" />
 		<setting id="box_border_color" category="tlcdesign" type="text" default="" />
+
 		<setting id="navbar_brand_color" category="tlcdesign" type="text" default="" />
 		<setting id="navbar_brand_color_shadow" category="tlcdesign" type="text" default="" />
 		<setting id="navbar_text_color" category="tlcdesign" type="text" default="" />
 		<setting id="navbar_text_color_shadow" category="tlcdesign" type="text" default="" />
+		<setting id="navbar_text_color_shadow" category="tlcdesign" type="text" default="" />
+
+		<setting id="spoiler_text_header" category="tlcdesign" type="text" default="" />
+		<setting id="spoiler_text_header_color" category="tlcdesign" type="text" default="" />
+		<setting id="spoiler_text" category="tlcdesign" type="text" default="" />
+		<setting id="spoiler_text_color" category="tlcdesign" type="text" default="" />
+		<setting id="spoiler_text_2" category="tlcdesign" type="text" default="" />
+		<setting id="spoiler_text_2_color" category="tlcdesign" type="text" default="" />
+		
+		<setting id="link_text_color" category="tlcdesign" type="text" default="" />
+		<setting id="header_text_color" category="tlcdesign" type="text" default="" />
 	</settings>
 </module>

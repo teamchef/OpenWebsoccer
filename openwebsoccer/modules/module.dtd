@@ -76,7 +76,7 @@
 <!ATTLIST page parentItem CDATA #IMPLIED>
 <!ATTLIST page navweight CDATA #IMPLIED>
 <!ATTLIST page navitem (true|false) "false">
-<!ATTLIST page navitemOnlyForConfigEnabled CDATA #IMPLIED>
+<!ATTLIST page ConfigEnabled CDATA #IMPLIED>
 <!ATTLIST page premiumBalanceMin CDATA #IMPLIED>
 
 <!ELEMENT script EMPTY>

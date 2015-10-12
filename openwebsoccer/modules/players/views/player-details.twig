@@ -77,7 +77,13 @@
 				  {% endif %}
 
 				  <dt>{{ i18n.getMessage("entity_player_nation") }}</dt>
-				  {% set nationImg = skin.getImage("flags/players/" ~ player.player_nationality_filename ~ ".png") %}
+				  
+				  {% if env.getConfig("cdn_root_set") %}
+				  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{ env.getConfig("cdn_root") }}/img/flags/{{ player.player_nationality }}.png"  alt="{{ player.player_nationality }}" style="width: 15px; height: 10px; vertical-align: baseline"/>
+				  {% else %}
+				  	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="{{ env.getConfig("context_root") }}/img/flags/{{ player.player_nationality }}.png"  alt="{{ player.player_nationality }}" style="width: 15px; height: 10px; vertical-align: baseline"/>
+				  {% endif %}
+				  
 				  	{% if i18n.hasMessage("option_" ~ player.player_nationality_filename) %}
 						{% set countryLabel = i18n.getMessage("option_" ~ player.player_nationality_filename) %}
 					{% else %}

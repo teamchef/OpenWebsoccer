@@ -32,9 +32,9 @@ define("BASE_FOLDER", __DIR__ ."/..");
 
 define("PHP_MIN_VERSION", "5.3.0");
 define("WRITABLE_FOLDERS", "generated/,uploads/club/,uploads/cup/,uploads/player/,uploads/sponsor/,uploads/stadium/,uploads/stadiumbuilder/,uploads/stadiumbuilding/,uploads/users/,cache/,admin/config/adminlog.php,admin/config/entitylog.php,admin/config/config.inc.php,admin/config/imprint.php,admin/config/jobs.xml,admin/config/termsandconditions.xml");
-define("DEFAULT_DB_PREFIX", "ows");
+define("DEFAULT_DB_PREFIX", "");
 define("CONFIGFILE", BASE_FOLDER . "/generated/config.inc.php");
-define("DDL_FULL", "ws3_ddl_full.sql");
+define("DDL_FULL", "ddl_full.sql");
 
 session_start();
 $supportedLanguages = array("de" => "Deutsch");
@@ -224,15 +224,6 @@ function printConfigForm($messages) {
 			    </div>
 			</div>
 
-			<div class="control-group">
-			    <label class="control-label" for="db_prefix"><?php echo $messages["label_db_prefix"] ?></label>
-			    <div class="controls">
-			      <input type="text" id="db_prefix" name="db_prefix"
-			      	value="<?php echo (isset($_POST["db_prefix"])) ? $_POST["db_prefix"] : ""; ?>">
-			      <span class="help-inline"><?php echo $messages["label_db_prefix_help"] ?></span>
-			    </div>
-			</div>
-
 			<hr>
 
 			<div class="control-group">
@@ -327,8 +318,8 @@ function actionSaveConfig() {
 
 	$prefix = isset($_POST["db_prefix"]) ? $_POST["db_prefix"] : DEFAULT_DB_PREFIX;
 
-	$filecontent = "<?php" . PHP_EOL;
-	$filecontent .= "\$conf['version'] =\"94\";" . PHP_EOL;
+	$filecontent = "<?php"
+	$filecontent .= "\$conf['head_code'] = \"\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_host'] = \"". $_POST["db_host"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_user'] = \"". $_POST["db_user"] . "\";" . PHP_EOL;
 	$filecontent .= "\$conf['db_passwort'] = \"". $_POST["db_password"] . "\";" . PHP_EOL;

@@ -9,7 +9,6 @@
   <settings>
       <setting id="skin" category="frontend" type="text" default="DefaultBootstrapSkin" />
       <setting id="entries_per_page" category="frontend" type="number" default="20" />
-      <setting id="head_code" category="frontend" type="textarea" />
   </settings>
 
     <blocks>

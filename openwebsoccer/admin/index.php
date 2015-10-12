@@ -144,7 +144,13 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
         <div class="span10">
 
         	<div id="ajaxSpinner" style="display: none">
-        		<img src="../img/ajax-loader.gif" width="16" height="16" />
+
+        		{% if env.getConfig("cdn_root_set") %}
+						<img src="{{ env.getConfig("cdn_root") }}/img/ajax-loader.gif" width="16" height="16" />
+				{% else %}
+						<img src="{{ env.getConfig("context_root") }}/img/ajax-loader.gif" width="16" height="16" />
+				{% endif %}
+
         	</div>
 <?php
 if (empty($site)) {

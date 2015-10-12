@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE messages SYSTEM "../messages.dtd">
+<messages>
+	<message id="settings_label_frontend_si_code_sidebar">HTML-Code für Alle sichtbar: Seitenleiste</message>
+	<message id="settings_label_frontend_si_code_top">HTML-Code für Alle sichtbar: Oberer Seitenbereich</message>
+	<message id="settings_label_frontend_si_code_bottom">HTML-Code für Alle sichtbar: Unterer Seitenbereich</message>
+	
+	<message id="settings_label_frontend_sif_code_sidebar">HTML-Code für Alle im Frotend sichtbar: Seitenleiste</message>
+	<message id="settings_label_frontend_sif_code_top">HTML-Code für Alle im Frotend sichtbar: Oberer Seitenbereich</message>
+	<message id="settings_label_frontend_sif_code_bottom">HTML-Code für Alle im Frotend sichtbar: Unterer Seitenbereich</message>
+</messages>

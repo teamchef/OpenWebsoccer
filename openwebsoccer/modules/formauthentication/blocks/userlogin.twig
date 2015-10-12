@@ -2,7 +2,8 @@
 {% import "formelements.twig" as formelements %}
 
 {% block box_title %}
-{{ i18n.getMessage('formlogin_block_title') }}
+<h4 class="colour"> {{ i18n.getMessage('formlogin_block_title') }}</h4>
+<h5 class="colour">
 {% endblock %}
 
 {% block box_content %}
@@ -23,23 +24,10 @@
     <label class="checkbox">
       <input type="checkbox" id="rememberme" name="rememberme" value="1"> {{ i18n.getMessage('formlogin_option_rememberme') }}
     </label>
-
+	<br>
 	<button type="submit" class="btn btn-primary">{{ i18n.getMessage('formlogin_submit_button') }}</button>
 	<input type="hidden" name="page" value="login"/>
 	<input type="hidden" name="action" value="login"/>
 </form>
 
-	{% if env.getConfig("allow_userregistration") or env.getConfig("login_allow_sendingpassword") or env.getConfig("registration_url")|length > 0 %}
-		<p>
-			{% if env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0 %}
-				{% set registerUrl = env.getInternalUrl("register") %}
-				{% if env.getConfig("registration_url")|length > 0 %}
-					{% set registerUrl = env.getConfig("registration_url") %}
-				{% endif %}
-				<a href="{{ registerUrl }}">{{ i18n.getMessage('formlogin_link_register') }}</a>
-			{% endif %}
-			{% if (env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0) and env.getConfig("login_allow_sendingpassword") %} | {% endif %}
-			{% if env.getConfig("login_allow_sendingpassword") %}<a href="{{ env.getInternalUrl("forgot-password") }}">{{ i18n.getMessage('formlogin_link_forgot_password') }}</a>{% endif %}
-		</p>
-	{% endif %}
 {% endblock %}

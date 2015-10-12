@@ -1,0 +1,47 @@
+enabled: true
+wk_path: 'vendor/h4cc/wkhtmltopdf-i386/bin/wkhtmltopdf-i386'
+
+#allow <path>                   Allow the file or files from the specified folder to be loaded (repeatable)
+#collate                        Collate when printing multiple copies
+#cookie <name> <value>          Set an additional cookie (repeatable)
+#cookie-jar <path>              Read and write cookies from and to the supplied cookie jar file
+#copies <number>                Number of copies to print into the pdf file (default 1)
+#custom-header <name> <value>   Set an additional HTTP header (repeatable)
+#debug-javascript               Show javascript debugging output
+#disable-javascript             Do not allow web pages to run javascript
+#disallow-local-file-access     Do not allowed conversion of a local file to read in other local files, unless explecitily allowed with --allow
+#dpi <dpi>                      Change the dpi explicitly (this has no effect on X11 based systems)
+#enable-plugins                 Enable installed plugins (such as flash
+#encoding <encoding>            Set the default text encoding, for input
+#extended-help                  Display more extensive help, detailing less common command switches
+grayscale: false                 # PDF will be generated in grayscale if true (default = false)
+#help                           Display help
+#htmldoc                        Output program html help
+#ignore-load-errors             Ignore pages that claimes to have encountered an error during loading
+#lowquality                     Generates lower quality pdf/ps. Useful to shrink the result document space
+#manpage                        Output program man page
+margin_bottom: 10               # <unitreal> Set the page bottom margin (default 10mm)
+margin_left: 10                 # <unitreal> Set the page left margin (default 10mm)
+margin_right: 10                # <unitreal> Set the page right margin (default 10mm)
+margin_top: 10                  # <unitreal> Set the page top margin (default 10mm)
+#minimum-font-size <int>        Minimum font size (default 5)
+#no-background                  Do not print background
+orientation: Portrait           # Set orientation to Landscape or Portrait
+#page-height <unitreal>         Page height (default unit millimeter)
+#page_size: A4                   # <size> Set paper size to: A4, Letter, etc.
+#page-width <unitreal>          Page width  (default unit millimeter)
+#password <password>            HTTP Authentication password
+#post <name> <value>            Add an additional post field (repeatable)
+#post-file <name> <path>        Post an additional file (repeatable)
+#proxy <proxy>                  Use a proxy
+#quiet                          Be less verbose
+#read-args-from-stdin           Read command line arguments from stdin
+#readme                         Output program readme
+#redirect-delay <msec>          Wait some milliseconds for js-redirects (default 200)
+#stop-slow-scripts              Stop slow running javascripts
+#title                          # <text> The title of the generated pdf file (The title of the first document is used if not specified)
+title: true                     # I prefer True or False, getting title from site page
+#user-style-sheet <url>         Specify a user style sheet, to load with every page
+#username <username>            HTTP Authentication username
+#version                        Output version information an exit
+zoom: 1                         # Use this zoom factor (default 1) <float>

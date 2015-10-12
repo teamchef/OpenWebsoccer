@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE messages SYSTEM "../messages.dtd">
 <messages>
-	<message id="settings_label_frontend_ads_hide_for_premiumusers">Werbeanzeigen bei Premiumnutzern ausblenden.</message> 
-	<message id="settings_label_frontend_ads_code_sidebar">Werbeanzeigen HTML-Code: Seitenleiste</message>
-	<message id="settings_label_frontend_ads_code_top">Werbeanzeigen HTML-Code: Oberer Seitenbereich</message>
-	<message id="settings_label_frontend_ads_code_bottom">Werbeanzeigen HTML-Code: Unterer Seitenbereich</message>
+	<message id="settings_label_frontend_ads_hide_for_premiumusers">Werbeanzeigen bei Premiumnutzern ausblenden.</message>
+
+	<message id="settings_label_frontend_ads_code_sidebar">HTML-Code für User sichtbar: Seitenleiste</message>
+	<message id="settings_label_frontend_ads_code_top">HTML-Code für User sichtbar: Oberer Seitenbereich</message>
+	<message id="settings_label_frontend_ads_code_bottom">HTML-Code für User sichtbar: Unterer Seitenbereich</message>
 </messages>
