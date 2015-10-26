@@ -66,6 +66,21 @@ class Form extends Iterator
     }
 
     /**
+     * Get value of given variable (or all values).
+     *
+     * @param string $name
+     * @return mixed
+     */
+    public function setValue($name = null, $value = '')
+    {
+        if (!$name) {
+            return;
+        }
+
+        $this->values[$name] = $value;
+    }
+
+    /**
      * Reset values.
      */
     public function reset()
@@ -80,6 +95,16 @@ class Form extends Iterator
     {
         if (isset($_POST)) {
             $this->values = (array) $_POST;
+        }
+
+        foreach($this->items['fields'] as $field) {
+            if ($field['type'] == 'checkbox') {
+                if (isset($this->values[$field['name']])) {
+                    $this->values[$field['name']] = true;
+                } else {
+                    $this->values[$field['name']] = false;
+                }
+            }
         }
 
         $process = isset($this->items['process']) ? $this->items['process'] : array();
