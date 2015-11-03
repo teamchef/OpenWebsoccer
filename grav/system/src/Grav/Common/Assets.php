@@ -42,6 +42,8 @@ class Assets
     /** @const Regex to match CSS import content */
     const CSS_IMPORT_REGEX = '{@import(.*);}';
 
+    const HTML_TAG_REGEX = '#(<([A-Z][A-Z0-9]*)>)+(.*)(<\/\2>)#is';
+
 
     /**
      * Closure used by the pipeline to fetch assets.
@@ -72,6 +74,8 @@ class Assets
     protected $config;
     protected $base_url;
     protected $timestamp = '';
+    protected $assets_dir;
+    protected $assets_url;
 
     // Default values for pipeline settings
     protected $css_minify = true;
@@ -115,7 +119,7 @@ class Assets
         }
 
         // Pipeline requires public dir
-        if (($this->js_pipeline || $this->css_pipeline) && !is_dir(ASSETS_DIR)) {
+        if (($this->js_pipeline || $this->css_pipeline) && !is_dir($this->assets_dir)) {
             throw new \Exception('Assets: Public dir not found');
         }
 
@@ -173,6 +177,11 @@ class Assets
         $base_url = self::getGrav()['base_url'];
         $asset_config = (array)$config->get('system.assets');
 
+        /** @var Locator $locator */
+        $locator = self::$grav['locator'];
+        $this->assets_dir = self::getGrav()['locator']->findResource('asset://') . DS;
+        $this->assets_url = self::getGrav()['locator']->findResource('asset://', false);
+
         $this->config($asset_config);
         $this->base_url = $base_url . '/';
 
@@ -227,21 +236,22 @@ class Assets
      * It checks for duplicates.
      * You may add more than one asset passing an array as argument.
      *
-     * @param  mixed  $asset
-     * @param  int    $priority the priority, bigger comes first
-     * @param  bool   $pipeline false if this should not be pipelined
+     * @param  mixed $asset
+     * @param  int $priority the priority, bigger comes first
+     * @param  bool $pipeline false if this should not be pipelined
+     * @param null $group
      *
      * @return $this
      */
-    public function addCss($asset, $priority = null, $pipeline = null)
+    public function addCss($asset, $priority = null, $pipeline = null, $group = null)
     {
         if (is_array($asset)) {
             foreach ($asset as $a) {
-                $this->addCss($a, $priority, $pipeline);
+                $this->addCss($a, $priority, $pipeline, $group);
             }
             return $this;
         } elseif (isset($this->collections[$asset])) {
-            $this->add($this->collections[$asset], $priority, $pipeline);
+            $this->add($this->collections[$asset], $priority, $pipeline, $group);
             return $this;
         }
 
@@ -253,7 +263,8 @@ class Assets
             'asset'    => $asset,
             'priority' => intval($priority ?: 10),
             'order'    => count($this->css),
-            'pipeline' => $pipeline ?: true
+            'pipeline' => $pipeline ?: true,
+            'group' => $group ?: 'head'
         ];
 
         // check for dynamic array and merge with defaults
@@ -369,20 +380,27 @@ class Assets
      * For adding chunks of string-based inline CSS
      *
      * @param  mixed $asset
-     * @param  int   $priority the priority, bigger comes first
+     * @param  int $priority the priority, bigger comes first
+     * @param null $group
      *
      * @return $this
      */
-    public function addInlineCss($asset, $priority = null)
+    public function addInlineCss($asset, $priority = null, $group = null)
     {
+        $asset = trim($asset);
+
         if (is_a($asset, 'Twig_Markup')) {
-            $asset = strip_tags((string)$asset);
+            preg_match(self::HTML_TAG_REGEX, $asset, $matches );
+            if (isset($matches[3]))  {
+                $asset = $matches[3];
+            }
         }
 
         $data = [
             'priority'  => intval($priority ?: 10),
             'order'     => count($this->inline_css),
-            'asset'     => $asset
+            'asset'     => $asset,
+            'group'     => $group ?: 'head'
         ];
 
         // check for dynamic array and merge with defaults
@@ -416,8 +434,13 @@ class Assets
      */
     public function addInlineJs($asset, $priority = null, $group = null)
     {
+        $asset = trim($asset);
+
         if (is_a($asset, 'Twig_Markup')) {
-            $asset = strip_tags((string)$asset);
+            preg_match(self::HTML_TAG_REGEX, $asset, $matches );
+            if (isset($matches[3]))  {
+                $asset = $matches[3];
+            }
         }
 
         $data = [
@@ -447,11 +470,12 @@ class Assets
     /**
      * Build the CSS link tags.
      *
+     * @param  string $group name of the group
      * @param  array $attributes
      *
      * @return string
      */
-    public function css($attributes = [])
+    public function css($group = 'head', $attributes = [])
     {
         if (!$this->css) {
             return null;
@@ -479,29 +503,37 @@ class Assets
         $attributes = $this->attributes(array_merge(['type' => 'text/css', 'rel' => 'stylesheet'], $attributes));
 
         $output = '';
+        $inline_css = '';
+
         if ($this->css_pipeline) {
-            $pipeline_result = $this->pipelineCss();
+            $pipeline_result = $this->pipelineCss($group);
             if ($pipeline_result) {
                 $output .= '<link href="' . $pipeline_result . '"' . $attributes . ' />' . "\n";
             }
             foreach ($this->css_no_pipeline as $file) {
-                $media = isset($file['media']) ? sprintf(' media="%s"', $file['media']) : '';
-                $output .= '<link href="' . $file['asset'] . $this->timestamp . '"' . $attributes . $media . ' />' . "\n";
+                if ($group && $file['group'] == $group) {
+                    $media = isset($file['media']) ? sprintf(' media="%s"', $file['media']) : '';
+                    $output .= '<link href="' . $file['asset'] . $this->timestamp . '"' . $attributes . $media . ' />' . "\n";
+                }
             }
         } else {
             foreach ($this->css as $file) {
-                $media = isset($file['media']) ? sprintf(' media="%s"', $file['media']) : '';
-                $output .= '<link href="' . $file['asset'] . $this->timestamp . '"' . $attributes . $media . ' />' . "\n";
+                if ($group && $file['group'] == $group) {
+                    $media = isset($file['media']) ? sprintf(' media="%s"', $file['media']) : '';
+                    $output .= '<link href="' . $file['asset'] . $this->timestamp . '"' . $attributes . $media . ' />' . "\n";
+                }
             }
         }
 
         // Render Inline CSS
-        if (count($this->inline_css) > 0) {
-            $output .= "<style>\n";
-            foreach ($this->inline_css as $inline) {
-                $output .= $inline['asset'] . "\n";
+        foreach ($this->inline_css as $inline) {
+            if ($group && $inline['group'] == $group) {
+                $inline_css .= $inline['asset'] . "\n";
             }
-            $output .= "</style>\n";
+        }
+
+        if ($inline_css) {
+            $output .= "\n<style>\n" . $inline_css . "\n</style>\n";
         }
 
 
@@ -582,7 +614,7 @@ class Assets
      *
      * @return string
      */
-    protected function pipelineCss()
+    protected function pipelineCss($group = 'head')
     {
         /** @var Cache $cache */
         $cache = self::getGrav()['cache'];
@@ -594,10 +626,10 @@ class Assets
         // clear no-pipeline assets lists
         $this->css_no_pipeline = [];
 
-        $file = md5(json_encode($this->css) . $this->css_minify . $this->css_rewrite) . '.css';
+        $file = md5(json_encode($this->css) . $this->css_minify . $this->css_rewrite . $group) . '.css';
 
-        $relative_path = "{$this->base_url}" . basename(ASSETS_DIR) . "/{$file}";
-        $absolute_path = ASSETS_DIR . $file;
+        $relative_path = "{$this->base_url}{$this->assets_url}/{$file}";
+        $absolute_path = $this->assets_dir . $file;
 
         // If pipeline exist return it
         if (file_exists($absolute_path)) {
@@ -606,10 +638,12 @@ class Assets
 
         // Remove any non-pipeline files
         foreach ($this->css as $id => $asset) {
-            if (!$asset['pipeline']) {
-                $this->css_no_pipeline[$id] = $asset;
-            } else {
-                $temp_css[$id] = $asset;
+            if ($asset['group'] == $group) {
+                if (!$asset['pipeline']) {
+                    $this->css_no_pipeline[$id] = $asset;
+                } else {
+                    $temp_css[$id] = $asset;
+                }
             }
         }
 
@@ -662,8 +696,8 @@ class Assets
 
         $file = md5(json_encode($this->js) . $this->js_minify . $group) . '.js';
 
-        $relative_path = "{$this->base_url}" . basename(ASSETS_DIR) . "/{$file}";
-        $absolute_path = ASSETS_DIR . $file;
+        $relative_path = "{$this->base_url}{$this->assets_url}/{$file}";
+        $absolute_path = $this->assets_dir . $file;
 
         // If pipeline exist return it
         if (file_exists($absolute_path)) {
@@ -825,12 +859,12 @@ class Assets
     public function addDir($directory, $pattern = self::DEFAULT_REGEX)
     {
         // Check if public_dir exists
-        if (!is_dir(ASSETS_DIR)) {
+        if (!is_dir($this->assets_dir)) {
             throw new Exception('Assets: Public dir not found');
         }
 
         // Get files
-        $files = $this->rglob(ASSETS_DIR . DIRECTORY_SEPARATOR . $directory, $pattern, ASSETS_DIR);
+        $files = $this->rglob($this->assets_dir . DIRECTORY_SEPARATOR . $directory, $pattern, $this->assets_dir);
 
         // No luck? Nothing to do
         if (!$files) {
@@ -930,6 +964,7 @@ class Assets
      * Download and concatenate the content of several links.
      *
      * @param  array $links
+     * @param  bool $css
      *
      * @return string
      */
@@ -960,7 +995,12 @@ class Assets
                 $link = ROOT_DIR . $relative_path;
             }
 
-            $file = ($this->fetch_command instanceof Closure) ? $this->fetch_command->__invoke($link) : file_get_contents($link);
+            $file = ($this->fetch_command instanceof Closure) ? @$this->fetch_command->__invoke($link) : @file_get_contents($link);
+
+            // No file found, skip it...
+            if ($file === false) {
+                continue;
+            }
 
             // Double check last character being
             if (!$css) {

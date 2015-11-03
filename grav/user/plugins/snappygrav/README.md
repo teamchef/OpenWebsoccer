@@ -72,10 +72,20 @@ margin_top: 10          # Set the page top margin (<unitreal> default 10mm)
 orientation: Portrait   # Set orientation to Landscape or Portrait
 page_size: A4           # Set paper <size> to: A4, Letter, etc.
 title: true             # I prefer True or False, getting title from site page
-zoom: 1                 # Use this zoom factor (<float> default 1) 
+zoom: 1                 # Use this zoom factor (<float> default 1)
 ```
 
 > Note: The expected values for the Paper Size are really many, to know what you are going to read them directly in the [source file](https://github.com/wkhtmltopdf/wkhtmltopdf/blob/master/src/lib/pdfsettings.cc) from line 174 to line 203.
+
+## Complete PDF
+
+You can print your all site as a PDF by replacing :pdf by :completepdf in the url :
+
+    {% if config.plugins.snappygrav.enabled %}
+        <a href="{{ page.url }}:completepdf" title="Get a complete PDF"><i class="fa fa-file-pdf-o"></i></a>
+    {% endif %}
+
+> Warning : it as been tested for a standard installation, on a 50+ pages grav website.
 
 # Customizing the Settings
 

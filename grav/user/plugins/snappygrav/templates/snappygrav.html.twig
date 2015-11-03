@@ -1,0 +1,14 @@
+{% extends 'partials/snappygrav-base.html.twig' %}
+{% block content %}
+    <h2>
+        <center>{{ snappygrav.page_title }}</center>
+    </h2>
+    <center>
+        <b>{{ snappygrav.page_header_author }}</b>
+    </center>
+    <br/>
+    <center>
+        <b>{{ snappygrav.page_date }}</b>
+    </center>
+    {{ snappygrav.page_content }}
+{% endblock %}

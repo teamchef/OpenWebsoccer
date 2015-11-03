@@ -2,6 +2,7 @@ absolute_urls: false                   # Absolute or relative URLs for `base_url
 timezone: ''                           # Valid values: http://php.net/manual/en/timezones.php
 default_locale:                        # Default locale (defaults to system)
 param_sep: ':'                         # Parameter separator, use ';' for Apache on windows
+wrapped_site: false                    # For themes/plugins to know if Grav is wrapped by another platform
 
 languages:
   supported: []                        # List of languages supported. eg: [en, fr, de]
@@ -48,11 +49,12 @@ pages:
   vary_accept_encoding: false          # Add `Vary: Accept-Encoding` header
   redirect_default_route: false        # Automatically redirect to a page's default route
   redirect_default_code: 301           # Default code to use for redirects
-  redirect_trailing_slash:  true       # Handle automatically or 301 redirect a trailing / URL
+  redirect_trailing_slash: true        # Handle automatically or 301 redirect a trailing / URL
   ignore_files: [.DS_Store]            # Files to ignore in Pages
   ignore_folders: [.git, .idea]        # Folders to ignore in Pages
   ignore_hidden: true                  # Ignore all Hidden files and folders
   url_taxonomy_filters: true           # Enable auto-magic URL-based taxonomy filters for page collections
+  fallback_types: [png,jpg,jpeg,gif]   # Allowed types of files found if accessed via Page route
 
 cache:
   enabled: true                        # Set to true to enable caching

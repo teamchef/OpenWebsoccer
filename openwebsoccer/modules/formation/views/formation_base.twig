@@ -1,4 +1,4 @@
-{% extends "layoutwithoutsidebar.twig" %}
+{% extends "layout.twig" %}
 
 {% import "formelements.twig" as formelements %}
 {% import "statisticelements.twig" as statisticelements %}
@@ -198,7 +198,7 @@
 
 		<h4>{{ i18n.getMessage("formation_bench") }}</h4>
 
-		<table class="table table-bordered" style="width: 450px">
+		<table class="table table-bordered" style="width: 440px">
 			<thead>
 				<tr>
 					<th>{{ i18n.getMessage("entity_player") }}</th>
@@ -330,7 +330,6 @@
 									{% endif %}
 									>
 									<div class="playerinfoBar">
-
 										{% if playerPosition != "bench" and (player.matches_injured is not defined or player.matches_injured == 0) and (player.matches_blocked is not defined or player.matches_blocked == 0) %}
 											<div class="playerinfoIcons text-right ">
 													<a id="addLink{{ player.id }}" href="#" data-toggle="dropdown" class="btn btn-mini dropdown-toggle playerAddToPitchLink"><i class="icon-plus-sign"></i> {{ i18n.getMessage("player_button_to_pitch") }}</a>
@@ -359,6 +358,7 @@
 											</div>
 										{% endif %}
 										{% if (player.position_main is defined and player.position_main|length > 0) %}
+										
 											<span class="mainposition" title="{{ i18n.getMessage("option_" ~ player.position_main) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}</span>
 											{% if (player.position_second|length > 0) %}
 											/ <span class="secondposition" title="{{ i18n.getMessage("option_" ~ player.position_second) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_second) }}</span>
@@ -394,7 +394,7 @@
 										{% endif %}
 
 									</div>
-
+									<br>
 									<span>{{ playerName }} ({{ player.age }}) {% if captain_id is defined and captain_id == player.id %}<i class="icon-group wstooltip" title="{{ i18n.getMessage("myteam_captain_tooltip") }}"></i>{% endif %}</span>
 
 									<br>
@@ -446,7 +446,7 @@
 	</div>
 </div>
 
-<br><br><p><em>{{ i18n.getMessage("formation_dragging_note_title") }}</em><br/>
+<br><br><br><p><em>{{ i18n.getMessage("formation_dragging_note_title") }}</em><br/>
 			{{ i18n.getMessage("formation_dragging_note") }}</p><br>
 
 	{% block form_footer %}

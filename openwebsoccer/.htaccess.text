@@ -15,6 +15,14 @@ ExpiresByType image/x-icon "access 1 year"
 ExpiresDefault "access 1 month"
 </IfModule>
 
+<IfModule mod_deflate.c>
+  <FilesMatch "\.(js|jpg|jpeg|gif|png|css|x?html?|php)$">
+  ExpiresActive on
+  ExpiresDefault "access plus 1 month"
+  SetOutputFilter DEFLATE
+  </FilesMatch>
+</IfModule>
+
 <ifmodule mod_headers.c>
 <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)(\.gz)?$">
 Header set Expires "Tue, 16 Jun 2020 20:00:00 GMT"

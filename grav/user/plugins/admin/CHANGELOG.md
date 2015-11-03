@@ -1,10 +1,21 @@
+# v1.0.0-rc.4
+## 10/29/2015
+
+1. [](#improved)
+    * Changed admin menu event hook to `onAdminMenu()`
+    * Minor improvements for admin page location
+    * Additional lang strings for Grav 1.0.0-rc.3
+
 # v1.0.0-rc.3
-## xx/xx/2015
+## 10/27/2015
 
 1. [](#improved)
     * Rely on context-language for active language
+    * Improved some Russian translations
+    * Only show login if not already logged in
 1. [](#bugfix)
     * Disable asset pipeline in admin only
+    * Fix Editor cursor insertion point when text is selected in some actions
 
 # v1.0.0-rc.2
 ## 10/23/2015
