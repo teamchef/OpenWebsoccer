@@ -121,6 +121,10 @@ class Installer
 
     }
 
+    /**
+     * @param $state
+     * @param $install_path
+     */
     protected static function flightProcessing($state, $install_path)
     {
         $blueprints_path = $install_path . DS . 'blueprints.yaml';
@@ -140,6 +144,13 @@ class Installer
         }
     }
 
+    /**
+     * @param \ZipArchive $zip
+     * @param             $install_path
+     * @param             $tmp
+     *
+     * @return bool
+     */
     public static function moveInstall(\ZipArchive $zip, $install_path, $tmp)
     {
         $container = $zip->getNameIndex(0);
@@ -152,6 +163,13 @@ class Installer
         return true;
     }
 
+    /**
+     * @param \ZipArchive $zip
+     * @param             $install_path
+     * @param             $tmp
+     *
+     * @return bool
+     */
     public static function copyInstall(\ZipArchive $zip, $install_path, $tmp)
     {
         $firstDir = $zip->getNameIndex(0);
@@ -165,6 +183,13 @@ class Installer
         return true;
     }
 
+    /**
+     * @param \ZipArchive $zip
+     * @param             $install_path
+     * @param             $tmp
+     *
+     * @return bool
+     */
     public static function sophisticatedInstall(\ZipArchive $zip, $install_path, $tmp)
     {
         for ($i = 0, $l = $zip->numFiles; $i < $l; $i++) {
@@ -279,7 +304,9 @@ class Installer
      */
     public static function lastErrorMsg()
     {
-        $msg = 'Unknown Error';
+        if (is_string(self::$error)) {
+            return self::$error;
+        }
 
         switch (self::$error) {
             case 0:
@@ -315,7 +342,7 @@ class Installer
                 break;
 
             default:
-                return 'Unknown error';
+                $msg = 'Unknown Error';
                 break;
         }
 
@@ -333,7 +360,7 @@ class Installer
 
     /**
      * Allows to manually set an error
-     * @param $error the Error code
+     * @param int|string $error the Error code
      */
 
     public static function setError($error)

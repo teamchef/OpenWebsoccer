@@ -1,65 +1,59 @@
 <?php
-/******************************************************
-
-  This file is part of OpenWebSoccer-Sim.
-
-  OpenWebSoccer-Sim is free software: you can redistribute it
-  and/or modify it under the terms of the
-  GNU Lesser General Public License
-  as published by the Free Software Foundation, either version 3 of
-  the License, or any later version.
-
-  OpenWebSoccer-Sim is distributed in the hope that it will be
-  useful, but WITHOUT ANY WARRANTY; without even the implied
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with OpenWebSoccer-Sim.
-  If not, see <http://www.gnu.org/licenses/>.
-
-******************************************************/
-
-
+/******************************************************************
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+******************************************************************/
 error_reporting(E_ALL);
 define("BASE_FOLDER", __DIR__ ."/..");
 define("WRITABLE_FOLDERS", "generated/");
 define("CONFIGFILE", BASE_FOLDER . "/generated/config.inc.php");
 define("CONFIGFILE_OLD", BASE_FOLDER . "/admin/config/config.inc.php");
-
 session_start();
 $supportedLanguages = array("de" => "Deutsch");
-
 ignore_user_abort(TRUE);
 set_time_limit(0);
-
 include(BASE_FOLDER . "/modules/DbConnection.class.php");
 ?>
-
 <!DOCTYPE html>
 <html lang="de">
-  <head>
-    <title>OpenWebsoccer Select-Update Installation</title>
-    <link href="../admin/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
-    <meta charset="UTF-8">
-    <style type="text/css">
-      body {
-        padding-top: 100px;
-        padding-bottom: 40px;
-      }
-    </style>
-  </head>
-  <body>
-
+	<head>
+		<title>OpenWebsoccer Select-Update Installation</title>
+		<link href="../admin/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
+		<meta charset="UTF-8">
+		<style type="text/css">
+			body {padding-top: 100px; padding-bottom: 40px;}
+		</style>
+	</head>
+	<body>
 	<div class="container">
-
 		<h1>OpenWebsoccer Select-Update Installation</h1>
-
 		<hr>
-
 		<?php
-
 		// Start - PHP-Vorababfrage mit Hinweisen
 		if (strnatcmp(phpversion(),'5.3.1')<= 0) {
 			echo 'Es muss mindestens PHP 5.3.0 sein, es ist die Version: ' . PHP_VERSION . ' installiert.' ;
@@ -67,51 +61,40 @@ include(BASE_FOLDER . "/modules/DbConnection.class.php");
 			echo '<p>"OpenWebsoocer / Co-Powered by Rolf Joseph / ErdemCan"</p>';
 			exit;
 		}
-
-		else if (version_compare(PHP_VERSION, '7.0.1', '>=')) {
+		else if (version_compare(PHP_VERSION, '7.0.4', '>')) {
 			echo 'Ihre PHP Version ' . PHP_VERSION . ' ist zu hoch, daher funktioniert die Installation eventuell nicht.';
 		}
-
 		else {
 			echo 'Ihre PHP Version ist ' . PHP_VERSION . ' und das Update kann beginnen.';
 		}
 		// Ende - PHP-Vorababfrage mit Hinweisen - by Rolf Josaeph / ErdemCan
-
 		$errors = array();
-
 		$messagesIncluded = FALSE;
 		if(isset($_SESSION["lang"])) {
 			include("messages_" . $_SESSION["lang"] . ".inc.php");
 			$messagesIncluded = $_SESSION["lang"];
 		}
-
 		$action = (isset($_REQUEST["action"])) ? $_REQUEST["action"] : "";
 		if (!strlen($action) || substr($action, 0, 6) !== "action") {
 			$view = "UpdateScreen";
 		} else {
 			$view = $action();
 		}
-
 		if(isset($_SESSION["lang"]) && $_SESSION["lang"] !== $messagesIncluded) {
 			include("messages_" . $_SESSION["lang"] . ".inc.php");
 		}
-
 		if (count($errors)) {
 			foreach($errors as $error) {
 				echo "<div class=\"alert alert-error\">$error</div>";
 			}
 		}
-
 		if (isset($messages)) {
 			$view($messages);
 		} else {
 			$view();
 }
-
 		?>
-
 		<?php
-
 /** Update */
 function UpdateScreen($messages) {
 	?>
@@ -126,37 +109,32 @@ function UpdateScreen($messages) {
 			</p><br>
 			<input type="submit" name="formSubmit" value="Update ausführen" /> <input type="reset" value=" Auswahl zurücksetzen"> <input type="button" value="Admincenter / Update abbrechen" onclick="document.location.href = '../admin/index.php'" /> <br><br><b>Hinweis: das Update wird abgeschlossen, wenn man im Admincenter die Cacheleerung ausführt ( das Update-Verzeichnis wird gelöscht ) !</b><br><br>
 		</form>
-
 	<?php
 			$servername = "localhost";
 			$username = "root";
 			$password = "root";
 			$dbname = "websoccer";
-
 			echo("<p><b>Es wurden folgende Updates installiert: </b>");
 			echo("</p>");
-
 			if(isset($_POST['stadionausbau'])) { $_POST['stadionausbau_status'] = ''; }
 			if(isset($_POST['zufallsereignisse'])) { $_POST['zufallsereignisse_status'] = ''; }
-
 			if(isset($_POST['stadionausbau_status']))
-        	{
-        		echo ' Stadionausbau Status-Feld setzen ->';
+ 			{
+ 				echo ' Stadionausbau Status-Feld setzen ->';
 				$sql = "ALTER TABLE _stadiumbuilding ADD status enum('1','0');";
-
 				try {
-    				$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    				$stmt = $conn->prepare($sql);
-    				$stmt->execute();
-    				echo " ausgeführt<br>";
-    			}
+ 					$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+ 					$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 					$stmt = $conn->prepare($sql);
+ 					$stmt->execute();
+ 					echo " ausgeführt<br>";
+ 				}
 				catch(PDOException $e) { echo $sql . $e->getMessage() . "<br>"; }
 				$conn = null;
-        	}
+ 			}
 			if(isset($_POST['stadionausbau']))
-        	{
-        		echo ' Stadionausbau ->';
+ 			{
+ 				echo ' Stadionausbau ->';
 				$sql = "SET FOREIGN_KEY_CHECKS = 0;
 INSERT INTO `_stadiumbuilding` (`id`, `name`, `description`, `picture`, `required_building_id`, `costs`, `premiumfee`, `construction_time_days`, `effect_training`, `effect_youthscouting`, `effect_tickets`, `effect_fanpopularity`, `effect_injury`, `effect_income`, `status`) VALUES
 ( '10001', 'Parkplatz (niedrig)', 'Parkplätze', NULL, NULL, 250000, 0, 30, 0, 0, 5, 1, 0, 1000, 0),
@@ -243,35 +221,33 @@ INSERT INTO `_stadiumbuilding` (`id`, `name`, `description`, `picture`, `require
 ( '10082', 'Polizeiwache', 'Mehr Zuschauer, aber kostet dafür auch Geld.', NULL, NULL, 500000, 0, 50, 0, 0, 10, 0, 0, '-10000', 0),
 ( '10083', 'Fanbetreungs Punkt', 'Kostet etwas, aber bringt auch mehr Zuschauer.', NULL, NULL, 50000, 0, 30, 0, 0, 5, 0, 0, '-1000', 0);
 SET FOREIGN_KEY_CHECKS = 1;";
-
 				try {
-    				$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    				$stmt = $conn->prepare($sql);
-    				$stmt->execute();
-    				echo " ausgeführt<br>";
-    			}
+					$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+ 					$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 					$stmt = $conn->prepare($sql);
+ 					$stmt->execute();
+ 					echo " ausgeführt<br>";
+ 				}
 				catch(PDOException $e) { echo $sql . $e->getMessage() . "<br>"; }
 				$conn = null;
-        	}
-        	if(isset($_POST['zufallsereignisse_status']))
-        	{
+ 			}
+ 			if(isset($_POST['zufallsereignisse_status']))
+ 			{
 				echo ' Zufallsereignisse Status-Feld setzen ->';
 				$sql = "ALTER TABLE _randomevent ADD status enum('1','0');";
-
 				try {
-    				$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    				$stmt = $conn->prepare($sql);
-    				$stmt->execute();
-    				echo " ausgeführt<br>";
-    			}
+ 					$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+ 					$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 					$stmt = $conn->prepare($sql);
+ 					$stmt->execute();
+ 					echo " ausgeführt<br>";
+ 				}
 				catch(PDOException $e) { echo $sql . $e->getMessage() . "<br>"; }
 				$conn = null;
-        	}
+ 			}
 			if(isset($_POST['zufallsereignisse']))
-        	{
-        		echo 'Zufallsereignisse ->';
+ 			{
+ 				echo 'Zufallsereignisse ->';
 				$sql = "SET FOREIGN_KEY_CHECKS = 0;
 INSERT INTO `_randomevent` (`id`, `message`, `effect`, `effect_money_amount`, `effect_blocked_matches`, `effect_skillchange`, `weight`, `status`) VALUES
 ( '10001', 'Sie gewinnen im Lotto', 'money', 100000, 0, 0, 3, 0),
@@ -341,19 +317,18 @@ INSERT INTO `_randomevent` (`id`, `message`, `effect`, `effect_money_amount`, `e
 ( '10064', 'Sie finden einen Alukoffer und öffnen diesen', 'money', 75750, 0, 0, 3, 0),
 ( '10065', 'Ein Mitarbeiter verletzt sich im Büro. Sie kaufen Ihn eine Aufmerksamkeit.', 'money', -500, 0, 0, 3, 0);
 SET FOREIGN_KEY_CHECKS = 1;";
-
 				try {
-    				$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    				$stmt = $conn->prepare($sql);
-    				$stmt->execute();
-    				echo " ausgeführt<br>";
-    			}
+ 					$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+ 					$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 					$stmt = $conn->prepare($sql);
+ 					$stmt->execute();
+ 					echo " ausgeführt<br>";
+ 				}
 				catch(PDOException $e) { echo $sql . $e->getMessage() . "<br>"; }
 				$conn = null;
-        	}
-        	if(isset($_POST['spielberichtsmeldungen']))
-        	{
+ 				}
+ 			if(isset($_POST['spielberichtsmeldungen']))
+ 			{
 				echo 'Spielberichtsmeldungen ->';
 				$sql = "DELETE FROM `websoccer`.`_spiel_text` WHERE `_spiel_text`.`id` = 1;
 DELETE FROM `websoccer`.`_spiel_text` WHERE `_spiel_text`.`id` = 2;
@@ -711,32 +686,28 @@ INSERT INTO `_spiel_text` (`id`, `aktion`, `nachricht`) VALUES
 ( '10300', 'Taktikaenderung', '<b>{ma1} : </b>{sp1} gibt die Anweisung, das mehr Druck aufgebaut werden soll.');
 ";
 				try {
-    				$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
-    				$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    				$stmt = $conn->prepare($sql);
-    				$stmt->execute();
-    				echo " ausgeführt<br>";
-    			}
+					$conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+ 					$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+ 					$stmt = $conn->prepare($sql);
+ 					$stmt->execute();
+ 					echo " ausgeführt<br>";
+ 				}
 				catch(PDOException $e) { echo $sql . $e->getMessage() . "<br>"; }
 				$conn = null;
-        	}
+ 			}
 		}
 		if(isset($_POST['generated']))
-        	{
-        		echo 'Erzeugte Dateien von der Quelle in den Ordner generated verschieben ->';
-
-				printSystemCheck();
-        	}
-
-function printSystemCheck() {
+ 		{
+			echo 'Erzeugte Dateien von der Quelle in den Ordner generated verschieben ->';
+			printSystemCheck();
+	 	}
+function printSystemCheck()
+{
 	echo "<h2>Systemanforderungen testen</h2>";
-
 	$requirments = array();
-
 	$writableFiles = explode(",", WRITABLE_FOLDERS);
 	foreach ($writableFiles as $writableFile) {
 		$file = BASE_FOLDER . "/" . $writableFile;
-
 		$requirments[] = array(
 				"requirement" => "Datei/Ordner hat Schreibrechte ( in Linux, führe aus: CHMOD a+w <filename> ): <i> " . $writableFile . "</i>",
 				"min" => "Ja",
@@ -744,9 +715,7 @@ function printSystemCheck() {
 				"status" => (is__writable($file)) ? "success" : "error"
 		);
 	}
-
 	?>
-
 	<table class="table">
 		<thead>
 			<tr>
@@ -764,7 +733,6 @@ function printSystemCheck() {
 			echo "<td>" . $requirement["min"] . "</td>";
 			echo "<td>" . $requirement["actual"] . "</td>";
 			echo "</tr>";
-
 			if ($requirement["status"] == "error") {
 				$valid = FALSE;
 			}
@@ -772,9 +740,7 @@ function printSystemCheck() {
 		?>
 		</tbody>
 	</table>
-
 	<?php
-
 	if ($valid) {
 		echo "<form method=\"post\">";
 		echo "<button type=\"submit\" class=\"btn\">". 'weiter' . "</button>";
@@ -784,47 +750,32 @@ function printSystemCheck() {
 		echo "<p>Die Mindestanforderungen sind auf diesem Webserver nicht erfüllt. Sie können die Software mit dieser Konfiguration nicht installieren. Kontaktieren Sie Ihren Webhoster oder den Hersteller. . </p>";
 	}
 }
-
-
-function actionMoveFiles() {
-
+function actionMoveFiles()
+{
 	$fileNames = array("config.inc.php", "adminlog.php", "imprint.php", "entitylog.php");
 	$oldDir = BASE_FOLDER . "/admin/config/";
 	$newDir = BASE_FOLDER . "/generated/";
-
 	foreach ($fileNames as $fileName) {
 		if (file_exists($oldDir . $fileName)) {
 			rename($oldDir . $fileName, $newDir . $fileName);
 		}
 	}
-
 	echo "<form method=\"post\">";
 	echo "<br>Erzeugte Dateien von der Quelle in den Ordner generated verschieben -> ausgeführt<br><br><br>";
 	echo "<button type=\"submit\" class=\"btn\">". 'Zurück zum Update-Screen' . "</button>";
 	echo "<input type=\"hidden\" name=\"action\" value=\"UpdateScreen\">";
 	echo "</form>";
 }
-
 ?>
-
-
-      <hr>
-
-      <footer>
-      	<a href="https://github.com/rolfjoseph/OpenWebsoccer" target="_blank"> <?php readfile('../admin/config/version.txt'); readfile('../modules/core/step.txt'); ?>
-      </footer>
-	</div>
-
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="../admin/bootstrap/js/bootstrap.min.js"></script>
-  </body>
+			<hr>
+			<footer>
+				<a href="https://github.com/rolfjoseph/OpenWebsoccer" target="_blank"> <?php readfile('../admin/config/version.txt'); readfile('../modules/core/step.txt'); ?>
+			</footer>
+		</div>
+		<script src="http://code.jquery.com/jquery-latest.js"></script>
+		<script src="../admin/bootstrap/js/bootstrap.min.js"></script>
+	</body>
 </html>
-
-
-
-
-
-
 <?php
 // real is_writable (http://www.php.net/manual/en/function.is-writable.php#73596)
 function is__writable($path) {
@@ -832,7 +783,6 @@ function is__writable($path) {
 	//NOTE: use a trailing slash for folders!!!
 	//see http://bugs.php.net/bug.php?id=27609
 	//see http://bugs.php.net/bug.php?id=30931
-
 	if ($path{strlen($path)-1}=='/') // recursively return a temporary file path
 		return is__writable($path.uniqid(mt_rand()).'.tmp');
 	else if (is_dir($path))
@@ -847,6 +797,3 @@ function is__writable($path) {
 		unlink($path);
 	return true;
 }
-?>
-
-

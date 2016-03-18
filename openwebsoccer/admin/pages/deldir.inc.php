@@ -38,9 +38,5 @@
     	}
 
     	@closedir ($dir);
-
     	$res = @rmdir ($path);
-
-    	return;
 	}
-?>

@@ -5,7 +5,7 @@ use \Doctrine\Common\Cache\FilesystemCache;
 
 class Grav extends AbstractPackageCollection
 {
-    protected $repository = 'http://getgrav.org/downloads/grav.json';
+    protected $repository = 'https://getgrav.org/downloads/grav.json';
     private $data;
 
     private $version;
@@ -55,7 +55,7 @@ class Grav extends AbstractPackageCollection
 
         $diffLog = [];
         foreach ($this->data['changelog'] as $version => $changelog) {
-            preg_match("/[\d\.]+/", $version, $cleanVersion);
+            preg_match("/[\w-\.]+/", $version, $cleanVersion);
 
             if (!$cleanVersion || version_compare($diff, $cleanVersion[0], ">=")) { continue; }
 

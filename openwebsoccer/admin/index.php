@@ -20,24 +20,18 @@
   If not, see <http://www.gnu.org/licenses/>.
 
 ******************************************************/
-
 define('BASE_FOLDER', __DIR__ .'/..');
-
 include(BASE_FOLDER . '/admin/adminglobal.inc.php');
-
 // building nav
 $navItems['settings'] = array();
 $navItems['website'] = array();
-
 foreach ($adminpage as $pageId => $pageData) {
 	$pageInfo = json_decode($pageData, true);
-
 	// check permission
 	if ((!isset($admin['r_admin']) || !$admin['r_admin']) && (!isset($admin['r_demo']) || !$admin['r_demo'])
 			&& (!isset($admin[$pageInfo['permissionrole']]) || !$admin[$pageInfo['permissionrole']])) {
 		continue;
 	}
-
 	if (isset($pageInfo['entity']) && $pageInfo['entity']) {
 		$siteInfo['label'] = $i18n->getMessage('entity_' . $pageInfo['entity']);
 		$siteInfo['pageid'] = 'manage';
@@ -47,12 +41,9 @@ foreach ($adminpage as $pageId => $pageData) {
 		$siteInfo['pageid'] = $pageInfo['filename'];
 		$siteInfo['entity'] = null;
 	}
-
 	$navItems[$pageInfo['navcategory']][] = $siteInfo;
 }
-
 function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
-
 	$url = '?site='. $pageId;
 	$active = ($currentSite == $pageId);
 
@@ -60,12 +51,10 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
 		$url .= '&entity=' . escapeOutput($entity);
 		$active = (isset($_REQUEST['entity']) &&  $_REQUEST['entity'] == $entity);
 	}
-
 	echo '<li';
 	if ($active) echo ' class=\'active\'';
 	echo '><a href=\''. $url . '\'>'. $navLabel . '</a></li>';
 }
-
 ?>
 <!DOCTYPE html>
 <html>
@@ -88,7 +77,6 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
       .sidebar-nav {
         padding: 9px 0;
       }
-
       .cupround {
 			margin-left: 30px;
 			border-left: 1px solid #CCCCCC;
@@ -97,7 +85,6 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
     </style>
   </head>
   <body>
-
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
@@ -123,13 +110,11 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
         </div>
       </div>
     </div>
-
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span2">
           <div class="well sidebar-nav">
             <ul class="nav nav-list">
-
 			  <?php
 				foreach ($navItems as $navCategory => $categoryItems) {
 					echo "<li class=\"nav-header\">". $i18n->getNavigationLabel("category_" . $navCategory) . "</li>";
@@ -139,24 +124,16 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
 				}
 			  ?>
             </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
+          </div>
+        </div>
         <div class="span10">
-
         	<div id="ajaxSpinner" style="display: none">
-
-        		{% if env.getConfig("cdn_root_set") %}
-						<img src="{{ env.getConfig("cdn_root") }}/img/ajax-loader.gif" width="16" height="16" />
-				{% else %}
-						<img src="{{ env.getConfig("context_root") }}/img/ajax-loader.gif" width="16" height="16" />
-				{% endif %}
-
+					<img src="../img/ajax-loader.gif" width="16" height="16" />
         	</div>
 <?php
 if (empty($site)) {
 	$site = 'home';
 }
-
 $includeFile = 'pages/' . $site .'.php';
 if (preg_match('#^[a-z0-9_-]+$#i', $site) && file_exists($includeFile) ) {
 	try {
@@ -170,19 +147,8 @@ if (preg_match('#^[a-z0-9_-]+$#i', $site) && file_exists($includeFile) ) {
 ?>
         </div><!--/span-->
       </div><!--/row-->
-
       <hr>
-
-<!--[if lte IE 9]>
-<div class="alert">
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-  <h4><?php echo $i18n->getMessage("internetexplorer_warning_title"); ?></h4>
-  <?php echo $i18n->getMessage("internetexplorer_warning_message"); ?>
-</div>
-<![endif]-->
 	</div>
-
-
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <script src="bootstrap/js/bootstrap.min.js"></script>
     <script src="bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
@@ -194,20 +160,15 @@ if (preg_match('#^[a-z0-9_-]+$#i', $site) && file_exists($includeFile) ) {
 		echo "<script src=\"select2/select2_locale_". $i18n->getCurrentLanguage() . ".js\"></script>";
 	}
 	?>
-
 	<script src="markitup/jquery.markitup.js"></script>
-
 	<?php if ($i18n->getCurrentLanguage() == "de") { ?>
 		<script src="markitup/sets/ws/set_de.js"></script>
 	<?php } else { ?>
 		<script src="markitup/sets/ws/set.js"></script>
 	<?php } ?>
 	<script src="js/admincenter.js"></script>
-
 	<script src="js/bootbox.min.js"></script>
-
 	<script src="js/bootstrap-tag.js"></script>
-
 	<script>
 	$(function() {
 		$(document).on("click", ".deleteBtn", function(e) {
@@ -218,14 +179,11 @@ if (preg_match('#^[a-z0-9_-]+$#i', $site) && file_exists($includeFile) ) {
 				if (result) {
 					document.frmMain.submit();
 				}
-
 			});
 		});
 		$(document).on("click", ".deleteLink", function(e) {
 			e.preventDefault();
-
 			var link = $(this);
-
 			bootbox.confirm("<?php echo $i18n->getMessage("manage_delete_link_confirm"); ?>",
 					"<?php echo $i18n->getMessage("option_no"); ?>",
 					"<?php echo $i18n->getMessage("option_yes"); ?>",
@@ -233,7 +191,6 @@ if (preg_match('#^[a-z0-9_-]+$#i', $site) && file_exists($includeFile) ) {
 				if (result) {
 					window.location = link.attr("href");
 				}
-
 			});
 		});
 		$(".datepicker").datepicker({
@@ -243,6 +200,5 @@ if (preg_match('#^[a-z0-9_-]+$#i', $site) && file_exists($includeFile) ) {
 		});
 	});
 </script>
-
   </body>
 </html>

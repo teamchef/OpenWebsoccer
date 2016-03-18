@@ -1,16 +1,20 @@
 <nav id="admin-sidebar">
     <div id="admin-logo">
-        <h3><a href="{{ base_url_relative }}">{{ "PLUGIN_ADMIN.GRAV_ADMIN"|tu }}</a> <a target="_blank" href="{{ base_url_relative_frontend }}"><i class="fa fa-fw fa-angle-double-right"></i></a></h3>
+        {% if config.plugins["admin-pro"].custom_logo_top_left %}
+            <a target="_blank" href="{{ base_url_relative_frontend }}"><img src="{{ base_url_relative_frontend == '/' ? '/' : base_url_relative_frontend ~ '/'}}{{ config.plugins["admin-pro"].custom_logo_top_left }}" /></a>
+        {% else %}
+            <h3><a href="{{ base_url_relative }}">{{ "PLUGIN_ADMIN.GRAV_ADMIN"|tu }}</a> <a target="_blank" href="{{ base_url_relative_frontend }}"> <i class="fa fa-fw fa-arrow-circle-right"></i></a></h3>
+        {% endif %}
     </div>
 
     {#{% if admin.authorize %}#}
     <div id="admin-user-details">
-        <a href="{{ base_url_relative }}/users/{{ admin.user.username }}">
-            <img src="http://www.gravatar.com/avatar/{{ admin.user.email|md5 }}?s=32" />
+        <a href="{{ base_url_relative }}/users/{{ admin.user.username|e }}">
+            <img src="//www.gravatar.com/avatar/{{ admin.user.email|md5 }}?s=32" />
 
             <div class="admin-user-names">
-                <h4>{{ admin.user.fullname }}</h4>
-                <h5>{{ admin.user.title }}</h5>
+                <h4>{{ admin.user.fullname|e }}</h4>
+                <h5>{{ admin.user.title|e }}</h5>
             </div>
         </a>
     </div>
@@ -21,8 +25,8 @@
             <a href="{{ base_url_relative }}"><i class="fa fa-fw fa-th"></i> {{ "PLUGIN_ADMIN.DASHBOARD"|tu }}</a>
         </li>
         {% if authorize(['admin.configuration', 'admin.super']) %}
-            <li class="{{ (location == 'system' or location == 'site') ? 'selected' : '' }}">
-                <a href="{{ base_url_relative }}/system"><i class="fa fa-fw fa-wrench"></i> {{ "PLUGIN_ADMIN.CONFIGURATION"|tu }}</a>
+            <li class="{{ (location == 'system' or location == 'site' or location == 'config') ? 'selected' : '' }}">
+                <a href="{{ base_url_relative }}/config/system"><i class="fa fa-fw fa-wrench"></i> {{ "PLUGIN_ADMIN.CONFIGURATION"|tu }}</a>
             </li>
         {% endif %}
         {% if authorize(['admin.pages', 'admin.super']) %}
@@ -30,7 +34,7 @@
                 <a href="{{ base_url_relative }}/pages">
                     <i class="fa fa-fw fa-file-text-o"></i> {{ "PLUGIN_ADMIN.PAGES"|tu }}
                     <span class="badges">
-                        <span class="badge count">{{ admin.countPages }}</span>
+                        <span class="badge count">{{ admin.pagesCount }}</span>
                     </span>
                 </a>
             </li>
@@ -72,16 +76,8 @@
 
         {% include 'nav-pro.html.twig' ignore missing %}
 
-        <!-- <li class="{{ (location == 'logs') ? 'selected' : '' }}">
-            <a href="{{ base_url_relative }}/logs">
-                <i class="fa fa-fw fa-warning"></i> Error Logs
-                <span class="badges">
-                    <span class="badge count">{{ admin.logs|length }}</span>
-                </span>
-            </a>
-        </li> -->
         <li>
-            <a href="{{ base_url_relative }}/task{{ config.system.param_sep }}logout"><i class="fa fa-fw fa-sign-out"></i> {{ "PLUGIN_ADMIN.LOGOUT"|tu }}</a>
+            <a href="{{ uri.addNonce(base_url_relative ~ '/task' ~ config.system.param_sep ~ 'logout', 'logout-form', 'logout-nonce') }}"><i class="fa fa-fw fa-sign-out"></i> {{ "PLUGIN_ADMIN.LOGOUT"|tu }}</a>
         </li>
     </ul>
 </nav>

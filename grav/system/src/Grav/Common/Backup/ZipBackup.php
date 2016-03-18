@@ -29,6 +29,14 @@ class ZipBackup
         '.idea'
     ];
 
+    /**
+     * Backup
+     *
+     * @param null          $destination
+     * @param callable|null $messager
+     *
+     * @return null|string
+     */
     public static function backup($destination = null, callable $messager = null)
     {
         if (!$destination) {
@@ -64,6 +72,8 @@ class ZipBackup
         $zip = new \ZipArchive();
         $zip->open($destination, \ZipArchive::CREATE);
 
+        $max_execution_time = ini_set('max_execution_time', 600);
+
         static::folderToZip(GRAV_ROOT, $zip, strlen(rtrim(GRAV_ROOT, DS) . DS), $messager);
 
         $messager && $messager([
@@ -84,6 +94,10 @@ class ZipBackup
         ]);
 
         $zip->close();
+
+        if ($max_execution_time !== false) {
+            ini_set('max_execution_time', $max_execution_time);
+        }
 
         return $destination;
     }

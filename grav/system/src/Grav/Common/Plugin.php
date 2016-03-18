@@ -6,11 +6,12 @@ use Grav\Common\Page\Page;
 use Grav\Common\Config\Config;
 use RocketTheme\Toolbox\Event\EventDispatcher;
 use RocketTheme\Toolbox\Event\EventSubscriberInterface;
+use RocketTheme\Toolbox\File\YamlFile;
 
 /**
  * The Plugin object just holds the id and path to a plugin.
  *
- * @author RocketTheme
+ * @author  RocketTheme
  * @license MIT
  */
 class Plugin implements EventSubscriberInterface
@@ -40,7 +41,7 @@ class Plugin implements EventSubscriberInterface
     {
         $methods = get_class_methods(get_called_class());
 
-        $list = array();
+        $list = [];
         foreach ($methods as $method) {
             if (strpos($method, 'on') === 0) {
                 $list[$method] = [$method, 0];
@@ -53,9 +54,9 @@ class Plugin implements EventSubscriberInterface
     /**
      * Constructor.
      *
-     * @param string              $name
-     * @param Grav                $grav
-     * @param Config              $config
+     * @param string $name
+     * @param Grav   $grav
+     * @param Config $config
      */
     public function __construct($name, Grav $grav, Config $config)
     {
@@ -69,6 +70,7 @@ class Plugin implements EventSubscriberInterface
         if (isset($this->grav['admin'])) {
             return true;
         }
+
         return false;
     }
 
@@ -82,12 +84,12 @@ class Plugin implements EventSubscriberInterface
 
         foreach ($events as $eventName => $params) {
             if (is_string($params)) {
-                $dispatcher->addListener($eventName, array($this, $params));
+                $dispatcher->addListener($eventName, [$this, $params]);
             } elseif (is_string($params[0])) {
-                $dispatcher->addListener($eventName, array($this, $params[0]), isset($params[1]) ? $params[1] : 0);
+                $dispatcher->addListener($eventName, [$this, $params[0]], isset($params[1]) ? $params[1] : 0);
             } else {
                 foreach ($params as $listener) {
-                    $dispatcher->addListener($eventName, array($this, $listener[0]), isset($listener[1]) ? $listener[1] : 0);
+                    $dispatcher->addListener($eventName, [$this, $listener[0]], isset($listener[1]) ? $listener[1] : 0);
                 }
             }
         }
@@ -103,12 +105,12 @@ class Plugin implements EventSubscriberInterface
 
         foreach ($events as $eventName => $params) {
             if (is_string($params)) {
-                $dispatcher->removeListener($eventName, array($this, $params));
+                $dispatcher->removeListener($eventName, [$this, $params]);
             } elseif (is_string($params[0])) {
-                $dispatcher->removeListener($eventName, array($this, $params[0]));
+                $dispatcher->removeListener($eventName, [$this, $params[0]]);
             } else {
                 foreach ($params as $listener) {
-                    $dispatcher->removeListener($eventName, array($this, $listener[0]));
+                    $dispatcher->removeListener($eventName, [$this, $listener[0]]);
                 }
             }
         }
@@ -121,15 +123,16 @@ class Plugin implements EventSubscriberInterface
      *
      * format: [plugin:myplugin_name](function_data)
      *
-     * @param        $content           The string to perform operations upon
-     * @param        $function          The anonymous callback function
-     * @param string $internal_regex    Optional internal regex to extra data from
+     * @param string   $content        The string to perform operations upon
+     * @param callable $function       The anonymous callback function
+     * @param string   $internal_regex Optional internal regex to extra data from
      *
      * @return string
      */
     protected function parseLinks($content, $function, $internal_regex = '(.*)')
     {
-        $regex = '/\[plugin:(?:'.$this->name.')\]\('.$internal_regex.'\)/i';
+        $regex = '/\[plugin:(?:' . $this->name . ')\]\(' . $internal_regex . '\)/i';
+
         return preg_replace_callback($regex, $function, $content);
     }
 
@@ -148,7 +151,7 @@ class Plugin implements EventSubscriberInterface
     {
         $class_name = $this->name;
         $class_name_merged = $class_name . '.merged';
-        $defaults = $this->config->get('plugins.'. $class_name, []);
+        $defaults = $this->config->get('plugins.' . $class_name, []);
         $page_header = $page->header();
         $header = [];
         if (!isset($page_header->$class_name_merged) && isset($page_header->$class_name)) {
@@ -179,7 +182,31 @@ class Plugin implements EventSubscriberInterface
         } else {
             $header = array_merge($header, $params);
         }
+
         // Return configurations as a new data config class
         return new Data($header);
+    }
+
+    /**
+     * Persists to disk the plugin parameters currently stored in the Grav Config object
+     *
+     * @param string $plugin_name The name of the plugin whose config it should store.
+     *
+     * @return true
+     */
+    public static function saveConfig($plugin_name)
+    {
+        if (!$plugin_name) {
+            return false;
+        }
+
+        $locator = Grav::instance()['locator'];
+        $filename = 'config://plugins/' . $plugin_name . '.yaml';
+        $file = YamlFile::instance($locator->findResource($filename, true, true));
+        $content = Grav::instance()['config']->get('plugins.' . $plugin_name);
+        $file->save($content);
+        $file->free();
+
+        return true;
     }
 }

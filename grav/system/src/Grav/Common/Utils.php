@@ -15,7 +15,11 @@ abstract class Utils
 {
     use GravTrait;
 
+    protected static $nonces = [];
+
     /**
+     * Check if the $haystack string starts with the substring $needle
+     *
      * @param  string $haystack
      * @param  string $needle
      *
@@ -39,6 +43,8 @@ abstract class Utils
     }
 
     /**
+     * Check if the $haystack string ends with the substring $needle
+     *
      * @param  string $haystack
      * @param  string $needle
      *
@@ -62,6 +68,8 @@ abstract class Utils
     }
 
     /**
+     * Check if the $haystack string contains the substring $needle
+     *
      * @param  string $haystack
      * @param  string $needle
      *
@@ -77,13 +85,15 @@ abstract class Utils
      *
      * @param $haystack
      * @param $needle
+     *
      * @return string
      */
     public static function substrToString($haystack, $needle)
     {
         if (static::contains($haystack, $needle)) {
-            return substr($haystack, 0, strpos($haystack,$needle));
+            return substr($haystack, 0, strpos($haystack, $needle));
         }
+
         return $haystack;
     }
 
@@ -100,6 +110,11 @@ abstract class Utils
         return (object)array_merge((array)$obj1, (array)$obj2);
     }
 
+    /**
+     * Return the Grav date formats allowed
+     *
+     * @return array
+     */
     public static function dateFormats()
     {
         $now = new DateTime();
@@ -115,6 +130,7 @@ abstract class Utils
         if ($default_format) {
             $date_formats = array_merge([$default_format => $default_format.' (e.g. '.$now->format($default_format).')'], $date_formats);
         }
+
         return $date_formats;
     }
 
@@ -122,10 +138,11 @@ abstract class Utils
      * Truncate text by number of characters but can cut off words.
      *
      * @param  string $string
-     * @param  int $limit Max number of characters.
-     * @param  bool $up_to_break truncate up to breakpoint after char count
-     * @param  string $break Break point.
-     * @param  string $pad Appended padding to the end of the string.
+     * @param  int    $limit       Max number of characters.
+     * @param  bool   $up_to_break truncate up to breakpoint after char count
+     * @param  string $break       Break point.
+     * @param  string $pad         Appended padding to the end of the string.
+     *
      * @return string
      */
     public static function truncate($string, $limit = 150, $up_to_break = false, $break = " ", $pad = "&hellip;")
@@ -150,8 +167,9 @@ abstract class Utils
     /**
      * Truncate text by number of characters in a "word-safe" manor.
      *
-     * @param $string
-     * @param int $limit
+     * @param string $string
+     * @param int    $limit
+     *
      * @return string
      */
     public static function safeTruncate($string, $limit = 150)
@@ -170,7 +188,7 @@ abstract class Utils
      */
     public static function truncateHtml($text, $length = 100)
     {
-        return Truncator::truncate($text, $length, array('length_in_chars' => true));
+        return Truncator::truncate($text, $length, ['length_in_chars' => true]);
     }
 
     /**
@@ -183,7 +201,7 @@ abstract class Utils
      */
     public static function safeTruncateHtml($text, $length = 100)
     {
-        return Truncator::truncate($text, $length, array('length_in_chars' => true, 'word_safe' => true));
+        return Truncator::truncate($text, $length, ['length_in_chars' => true, 'word_safe' => true]);
     }
 
     /**
@@ -201,8 +219,8 @@ abstract class Utils
     /**
      * Provides the ability to download a file to the browser
      *
-     * @param      $file            the full path to the file to be downloaded
-     * @param bool $force_download  as opposed to letting browser choose if to download or render
+     * @param string $file           the full path to the file to be downloaded
+     * @param bool   $force_download as opposed to letting browser choose if to download or render
      */
     public static function download($file, $force_download = true)
     {
@@ -214,8 +232,11 @@ abstract class Utils
             $filesize = filesize($file);
 
             // check if this function is available, if so use it to stop any timeouts
-            if (function_exists('set_time_limit')) {
-                set_time_limit(0);
+            try {
+                if (!Utils::isFunctionDisabled('set_time_limit') && !ini_get('safe_mode') && function_exists('set_time_limit')) {
+                    set_time_limit(0);
+                }
+            } catch (\Exception $e) {
             }
 
             ignore_user_abort(false);
@@ -257,7 +278,7 @@ abstract class Utils
     /**
      * Return the mimetype based on filename
      *
-     * @param $extension Extension of file (eg .txt)
+     * @param string $extension Extension of file (eg "txt")
      *
      * @return string
      */
@@ -276,7 +297,7 @@ abstract class Utils
     /**
      * Normalize path by processing relative `.` and `..` syntax and merging path
      *
-     * @param $path
+     * @param string $path
      *
      * @return string
      */
@@ -285,7 +306,7 @@ abstract class Utils
         $root = ($path[0] === '/') ? '/' : '';
 
         $segments = explode('/', trim($path, '/'));
-        $ret = array();
+        $ret = [];
         foreach ($segments as $segment) {
             if (($segment == '.') || empty($segment)) {
                 continue;
@@ -300,6 +321,23 @@ abstract class Utils
         return $root . implode('/', $ret);
     }
 
+    /**
+     * Check whether a function is disabled in the PHP settings
+     *
+     * @param string $function the name of the function to check
+     *
+     * @return bool
+     */
+    public static function isFunctionDisabled($function)
+    {
+        return in_array($function, explode(',', ini_get('disable_functions')));
+    }
+
+    /**
+     * Get the formatted timezones list
+     *
+     * @return array
+     */
     public static function timezones()
     {
         $timezones = \DateTimeZone::listIdentifiers(\DateTimeZone::ALL);
@@ -313,7 +351,7 @@ abstract class Utils
 
         asort($offsets);
 
-        $timezone_list = array();
+        $timezone_list = [];
         foreach ($offsets as $timezone => $offset) {
             $offset_prefix = $offset < 0 ? '-' : '+';
             $offset_formatted = gmdate('H:i', abs($offset));
@@ -324,30 +362,46 @@ abstract class Utils
         }
 
         return $timezone_list;
-
     }
 
+    /**
+     * Recursively filter an array, filtering values by processing them through the $fn function argument
+     *
+     * @param array    $source the Array to filter
+     * @param callable $fn     the function to pass through each array item
+     *
+     * @return array
+     */
     public static function arrayFilterRecursive(Array $source, $fn)
     {
-        $result = array();
-        foreach ($source as $key => $value)
-        {
-            if (is_array($value))
-            {
+        $result = [];
+        foreach ($source as $key => $value) {
+            if (is_array($value)) {
                 $result[$key] = static::arrayFilterRecursive($value, $fn);
                 continue;
             }
-            if ($fn($key, $value))
-            {
+            if ($fn($key, $value)) {
                 $result[$key] = $value; // KEEP
                 continue;
             }
         }
+
         return $result;
     }
 
+    /**
+     * Checks if the passed path contains the language code prefix
+     *
+     * @param string $string The path
+     *
+     * @return bool
+     */
     public static function pathPrefixedByLangCode($string)
     {
+        if (strlen($string) <= 3) {
+            return false;
+        }
+
         $languages_enabled = self::getGrav()['config']->get('system.languages.supported', []);
 
         if ($string[0] == '/' && $string[3] == '/' && in_array(substr($string, 1, 2), $languages_enabled)) {
@@ -357,6 +411,14 @@ abstract class Utils
         return false;
     }
 
+    /**
+     * Get the timestamp of a date
+     *
+     * @param string $date a String expressed in the system.pages.dateformat.default format, with fallback to a
+     *                     strtotime argument
+     *
+     * @return int the timestamp
+     */
     public static function date2timestamp($date)
     {
         $config = self::getGrav()['config'];
@@ -378,13 +440,180 @@ abstract class Utils
     }
 
     /**
+     * Get value of an array element using dot notation
+     *
+     * @param array  $array   the Array to check
+     * @param string $path    the dot notation path to check
+     * @param mixed  $default a value to be returned if $path is not found in $array
+     *
+     * @return mixed the value found
+     */
+    public static function resolve(array $array, $path, $default = null)
+    {
+        $current = $array;
+        $p = strtok($path, '.');
+
+        while ($p !== false) {
+            if (!isset($current[$p])) {
+                return $default;
+            }
+            $current = $current[$p];
+            $p = strtok('.');
+        }
+
+        return $current;
+    }
+
+    /**
      * Checks if a value is positive
      *
      * @param string $value
      *
      * @return boolean
      */
-    public static function isPositive($value) {
+    public static function isPositive($value)
+    {
         return in_array($value, [true, 1, '1', 'yes', 'on', 'true'], true);
+    }
+
+    /**
+     * Generates a nonce string to be hashed. Called by self::getNonce()
+     * We removed the IP portion in this version because it causes too many inconsistencies
+     * with reverse proxy setups.
+     *
+     * @param string $action
+     * @param bool   $plusOneTick if true, generates the token for the next tick (the next 12 hours)
+     *
+     * @return string the nonce string
+     */
+    private static function generateNonceString($action, $plusOneTick = false)
+    {
+        $username = '';
+        if (isset(self::getGrav()['user'])) {
+            $user = self::getGrav()['user'];
+            $username = $user->username;
+        }
+
+        $token = session_id();
+        $i = self::nonceTick();
+
+        if ($plusOneTick) {
+            $i++;
+        }
+
+        return ($i . '|' . $action . '|' . $username . '|' . $token . '|' . self::getGrav()['config']->get('security.salt'));
+    }
+
+    //Added in version 1.0.8 to ensure that existing nonces are not broken.
+    private static function generateNonceStringOldStyle($action, $plusOneTick = false)
+    {
+        if (isset(self::getGrav()['user'])) {
+            $user = self::getGrav()['user'];
+            $username = $user->username;
+            if (isset($_SERVER['REMOTE_ADDR'])) {
+                $username .= $_SERVER['REMOTE_ADDR'];
+            }
+        } else {
+            $username = isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '';
+        }
+        $token = session_id();
+        $i = self::nonceTick();
+        if ($plusOneTick) {
+            $i++;
+        }
+
+        return ($i . '|' . $action . '|' . $username . '|' . $token . '|' . self::getGrav()['config']->get('security.salt'));
+    }
+
+    /**
+     * Get the time-dependent variable for nonce creation.
+     *
+     * Now a tick lasts a day. Once the day is passed, the nonce is not valid any more. Find a better way
+     *       to ensure nonces issued near the end of the day do not expire in that small amount of time
+     *
+     * @return int the time part of the nonce. Changes once every 24 hours
+     */
+    private static function nonceTick()
+    {
+        $secondsInHalfADay = 60 * 60 * 12;
+
+        return (int)ceil(time() / ($secondsInHalfADay));
+    }
+
+    /**
+     * Creates a hashed nonce tied to the passed action. Tied to the current user and time. The nonce for a given
+     * action is the same for 12 hours.
+     *
+     * @param string $action      the action the nonce is tied to (e.g. save-user-admin or move-page-homepage)
+     * @param bool   $plusOneTick if true, generates the token for the next tick (the next 12 hours)
+     *
+     * @return string the nonce
+     */
+    public static function getNonce($action, $plusOneTick = false)
+    {
+        // Don't regenerate this again if not needed
+        if (isset(static::$nonces[$action])) {
+            return static::$nonces[$action];
+        }
+        $nonce = md5(self::generateNonceString($action, $plusOneTick));
+        static::$nonces[$action] = $nonce;
+
+        return static::$nonces[$action];
+    }
+
+    //Added in version 1.0.8 to ensure that existing nonces are not broken.
+    public static function getNonceOldStyle($action, $plusOneTick = false)
+    {
+        // Don't regenerate this again if not needed
+        if (isset(static::$nonces[$action])) {
+            return static::$nonces[$action];
+        }
+        $nonce = md5(self::generateNonceStringOldStyle($action, $plusOneTick));
+        static::$nonces[$action] = $nonce;
+
+        return static::$nonces[$action];
+    }
+
+    /**
+     * Verify the passed nonce for the give action
+     *
+     * @param string $nonce  the nonce to verify
+     * @param string $action the action to verify the nonce to
+     *
+     * @return boolean verified or not
+     */
+    public static function verifyNonce($nonce, $action)
+    {
+        //Safety check for multiple nonces
+        if (is_array($nonce)) {
+            $nonce = array_shift($nonce);
+        }
+
+        //Nonce generated 0-12 hours ago
+        if ($nonce == self::getNonce($action)) {
+            return true;
+        }
+
+        //Nonce generated 12-24 hours ago
+        $plusOneTick = true;
+        if ($nonce == self::getNonce($action, $plusOneTick)) {
+            return true;
+        }
+
+
+        //Added in version 1.0.8 to ensure that existing nonces are not broken.
+        //Nonce generated 0-12 hours ago
+        if ($nonce == self::getNonceOldStyle($action)) {
+            return true;
+        }
+
+        //Nonce generated 12-24 hours ago
+        $plusOneTick = true;
+        if ($nonce == self::getNonceOldStyle($action, $plusOneTick)) {
+            return true;
+        }
+
+        //Invalid nonce
+        return false;
     }
 }

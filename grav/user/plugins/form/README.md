@@ -2,8 +2,6 @@
 
 The **form plugin** for [Grav](http://github.com/getgrav/grav) adds the ability to create and use forms.  This is currently used extensively by the **admin** and **login** plugins.
 
-| IMPORTANT!!! This plugin is currently in development as is to be considered a **beta release**.  As such, use this in a production environment **at your own risk!**. More features will be added in the future.
-
 # Installation
 
 The form plugin is easy to install with GPM.
@@ -14,7 +12,7 @@ $ bin/gpm install form
 
 # Configuration
 
-Simply copy the `user/plugins/forms/forms.yaml` into `user/config/plugins/forms.yaml` and make your modifications.
+Simply copy the `user/plugins/form/form.yaml` into `user/config/plugins/form.yaml` and make your modifications.
 
 ```
 enabled: true
@@ -22,8 +20,8 @@ enabled: true
 
 # How to use the Form Plugin
 
-The Learn site has two pages describing how to use the Form Plugin: 
-- [Forms](http://learn.getgrav.org/advanced/forms) 
+The Learn site has two pages describing how to use the Form Plugin:
+- [Forms](http://learn.getgrav.org/advanced/forms)
 - [Add a contact form](http://learn.getgrav.org/advanced/contact-form)
 
 # Using email

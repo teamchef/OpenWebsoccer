@@ -4,8 +4,6 @@
 
 This **admin plugin** for [Grav](http://github.com/getgrav/grav) is an HTML user interface that provides a convenient way to configure Grav and easily create and modify pages.  This will remain a totally optional plugin, and is not in any way required or needed to use Grav effectively.  In fact, the admin provides an intentionally limited view to ensure it remains easy to use and not overwhelming.  I'm sure power users will still prefer to work with the configuration files directly.
 
-> IMPORTANT!!! This plugin is currently in development as is to be considered a **beta release**.  As such, use this in a production environment **at your own risk!**.
-
 ![](assets/admin-dashboard.png)
 
 # Features
@@ -72,7 +70,7 @@ Extract each archive file into your `user/plugins` folder, then ensure the folde
 After this you need to create a user account with admin privileges:
 
 ```
-$ bin/grav newuser
+$ bin/plugin login new-user
 ```
 
 ### Create User Manually
@@ -107,4 +105,3 @@ If you have been following the [blog](http://getgrav.org/blog), [Twitter](https:
 The **standard free version**, is very powerful, and has more functionality than most commercial flat-file CMS systems.
 
 We also intend to release in the near future a more feature-rich **pro version** that will include enhanced functionality, as well as some additional nice-to-have capabilities. This pro version will be a **paid** plugin the price of which is not yet 100% finalized.
-

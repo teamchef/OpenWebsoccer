@@ -1,3 +1,214 @@
+# v1.0.9
+## 02/11/2016
+
+1. [](#bugfix)
+    * Fix language translation files
+
+# v1.0.8
+## 02/05/2016
+
+1. [](#new)
+    * Added a logout button when not authorized to access a page in Admin
+    * Added the option to hide a tab from an extended blueprint (https://github.com/getgrav/grav/issues/620)
+    * Many new languages and updates to existing languages from the Translation team.
+1. [](#improved)
+    * Check frontmatter for validity prior to saving
+    * Add noindex, nofollow across the entire admin theme if no other robots headers are set on a page
+    * Allow to hide a configuration blueprint section / tab and still save its values
+    * Allow to show user defined blueprints in configuration
+    * Updated FontAwesome to latest 4.5.0 version
+1. [](#bugfix)
+    * Fixed an issue with user registration on Linux caused by `glob()` possibly returning false.
+    * Fixed an issue preventing Admin to work correctly in a multisite configuration
+    * Fixed preview and insertion of images with non-lowercase extension
+    * Fixed an incorrect number of pages being displayed in the sidebar in some cases
+    * [Security] Don't reveal Grav filesystem path when trying to delete non-existing images
+    * [Security] Fix PHP error happening when uploading file without extension if the JS dropzone uploader is configured to allow empty file extensions
+    * [Security] Ensure correct escaping in various Twig files
+
+# v1.0.7
+## 01/15/2016
+
+1. [](#new)
+    * Added onAdminDashboard event
+    * Added onAdminSave event
+    * New lang strings for reverse proxy toggle
+1. [](#improved)
+    * More robust YAML file checking in config folders
+    * Removed deprecated menu event
+    * Removed old logs code
+    * Used new onAdminDashboard event for current dashboard widgets 
+1. [](#bugfix)
+    * Fix for missing access checks on config pages #397
+    * Fix parent not loaded on admin form save #587
+    * When no route field is added to a page blueprint, add it as page root
+    * Fix for wrong page count (will show dynamic added pages in count too - Need to fix this)
+    * Fix for IE/Edge saving forms #391
+
+# v1.0.6
+## 01/07/2016
+
+1. [](#bugfix)
+    * Fix for forms appending `_json` fields on every save
+
+# v1.0.5
+## 01/07/2016
+
+1. [](#new)
+    * Added a pointer to Grav's contributing guide
+    * Handle the optional logic to strip home from Page routes and urls
+    * The Configuration page now shows any blueprint found in the user/blueprints/config/ folder, thus allowing to add custom configurations 
+1. [](#improved)
+    * Allow the nonce for a POST action to be set in the query url
+    * Add a fallback twig template to use in case Twig cannot find a template file
+    * Modified update Theme and Plugin buttons to use more reliably markup
+1. [](#bugfix)
+    * Fix additional `on` parameter when saving plugins configs that contain tabs in their blueprint
+    * Fixes for the `pagemediaselect` form field 
+    * Fix an untranslated message in the logout form when `system.languages.translations` is disabled
+    * Fixed a hardcoded `http://` reference throwing warnings under HTTPS
+    * Ensure download package has `.zip` extension, just in case
+
+# v1.0.4
+## 12/22/2015
+
+1. [](#improved)
+    * Improved File input field for admin
+    * Restore file inputs functionality and process form via JS if no inputs found
+1. [](#bugfix)
+    * Fix for the image preview in the file field on multi-lang sites
+    * Fix problem in form code introduced by fix to allow file uploads
+    * Fix redirect in deleting page media
+
+# v1.0.3
+## 12/20/2015
+
+1. [](#new)
+    * Added `pagemediaselect` field for use in pages
+1. [](#improved)
+    * Updated various languages
+    * Check for method `meetsRequirements()` prior to using
+    * Enable `file` form field to be used in plugins and theme blueprints
+
+# v1.0.2
+## 12/18/2015
+
+1. [](#bugfix)
+    * Fixed issue with user edit page causing error due to individual language files
+
+# v1.0.1
+## 12/18/2015
+
+1. [](#new)
+    * Moved languages into individual files under `languages/` folder
+    * Added a check for PHP version
+    * Dutch translation added
+1. [](#improved)
+    * Let forms work with file inputs
+    * Various file input improvements
+    * Language updates
+    * Better checks for existence of Popularity JSON data
+    * Add file processing to admin forms
+    * More Admin Pro integration fixes
+1. [](#bugfix)
+    * Set form to multipart if it contains a file field
+    * `cleanFilesData()` now returns just the filename
+
+# v1.0.0
+## 12/11/2015
+
+1. [](#new)
+    * New built-in admin registration process
+    * Added security check to `section` form field
+    * Added new RocketTheme font with various icons
+    * Add `onAdminThemeInitialized()` event to admin `Themes::init()`
+    * Force timestamp on CSS/JS assets based on `GRAV_VERSION`
+    * Additions for Gantry5 support
+1. [](#improved)
+    * Force lowercase `username` when logging in
+    * Hide markdown preview except for pages
+    * Added a notice if you don't have permission to see dashboard
+    * Updated admin login page logic
+    * Return "Invalid Security Token" instead of "Unauthorized"
+    * Throw exception if you used with built-in PHP web server
+    * Updated languages
+    * Removed `noreply@getgrav.org` default email address
+    * Use new methods to disable CSS/JS pipeline if available
+    * Various code cleanups
+1. [](#bugfix)
+    * Handle case when email `from` is not configured
+    * Fix tabs support in plugin/themes settings
+    * Fix param separator in page media Ajax call
+    * Fix favicon base URL
+
+# v1.0.0-rc.7
+## 12/01/2015
+
+1. [](#new)
+    * Display error page if page does not exist in admin
+    * Removed Beta message option and added toggle for GitHub message
+    * Added functionality to support Admin Pro plugin (in development)
+1. [](#improved)
+    * Added support for Markdown editor in lists #239
+    * Better Markdown Editor API with dynamic initialization
+    * Various language updates    
+    * Removed some unused variables
+    * Added admin check for pages existence
+    * Prevent the admin to cause an error when an Ajax action is in progress
+    * Force translations to be active even when disabled in site #299
+    * Do not reinitialize `Selectize` if already available
+1. [](#bugfix)
+    * Fixed full-screen markdown Editor
+    * Fix modular preview not working reliably #254
+    * **Nonce fixes** (hopefully the last of them!)
+    * Fix broken plugin enable/disable
+    * Fix issue where `_redirect: /plugins` was getting stored in the plugin configuration
+    * Replace default them service with admin one
+    * Fix saving array fields #304
+    * Fix missing translations when default language is not english
+    * Fix title variables not translated #310
+
+# v1.0.0-rc.6
+## 11/21/2015
+
+1. [](#improved)
+    * Implemented logic to detect when offline and suppress Ajax calls 
+    * Added nonce logic to be used by JS
+1. [](#bugfix)
+    * Nonce fix for updating themes
+    * Nonce fix for deleting pages
+    
+# v1.0.0-rc.5
+## 11/20/2015
+
+1. [](#new)
+    * Use **Nonce** mechanism for form security
+    * Added Hungarian translation
+    * Add support for Markdown labels #271
+    * Added support for Markdown Editor in all the things
+    * Implemented save keyboard shortcut (Ctrl + S / CMD + S)
+1. [](#improved)
+    * Better error for "Internal Server Error" when accessing GPM
+    * Updated French translation
+    * Updated Russian translation
+    * Load Gravatar image with protocol-less `//:` syntax
+    * Improved header UI in mobile browsers #265
+    * Dropped unused version of JQuery
+    * More visible Preview link icon
+    * Hide **Latest pages** if there are none
+    * Improved toggle to better support different length strings
+1. [](#bugfix)
+    * Force rescanning fields when submitting a form #243
+    * Set default lang for pages on fresh session
+    * Escaped values in `array.html.twig`
+    * Fix saving in IE Edge
+    * Fixed various typos
+    * Fixed JS button issues #370
+    * Fixed JS error in private browsing #272
+    * Fixed date field border
+    * Fixed multiple instance of Markdown Editor #285
+    * Fixed Spacer CSS #267
+
 # v1.0.0-rc.4
 ## 10/29/2015
 

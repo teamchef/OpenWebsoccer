@@ -21,7 +21,7 @@
           if ($line !== null):
 
           // the $line is 1-indexed, we nab -1 where needed to account for this
-          $range = $frame->getFileLines($line - 8, 10);
+          $range = $frame->getFileLines($line - 10, 20);
 
           // getFileLines can return null if there is no source code
           if ($range):
@@ -29,6 +29,10 @@
             $start = key($range) + 1;
             $code  = join("\n", $range);
         ?>
+            <style>#frame-code-0 .linenums li:nth-child(<?= $line-$start+1 ?>) {
+                /* Style current line */
+                background-color: hsl(0, 0%, 33%); 
+            }</style>
             <pre class="code-block prettyprint linenums:<?php echo $start ?>"><?php echo $tpl->escape($code) ?></pre>
           <?php endif ?>
         <?php endif ?>

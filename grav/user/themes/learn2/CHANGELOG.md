@@ -1,3 +1,27 @@
+# v1.5.0
+## 01/06/2016
+
+1. [](#new)
+    * Added keyboard prev/next navigation
+1. [](#improved)
+    * Various language updates
+1. [](#bugfix)
+    * Fixed a typo in CSS
+
+
+# v1.4.2
+## 12/18/2015
+
+1. [](#bugfix)
+    * Fixed clipboard for Safari
+
+# v1.4.1
+## 12/11/2015
+
+1. [](#new)
+    * Support new sidebar scrollbar
+    * New subtle `subtitle` styling
+
 # v1.4.0
 ## 10/07/2015
 

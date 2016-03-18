@@ -31,10 +31,16 @@
   </th>
   <th>
   <FONT SIZE="-3">
-  {{ constant('OPENWEBSOCCER_VERSION')}}<br>
-  PHP  Version {{constant('PHP_VERSION')}}<br>
-  Twig Version {{constant('Twig_Environment::VERSION')}}<br>
-  Feataturing: Grav 1.0.0-rc.4
+						{{ constant('OPENWEBSOCCER_VERSION') }}<br>
+						PHP Version {{ constant('PHP_VERSION') }}<br>
+						Twig Version {{ constant('Twig_Environment::VERSION') }}<br>
+						{% if constant('GRAV_VERSION') >0 %}
+							{% if env.getConfig("grav_enabled") %}
+								Grav Version {{ constant('GRAV_VERSION') }}
+							{% else %}
+								Featuring: Grav Version {{ constant('GRAV_VERSION') }}
+							{% endif %}
+						{% endif %}
   </FONT>
 </th>
 </table>

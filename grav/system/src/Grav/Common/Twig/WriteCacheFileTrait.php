@@ -11,6 +11,7 @@ trait WriteCacheFileTrait
     use GravTrait;
 
     protected static $umask;
+
     /**
      * This exists so template cache files use the same
      * group between apache and cli
@@ -20,6 +21,10 @@ trait WriteCacheFileTrait
      */
     protected function writeCacheFile($file, $content)
     {
+        if (empty($file)) {
+            return;
+        }
+
         if (!isset(self::$umask)) {
             self::$umask = self::getGrav()['config']->get('system.twig.umask_fix', false);
         }

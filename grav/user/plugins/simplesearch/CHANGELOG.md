@@ -1,3 +1,21 @@
+# v1.6.2
+## 01/06/2016
+
+1. [](#improved)
+    * Improved the README instructions on how to save all pages 
+
+# v1.6.1
+## 11/11/2015
+
+1. [](#improved)
+    * Strip HTML tags from title and content before searching
+
+# v1.6.0
+## 11/11/2015
+
+1. [](#new)
+    * Removing `filter:` from configuration will search **ALL** pages
+
 # v1.5.1
 ## 10/15/2015
 

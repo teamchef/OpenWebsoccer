@@ -2,8 +2,6 @@
 namespace Grav\Common\Page;
 
 use Grav\Common\Getters;
-use Grav\Common\Grav;
-use Grav\Common\Config\Config;
 use Grav\Common\GravTrait;
 use Grav\Common\Page\Medium\Medium;
 use Grav\Common\Page\Medium\MediumFactory;
@@ -22,11 +20,11 @@ class Media extends Getters
     protected $gettersVariable = 'instances';
     protected $path;
 
-    protected $instances = array();
-    protected $images = array();
-    protected $videos = array();
-    protected $audios = array();
-    protected $files = array();
+    protected $instances = [];
+    protected $images = [];
+    protected $videos = [];
+    protected $audios = [];
+    protected $files = [];
 
     /**
      * @param $path
