@@ -1,4 +1,6 @@
 <?php
+include('./libs/iosec/iosec.php');
+include('./libs/phpfirewall/firewall.php');
 // php benchmarker by Paul Taulborg (njaguar at http://forums.d2jsp.org) - Modified by Jeroen Post
 // Modified by Rolf Joseph /ErdemCan for OpenWebsoccer
 $timer = new benchmarkTimer();

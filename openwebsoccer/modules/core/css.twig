@@ -1,3 +1,32 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
 {% if env.getConfig("cdn_root_set") %}
 	#ajaxLoaderPage 					{display: none;background:url('{{env.getConfig("cdn_root")}}/img/ajaxloaderbar.gif') no-repeat center center;height: 15px;width:100%;position:fixed;bottom:10px;}
 	#stadium 							{background: url('{{env.getConfig("cdn_root")}}/img/pitch_bg.png') no-repeat 110px 90px;}
@@ -5,7 +34,6 @@
 	#ajaxLoaderPage 					{display: none;background:url('{{env.getConfig("context_root")}}/img/ajaxloaderbar.gif') no-repeat center center;height: 15px;width:100%;position:fixed;bottom:10px;}
 	#stadium 							{background: url('{{env.getConfig("context_root")}}/img/pitch_bg.png') no-repeat 110px 90px;}
 {% endif %}
-
 	body 					{background-image:url({{env.getConfig("bild_hintergrund")}});background-repeat:no-repeat;background-size:cover;padding-top:60px;margin-right: auto;margin-left: auto;}
 	#navbar 				{background-image:url({{env.getConfig("bild_navbar")}});background-repeat:no-repeat;position:fixed;top:0px;left:0px;right:0px;z-index:2;}
 	.navbar-fixed-top		{background-color:{{env.getConfig("color_navbar")}};}
@@ -15,8 +43,10 @@
 	#footer 				{background-color:{{env.getConfig("color_footer")}};background-image:url({{env.getConfig("bild_footer")}});background-repeat:no-repeat;position:fixed;bottom:0px; left:0px; right:0px;
 							text-align:center;padding:0px;padding-top:30px;}
 	.span12					{position: relative;}
-	.span5					{min-width: 370px; max-width: 370px;}
-	.span3					{min-width: 360px; max-width: 360px;}
+	.span7					{min-width: 785px; max-width: 785px;}
+	.span5					{min-width: 540px; max-width: 540px;}
+	.span4					{min-width: 290px; max-width: 290px;}
+	.span3					{min-width: 280px; max-width: 280px;}
 	.sidebar-nav 			{padding:9px 0;}
 	.box 					{padding:9px 9px;background-color:{{env.getConfig("box_background_color")}};background-image:url({{env.getConfig("box_background_image")}});background-repeat:no-repeat;border:1px solid #eeeeee;
 							 border-bottom:3px solid #eee;border-radius:6px;margin-top:10px;margin-bottom:30px;margin-left:auto;margin-right:auto;border-width:{{env.getConfig("box_border")}}px;border-color:{{env.getConfig("box_border_color")}}}
@@ -33,3 +63,4 @@
 							 text-shadow:0 1px 0 {{env.getConfig("navbar_brand_color_shadow")}};}.navbar .brand:hover,.navbar .brand:focus{text-decoration:none;}
 	a:link, a:visited 		{color: {{env.getConfig("link_text_color")}}; }
 	h1.colour, h2.colour, h3.colour, h4.colour, h5.colour, h6.colour {color: {{env.getConfig("header_text_color")}};}
+{% endif %}

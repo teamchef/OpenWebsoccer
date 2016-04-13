@@ -1,17 +1,45 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
-<messages>
-    <message id="cup_firstround_only_date">Datum</message>
-    <message id="cup_firstround">Hinspiel</message>
-    <message id="cup_secondround">RÃ¼ckspiel</message>
-    <message id="cup_created_from_winners_of_round">Gewinner aus <strong>%s</strong>.</message>
-    <message id="cup_created_from_loosers_of_round">Verlierer aus <strong>%s</strong>.</message>
-    <message id="cup_cuproundaward_perround_subject">PrÃ¤mie fÃ¼r Pokalrunde</message>
-    <message id="cup_cuproundaward_winner_subject">Gewinn des Pokals</message>
-    <message id="cup_cuproundaward_second_subject">PrÃ¤mie fÃ¼r zweiten Platz</message>
-    
-    <message id="cup_title_groups">Gruppen</message>
-    <message id="cup_group_noteamsavailable">Dieser Gruppe wurden noch keine Teams zugeteilt.</message>
-    <message id="cup_group_select_group_placeholder">Bitte wÃ¤hlen Sie eine Gruppe aus.</message>
-    
-</messages>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version="OpenWebsoccer">
+	<messages>
+		<message id="cup_firstround_only_date">Datum</message>
+		<message id="cup_firstround">Hinspiel</message>
+		<message id="cup_secondround">Rückspiel</message>
+		<message id="cup_created_from_winners_of_round">Gewinner aus<strong>%s</strong>.</message>
+		<message id="cup_created_from_loosers_of_round">Verlierer aus<strong>%s</strong>.</message>
+		<message id="cup_cuproundaward_perround_subject">Prämie für Pokalrunde</message>
+		<message id="cup_cuproundaward_winner_subject">Gewinn des Pokals</message>
+		<message id="cup_cuproundaward_second_subject">Prämie für zweiten Platz</message>
+		<message id="cup_title_groups">Gruppen</message>
+		<message id="cup_group_noteamsavailable">Dieser Gruppe wurden noch keine Teams zugeteilt.</message>
+		<message id="cup_group_select_group_placeholder">Bitte wählen Sie eine Gruppe aus.</message>
+	</messages>
+</module>

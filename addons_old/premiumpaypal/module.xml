@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+
+<!---
+    * This file is part of OpenWebSoccer-Sim.
+    *
+    * OpenWebSoccer-Sim is free software: you can redistribute it
+    * and/or modify it under the terms of the
+    * GNU Lesser General Public License
+    * as published by the Free Software Foundation, either version 3 of
+    * the License, or any later version.
+    *
+    * OpenWebSoccer-Sim is distributed in the hope that it will be
+    * useful, but WITHOUT ANY WARRANTY; without even the implied
+    * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    * See the GNU Lesser General Public License for more details.
+    *
+    * You should have received a copy of the GNU Lesser General Public
+    * License along with OpenWebSoccer-Sim.
+    * If not, see
+    <http://www.gnu.org/licenses/>.
+-->
+
+<module version="OpenWebsoccer">
+    <settings>
+        <setting id="paypal_enabled" category="premium" type="boolean" default="false"/>
+        <setting id="paypal_receiver_email" category="premium" type="email" default=""/>
+        <setting id="paypal_host" category="premium" type="text" default="www.paypal.com"/>
+        <setting id="paypal_url" category="premium" type="url" default="ssl://www.paypal.com"/>
+        <setting id="paypal_buttonhtml" category="premium" type="textarea" default=""/>
+    </settings>
+
+    <actions>
+        <action id="paypal-notify" controller="PaypalPaymentNotificationController" role="guest,user">
+            <param id="receiver_email" type="email" required="true"/>
+            <param id="mc_gross" type="text" required="true"/>
+            <param id="settle_amount" type="text" required="false"/>
+            <param id="custom" type="number" required="true"/>
+            <param id="payment_status" type="text" required="true"/>
+        </action>
+    </actions>
+
+    <blocks>
+        <block
+                id="paypalpaymentlink"
+                template="paypalpaymentlink"
+                includepages="premium-feature-requested"
+                area="content_bottom"
+                weight="1"
+                role="user"
+                model="PaypalLinkModel"/>
+    </blocks>
+</module>

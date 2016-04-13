@@ -1,0 +1,20 @@
+Modul: cups
+    
+<admin>
+
+<editform>
+                   																validator="UniqueCupNameValidator"
+<blocks>
+	cupgroupdetails									template="cupgroup_table"				model="CupGroupDetailsModel"
+
+
+Dateien:
+
+											cupgroup_table.twig
+																		UniqueCupNameValidator.class.php
+																		CupGroupDetailsModel.class.php
+
+sonstige Dateien:
+																		CupRoundsLinkConverter.class.php
+																		CupsDataService.class.php
+																		ScheduleGenerator.class.php

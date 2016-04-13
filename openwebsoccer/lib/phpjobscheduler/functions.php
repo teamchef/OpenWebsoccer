@@ -167,14 +167,14 @@ function show_jobs()
         $run_only_once_txt= $run_only_once ? "<i><font color=\"#ff0000\"> Will run just once</font></i>":"";
         $time_interval = time_unit($time_interval);
         $paused_txt= $paused?'<font color="#ff0000">PAUSED</font>':'';
-        $scriptpath=htmlentities($scriptpath);  //  fÃ¼r die richtige Anzeige der URL
+        $scriptpath=htmlentities($scriptpath);  //  für die richtige Anzeige der URL
         $table_rows.="
            <tr align=\"center\">
            <th align=\"left\" bgcolor=\"$bg_colour\">
            <div id=\"pjs$id\">
              <font color=\"#008000\">$paused_txt &quot;$name&quot;</font> - <a
-             href=\"javascript:modify($id);\">Ã¤ndern</a> -
-             <a href=\"javascript:deletepjs('".PJS_TABLE."',$id,'$name');\">lÃ¶schen ?</a> $run_only_once_txt<br>
+             href=\"javascript:modify($id);\">ändern</a> -
+             <a href=\"javascript:deletepjs('".PJS_TABLE."',$id,'$name');\">löschen ?</a> $run_only_once_txt<br>
              <small>Scriptpfad: <font color=\"#000000\">$scriptpath</font></small>
            </div>
            </th>
@@ -219,7 +219,7 @@ function show_logs($qstart)
    $log_date=strftime("Date: %d %b %Y  Time: %H:%M:%S",$date_added);
    if ($bg_colour=="#E9E9E9") $bg_colour="#FFFFFF"; else $bg_colour="#E9E9E9";
    if ($output!="") $show_hide="<a href=\"javascript:show_hide('$id');\">anzeigen/verbergen</a>";
-   else $show_hide="keine Daten verfÃ¼gbar";
+   else $show_hide="keine Daten verfügbar";
    $table_rows.="
      <tr align=\"center\">
       <th align=\"left\" bgcolor=\"$bg_colour\">
@@ -236,7 +236,7 @@ function show_logs($qstart)
      </th>
      <th align=\"center\" bgcolor=\"$bg_colour\">
       <small><div id=\"pjs$id\">$log_date <br>
-       <a href=\"javascript:deletepjs('".LOGS_TABLE."',$id,'$script');\">lÃ¶schen ?</a>
+       <a href=\"javascript:deletepjs('".LOGS_TABLE."',$id,'$script');\">löschen ?</a>
        <br></small></div>
      </th>
     </tr>";
@@ -245,11 +245,11 @@ function show_logs($qstart)
   $qend=$i+$qstart;
   echo "$table_rows </table></center></div></form> <center><strong>
       Loganzeige von $qstart bis $qend<br></strong>";
-  $next_link="<strong><a href=\"error-logs.php?start=$next_logs\">die nÃ¤chsten $num Logs anzeigen.&gt;&gt;</a>
+  $next_link="<strong><a href=\"error-logs.php?start=$next_logs\">die nächsten $num Logs anzeigen.&gt;&gt;</a>
              </strong><br><br><br>";
   if ($num==$i) echo $next_link;
-  echo '<p align="center"><font color="#FF8000">* Die maximale LÃ¤nge der Ausgabe ist auf
-       <strong>'.MAX_ERROR_LOG_LENGTH.' Zeichen</strong> beschrÃ¤nkt. </font>Um dies zu verÃ¤ndern sehen Sie
+  echo '<p align="center"><font color="#FF8000">* Die maximale Länge der Ausgabe ist auf
+       <strong>'.MAX_ERROR_LOG_LENGTH.' Zeichen</strong> beschränkt. </font>Um dies zu verändern sehen Sie
        <a href="./readme.html#error_log">bitte in der readme Datei nach.</a><br>';
 
  }

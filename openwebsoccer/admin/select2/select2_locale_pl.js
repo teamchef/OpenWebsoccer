@@ -9,12 +9,12 @@
     var pl_suffix = function(n) {
         if(n == 1) return "";
         if((n%100 > 1 && n%100 < 5) || (n%100 > 20 && n%10 > 1 && n%10 < 5)) return "i";
-        return "ów";
+        return "߳w";
     };
 
     $.extend($.fn.select2.defaults, {
         formatNoMatches: function () {
-            return "Brak wyników.";
+            return "Brak wynik߳w.";
         },
         formatInputTooShort: function (input, min) {
             var n = min - input.length;
@@ -28,7 +28,7 @@
             return "Możesz zaznaczyć najwyżej " + limit + " element" + pl_suffix(limit) + ".";
         },
         formatLoadMore: function (pageNumber) {
-            return "Ładowanie wyników...";
+            return "Ładowanie wynik߳w...";
         },
         formatSearching: function () {
             return "Szukanie...";

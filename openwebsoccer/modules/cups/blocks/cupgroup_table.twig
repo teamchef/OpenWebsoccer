@@ -1,18 +1,38 @@
-
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
 <h4>{{ env.getRequestParameter("group") }}</h4>
-
 {% if groupteams is defined and groupteams|length > 0 %}
-	
 	<table class="table table-striped">
 		<colgroup>
-			<col style="width: 40px" />
-			<col />
-			<col />
-			<col />
-			<col />
-			<col />
-			<col />
-			<col />
+			<col style="width: 40px;"/>
+			<col/><col/><col/><col/><col/><col/><col/>
 		</colgroup>
 		<thead>
 			<tr>
@@ -29,15 +49,18 @@
 		<tbody>
 			{% for team in groupteams %}
 				{% set place = loop.index %}
-			
 				<tr>
 					<td>{{ place }}</td>
-					<td>{% if (env.getUser().id > 0 and team.user_id == env.getUser().id) %}<strong>{% endif %}
-					<a href="{{ env.getInternalUrl("team", "id=" ~ team.id) }}">{{ team.name }}</a>
-					{% if team.user_id > 0 %}
-					<br><small>(<a href="{{ env.getInternalUrl("user", "id=" ~ team.user_id) }}">{{ team.user_name }}</a>)</small>
-					{% endif %}
-					{% if (env.getUser().id > 0 and team.user_id == env.getUser().id) %}<strong>{% endif %}
+					<td>
+						{% if (env.getUser().id > 0 and team.user_id == env.getUser().id) %}<strong>{% endif %}</strong>
+						<a href="{{ env.getInternalUrl("team", "id=" ~ team.id) }}">{{ team.name }}</a>
+						{% if team.user_id > 0 %}
+							<br>
+							<small>
+								(<a href="{{ env.getInternalUrl("user", "id=" ~ team.user_id) }}">{{ team.user_name }}</a>)
+							</small>
+						{% endif %}
+						{% if (env.getUser().id > 0 and team.user_id == env.getUser().id) %}<strong>{% endif %}</strong>
 					</td>
 					<td>{{ team.wins + team.draws + team.defeats }}</td>
 					<td>{{ team.wins }}</td>
@@ -49,10 +72,9 @@
 			{% endfor %}
 		</tbody>
 	</table>
-	
 {% else %}
 	<p>{{ i18n.getMessage("cup_group_noteamsavailable") }}</p>
 {% endif %}
-
 <hr>
 {% include 'blocks/results-list.twig' %}
+{% endif %}

@@ -27,6 +27,7 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
+include('../jobsxmlrepair.php');
 // Autorefresh der Jobs-Seite
 echo("<meta http-equiv='refresh' content='60'>");
 $mainTitle = $i18n->getMessage("jobs_navlabel");

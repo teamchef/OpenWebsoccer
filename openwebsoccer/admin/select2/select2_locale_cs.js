@@ -13,37 +13,37 @@
         4: function() { return "čtyři"; }
     }
     $.extend($.fn.select2.defaults, {
-        formatNoMatches: function () { return "Nenalezeny žádné položky"; },
+        formatNoMatches: function () { return "Nenalezeny žߡdnߩ položky"; },
         formatInputTooShort: function (input, min) {
             var n = min - input.length;
             if (n == 1) {
-                return "Prosím zadejte ještě jeden znak";
+                return "Pros߭m zadejte ještě jeden znak";
             } else if (n <= 4) {
-                return "Prosím zadejte ještě další "+smallNumbers[n](true)+" znaky";
+                return "Pros߭m zadejte ještě dalš߭ "+smallNumbers[n](true)+" znaky";
             } else {
-                return "Prosím zadejte ještě dalších "+n+" znaků";
+                return "Pros߭m zadejte ještě dalš߭ch "+n+" znaků";
             }
         },
         formatInputTooLong: function (input, max) {
             var n = input.length - max;
             if (n == 1) {
-                return "Prosím zadejte o jeden znak méně";
+                return "Pros߭m zadejte o jeden znak mߩně";
             } else if (n <= 4) {
-                return "Prosím zadejte o "+smallNumbers[n](true)+" znaky méně";
+                return "Pros߭m zadejte o "+smallNumbers[n](true)+" znaky mߩně";
             } else {
-                return "Prosím zadejte o "+n+" znaků méně";
+                return "Pros߭m zadejte o "+n+" znaků mߩně";
             }
         },
         formatSelectionTooBig: function (limit) {
             if (limit == 1) {
                 return "Můžete zvolit jen jednu položku";
             } else if (limit <= 4) {
-                return "Můžete zvolit maximálně "+smallNumbers[limit](false)+" položky";
+                return "Můžete zvolit maximߡlně "+smallNumbers[limit](false)+" položky";
             } else {
-                return "Můžete zvolit maximálně "+limit+" položek";
+                return "Můžete zvolit maximߡlně "+limit+" položek";
             }
         },
-        formatLoadMore: function (pageNumber) { return "Načítavají se další výsledky..."; },
-        formatSearching: function () { return "Vyhledávání..."; }
+        formatLoadMore: function (pageNumber) { return "Nač߭tavaj߭ se dalš߭ v߽sledky..."; },
+        formatSearching: function () { return "Vyhledߡvߡn߭..."; }
     });
 })(jQuery);

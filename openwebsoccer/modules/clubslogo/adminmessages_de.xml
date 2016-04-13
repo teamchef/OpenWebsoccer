@@ -1,7 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE messages SYSTEM "../messages.dtd">
-<messages>
-	
-	<message id="settings_label_upload_clublogo_max_size">Vereinslogo Upload: MaximalgrÃ¶se</message> 
-	<message id="settings_label_upload_clublogo_max_size_help">Falls Benutzer ein eigenes Vereinslogo hochladen dÃ¼rfen, kÃ¶nnen Sie hier die MaximalgrÃ¶sse der Bilddatei in KBytes angeben. 0 wenn kein Bildupload mÃ¶glich sein soll.</message> 
-</messages>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version="OpenWebsoccer">
+	<messages>
+		<message id="settings_label_upload_clublogo_max_size">Vereinslogo Upload: Maximalgröse</message>
+		<message id="settings_label_upload_clublogo_max_size_help">Falls Benutzer ein eigenes Vereinslogo hochladen dürfen, können Sie hier die Maximalgrösse der Bilddatei in KBytes angeben. 0 wenn kein Bildupload möglich sein soll.</message>
+	</messages>
+</module>

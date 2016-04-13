@@ -1,17 +1,41 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
 {% extends "base.twig" %}
-
 {% block page_title %}
 {{ i18n.getMessage("youthplayer-makeprofessional_navlabel") }}
 {% endblock %}
-
 {% block page_content %}
 <form class="form-horizontal" method="post">
-
 	<fieldset>
 		<legend>{{ i18n.getMessage("youthplayer-makeprofessional_formlabel") }}</legend>
-		
 		<p>{{ i18n.getMessage("youthplayer-makeprofessional_form_intro")|raw }}</p>
-		
 		<div class="control-group{% if validationMsg['mainposition'] is defined %} error{% endif %}">
 			<label class="control-label" for="mainposition">
 				<strong>{{ i18n.getMessage("entity_player_position_main") }}</strong>
@@ -19,7 +43,6 @@
 			<div class="controls">
 		  		<select name="mainposition" id="mainposition">
 		  			<option></option>
-		  			
 		  			{% if player.position == "Torwart" %}
 		  				<option value="T" selected>{{ i18n.getMessage("option_T") }}</option>
 		  			{% elseif player.position == "Abwehr" %}
@@ -40,7 +63,6 @@
 		  		</select>
 			</div>
 		</div>
-		
 	</fieldset>
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_submit') }}</button>
@@ -51,3 +73,4 @@
 	<input type="hidden" name="action" value="move-youthplayer-to-professional"/>
 </form>
 {% endblock %}
+{% endif %}

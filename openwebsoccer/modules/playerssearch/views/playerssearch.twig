@@ -1,63 +1,76 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
 {% extends "base.twig" %}
 {% import "formelements.twig" as formelements %}
-
 {% block page_title %}
-{{ i18n.getMessage("playerssearch_navlabel") }}
+	{{ i18n.getMessage("playerssearch_navlabel") }}
 {% endblock %}
-
 {% block page_content %}
-
-
-<form class="form-horizontal" method="post">
-
-	{{ formelements.textfield('fname', i18n.getMessage('entity_player_vorname'), env.getRequestParameter('fname'), false, validationMsg, 'text') }}
-
-	{{ formelements.textfield('lname', i18n.getMessage('entity_player_nachname'), env.getRequestParameter('lname'), false, validationMsg, 'text') }}
-
-	{{ formelements.autocomplete("club", i18n.getMessage("entity_player_verein_id"), env.getRequestParameter('club'), false, validationMsg, "clubsearch") }}
-
-	<div class="control-group">
-		<label class="control-label" for="position">
-			{{ i18n.getMessage("entity_player_position") }}
-		</label>
-		<div class="controls">
-	  		<select name="position" id="position">
-	  			<option></option>
-	  			<option value="Torwart"{% if env.getRequestParameter("position") == "Torwart" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
-	  			<option value="Abwehr"{% if env.getRequestParameter("position") == "Abwehr" %} selected{% endif %}>{{ i18n.getMessage("option_Abwehr") }}</option>
-	  			<option value="Mittelfeld"{% if env.getRequestParameter("position") == "Mittelfeld" %} selected{% endif %}>{{ i18n.getMessage("option_Mittelfeld") }}</option>
-	  			<option value="Sturm"{% if env.getRequestParameter("position") == "Sturm" %} selected{% endif %}>{{ i18n.getMessage("option_Sturm") }}</option>
-	  		</select>
+	<form class="form-horizontal" method="post">
+		{{ formelements.textfield('fname', i18n.getMessage('entity_player_vorname'), env.getRequestParameter('fname'), false, validationMsg, 'text') }}
+		{{ formelements.textfield('lname', i18n.getMessage('entity_player_nachname'), env.getRequestParameter('lname'), false, validationMsg, 'text') }}
+		{{ formelements.autocomplete("club", i18n.getMessage("entity_player_verein_id"), env.getRequestParameter('club'), false, validationMsg, "clubsearch") }}
+		<div class="control-group">
+			<label class="control-label" for="position">{{ i18n.getMessage("entity_player_position") }}</label>
+			<div class="controls">
+				<select name="position" id="position">
+					<option></option>
+					<option value="Torwart"{% if env.getRequestParameter("position") == "Torwart" %} selected{% endif %}>{{ i18n.getMessage("option_Torwart") }}</option>
+					<option value="Abwehr"{% if env.getRequestParameter("position") == "Abwehr" %} selected{% endif %}>{{ i18n.getMessage("option_Abwehr") }}</option>
+					<option value="Mittelfeld"{% if env.getRequestParameter("position") == "Mittelfeld" %} selected{% endif %}>{{ i18n.getMessage("option_Mittelfeld") }}</option>
+					<option value="Sturm"{% if env.getRequestParameter("position") == "Sturm" %} selected{% endif %}>{{ i18n.getMessage("option_Sturm") }}</option>
+				</select>
+			</div>
 		</div>
-	</div>
-
-	{% if env.getConfig("hide_strength_attributes") != "1" %}
-	<div class="control-group">
-		<label class="control-label" for="strength">
-			{{ i18n.getMessage("entity_player_w_staerke") }}
-		</label>
-		<div class="controls">
-	  		<select name="strength" id="strength">
-	  			<option></option>
-	  			<option value="20"{% if env.getRequestParameter("strength") == "20" %} selected{% endif %}>1% - 20%</option>
-	  			<option value="40"{% if env.getRequestParameter("strength") == "40" %} selected{% endif %}>21% - 40%</option>
-	  			<option value="60"{% if env.getRequestParameter("strength") == "60" %} selected{% endif %}>41% - 60%</option>
-	  			<option value="80"{% if env.getRequestParameter("strength") == "80" %} selected{% endif %}>61% - 80%</option>
-	  			<option value="100"{% if env.getRequestParameter("strength") == "100" %} selected{% endif %}>81% - 100%</option>
-	  		</select>
+		{% if env.getConfig("hide_strength_attributes") != "1" %}
+			<div class="control-group">
+				<label class="control-label" for="strength">{{ i18n.getMessage("entity_player_w_staerke") }}</label>
+				<div class="controls">
+					<select name="strength" id="strength">
+						<option></option>
+						<option value="20"{% if env.getRequestParameter("strength") == "20" %} selected{% endif %}>1% - 20%</option>
+						<option value="40"{% if env.getRequestParameter("strength") == "40" %} selected{% endif %}>21% - 40%</option>
+						<option value="60"{% if env.getRequestParameter("strength") == "60" %} selected{% endif %}>41% - 60%</option>
+						<option value="80"{% if env.getRequestParameter("strength") == "80" %} selected{% endif %}>61% - 80%</option>
+						<option value="100"{% if env.getRequestParameter("strength") == "100" %} selected{% endif %}>81% - 100%</option>
+					</select>
+				</div>
+			</div>
+		{% endif %}
+		{% if env.getConfig("lending_enabled") %}
+			{{ formelements.checkbox('lendable', i18n.getMessage('lending_player_marker_lendable'), env.getRequestParameter('lendable')) }}
+		{% endif %}
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary ajaxSubmit" data-ajaxblock="playerssearch-results" data-ajaxtarget="playerssearch-results_block">{{ i18n.getMessage('playerssearch_submit') }}</button>
 		</div>
-	</div>
-	{% endif %}
-
-	{% if env.getConfig("lending_enabled") %}
-		{{ formelements.checkbox('lendable', i18n.getMessage('lending_player_marker_lendable'), env.getRequestParameter('lendable')) }}
-	{% endif %}
-	<div class="form-actions">
-		<button type="submit" class="btn btn-primary ajaxSubmit"
-		data-ajaxblock="playerssearch-results"
-		data-ajaxtarget="playerssearch-results_block">{{ i18n.getMessage('playerssearch_submit') }}</button>
-	</div>
-	<input type="hidden" name="page" value="playerssearch"/>
-</form>
-
+		<input type="hidden" name="page" value="playerssearch"/>
+	</form>
 {% endblock %}
+{% endif %}

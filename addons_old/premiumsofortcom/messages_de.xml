@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+
+<!---
+    * This file is part of OpenWebSoccer-Sim.
+    *
+    * OpenWebSoccer-Sim is free software: you can redistribute it
+    * and/or modify it under the terms of the
+    * GNU Lesser General Public License
+    * as published by the Free Software Foundation, either version 3 of
+    * the License, or any later version.
+    *
+    * OpenWebSoccer-Sim is distributed in the hope that it will be
+    * useful, but WITHOUT ANY WARRANTY; without even the implied
+    * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    * See the GNU Lesser General Public License for more details.
+    *
+    * You should have received a copy of the GNU Lesser General Public
+    * License along with OpenWebSoccer-Sim.
+    * If not, see
+    <http://www.gnu.org/licenses/>.
+-->
+
+<module version="OpenWebsoccer">
+    <messages>
+        <message id="actionsubject_sofortcom-notify">Zahlung über Sofort.com</message>
+        <message id="sofortcompayment_link_title">Zahlen über Sofort.com</message>
+        <message id="sofortcompayment_link_intro">Bezahlen Sie einfach mit Ihren Online-Banking-Daten über den Anbieter <a href="https://www.sofort.com" target="_blank">Sofort.com</a>. Sie müssen sich dazu weder bei dem Anbieter registrieren, noch benötigen Sie eine Kreditkarte.</message>
+        <message id="sofortcompayment_label_amount">Betrag</message>
+        <message id="sofortcompayment_label_submit">Auf Sofort.com kaufen</message>
+    </messages>
+</module>

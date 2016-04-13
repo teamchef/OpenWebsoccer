@@ -1,94 +1,122 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
 {% extends "base.twig" %}
-
+{% import "paginator.twig" as pagination %}
 {% import "messagebox.twig" as msgbox %}
-
 {% block browser_title %}
-{{ i18n.getMessage("home_title", env.getConfig("projectname")) }}
+	{{ i18n.getMessage("home_title", env.getConfig("projectname")) }}
 {% endblock %}
-
 {% block page_header %}
-
-<center><i class="fa-li fa fa-spinner fa-spin"></center>
-
-{% if env.user.id == null %}
-
-<br>
-<div class="top_spoiler" style="color:white;border-style:solid;border-width:{{env.getConfig("spoiler_border")}}px;border-color:{{env.getConfig("spoiler_border_color")}};" >
-<table cellpadding="25">
-  <th>
-	<h1><div style="color:{{ env.getConfig("spoiler_text_header_color") }}"> {{ env.getConfig("spoiler_text_header") }}</div></h1>
-	<div style="color:{{ env.getConfig("spoiler_text_color") }}"> {{ env.getConfig("spoiler_text") }}</div>
-	<div style="color:{{ env.getConfig("spoiler_text_2_color") }}"> {{ env.getConfig("spoiler_text_2") }}</div>
-  </th>
-  <th>
-    	{% if env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0 %}
-		{% set registerUrl = env.getInternalUrl("register") %}
-		{% if env.getConfig("registration_url")|length > 0 %}
-			{% set registerUrl = env.getConfig("registration_url") %}
-		{% endif %}
-		<div style="text-align:center;"><a href="{{ registerUrl }}" class="btn btn-large">{{ i18n.getMessage("home_teaser_link_register") }}</a></div>
-	{% endif %}
-  </th>
-  <th>
-  <FONT SIZE="-3">
-						{{ constant('OPENWEBSOCCER_VERSION') }}<br>
-						PHP Version {{ constant('PHP_VERSION') }}<br>
-						Twig Version {{ constant('Twig_Environment::VERSION') }}<br>
-						{% if constant('GRAV_VERSION') >0 %}
-							{% if env.getConfig("grav_enabled") %}
-								Grav Version {{ constant('GRAV_VERSION') }}
-							{% else %}
-								Featuring: Grav Version {{ constant('GRAV_VERSION') }}
+	<div style="text-align: center;"><i class="fa-li fa fa-spinner fa-spin"></i></div>
+	{% if env.getConfig("spoiler_noshow") == 0 %}
+		{% if env.user >= null %}
+			<br>
+			<div class="top_spoiler" style="color:#ffffff;border-style:solid;border-width:{{ env.getConfig("spoiler_border") }}px;border-color:{{ env.getConfig("spoiler_border_color") }};">
+				<table cellpadding="25">
+					<th>
+						<h1>
+						<div style="color:{{ env.getConfig("spoiler_text_header_color") }};"> {{ env.getConfig("spoiler_text_header") }}</div></h1>
+						<div style="color:{{ env.getConfig("spoiler_text_color") }};"> {{ env.getConfig("spoiler_text") }}</div>
+						<div style="color:{{ env.getConfig("spoiler_text_2_color") }};"> {{ env.getConfig("spoiler_text_2") }}</div>
+					</th>
+					<th>
+						{% if env.getConfig("allow_userregistration") or env.getConfig("registration_url")|length > 0 %}
+							{% set registerUrl = env.getInternalUrl("register") %}
+							{% if env.getConfig("registration_url")|length > 0 %}
+								{% set registerUrl = env.getConfig("registration_url") %}
 							{% endif %}
+								<div style="text-align:center;"><a href="{{ registerUrl }}" class="btn btn-large">{{ i18n.getMessage("home_teaser_link_register") }}</a></div>
 						{% endif %}
-  </FONT>
-</th>
-</table>
-</div>
-
-{% endif %}
-
-<div id="messages">
-{% if frontMessages is defined %}
-	{% for message in frontMessages %}
-		{{ msgbox.box(message.title, message.message, message.type) }}
-	{% endfor %}
-{% endif %}
-</div>
-
-<div class="row">
-
-	<div class="span3">
-		<div class="ajaxLoadedBlock" id="projectStatisticsBlock" data-ajaxblock="projectstatistics" data-ignoreemptymessages="true"  data-refreshperiod="30"></div>
-		{{ viewHandler.renderBlock('news')|raw }}
-	</div>
-
-	<div class="span5">
-		<div class="ajaxLoadedBlock" id="todaysmatchesBlock" data-ajaxblock="todaysmatches" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
-		<div class="ajaxLoadedBlock" id="latestResultsBlock" data-ajaxblock="latest-results-summary" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
-		{% if env.getConfig("hide_latestActivitiesBlock") != "1" %}
-			  <div class="ajaxLoadedBlock" id="latestActivitiesBlock" data-ajaxblock="user-activities-all" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
+					</th>
+					<th>
+						<FONT SIZE="-3">
+							{{ constant('OPENWEBSOCCER_VERSION') }}<br>
+							PHP Version {{ constant('PHP_VERSION') }}<br>
+							Twig Version {{ constant('Twig_Environment::VERSION') }}<br>
+							{% if constant('GRAV_VERSION') >0 %}
+								{% if env.getConfig("grav_enabled") %}
+									Grav Version {{ constant('GRAV_VERSION') }}
+								{% else %}
+									Featuring: Grav Version {{ constant('GRAV_VERSION') }}
+								{% endif %}
+							{% endif %}
+						</FONT>
+					</th>
+				</table>
+			</div>
 		{% endif %}
-	</div>
-
-	<div class="span3">
-		{% if blocks.sidebar is defined %}
-			{% for uiBlock in blocks.sidebar %}
-				{{ viewHandler.renderBlock(uiBlock.id, uiBlock)|raw }}
+	{% endif %}
+	<div id="messages">
+		{% if frontMessages is defined %}
+			{% for message in frontMessages %}
+				{{ msgbox.box(message.title, message.message, message.type) }}
 			{% endfor %}
 		{% endif %}
 	</div>
-</div>
-
-{% if blocks.content_bottom is defined %}
-	{% for uiBlock in blocks.content_bottom %}
-		<div id="{{ uiBlock.id }}_block">
-		{{ viewHandler.renderBlock(uiBlock.id, uiBlock)|raw }}
+	<div class="row">
+		<div class="span3">
+			{% if env.getConfig("projectStatistics_noshow") == 0 %}
+				<div class="ajaxLoadedBlock" id="projectStatisticsBlock" data-ajaxblock="projectstatistics" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
+			{% endif %}
+			{% if env.getConfig("news_noshow") == 0 %}
+				{{ viewHandler.renderBlock('news')|raw }}
+			{% endif %}
 		</div>
-	{% endfor %}
-{% endif %}
-
+		<div class="span5">
+			<div class="ajaxLoadedBlock" id="livematchesBlock" data-ajaxblock="livematches" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
+			<div class="ajaxLoadedBlock" id="todaysmatchesBlock" data-ajaxblock="todaysmatches" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
+			<div class="ajaxLoadedBlock" id="simulatetmatchesBlock" data-ajaxblock="simulatetmatches" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
+			{% if env.getConfig("latestResults_noshow") == 0 %}
+				<div class="ajaxLoadedBlock" id="latestResultsBlock" data-ajaxblock="latest-results-summary" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
+			{% endif %}
+			{% if env.getConfig("activities_noshow") == 0 %}
+				<div class="ajaxLoadedBlock" id="latestActivitiesBlock" data-ajaxblock="user-activities-all" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
+			{% endif %}
+		</div>
+		<div class="span3">
+			{% if blocks.sidebar is defined %}
+				{% for uiBlock in blocks.sidebar %}
+					{% if env.getConfig("login_noshow") == 1 %}
+					{% else %}
+						{{ viewHandler.renderBlock(uiBlock.id, uiBlock)|raw }}
+					{% endif %}
+				{% endfor %}
+			{% endif %}
+		</div>
+	</div>
+	{% if blocks.content_bottom is defined %}
+		{% for uiBlock in blocks.content_bottom %}
+			<div id="{{ uiBlock.id }}_block">{{ viewHandler.renderBlock(uiBlock.id, uiBlock)|raw }}</div>
+		{% endfor %}
+	{% endif %}
 {% endblock %}
-
 {% block page_columns %}
 {% endblock %}
+{% endif %}

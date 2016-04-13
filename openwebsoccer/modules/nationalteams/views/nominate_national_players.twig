@@ -1,23 +1,45 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
 {% extends "base.twig" %}
 {% import "messagebox.twig" as messagebox %}
 {% import "formelements.twig" as formelements %}
 {% import "paginator.twig" as pagination %}
 {% import "playerlists.twig" as playerlists %}
-
 {% block page_title %}
 {{ i18n.getMessage("nominate-national-players_navlabel") }}
 {% endblock %}
-
 {% block page_content %}
-
 	<h3>{{ team_name }}</h3>
-
 	<form class="form-horizontal" method="post">
-
 		{{ formelements.textfield('fname', i18n.getMessage('entity_player_vorname'), env.getRequestParameter('fname'), false, validationMsg, 'text') }}
-
 		{{ formelements.textfield('lname', i18n.getMessage('entity_player_nachname'), env.getRequestParameter('lname'), false, validationMsg, 'text') }}
-
 		<div class="control-group">
 			<label class="control-label" for="position">
 				{{ i18n.getMessage("entity_player_position") }}
@@ -32,7 +54,6 @@
 		  		</select>
 			</div>
 		</div>
-
 		<div class="control-group">
 			<label class="control-label" for="position_main">
 				{{ i18n.getMessage("entity_player_position_main") }}
@@ -55,19 +76,15 @@
 		  		</select>
 			</div>
 		</div>
-
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">{{ i18n.getMessage('playerssearch_submit') }}</button>
 		</div>
 		<input type="hidden" name="page" value="nominate-national-players"/>
 		<input type="hidden" name="search" value="true"/>
 	</form>
-
 	{% if env.getRequestParameter("search") %}
 		{% if players is defined and players|length > 0 %}
-
 			<h4>{{ i18n.getMessage("playerssearch_hits", playersCount) }}</h4>
-
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -81,7 +98,6 @@
 					</tr>
 				</thead>
 				<tbody>
-
 					{% for player in players %}
 					<tr>
 						<td>
@@ -92,7 +108,6 @@
 							<img src="{{ env.getConfig("context_root") }}/img/{{ i18n.getMessage("player_position_" ~ player.position) }}.png"	alt="{{ i18n.getMessage("player_position_" ~ player.position) }}"
 							title="{{ i18n.getMessage("player_position_" ~ player.position) }}" />
 						{% endif %}
-													
 							{% if player.position_main|length > 0 %}<abbr title="{{ i18n.getMessage("option_" ~ player.position_main) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}</abbr>{% endif %}
 							{% if player.position_second|length > 0 %}/ <abbr title="{{ i18n.getMessage("option_" ~ player.position_second) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_second) }}</abbr>{% endif %}
 						</td>
@@ -104,7 +119,6 @@
 						-
 						{% endif %}
 						</td>
-
 						{% if env.getConfig("hide_strength_attributes") != "1" %}
 							<td>
 								<ul class="unstyled">
@@ -121,20 +135,15 @@
 								</ul>
 							</td>
 						{% endif %}
-
 						<td><a class="btn btn-small" href="{{ env.getInternalActionUrl("add-national-player", "id=" ~ player.id) }}"><i class="icon-flag-alt"></i> {{ i18n.getMessage("nationalteams_addplayer") }}</a></td>
-
 					</tr>
 					{% endfor %}
-
 				</tbody>
 			</table>
-
 			{{ pagination.paginator(paginator) }}
-
 		{% else %}
 			{{ messagebox.box(i18n.getMessage("no_players_found"), "", "info") }}
 		{% endif %}
 	{% endif %}
-
 {% endblock %}
+{% endif %}

@@ -1,5 +1,5 @@
+{% if OPEN_WEBSOCCER is defined %}
 {% import "formelements.twig" as formelements %}
-
 {% extends "base.twig" %}
 
 {% block page_title %}
@@ -32,3 +32,4 @@
 	<input type="hidden" name="action" value="userregistration"/>
 </form>
 {% endblock %}
+{% endif %}

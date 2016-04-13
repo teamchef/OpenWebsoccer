@@ -56,8 +56,7 @@ if ($inputUser or $inputPassword) {
 		$errors['inputPassword'] = $i18n->getMessage('login_error_nopassword');
 	}
 	if (count($errors) == 0) {
-		// correct Pwd?
-		$columns = array('id', 'passwort', 'passwort_salt', 'passwort_neu', 'name');
+		$columns = '*';
 		$fromTable = $conf['db_prefix'] .'_admin';
 		$whereCondition = 'name = \'%s\'';
 		$parameters = $inputUser;
@@ -150,7 +149,7 @@ header('Content-type: text/html; charset=utf-8');
 				<div class='control-group<?php if (isset($errors['inputPassword'])) echo ' error'; ?>'>
 					<label class='control-label' for='inputPassword'><?php echo $i18n->getMessage('login_label_password');?></label>
 					<div class='controls'>
-						<input type='password' name='inputPassword' id='inputPassword' placeholder='<?php echo $i18n->getMessage('login_label_password');?>' required>
+						<input type='password' name='inputPassword' id='inputPassword' placeholder='<?php echo $i18n->getMessage('login_label_password');?>'>
 					</div>
 				</div>
 				<div class='control-group'>
@@ -163,7 +162,7 @@ header('Content-type: text/html; charset=utf-8');
 			<hr>
 			<footer>
  				<div id="footer">
-	 				<a href="https://github.com/rolfjoseph/OpenWebsoccer" target="_blank"> <?php readfile('../admin/config/version.txt'); readfile('../modules/core/step.txt'); ?>
+	 				<a href="https://github.com/rolfjoseph/OpenWebsoccer" target="_blank"> <?php readfile('../admin/config/version.txt'); readfile('../build.txt'); ?>
 				</div>
 			</footer>
 		</div>

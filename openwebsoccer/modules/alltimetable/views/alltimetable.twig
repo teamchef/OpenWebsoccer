@@ -1,25 +1,55 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
 {% extends "base.twig" %}
-
 {% block page_title %}
-{{ i18n.getMessage("alltimetable_navlabel") }}
+	{{ i18n.getMessage("alltimetable_navlabel") }}
 {% endblock %}
-
 {% block page_content %}
-
-<form class="form-inline" method="post">
-
-	<label class="control-label" for="country">{{ i18n.getMessage("entity_league") }}</label> 
-	<select id="id" name="id" class="span3">
-		<option></option>
-	{% for leagueItem in leagues %}
-		<option value="{{ leagueItem.league_id }}"{% if league.league_id is defined and league.league_id == leagueItem.league_id or env.getRequestParameter("id") == leagueItem.league_id %} selected{% endif %}>{{ leagueItem.league_country }} - {{ leagueItem.league_name }}</option>
-	{% endfor %}
-	</select>
-
-	<button type="submit" class="btn btn-primary ajaxSubmit" 
-		data-ajaxtarget="alltimetable-table_block" data-ajaxblock="alltimetable-table">{{ i18n.getMessage('button_display') }}</button>
-
-	<input type="hidden" name="page" value="alltimetable" />
-</form>
-
+	<form class="form-inline" method="post">
+		<table>
+		<td>
+		<label class="control-label" for="country">{{ i18n.getMessage("entity_league") }}</label>
+		<label for="id"></label><select id="id" name="id" class="span3">
+			<option></option>
+			{% for leagueItem in leagues %}
+				<option value="{{ leagueItem.league_id }}"{% if league.league_id is defined and league.league_id == leagueItem.league_id or env.getRequestParameter("id") == leagueItem.league_id %} selected{% endif %}>{{ leagueItem.league_country }} - {{ leagueItem.league_name }}</option>
+			{% endfor %}
+		</select>
+		</td>
+		<td></td><td></td><td></td><td></td><td></td>
+		<td>
+		<br>
+		<button type="submit" class="btn btn-primary ajaxSubmit" data-ajaxtarget="alltimetable-table_block" data-ajaxblock="alltimetable-table">{{ i18n.getMessage('button_display') }}</button>
+		<input type="hidden" name="page" value="alltimetable"/>
+		</td>
+		</table>
+	</form>
 {% endblock %}
+{% endif %}

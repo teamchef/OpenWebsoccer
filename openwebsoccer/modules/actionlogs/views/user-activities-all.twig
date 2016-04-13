@@ -1,30 +1,62 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
 {% extends "base.twig" %}
-
 {% block page_title %}
-{{ i18n.getMessage("activitylog_box_title") }}
+	{{ i18n.getMessage("activitylog_box_title") }}
 {% endblock %}
-
 {% block page_content %}
-
-{% if env.user.isAdmin() %}
-
-	{% if activities is defined and activities|length > 0 %}
-	
-		<table class="table table-striped">
-		{% for activity in activities %}
-			{% set username = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ activity.user_id) ~ "\">" ~ activity.user_name|e ~ "</a>" %}
-			<tr>
-				<td><small>{{ env.getFormattedDatetime(activity.created_date) }}</small> {{ i18n.getMessage("activitylog_" ~ activity.action_id)|format(username)|raw }}</td>
-			</tr>
-		{% endfor %}
-		</table>
-
+	{% if entry.featureImage | length %}
+		{% set image = entry.featureImage.first() %}
+		{% if env.getConfig("cdn_root_set") %}
+			<img src="{{ env.getConfig("cdn_root") }}/img/actionlogs.png"/><br><br>
+		{% else %}
+			<img src="{{ env.getConfig("context_root") }}/img/actionlogs.png"/><br><br>
+		{% endif %}
 	{% endif %}
-
-{% else %} {{ i18n.getMessage("admin") }}
-
-{% endif %}
-<p> Powered by Rolf Joseph / ErdemCan</p>
+	{% if env.user.isAdmin() %}
+		{% if activities is defined and activities|length > 0 %}
+			<table>
+				{% for activity in activities %}
+					{% set username = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ activity.user_id) ~ "\">" ~ activity.user_name|e ~ "</a>" %}
+					<tr>
+						<small>
+							{{ env.getFormattedDatetime(activity.created_date) }}
+							{{ i18n.getMessage("activitylog_" ~ activity.action_id)|format(username)|raw }}
+							<br>
+						</small>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+	{% else %} {{ i18n.getMessage("admin") }}
+	{% endif %}
+	<p> Powered 2015 - 2016 by Rolf Joseph / ErdemCan</p>
 {% endblock %}
-
-
+{% endif %}

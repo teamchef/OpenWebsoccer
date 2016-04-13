@@ -1,34 +1,56 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
 {% extends "base.twig" %}
 {% import "profileelements.twig" as profile %}
 {% import "messagebox.twig" as messagebox %}
 {% import "statisticelements.twig" as statisticelements %}
-
 {% block page_title %}
 {{ i18n.getMessage("youth-scouting_navlabel") }}
 {% endblock %}
-
 {% block page_content %}
-
 	{% if lastExecutionTimestamp == 0 %}
 		{% set lastScouting = i18n.getMessage("youthteam_scouting_lastexecution_never") %}
 	{% else %}
 		{% set lastScouting = env.getFormattedDatetime(lastExecutionTimestamp) %}
 	{% endif %}
 	{{ profile.infofield(i18n.getMessage("youthteam_scouting_lastexecution"), lastScouting) }}
-
 	{% if not scoutingPossible %}
 		<hr>
 		{{ messagebox.box(i18n.getMessage("youthteam_scouting_nextpossibleexecution",
 			env.getFormattedDatetime(nextPossibleExecutionTimestamp)), "", "warning") }}
 	{% else %}
-
 		{% if env.getRequestParameter("scoutid") == null %}
 			<h3>{{ i18n.getMessage("youthteam_scouting_schoosescout") }}</h3>
-
 			{% if scouts|length == 0 %}
 				<p>{{ i18n.getMessage("youthteam_scouting_noscoutavailable") }}</p>
 			{% else %}
-
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -51,11 +73,9 @@
 					{% endfor %}
 					</tbody>
 				</table>
-
 			{% endif %}
 		{% else %}
 			<h3>{{ i18n.getMessage("youthteam_scouting_schoosecountry") }}</h3>
-
 			{% for country in countries %}
 				{% set nationImg = skin.getImage("flags/players/" ~ country ~ ".png") %}
 				{% if i18n.hasMessage("option_" ~ country) %}
@@ -65,11 +85,8 @@
 				{% endif %}
 				<a href="{{ env.getInternalActionUrl("scout-youthplayer", "scoutid=" ~ env.getRequestParameter("scoutid") ~ "&country=" ~ country) }}" class="btn btn-large btn-block">{% if nationImg %}<img src="{{ nationImg }}" alt="{{ countryLabel }}" /> {% endif %}{{ countryLabel }}</a>
 			{% endfor %}
-
 			<p style="margin-top: 10px"><a href="{{ env.getInternalUrl("youth-scouting") }}" class="btn">{{ i18n.getMessage("button_cancel") }}</a></p>
-
 		{% endif %}
-
 	{% endif %}
-
 {% endblock %}
+{% endif %}

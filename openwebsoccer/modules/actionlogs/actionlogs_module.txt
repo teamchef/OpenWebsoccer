@@ -1,31 +1,79 @@
-Modul:	actionlogs
-
-
-Neu:	Bei den Benutzeraktivitäten wird nun zusätzlich die Uhrzeit angezeigt
-Neu:	Neue Seite Im Frontend unter Ligen der Punkt "Alle Useraktivitäten"
-
-	User erhalten die Meldung, das der Zugriff nur für den Admin ist.
-	Der Admin erhält eine Liste der aller gespeicherten Useraktivitäten.
-
-	Die Voraussetzung ist, das der Admin zusätzlich als Benutzter registriert ist.
-	Dabei muss der Benutzername und die E-Mail-Adresse bei beiden Accounts gleich sein !
-
-
-
-<pages>
-Neu		template="user-activities-all.twig"		<-	Bereitstellung aller User-Aktivitäten für den Admin	->	model="AllActivitiesModel.class.php"
-
-<blocks>
-		template="user-activities-list.twig"		<-	Anzeige aller Useraktivitäten als Liste			->	model="UserActivitiesModel.php"
-		template="user-activities-box.twig"		<-	Anzeige der letzten Useraktivitäten in einer Box	->	model="AllUserActivitiesModel.php"
-
-
-sonstige Dateien:
-									Handler für die Aktion Useraktivität			->	ActionHandler.class.php
-									Datenservice für die Aktivitäteneinträge		->	ActionLogDataService.class.php
-
-bearbeitet	modul.xml						Modul-Konfigurations-Datei
-bearbeitet	messages_de.xml						Modul-Nachrichten-Datei
-
-Hilfsdatei	columns.php						mehrfach genutzte Komponente für ActionLogDataService.class.php
-Hilfsdatei	logs.php						mehrfach genutzte Komponente für ActionLogDataService.class.php
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+Modul								actionlogs
+Admincenter							Einstellungen -> TLC-Features -> Benutzeraktivitäten ausblenen	// eigene Benutzeraktivitäten werden weiterhin angezeigt
+Funktionen sichtbar					?page=home			-> Benutzeraktivitäten		// alle Benutzeraktivitäten der letzten Einträge anzeigen
+									?page=user&id=		-> Benutzer					// nur die Benutzeraktivitäten des Users anzeigen
+									?page=allaktivities	-> Alle User Aktivitäten	// nur für den Admin ( wenn er auch Benutzer angelegt wurde )
+Neu									Bei den Benutzeraktivitäten wird nun zusätzlich die Uhrzeit angezeigt
+Neu									Neue Seite Im Frontend unter Ligen der Punkt "Alle Useraktivitäten"
+									User erhalten die Meldung, das der Zugriff nur für den Admin ist.
+									Der Admin erhält eine Liste aller gespeicherten Useraktivitäten.
+									Die Voraussetzung ist, das der Admin zusätzlich als Benutzter registriert ist.
+									Dabei muss der Benutzername und die E-Mail-Adresse bei beiden Accounts gleich sein !
+<page>  Neu							Bereitstellung aller User-Aktivitäten für den Admin
+									template="user-activities-all.twig"
+									model="AllActivitiesModel.class.php"
+<block>								Anzeige aller Useraktivitäten als Liste
+									template="user-activities-list.twig"
+									model="UserActivitiesModel.php"
+<block>								Anzeige der letzten Useraktivitäten in einer Box
+									template="user-activities-box.twig"
+									model="AllUserActivitiesModel.php"
+Datenservice						für die Aktivitäteneinträge
+									ActionLogDataService.class.php
+Konfiguration-Datei					module.xml
+Nachrichten-Datei					messages_de.xml
+Hilfsdatei							mehrfach genutzte Komponente für ActionLogDataService.class.php
+									columns.php
+									logs.php
+Klasse mit mehreren Funktionen
+ActionLogDataService.class.php		class		ActionLogDataService::
+												function				getActionLogsOfUser			// Funktion: Letzte Aktionen eines User
+												function				getLatestActionLogs			// Funktion: Letzte 10 Aktionen aller User
+												function				getAllActionLogs			// Funktion: Alle Aktionen aller User im verfügbaren Zeitraum
+												function				createOrUpdateActionLog		// Funktionen: NeueLogeinträge erstellen, Alte Einträge löschen, bei gleicher Aktion die Zeit korrigieren
+Klasssen die auf "implements IModel" basieren - "implements IModel" muss nicht genutzt werden.
+Es dient nur zur Sicherung der Mindestvorgaben der Funktionsaufrufe als eigene Klasse.
+Klassen mit einer Function
+AllActivitiesModel.class.php		class		AllActivitiesModel
+												function				__construct
+												function				renderView
+												function				getTemplateParameters
+												return ["activities" => ActionLogDataService::getAllActionLogs($this->_websoccer, $this->_db)];
+UserActivitiesModel.php				class		UserActivitiesModel
+												function				__construct
+												function				renderView
+												function				getTemplateParameters
+												return ["activities" => ActionLogDataService::getActionLogsOfUser($this->_websoccer, $this->_db, $this->_websoccer->getRequestParameter('userid'))];
+AllUserActivitiesModel.php			class		AllUserActivitiesModel
+												function				__construct
+												function				renderView
+												function				getTemplateParameters
+												return ["activities" => ActionLogDataService::getLatestActionLogs($this->_websoccer, $this->_db, 5)];

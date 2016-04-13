@@ -1,8 +1,8 @@
-Móstoles
+M߳stoles
 Barcellona
-Sanlúcar
-Benalmádena
-Logroño
+Sanlߺcar
+Benalmߡdena
+Logro߱o
 Ceuta
 Valdemoro
 Viladecans
@@ -10,7 +10,7 @@ Huelva
 Orihuela
 Reus
 Pamplonna
-San Bartolomé
+San Bartolomߩ
 Marbella
 Rivas-Vaciamadrid
 Valladolid
@@ -18,16 +18,16 @@ Arrecife
 Fuenlabrada
 Murcia
 Ourense
-Leganés
+Leganߩs
 Torremolinos
 Cartagena
 Saragosa
 Estepona
 Siero
 Sagunto
-Corruña
+Corru߱a
 Irun
-Málagga
+Mߡlagga
 Elche
 Manresa
 Terrassa
@@ -36,39 +36,39 @@ Zamora
 Melilla
 Jerez de la Frontera
 Collado Villalba
-Almería
+Almer߭a
 Badajoz
 El Prat de Llobregat
-San Cristóbal
-Cáceres
-Alcalá
-Alcalá de Henares
+San Crist߳bal
+Cߡceres
+Alcalߡ
+Alcalߡ de Henares
 El Ejido
 Pozuelo
 Gandia
-Cornellà
-Jaén
+Cornellߠ
+Jaߩn
 Utrera
 San Fernando
-Mérida
+Mߩrida
 Bilpao
 Las Pallmas
-Mataró
+Matar߳
 Getxo
 Lleida
 Cerdanyola
 Albacete
 Badalona
 Villarreal
-Gijón
+Gij߳n
 Santander
-La Línea
+La L߭nea
 Tarragona
 Santa Coloma
 Huesca
-León
-San Sebastián
-Castellón
+Le߳n
+San Sebastiߡn
+Castell߳n
 Vilanova
 Sant Boi
 Cuenca
@@ -79,25 +79,25 @@ Talavera
 Ponferrada
 Girona
 Torrevieja
-Calvià
+Calviߠ
 Pontevedra
 Ciudad Real
-Córdoba
+C߳rdoba
 Elda
 Parla
 Algeciras
 Mijas
 Valenssia
 Vitoria-Gasteiz
-Alcorcón
+Alcorc߳n
 Guadalajara
-San Sebastián
-Santa Lucía
+San Sebastiߡn
+Santa Luc߭a
 Toledo
 Alcoy
 Fuengirola
-Avilés
-Mollet del Vallès
+Avilߩs
+Mollet del Vallߨs
 Las Rozas
 Burgos
 Castelldefels
@@ -108,7 +108,7 @@ Granada
 Torrelavega
 Coslada
 Santa Cruz
-Cádiz
+Cߡdiz
 Chiclana
 Ferrol
 Telde
@@ -122,10 +122,10 @@ Medrid
 Lorca
 Sabadell
 Vigo
-Ávila
+߁vila
 Arganda del Rey
 Paterna
-Torrejón
+Torrej߳n
 Gedafe
 Salamanca
 Lugo
@@ -135,8 +135,8 @@ San Vicente
 Motril
 Roquetas
 Savilla
-Vélez-Málaga
+Vߩlez-Mߡlaga
 Sant Cugat
 Molina
 Linares
-Rubí
+Rub߭

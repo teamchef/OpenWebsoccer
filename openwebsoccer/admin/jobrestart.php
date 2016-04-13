@@ -27,6 +27,7 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
+include('../jobsxmlrepair.php');
 /*
 * Startet den internen Job neu, wenn dieser vom Server beendet wurde.
 */

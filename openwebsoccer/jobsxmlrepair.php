@@ -1,5 +1,5 @@
 <?php
-/**********************************************************************************************
+/******************************************************************
 *
 * This file is part of OpenWebSoccer-Sim.
 *
@@ -21,23 +21,22 @@
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
 *
-* This Version called "OpenWebsoccer" is a advanced modifikation
+* This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
 *
-* For comparison of the code look at the original at https://github.com/ihofmann/open-websoccer
-**********************************************************************************************/
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+******************************************************************/
 //	* Start: defekte job.xml - by Rolf Joseph / ErdemCan
 //	* Voraussetzung ist, das im Ordner /admin/config/ die Datei jobs_backup.xml vorhanden ist
 //	* die letzte job.xml wird als error_jobs.xml gespeichert
 //	*
 //	kann die jobs.xml geladen werden, wenn nein, dann mit der Kopie ersetzen
-	define('JOBS_CONFIG_FILE', BASE_FOLDER . '/admin/config/jobs.xml');
 	$doc = new DOMDocument();
-	$loaded = @$doc->load(JOBS_CONFIG_FILE);
+	$loaded = @$doc->load(dirname ( realpath ( __FILE__ ) ).'/admin/config/jobs.xml');
 	if (!$loaded)
 	{
- 		copy("/admin/config/jobs.xml", __DIR__ . "/admin/config/error_jobs.xml");
- 		copy("/admin/config/jobs_backup.xml", __DIR__ . "/admin/config/jobs.xml");
+ 		copy(dirname ( realpath ( __FILE__ ) ). "/admin/config/jobs.xml", dirname ( realpath ( __FILE__ ) ). "/admin/config/error_jobs.xml");
+ 		copy(dirname ( realpath ( __FILE__ ) ). "/admin/config/jobs_backup.xml", dirname ( realpath ( __FILE__ ) ). "/admin/config/jobs.xml");
 	}
 //	* End: defekte job.xml - by Rolf Joseph / ErdemCan
-?>

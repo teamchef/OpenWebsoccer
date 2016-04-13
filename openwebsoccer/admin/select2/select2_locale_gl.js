@@ -13,7 +13,7 @@
         formatInputTooShort: function (input, min) {
             var n = min - input.length;
             if (n === 1) {
-                return "Engada un carácter";
+                return "Engada un carߡcter";
             } else {
                 return "Engada " + n + " caracteres";
             }
@@ -21,20 +21,20 @@
         formatInputTooLong: function (input, max) {
             var n = input.length - max;
             if (n === 1) {
-                return "Elimine un carácter";
+                return "Elimine un carߡcter";
             } else {
                 return "Elimine " + n + " caracteres";
             }
         },
         formatSelectionTooBig: function (limit) {
             if (limit === 1 ) {
-                return "Só pode seleccionar un elemento";
+                return "S߳ pode seleccionar un elemento";
             } else {
-                return "Só pode seleccionar " + limit + " elementos";
+                return "S߳ pode seleccionar " + limit + " elementos";
             }
         },
         formatLoadMore: function (pageNumber) {
-            return "Cargando máis resultados...";
+            return "Cargando mߡis resultados...";
         },
         formatSearching: function () {
             return "Buscando...";

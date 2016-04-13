@@ -1,37 +1,82 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE messages SYSTEM "../messages.dtd">
-<messages>
-	<message id="phpjobscheduler_navlabel">TLC Jobscheduler</message>
-
-	<message id="settings_tab_tlc">TLC - Features</message>
-
-	<message id="settings_label_grav_enabled">Grav CMS nutzen</message>
-
-	<message id="settings_label_hide_latestActivitiesBlock">BenutzeraktivitÃ¤ten ausblenen</message>
-
-	<message id="settings_label_amount_aufstellung_enabled">AufstellungsprÃ¤mie fÃ¼r eine abgegebenen Aufstellung.</message>
-	<message id="settings_label_amount_aufstellung">AufstellungsprÃ¤mie:</message>
-
-	<message id="settings_label_sim_auto_deblock">Automatisches entblocken von Spielen: Der Admin muss die, nach Berechnungsfehlern vorsichtshalber geblockten Spiele, nicht mehr selbst entblocken.</message>
-
-	<message id="settings_label_cdn_root_set">cookie-free Domain aktivieren</message>
-	<message id="settings_label_cdn_root">Verzeichnis fÃ¼r cookie-free Domain</message>
-
-	<message id="settings_label_transferoffersbetweenownteams_enabled">Direkttransfers auch zwischen den eigenen Teams erlauben.</message>
-
-	<message id="settings_label_externlink1">externer Link 1 URL</message>
-	<message id="settings_label_externlink1txt">externer Link 1 Bezeichung</message>
-	<message id="settings_label_externlink2">externer Link 2 URL</message>
-	<message id="settings_label_externlink2txt">externer Link 2 Bezeichung</message>
-	<message id="settings_label_externlinklogout">externer Link 2 URL</message>
-	<message id="settings_label_externlinklogouttxt">externer Link 2 Bezeichung</message>
-
-	<message id="settings_label_addplyr">Vereinslose Spieler auf die Transferliste setzen</message>
-	<message id="settings_label_extransf">Offene Spielertransfers ausfÃ¼hren</message>
-	<message id="settings_label_sim">Offene Spiele simulieren</message>
-	<message id="settings_label_usractv">BenutzerinaktivitÃ¤t berechnen und aktualisieren</message>
-	<message id="settings_label_stats">Ligastatistiken berechnen und aktualisieren</message>
-	<message id="settings_label_stadium">FÃ¤llige Stadionerweiterungen und Trainingslager ausfÃ¼hren</message>
-
-	<message id="settings_label_version">Co-Powered by Rolf Joseph / ErdemCan </message>
-</messages>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version="OpenWebsoccer">
+	<messages>
+		<message id="phpjobscheduler_navlabel">TLC Jobscheduler</message>
+		<message id="settings_tab_tlc">TLC - Features</message>
+		<message id="settings_label_projectStatistics_noshow">Box: Projektstatistiken ausblenden</message>
+		<message id="settings_label_news_noshow">Box: News ausblenden</message>
+		<message id="settings_label_todaysmatches_noshow">Box: heutige Spiele ausblenden</message>
+		<message id="settings_label_latestResults_noshow">Box: letzte Ergebnisse ausblenden</message>
+		<message id="settings_label_activities_noshow">Box: Benutzeraktivitäten ausblenden</message>
+		<message id="settings_label_login_noshow">Box: Login ausblenden</message>
+		<message id="settings_label_spoiler_noshow">Spoiler ausblenden</message>
+		<message id="settings_label_grav_enabled">Grav CMS nutzen</message>
+		<message id="settings_label_amount_aufstellung_enabled">Aufstellungsprämie für eine abgegebenen Aufstellung.</message>
+		<message id="settings_label_amount_aufstellung">Aufstellungsprämie:</message>
+		<message id="settings_label_sim_auto_deblock">Automatisches entblocken von Spielen: Der Admin muss die, nach Berechnungsfehlern vorsichtshalber geblockten Spiele, nicht mehr selbst entblocken.</message>
+		<message id="settings_label_nextgames_set">Die nästen x Spiele anzeigen.</message>
+		<message id="settings_label_player_delete_from_db">Spieler beim entlassen aus der Datenbank entfernen.</message>
+		<message id="settings_label_cdn_root_set">cookie-free Domain aktivieren</message>
+		<message id="settings_label_cdn_root">Verzeichnis für cookie-free Domain</message>
+		<message id="settings_label_transferoffersbetweenownteams_enabled">Direkttransfers auch zwischen den eigenen Teams erlauben.</message>
+		<message id="settings_label_externlink1">externer Link 1 URL</message>
+		<message id="settings_label_externlink1txt">externer Link 1 Bezeichung</message>
+		<message id="settings_label_externlink2">externer Link 2 URL</message>
+		<message id="settings_label_externlink2txt">externer Link 2 Bezeichung</message>
+		<message id="settings_label_externlink3">externer Link 3 URL</message>
+		<message id="settings_label_externlink3txt">externer Link 3 Bezeichung</message>
+		<message id="settings_label_footerlinkoben1">Footerlink 1 oben URL</message>
+		<message id="settings_label_footerlinkoben1txt">Footerlink 1 oben Bezeichnung</message>
+		<message id="settings_label_footerlinkoben2">Footerlink 2 oben URL</message>
+		<message id="settings_label_footerlinkoben2txt">Footerlink 2 oben Bezeichnung</message>
+		<message id="settings_label_footerlinkoben3">Footerlink 3 oben URL</message>
+		<message id="settings_label_footerlinkoben3txt">Footerlink 3 oben Bezeichnung</message>
+		<message id="settings_label_footerlinkrechts">Footerlinks rechts URL</message>
+		<message id="settings_label_footerlinkrechtstxt">Footerlinks rechts Bezeichnung</message>
+		<message id="settings_label_footerlinkunten1">Footerlink 1 unten URL</message>
+		<message id="settings_label_footerlinkunten1txt">Footerlink 1 unten Bezeichnung</message>
+		<message id="settings_label_footerlinkunten2">Footerlink 2 unten URL</message>
+		<message id="settings_label_footerlinkunten2txt">Footerlink 2 unten Bezeichnung</message>
+		<message id="settings_label_footerlinkunten3">Footerlink 3 unten URL</message>
+		<message id="settings_label_footerlinkunten3txt">Footerlink 3 unten Bezeichnung</message>
+		<message id="settings_label_addplyr">Vereinslose Spieler auf die Transferliste setzen</message>
+		<message id="settings_label_extransf">Offene Spielertransfers ausführen</message>
+		<message id="settings_label_sim">Offene Spiele simulieren</message>
+		<message id="settings_label_usractv">Benutzerinaktivität berechnen und aktualisieren</message>
+		<message id="settings_label_stats">Ligastatistiken berechnen und aktualisieren</message>
+		<message id="settings_label_stadium">Fällige Stadionerweiterungen und Trainingslager ausführen</message>
+		<message id="settings_label_version">powered 2015 - 2016 by Rolf Joseph / ErdemCan</message>
+		<message id="settings_label_facebook_on">Wenn das alte Facebook-Modul genutzt wird eine 1 einsetzen !</message>
+		<message id="settings_label_gravatar_enable">Wenn das alte Gravatar-Modul genutzt wird eine 1 einsetzen !</message>
+		<message id="settings_label_hide_market_values">Marktwerte ausblenden</message>
+	</messages>
+</module>

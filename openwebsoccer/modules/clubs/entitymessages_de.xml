@@ -1,54 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE messages SYSTEM "../messages.dtd">
-<messages>
-    <message id="entity_club">Verein</message>
-	<message id="entity_club_name">Name</message>
-	<message id="entity_club_kurz">KÃ¼rzel</message>
-	<message id="entity_club_liga_id">Liga</message>
-	<message id="entity_club_user_id">Benutzer</message>
-	<message id="entity_club_user_id_actual">Eigentlicher Manager</message>
-	<message id="entity_club_user_id_actual_help">Falls Benutzer nur Stellvertreter wÃ¤hrend einer Abwesenheit ist.</message>
-	<message id="entity_club_bild">Logo</message>
-	<message id="entity_club_stadion_id">Stadion</message>
-	<message id="entity_club_sponsor_id">Sponsor</message>
-	<message id="entity_club_sponsor_spiele">Restliche Spiele mit Sponsor</message>
-	<message id="entity_club_training_id">Trainingseinheit</message>
-	<message id="entity_club_finanz_budget">Budget</message>
-	<message id="entity_club_finanz_sponsor">Sponsoreneinnahmen</message>
-	<message id="entity_club_finanz_transfer">TransferÃ¼berschuss</message>
-	<message id="entity_club_finanz_gehalt">Gehaltszahlungen</message>
-	<message id="entity_club_finanz_zuschauer">Zuschauereinnahmen</message>
-	<message id="entity_club_finanz_sonstiges">Sonstige Einnahmen</message>
-	<message id="entity_club_preis_stehen">Ticketpreis StehplÃ¤tze</message>
-	<message id="entity_club_preis_sitz">Ticketpreis SitzplÃ¤tze</message>
-	<message id="entity_club_preis_haupt_stehen">Ticketpreis StehplÃ¤tze (HaupttribÃ¼ne)</message>
-	<message id="entity_club_preis_haupt_sitze">Ticketpreis SitzplÃ¤tze (HaupttribÃ¼ne)</message>
-	<message id="entity_club_preis_vip">Ticketpreis V.I.P.-Lounge</message>
-	<message id="entity_club_last_steh">Zuschauer letztes Spiel: StehplÃ¤tze</message>
-	<message id="entity_club_last_sitz">Zuschauer letztes Spiel: SitzplÃ¤tze</message>
-	<message id="entity_club_last_haupt_steh">Zuschauer letztes Spiel: StehplÃ¤tze (Haupt)</message>
-	<message id="entity_club_last_haupt_sitz">Zuschauer letztes Spiel: SitzplÃ¤tze (Haupt)</message>
-	<message id="entity_club_last_vip">Zuschauer letztes Spiel: VIP-Lounge</message>
-	<message id="entity_club_meisterschaften">Gewonnene Meisterschaften</message>
-	<message id="entity_club_st_tore">Tore (gesamt)</message>
-	<message id="entity_club_st_gegentore">Gegentore (gesamt)</message>
-	<message id="entity_club_st_spiele">Spiele (gesamt)</message>
-	<message id="entity_club_st_siege">Siege (gesamt)</message>
-	<message id="entity_club_st_niederlagen">Niederlagen (gesamt)</message>
-	<message id="entity_club_st_unentschieden">Unentschieden (gesamt)</message>
-	<message id="entity_club_st_punkte">Punkte (gesamt)</message>
-	<message id="entity_club_sa_tore">Tore (Saison)</message>
-	<message id="entity_club_sa_gegentore">Gegentore (Saison)</message>
-	<message id="entity_club_sa_spiele">Spiele (Saison)</message>
-	<message id="entity_club_sa_siege">Siege (Saison)</message>
-	<message id="entity_club_sa_niederlagen">Niederlagen (Saison)</message>
-	<message id="entity_club_sa_unentschieden">Unentschieden (Saison)</message>
-	<message id="entity_club_sa_punkte">Punkte (Saison)</message>
-	<message id="entity_club_history">Historie</message>
-	<message id="entity_club_status">Aktiv</message>
-	<message id="entity_club_min_target_rank">Saisonziel</message>
-	<message id="entity_club_min_target_rank_help">Erwartete Mindestplatzierung in der Liga am Ende der Saison. 0 fÃ¼r kein Saisonziel. Beim Beenden einer Saison kÃ¶nnen die Auswirkungen bei Nichterreichen (Reduzierung Fanbeliebtheit, Strafzahlung, KÃ¼ndigung) festgelegt werden.</message>
-	<message id="entity_club_nationalteam">Ist Nationalmannschaft</message>
-	<message id="entity_club_captain_id">KapitÃ¤n</message>
-	<message id="entity_club_interimmanager">Wird von Interims-Manager betreut</message>
-</messages>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version="OpenWebsoccer">
+	<messages>
+		<message id="entity_club">Verein</message>
+		<message id="entity_club_name">Name</message>
+		<message id="entity_club_kurz">Kürzel</message>
+		<message id="entity_club_liga_id">Liga</message>
+		<message id="entity_club_user_id">Benutzer</message>
+		<message id="entity_club_user_id_actual">Eigentlicher Manager</message>
+		<message id="entity_club_user_id_actual_help">Falls Benutzer nur Stellvertreter während einer Abwesenheit ist.</message>
+		<message id="entity_club_bild">Logo</message>
+		<message id="entity_club_stadion_id">Stadion</message>
+		<message id="entity_club_sponsor_id">Sponsor</message>
+		<message id="entity_club_sponsor_spiele">Restliche Spiele mit Sponsor</message>
+		<message id="entity_club_training_id">Trainingseinheit</message>
+		<message id="entity_club_finanz_budget">Budget</message>
+		<message id="entity_club_finanz_sponsor">Sponsoreneinnahmen</message>
+		<message id="entity_club_finanz_transfer">Transferüberschuss</message>
+		<message id="entity_club_finanz_gehalt">Gehaltszahlungen</message>
+		<message id="entity_club_finanz_zuschauer">Zuschauereinnahmen</message>
+		<message id="entity_club_finanz_sonstiges">Sonstige Einnahmen</message>
+		<message id="entity_club_preis_stehen">Ticketpreis Stehplätze</message>
+		<message id="entity_club_preis_sitz">Ticketpreis Sitzplätze</message>
+		<message id="entity_club_preis_haupt_stehen">Ticketpreis Stehplätze (Haupttribüne)</message>
+		<message id="entity_club_preis_haupt_sitze">Ticketpreis Sitzplätze (Haupttribüne)</message>
+		<message id="entity_club_preis_vip">Ticketpreis V.I.P.-Lounge</message>
+		<message id="entity_club_last_steh">Zuschauer letztes Spiel: Stehplätze</message>
+		<message id="entity_club_last_sitz">Zuschauer letztes Spiel: Sitzplätze</message>
+		<message id="entity_club_last_haupt_steh">Zuschauer letztes Spiel: Stehplätze (Haupt)</message>
+		<message id="entity_club_last_haupt_sitz">Zuschauer letztes Spiel: Sitzplätze (Haupt)</message>
+		<message id="entity_club_last_vip">Zuschauer letztes Spiel: VIP-Lounge</message>
+		<message id="entity_club_meisterschaften">Gewonnene Meisterschaften</message>
+		<message id="entity_club_st_tore">Tore (gesamt)</message>
+		<message id="entity_club_st_gegentore">Gegentore (gesamt)</message>
+		<message id="entity_club_st_spiele">Spiele (gesamt)</message>
+		<message id="entity_club_st_siege">Siege (gesamt)</message>
+		<message id="entity_club_st_niederlagen">Niederlagen (gesamt)</message>
+		<message id="entity_club_st_unentschieden">Unentschieden (gesamt)</message>
+		<message id="entity_club_st_punkte">Punkte (gesamt)</message>
+		<message id="entity_club_sa_tore">Tore (Saison)</message>
+		<message id="entity_club_sa_gegentore">Gegentore (Saison)</message>
+		<message id="entity_club_sa_spiele">Spiele (Saison)</message>
+		<message id="entity_club_sa_siege">Siege (Saison)</message>
+		<message id="entity_club_sa_niederlagen">Niederlagen (Saison)</message>
+		<message id="entity_club_sa_unentschieden">Unentschieden (Saison)</message>
+		<message id="entity_club_sa_punkte">Punkte (Saison)</message>
+		<message id="entity_club_history">Historie</message>
+		<message id="entity_club_status">Aktiv</message>
+		<message id="entity_club_min_target_rank">Saisonziel</message>
+		<message id="entity_club_min_target_rank_help">Erwartete Mindestplatzierung in der Liga am Ende der Saison. 0 für kein Saisonziel. Beim Beenden einer Saison können die Auswirkungen bei Nichterreichen (Reduzierung Fanbeliebtheit, Strafzahlung, Kündigung) festgelegt werden.</message>
+		<message id="entity_club_nationalteam">Ist Nationalmannschaft</message>
+		<message id="entity_club_captain_id">Kapitän</message>
+		<message id="entity_club_interimmanager">Wird von Interims-Manager betreut</message>
+	</messages>
+</module>

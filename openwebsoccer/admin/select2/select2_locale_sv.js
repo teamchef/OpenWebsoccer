@@ -7,11 +7,11 @@
     "use strict";
 
     $.extend($.fn.select2.defaults, {
-        formatNoMatches: function () { return "Inga trÃ¤ffar"; },
+        formatNoMatches: function () { return "Inga träffar"; },
         formatInputTooShort: function (input, min) { var n = min - input.length; return "Var god skriv in " + n + (n>1 ? " till tecken" : " tecken till"); },
         formatInputTooLong: function (input, max) { var n = input.length - max; return "Var god sudda ut " + n + " tecken"; },
-        formatSelectionTooBig: function (limit) { return "Du kan max vÃ¤lja " + limit + " element"; },
+        formatSelectionTooBig: function (limit) { return "Du kan max välja " + limit + " element"; },
         formatLoadMore: function (pageNumber) { return "Laddar fler resultat..."; },
-        formatSearching: function () { return "SÃ¶ker..."; }
+        formatSearching: function () { return "Söker..."; }
     });
 })(jQuery);

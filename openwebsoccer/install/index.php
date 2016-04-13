@@ -449,7 +449,7 @@ function printFinalPage($messages)
 			echo '<p>"OpenWebsoocer / Co-Powered by Rolf Joseph / ErdemCan"</p>';
 			exit;
 		}
-		else if (version_compare(PHP_VERSION, '7.0.4', '>')) {
+		else if (version_compare(PHP_VERSION, '7.0.5', '>')) {
 			echo 'Ihre PHP Version ' . PHP_VERSION . ' ist zu hoch, daher funktioniert die Installation eventuell nicht.';
 		}
 		else {

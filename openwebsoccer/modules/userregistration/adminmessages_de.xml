@@ -1,19 +1,46 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE module SYSTEM "../messages.dtd">
-<messages>
-    <message id="settings_label_allow_userregistration">Benutzerregistrierung fÃ¼r jeden Gast aktivieren.</message> 
-    <message id="settings_label_illegal_usernames">Unerlaubte Benutzernamen</message> 
-    <message id="settings_label_illegal_usernames_help">Mit Komma getrennt</message> 
-    <message id="settings_label_max_number_of_users">HÃ¶chstanzahl zugelassender Benutzer</message> 
-    <message id="settings_label_max_number_of_users_help">0 fÃ¼r uneingeschrÃ¤nkt</message> 
-    
-    <message id="settings_label_register_use_captcha">reCAPTCHA Sicherheitscode benutzen, um Spam-Registrierungen zu verhindern. Dies erfordert eine Registrierung auf <a href="https://www.google.com/recaptcha/admin/create" target="_blank">www.google.com/recaptcha</a>.</message> 
-    
-    <message id="settings_label_register_captcha_publickey">Public Key</message>
-    <message id="settings_label_register_captcha_publickey_help">Entnehmen Sie diese Angabe aus der reCAPTCHA-RegistrierungsbestÃ¤tigung.</message>
-    <message id="settings_label_register_captcha_privatekey">Private Key</message>
-    <message id="settings_label_register_captcha_privatekey_help">Entnehmen Sie diese Angabe aus der reCAPTCHA-RegistrierungsbestÃ¤tigung.</message>
-
-    <message id="settings_label_registration_url">URL zu Registrierung</message>
-	<message id="settings_label_registration_url_help">Falls Benutzer ihr Benutzerkonto auf einer anderen Webseite registrieren sollen, kÃ¶nnen Sie hier den URL zur Registrierungsmaske angeben.</message>
-</messages>
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version="OpenWebsoccer">
+	<messages>
+		<message id="settings_label_allow_userregistration">Benutzerregistrierung für jeden Gast aktivieren.</message>
+		<message id="settings_label_illegal_usernames">Unerlaubte Benutzernamen</message>
+		<message id="settings_label_illegal_usernames_help">Mit Komma getrennt</message>
+		<message id="settings_label_max_number_of_users">Höchstanzahl zugelassender Benutzer</message>
+		<message id="settings_label_max_number_of_users_help">0 für uneingeschränkt</message>
+		<message id="settings_label_register_use_captcha">reCAPTCHA Sicherheitscode benutzen, um Spam-Registrierungen zu verhindern. Dies erfordert eine Registrierung auf<a href="https://www.google.com/recaptcha/admin/create" target="_blank">www.google.com/recaptcha</a>.</message>
+		<message id="settings_label_register_captcha_publickey">Public Key</message>
+		<message id="settings_label_register_captcha_publickey_help">Entnehmen Sie diese Angabe aus der reCAPTCHA-Registrierungsbestätigung.</message>
+		<message id="settings_label_register_captcha_privatekey">Private Key</message>
+		<message id="settings_label_register_captcha_privatekey_help">Entnehmen Sie diese Angabe aus der reCAPTCHA-Registrierungsbestätigung.</message>
+		<message id="settings_label_registration_url">URL zu Registrierung</message>
+		<message id="settings_label_registration_url_help">Falls Benutzer ihr Benutzerkonto auf einer anderen Webseite registrieren sollen, können Sie hier den URL zur Registrierungsmaske angeben.</message>
+	</messages>
+</module>

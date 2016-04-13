@@ -7,12 +7,12 @@
     "use strict";
 
     $.extend($.fn.select2.defaults, {
-        formatNoMatches: function () { return "Không tìm thấy kết quả"; },
-        formatInputTooShort: function (input, min) { var n = min - input.length; return "Vui lòng nhập nhiều hơn " + n + " ký tự" + (n == 1 ? "" : "s"); },
-        formatInputTooLong: function (input, max) { var n = input.length - max; return "Vui lòng nhập ít hơn " + n + " ký tự" + (n == 1? "" : "s"); },
-        formatSelectionTooBig: function (limit) { return "Chỉ có thể chọn được " + limit + " tùy chọn" + (limit == 1 ? "" : "s"); },
-        formatLoadMore: function (pageNumber) { return "Đang lấy thêm kết quả..."; },
-        formatSearching: function () { return "Đang tìm..."; }
+        formatNoMatches: function () { return "Khߴng t߬m thấy kết quả"; },
+        formatInputTooShort: function (input, min) { var n = min - input.length; return "Vui l߲ng nhập nhiều hơn " + n + " k߽ tự" + (n == 1 ? "" : "s"); },
+        formatInputTooLong: function (input, max) { var n = input.length - max; return "Vui l߲ng nhập ߭t hơn " + n + " k߽ tự" + (n == 1? "" : "s"); },
+        formatSelectionTooBig: function (limit) { return "Chỉ c߳ thể chọn được " + limit + " t߹y chọn" + (limit == 1 ? "" : "s"); },
+        formatLoadMore: function (pageNumber) { return "Đang lấy thߪm kết quả..."; },
+        formatSearching: function () { return "Đang t߬m..."; }
     });
 })(jQuery);
 

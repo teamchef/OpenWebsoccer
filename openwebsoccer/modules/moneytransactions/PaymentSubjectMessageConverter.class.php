@@ -1,65 +1,44 @@
 <?php
-/******************************************************
-
-  This file is part of OpenWebSoccer-Sim.
-
-  OpenWebSoccer-Sim is free software: you can redistribute it 
-  and/or modify it under the terms of the 
-  GNU Lesser General Public License 
-  as published by the Free Software Foundation, either version 3 of
-  the License, or any later version.
-
-  OpenWebSoccer-Sim is distributed in the hope that it will be
-  useful, but WITHOUT ANY WARRANTY; without even the implied
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public 
-  License along with OpenWebSoccer-Sim.  
-  If not, see <http://www.gnu.org/licenses/>.
-
-******************************************************/
-
+/******************************************************************
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.3 - 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+******************************************************************/
+defined('OpenWebsoccer') or header('location: ../../index.php');
 /**
- * Translates value which is a message key of a frontend message.
- * 
- * @author Ingo Hofmann
- */
-class PaymentSubjectMessageConverter implements IConverter {
-	private $_i18n;
-	private $_websoccer;
-	
-	public function __construct($i18n, $websoccer) {
-		$this->_i18n = $i18n;
-		$this->_websoccer = $websoccer;
-	}
-	
-	/**
-	 * @see IConverter::toHtml()
-	 */
-	public function toHtml($row) {
+* Translates value which is a message key of a frontend message.
+*/
+class PaymentSubjectMessageConverter extends BaseConverter
+{
+	public function toHtml($row)
+	{
 		include(sprintf(CONFIGCACHE_MESSAGES, $this->_i18n->getCurrentLanguage()));
 		if (isset($msg[$row['entity_transaction_verwendung']])) {
 			return $msg[$row['entity_transaction_verwendung']];
 		}
-		
 		return $row['entity_transaction_verwendung'];
 	}
-	
-	/**
-	 * @see IConverter::toText()
-	 */
-	public function toText($value) {
-		return $value;
-	}
-	
-	/**
-	 * @see IConverter::toDbValue()
-	 */
-	public function toDbValue($value) {
-		return $this->toText($value);
-	}
-	
 }
-
-?>

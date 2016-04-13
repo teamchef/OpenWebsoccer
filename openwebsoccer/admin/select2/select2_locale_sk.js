@@ -16,33 +16,33 @@
         formatInputTooShort: function (input, min) {
             var n = min - input.length;
             if (n == 1) {
-                return "Prosím zadajte ešte jeden znak";
+                return "Pros߭m zadajte ešte jeden znak";
             } else if (n <= 4) {
-                return "Prosím zadajte ešte ďalšie "+smallNumbers[n](true)+" znaky";
+                return "Pros߭m zadajte ešte ďalšie "+smallNumbers[n](true)+" znaky";
             } else {
-                return "Prosím zadajte ešte ďalších "+n+" znakov";
+                return "Pros߭m zadajte ešte ďalš߭ch "+n+" znakov";
             }
         },
         formatInputTooLong: function (input, max) {
             var n = input.length - max;
             if (n == 1) {
-                return "Prosím zadajte o jeden znak menej";
+                return "Pros߭m zadajte o jeden znak menej";
             } else if (n <= 4) {
-                return "Prosím zadajte o "+smallNumbers[n](true)+" znaky menej";
+                return "Pros߭m zadajte o "+smallNumbers[n](true)+" znaky menej";
             } else {
-                return "Prosím zadajte o "+n+" znakov menej";
+                return "Pros߭m zadajte o "+n+" znakov menej";
             }
         },
         formatSelectionTooBig: function (limit) {
             if (limit == 1) {
-                return "Môžete zvoliť len jednu položku";
+                return "Mߴžete zvoliť len jednu položku";
             } else if (limit <= 4) {
-                return "Môžete zvoliť najviac "+smallNumbers[limit](false)+" položky";
+                return "Mߴžete zvoliť najviac "+smallNumbers[limit](false)+" položky";
             } else {
-                return "Môžete zvoliť najviac "+limit+" položiek";
+                return "Mߴžete zvoliť najviac "+limit+" položiek";
             }
         },
-        formatLoadMore: function (pageNumber) { return "Načítavajú sa ďalšie výsledky..."; },
-        formatSearching: function () { return "Vyhľadávanie..."; }
+        formatLoadMore: function (pageNumber) { return "Nač߭tavajߺ sa ďalšie v߽sledky..."; },
+        formatSearching: function () { return "Vyhľadߡvanie..."; }
     });
 })(jQuery);

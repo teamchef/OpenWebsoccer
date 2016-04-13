@@ -27,10 +27,18 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
+include('./libs/iosec/iosec.php');
+$inhalt = file_get_contents( 'build.txt' );
+define('OPENWEBSOCCER_VERSION',$inhalt);
+define('OpenWebsoccer', TRUE);
+define('BASE_FOLDER', __DIR__);
+// Sicherheit: erlaubt keinen direkten Aufruf von PHP-Scripten
+// - Hacking Prävention - DeepLink Prävention -
+// direkter Aufruf des PHP-Scripts unterbinden und zur Einstiegsseite leiten
+// in die geschützten PHP-Scripte muss folgendes oben im Script stehen:
+// defined('OpenWebsoccer') or header('location: index.php');
 if (file_exists('/install')){ require './admin/pages/deldir.inc.php'; deldir (BASE_FOLDER . '/cache'); mkdir  (BASE_FOLDER . '/cache'); header('Location: /install/'); }
 if (file_exists('/update')){ require './admin/pages/deldir.inc.php'; deldir (BASE_FOLDER . '/cache'); mkdir  (BASE_FOLDER . '/cache'); header('Location: /update/'); }
-define('BASE_FOLDER', __DIR__);
-define('OPENWEBSOCCER_VERSION','OpenWebsoccer 2015 (104b)');
 include(BASE_FOLDER . '/frontbase.inc.php');
 include('../grav/system/defines.php');
 $parts = parse_url($_SERVER['HTTP_REFERER']);

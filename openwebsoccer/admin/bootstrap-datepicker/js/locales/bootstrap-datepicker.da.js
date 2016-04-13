@@ -4,9 +4,9 @@
  */
 ;(function($){
 	$.fn.datepicker.dates['da'] = {
-		days: ["Søndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "Lørdag", "Søndag"],
-		daysShort: ["Søn", "Man", "Tir", "Ons", "Tor", "Fre", "Lør", "Søn"],
-		daysMin: ["Sø", "Ma", "Ti", "On", "To", "Fr", "Lø", "Sø"],
+		days: ["S߸ndag", "Mandag", "Tirsdag", "Onsdag", "Torsdag", "Fredag", "L߸rdag", "S߸ndag"],
+		daysShort: ["S߸n", "Man", "Tir", "Ons", "Tor", "Fre", "L߸r", "S߸n"],
+		daysMin: ["S߸", "Ma", "Ti", "On", "To", "Fr", "L߸", "S߸"],
 		months: ["Januar", "Februar", "Marts", "April", "Maj", "Juni", "Juli", "August", "September", "Oktober", "November", "December"],
 		monthsShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dec"],
 		today: "I Dag"

@@ -1,0 +1,173 @@
+## Start: OpenWebsoccer - Sicherheitseinstellungen über .htaccess
+##
+# verhindern das Dateien und  Verzeichnisse gelistet werden
+Options -Indexes
+## nur den Zugriff auf die index.php erlauben
+DirectoryIndex index.php
+##
+# Zugriff auf versteckte Dateien und Verezeichnisse verhindern
+RedirectMatch 403 /\..*$
+##
+# Server Signature verbergen
+ServerSignature Off
+##
+<IfModule mod_rewrite.c>
+RewriteEngine On
+##
+## bots oder Sitecrawler blockieren, bitte bei Verwendung beide folgenden # entfernen
+#RewriteCond %{HTTP_USER_AGENT} (8484\ boston\ project|^fetch|^pixray\.com|acoon-robot|addsugarspiderbot|adnormcrawler|adshadow|alligator|appengine-google|arachmo|arste\.info|askpeter\.info|asterias|atspider|autoemailspider|backdoorbot|backstreet\ browser|backweb|batchftp|bejibot|betabot|bitacle\ bot|biz360|blackspider|blackwidow|blowfish|bot\ for\ jce|bot\ search|botalot|buddy|bulk|cfg_spider_user_agent|cherrypicker|china\ local\ browse|chinaclaw|cityreview\ robot|cligoorobot|clj-httpc|contentsmartz|copyright\ sheriff|coralwebprx|corpuscrawler|covario|cr4nk\.|crawler4j|crescent|curl/|da\ 3\.|da\ 4\.|da\ 5\.|da\ 7\.|datacha0s|datafountains|dc-sakura|demo\ bot|disco\ pump|ditto|dlman|dontbuylists\.com|download\ demon|download\ druid|download\ express|download\ master|download\ ninja|download\ wonder|download\.exe|downloader|dreampassport|drip|dts\ agent|ecatch|educate\ search|efp^gmx\.net|eirgrabber|emailcollector|emailharv|emailsearch|emailsiphon|emailwolf|extractor|extractorpro|extreme|eyenetie|fdm\ 1\.|fdm\ 2\.|fdm\ 3\.|fetch\ api\ request|filehound|findfiles\.net|flashget|franklin\ locator|freshdownload|full\ web\ bot|gaisbot/|geniebot|getbot|getright|getweb|go!zilla|go-ahead-got-it|grafula|guestbook\ auto\ submitter|guglibot|here\ will\ be\ link\ to\ crawler\ site|hidownload|html2jpg|htmlparser|http\://www\.seexie\.com|http^lite|http_request|httrack|iaskspider|idealobserver\.com|ieautodiscovery|igetter|industry\ program|indy\ library|infometrics|installshield\ digitalwizard|interarchy|interget|internet\ ninja|iplexx|iptccheck\.bot\.js|irc\ search|irvine|iupui\ research|ivia|jakarta\ commons-httpclient|java/1|jbh\ agent|jetcar|jobo|joc\ web\ spider|justview|kapere|kontiki\ client|larbin|leechftp|leechget|letscrawl\.com|lftp|libcurl-agent|libwhisker|libwww-perl|lightningdownload|lincoln\ state\ web\ browser|linkdex\.com|linkwalker|lipperhey|litefinder\.net|lwp-request|lycosa\.se|mama\ casper|mama\ cyber|medusa|mfc\ foundation\ class\ library|mfhttpscan|microsoft\ url\ control|microsoft\ windows\ network\ diagnostics|midown\ tool|missauga\ locate|missigua\ locator|missouri\ college\ browse|mister\ pix|mizzu\ labs|mo\ college|morfeus\ fucking\ scanner|morfeus\ strikes\ again|mozilla\ 2\.0|mozilla/0\.91\ beta|mozilla/2\.0|mozilla/3\.0\ \(compatible\)|mozilla/4\.0\ \(compatible;\)|mozilla/4\.76\ [ru]\ \(x11;\ u;\ sunos\ 5\.7\ sun4u\)|mozilla/5\.0\ \(searchbot|mrcarlito|msie\ 7\.5|mulder|mvaclient|myob/6\.66|nasa\ search|nearsite|nerdbynature|nerdybot|netants|netbrain_crawler|netcraft\ web\ server\ survey|netcraftsurveyagent|netpumper|netspider|newt\ activex|nsauditor|nudelbot|offline\ explorer|ozelot|pagegrabber|pagenest|page_prefetcher|pagmiedownload|papa\ foto|penthesilea|peval|pf\:inet|photolizenzen|php-requests/|phpcrawl|picmole\.com|pictureripper|pingbot/|pmafind|pockey|poe-component-client-http|poirot|poodle\ predictor|port\ huron\ labs|production\ bot|psycheclone|puf/|puxarapido|pycurl|python-urllib|qaaybot|reget|retriever|revolt|ripper|rk\ q\ kangen|rss\ popper\ -\ mozilla|sbl-bot|scann|searchbot\ admin^google\.com|seo\(http\://seox\.us/\)|seoprofiler|similarpages|sistrix|sitesnagger|sitesucker|slow\ scraper|snoopy|sogou\ spider|sogou\ web\ spider|sohu\ agent|sosospider|spacebison|spbot|speeddownload|spider\ bot|squider/|ssm\ agent|stardownloader|suchmaschinenoptimierung|superbot|superhttp|superinfobot|t3census-crawler|takeout|teleport|teragramcrawler|toata\ dragostea|twisted\ pagegetter|unister|uri^fetch/|urlgetfile|useragent\:|utilmind\ httpget|vadixbot|vb\ wininet|vb-tec\:inet|verdacht\ vergehen|virus_detector|vsyncrawler|w3c-webcon|web\ downloader|web\ image\ collector|web\ search\ 00|webauto|webbandit|webcapture|webcopier|webdatacentrebot|webfetch|webimage|webminer|webpix|webreaper|websauger|website\ explorer|webstripper|websucker|webvulncrawl|webwhacker|webzip|wells\ search|wep\ search|west\ wind\ internet\ protocols|wget|whatweb/|wikiwix-bot|wildsoft\ surfer|willow\ internet\ crawler|winget|winhttprequest|wir\ suchen\ nur\ geklaute\ inhalte|wtabot|www-mechanize|www\.aconon\.com|www\.icjobs\.de|www\.webintegration\.at|www\.whoisde\.de|www\.xrss\.eu|wwwoffle|xaldon\ webspider|xerka\ webbot|zmeu|_spider_botname\ _spider_botinfo) [NC]
+# RewriteRule ^.* - [F,L]
+##
+# manchmal nötig zu blocken, damit Clients mit Leeren USER AGENT und REFERER
+# der Zugriff verweigert wird. Bei Bedarf in den folgenden Zeilen das # entfernen.
+# RewriteCond %{REQUEST_METHOD} POST
+# RewriteCond %{HTTP_REFERER} ^$ [NC]
+# RewriteCond %{HTTP_USER_AGENT} ^$ [NC]
+# RewriteRule ^(.*)$ - [F,L]
+##
+# Cookie-Manipulationnen eindämmen
+# lt. https://perishablepress.com/eight-ways-to-blacklist-with-apaches-mod_rewrite/
+RewriteCond %{HTTP_COOKIE} ^.*(<|>|'|%0A|%0D|%27|%3C|%3E|%00).* [NC]
+RewriteRule ^(.*)$ - [F,L]
+##
+# direkten Zugriff auf folgende Verzeichnisse verhindern
+RewriteRule ^(config)/(.*) error [L]
+##
+# folgende Dateitypen werden in den angegebenen Verzeichnissen blockiert
+RewriteRule ^(system|user|vendor)/(.*)\.(txt|html|xml|php|twig|js|dtd)$ error [L]
+##
+## Dateianforderungen beschränken
+# ist die angeforderte Datei nicht die index.php und wird die angeforderte
+# Datei nicht intern auf die index.php umgeleitet
+RewriteCond %{REQUEST_URI} !^/index\.php
+# ist die angeforderte Daei nicht vorhanden
+RewriteCond %{REQUEST_FILENAME} !-f
+# ist das angeforderte Verzeichnis nicht vorhanden
+RewriteCond %{REQUEST_FILENAME} !-d
+# Umleitung auf die index.php
+RewriteRule .* ../index.php [L]
+##
+## weitere Angriffe verhindern
+##
+# Angriff blocken: base64_encode data innerhalb der URL.
+RewriteCond %{QUERY_STRING} base64_encode[^(]*\([^)]*\) [OR]
+##
+# Angriff blocken:  die den Tag <script> in der URL haben.
+RewriteCond %{QUERY_STRING} (<|%3C)([^s]*s)+cript.*(>|%3E) [NC,OR]
+##
+# Angriff blocken:  der versucht eine Variable mittels PHP GLOBALS über die URL zu setzen.
+RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+##
+# Angriff blocken: der veruscht die Variable _REQUEST über die URL zu ändern.
+RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+##
+# XST Angriff blocken
+RewriteCond %{REQUEST_METHOD} ^TRACE
+##
+# Beim verbotenen Anforderungen nicht 'Zugriff verboten' anzeigen, sondern auf die index.php umleiten
+RewriteRule .* ../index.php [F]
+##
+# sonstige möglichen Angriffe verhindern
+RewriteCond %{REQUEST_METHOD} ^(connect|debug|delete|move|put|trace|track) [NC]
+RewriteRule .* - [F]
+RewriteCond %{QUERY_STRING} (javascript:)(.*)(;) [NC,OR]
+RewriteCond %{QUERY_STRING} \.\.\/ [NC,OR]
+RewriteCond %{QUERY_STRING} boot\.ini [NC,OR]
+RewriteCond %{QUERY_STRING} tag\= [NC,OR]
+RewriteCond %{QUERY_STRING} ftp\: [NC,OR]
+RewriteCond %{QUERY_STRING} http\: [NC,OR]
+RewriteCond %{QUERY_STRING} https\: [NC,OR]
+RewriteCond %{QUERY_STRING} (\<|%3C).*iframe.*(\>|%3E) [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(%0|127\.0).* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(\(|\)|<|>|'|"|\?|\*|%%|&%%|&"|").* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(globals|encode|localhost|loopback).* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(execute|exec|sp_executesql|request|insert|union|declare).* [NC,OR]
+RewriteCond %{QUERY_STRING} ^.*(drop|alter|char|cast|convert|meta|script|truncate).* [NC]
+RewriteCond %{QUERY_STRING} (eval\() [NC,OR]
+RewriteCond %{QUERY_STRING} (127\.0\.0\.1) [NC,OR]
+RewriteCond %{QUERY_STRING} ([a-z0-9]{2000}) [NC,OR]
+RewriteCond %{QUERY_STRING} (\\|\.\.\.|\.\./|~|`|<|>|\|) [NC,OR]
+RewriteCond %{QUERY_STRING} (boot\.ini|etc/passwd|self/environ) [NC,OR]
+RewriteCond %{QUERY_STRING} (thumbs?(_editor|open)?|tim(thumb)?)\.php [NC,OR]
+RewriteCond %{QUERY_STRING} (\'|\")(.*)(drop|insert|md5|select|union) [NC]
+RewriteRule ^.* - [F,L]
+</IfModule>
+##
+## Gültigkeit der Dateien Regeln
+<ifmodule mod_headers.c>
+##
+# Um sogenannte clickjacking-Attacken zu verhindern, die über
+# <frame> und <iframe> eingebunden werden können, setzen
+# Sie die X-Frame-Options auf DENY - Keine Seite kann dann
+# Inhalte einbinden.
+# Folgende Optionen stehen zur Auswahl:
+# 1. DENY - verbietet jeglichen Frame-Zugriff
+# 2. SAMEORIGIN - lässt nur Zugriffe von der eigenen Lokation zu
+# 3. ALLOW-FROM - (ALLOW-FORM uri wird nicht von allen Browsern
+# unterstützt) dies lässt nur Zugriffe von einer bestimmten URI zu
+Header set X-Frame-Options DENY
+##
+# X-XSS-Protektion
+# Dieser Header bezieht sich nur auf IE8 und IE9 und schaltet den
+# cross-site-scripting Schutz ein.
+Header set X-XSS-Protection "1; mode=block"
+##
+# X-Content-Type-Options
+# Dieser Header verhindert beim Internet Explorer "mime" basierte
+# Attacken. Wenn der Server text/html liefert wird mit der nosniff
+# Option der Browser angewiesen auch nur text/html zu rendern.
+Header set X-Content-Type-Options "nosniff"
+##
+# X-Content-Security-Policy
+# Mit dieser CSP können Sie eine Reihe von Angriffen verhindern.
+# Es unterbindet das Ausführen von Javascript auf Ihrer Seite,
+# wenn es außerhalb Ihrer Domain liegt.
+Header set X-Content-Security-Policy "allow 'self';"
+##
+# nur den originalen Frame nutzen
+Header always append X-Frame-Options SAMEORIGIN
+##
+<FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css|swf)(\.gz)?$">
+Header set Expires "Tue, 16 Jun 2020 20:00:00 GMT"
+Header unset ETag
+Header unset Last-Modified
+Header unset Pragma
+FileETag None
+</FilesMatch>
+<filesmatch "\\.(ico|jpe?g|png|gif|swf)$">
+Header set Cache-Control "max-age=2592000, public"
+</filesmatch>
+<filesmatch "\\.(css)$">
+Header set Cache-Control "max-age=604800, public"
+</filesmatch>
+<filesmatch "\\.(js)$">
+Header set Cache-Control "max-age=216000, private"
+</filesmatch>
+</ifmodule>
+<IfModule mod_expires.c>
+ExpiresActive ON
+ExpiresByType image/jpg "access 1 year"
+ExpiresByType image/jpeg "access 1 year"
+ExpiresByType image/gif "access 1 year"
+ExpiresByType image/png "access 1 year"
+ExpiresByType text/css "access 1 month"
+ExpiresByType text/js "access 1 month"
+ExpiresByType text/html "access 1 month"
+ExpiresByType application/pdf "access 1 month"
+ExpiresByType text/x-javascript "access 1 month"
+ExpiresByType application/javascript "access plus 1 month"
+ExpiresByType application/x-shockwave-flash "access 1 month"
+ExpiresByType image/x-icon "access 1 year"
+ExpiresDefault "access 1 month"
+</IfModule>
+##
+## wird die .user.ini nicht unterstützt, so über die .htaccess die Ausgabe komprimieren
+<IfModule mod_deflate.c>
+<FilesMatch "\.(js|jpg|jpeg|gif|png|css|x?html?|php)$">
+ExpiresActive on
+ExpiresDefault "access plus 1 month"
+SetOutputFilter DEFLATE
+</FilesMatch>
+</IfModule>
+##
+## Ende: OpenWebsoccer - Sicherheitseinstellungen über .htaccess
