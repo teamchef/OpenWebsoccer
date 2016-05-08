@@ -1,0 +1,52 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
+{% if env.getConfig("social_likebutton_werkenntwen") %}
+	<script type="text/javascript" id="wkwrecommendscript" src="http://www.wer-kennt-wen.de/js/widgets/external/recommend.js?imgId=0"></script>
+	<style>#wkwRecommendAnchorTag > img { vertical-align: top; }</style>
+{% endif %}
+{% if env.getConfig("social_likebutton_xing") %}
+	<div data-counter="no_count" data-type="XING/Share" data-lang="{{ i18n.getCurrentLanguage() }}"></div>
+	<script>
+		(function (d, s) {
+			var x = d.createElement(s), s = d.getElementsByTagName(s)[0]; x.src = "https://www.xing-share.com/js/external/share.js"; s.parentNode.insertBefore(x, s);
+		})(document, "script");
+	</script>
+{% endif %}
+{% if env.getConfig("social_likebutton_twitter") %}
+	<span style="margin: 0 2px;">
+		<a href="https://twitter.com/share" class="twitter-share-button" data-lang="{{ i18n.getCurrentLanguage() }}">Tweet</a>
+		<script>!function (d, s, id) {
+			var js, fjs = d.getElementsByTagName(s)[0];
+			if (!d.getElementById(id)) { js = d.createElement(s); js.id = id; js.src = "https://platform.twitter.com/widgets.js"; fjs.parentNode.insertBefore(js, fjs); }
+			}(document, "script", "twitter-wjs");
+		</script>
+	</span>
+{% endif %}
+{% endif %}

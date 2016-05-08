@@ -1,0 +1,14 @@
+Modul:	playersearch
+    
+<pages>
+	playerssearch												template="playerssearch"
+
+<blocks>
+	clubsearch												template="autocomplete-resultlist"					model="ClubSearchModel"
+	playerssearch-results											template="playerssearch-results"					model="PlayersSearchModel"
+
+Dateien:
+														playerssearch.twig							ClubSearchModel.class.php
+																							PlayersSearchModel.class.php
+														autocomplete-resultlist.twig
+														playerssearch-results.twig

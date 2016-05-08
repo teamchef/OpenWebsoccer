@@ -1,0 +1,62 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+
+{% import "formelements.twig" as formelements %}
+{% set showForm = true %}
+{% for frontMessage in env.getFrontMessages %}
+	{% if frontMessage.type == "success" %}
+		{% set showForm = false %}
+	{% endif %}
+{% endfor %}
+{% if showForm %}
+	{{ formelements.textfield('amount', i18n.getMessage('transferoffer_label_amount'), env.getRequestParameter("amount"), true, validationMsg, 'number', env.getConfig("game_currency")) }}
+	{{ formelements.textarea('comment', i18n.getMessage('transferoffer_label_comment'), env.getRequestParameter("comment"), false, validationMsg, null, 3) }}
+	<fieldset>
+		<legend>{{ i18n.getMessage('transferoffer_label_fieldset_playerexchange') }}</legend>
+		{{ formelements.teamPlayerSelection("exchangeplayer1", i18n.getMessage('transferoffer_label_exchangeplayer1'),
+			env.getRequestParameter("exchangeplayer1"), players) }}
+		{{ formelements.teamPlayerSelection("exchangeplayer2", i18n.getMessage('transferoffer_label_exchangeplayer2'),
+			env.getRequestParameter("exchangeplayer2"), players) }}
+	</fieldset>
+	<fieldset>
+		<legend>{{ i18n.getMessage('transferoffer_label_fieldset_contract') }}</legend>
+		<dl class="dl-horizontal">
+		  <dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
+		  <dd>{{ player.player_contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
+		  <dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
+		  <dd>{{ player.player_contract_goalbonus|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</dd>
+		  <dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
+		  <dd>{{ env.getConfig("transferoffers_contract_matches")  }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
+		</dl>
+	</fieldset>
+{% else %}
+	<script>
+	$("#offerSubmit").hide();
+	</script>
+{% endif %}

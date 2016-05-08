@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version="OpenWebsoccer">
+	<messages>
+		<message id="entity_randomevent">Zufallsereignisse</message>
+		<message id="entity_randomevent_status">Aktiv</message>
+		<message id="entity_randomevent_message">Nachricht</message>
+		<message id="entity_randomevent_message_help">Kann auch ein Messages-Key sein. Nachricht kann Platzhalter "{playername}" enthalten bei spielerspezifischen Ereignissen.</message>
+		<message id="entity_randomevent_effect">Auswirkung</message>
+		<message id="entity_randomevent_effect_money_amount">Auswirkung: Geldbetrag</message>
+		<message id="entity_randomevent_effect_money_amount_help">Positiver oder negativer Betrag, der beim entsprechenden Ereignis vom bzw. auf das Vereinskonto gebucht wird.</message>
+		<message id="entity_randomevent_effect_blocked_matches">Auswirkung: Anzahl gesperrte Spiele</message>
+		<message id="entity_randomevent_effect_skillchange">Auswirkung: Stärkenänderung</message>
+		<message id="entity_randomevent_effect_skillchange_help">Positive oder negative ß„nderung des entsprechenden Spielerattributs.</message>
+		<message id="entity_randomevent_weight">Gewichtung</message>
+		<message id="entity_randomevent_weight_help">Wirkt sich auf die Wahrscheinlichkeit des Eintretens aus. 1 bedeutet normale Wahrscheinlichkeit; 5 bedeutet, dass es fünf mal so wahrscheinlich eintreten kann. 0 deaktiviert das Ereignis.</message>
+		<message id="option_money">Vereinskonto wird verändert</message>
+		<message id="option_player_injured">Ein Spieler fällt verletzt aus</message>
+		<message id="option_player_blocked">Ein Spieler fällt gesperrt aus</message>
+		<message id="option_player_happiness">Zufriedenheit eines Spielers verändert sich</message>
+		<message id="option_player_fitness">Frische eines Spielers verändert sich</message>
+		<message id="option_player_stamina">Kondition eines Spielers verändert sich</message>
+	</messages>
+</module>

@@ -1,0 +1,140 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
+{% import "messagebox.twig" as messagebox %}
+{% block table_header %}
+{% endblock %}
+	{% if teams is defined and teams|length > 0 %}
+		<table class="table">
+			<colgroup>
+				<col style="width: 40px" />
+				<col />
+				<col />
+				<col />
+				<col />
+				<col />
+				<col />
+				<col />
+				<col />
+			</colgroup>
+			<thead>
+				<tr>
+					<th><abbr title="{{ i18n.getMessage("leaguetable_head_place") }}">{{ i18n.getMessage("leaguetable_head_place_abbr") }}</abbr></th>
+					<th>{{ i18n.getMessage("leaguetable_head_club") }}</th>
+					<th><abbr title="{{ i18n.getMessage("leaguetable_head_matches") }}">{{ i18n.getMessage("leaguetable_head_matches_abbr") }}</abbr></th>
+					<th><abbr title="{{ i18n.getMessage("leaguetable_head_wins") }}">{{ i18n.getMessage("leaguetable_head_wins_abbr") }}</abbr></th>
+					<th><abbr title="{{ i18n.getMessage("leaguetable_head_draws") }}">{{ i18n.getMessage("leaguetable_head_draws_abbr") }}</abbr></th>
+					<th><abbr title="{{ i18n.getMessage("leaguetable_head_defeats") }}">{{ i18n.getMessage("leaguetable_head_defeats_abbr") }}</abbr></th>
+					<th>{{ i18n.getMessage("leaguetable_head_goals") }}</th>
+					<th><abbr title="{{ i18n.getMessage("leaguetable_head_goalsdiff") }}">{{ i18n.getMessage("leaguetable_head_goalsdiff_abbr") }}</abbr></th>
+					<th>{{ i18n.getMessage("leaguetable_head_score") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for team in teams %}
+					{% set place = loop.index %}
+					{% set markerTitle = '' %}
+					<tr>
+						<td{% if markers is defined and markers|length > 0 %}
+							{% for marker in markers if marker.place_from <= place and marker.place_to >= place %}
+								{% set markerTitle = marker.name %}
+									{% if i18n.hasMessage(markerTitle) %}
+										{% set markerTitle = i18n.getMessage(markerTitle) %}
+									{% endif %}
+									style="background-color: {{ marker.color }}"
+								{% endfor %}
+						 	{% endif %}>
+							{% if markerTitle|length > 0 %}<div class="wstooltip" title="{{ markerTitle }}" style="cursor: default;">{% endif %}{{ place }}{% if markerTitle|length > 0 %}</div>{% endif %}
+						</td>
+					<td>{% if (env.getUser().id > 0 and team.user_id == env.getUser().id) %}<strong>{% endif %}
+					{% if team.picture|length %}
+						{% if env.getConfig("cdn_root_set") %}
+							<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ team.picture }}" style="max-width: 20px"/>
+						{% else %}
+							<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ team.picture }}" style="max-width: 20px"/>
+						{% endif %}
+					{% endif %}
+					<a href="{{ env.getInternalUrl("team", "id=" ~ team.id) }}">{{ team.name }}</a>
+					{% if team.user_id > 0 %}
+						<br>
+						{% if team.user_picture|length > 0 %}
+							<a href="{{ env.getInternalUrl("user", "id=" ~ team.user_id) }}"><img src="{{ team.user_picture }}" style="width: 20px; height: 20px"/></a>
+						{% endif %}
+						<small><a href="{{ env.getInternalUrl("user", "id=" ~ team.user_id) }}">{{ team.user_name }}</a></small>
+					{% endif %}
+					{% if (env.getUser().id > 0 and team.user_id == env.getUser().id) %}<strong>{% endif %}
+					</td>
+					<td>{{ team.matches }}</td>
+					<td>{{ team.wins }}</td>
+					<td>{{ team.draws }}</td>
+					<td>{{ team.defeats }}</td>
+					<td>{{ team.goals }}:{{ team.goals_received }}</td>
+					<td>{{ team.goals_diff }}</td>
+					<td>{{ team.score }}
+					{% if team.previous_rank is defined and team.previous_rank > 0 %}
+						<a href="{{ env.getInternalUrl("tablehistory", "id=" ~ team.id) }}" style="text-decoration: none" title="{{ i18n.getMessage("tablehistory_navlabel") }}">
+						{% if team.previous_rank < place %}
+							<i class="icon-arrow-down text-error"></i>
+						{% elseif team.previous_rank > place %}
+							<i class="icon-arrow-up text-success"></i>
+						{% else %}
+							<i class="icon-circle text-info"></i>
+						{% endif %}
+						</a>
+					{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{% if markers is defined and markers|length > 0 %}
+		<h5>{{ i18n.getMessage("entity_tablemarker") }}</h5>
+		<table class="table table-condensed" style="width: auto;">
+			<colgroup>
+				<col style="width: 40px" />
+				<col />
+			</colgroup>
+			<tbody>
+			{% for marker in markers %}
+				{% set markerTitle = marker.name %}
+				{% if i18n.hasMessage(markerTitle) %}
+					{% set markerTitle = i18n.getMessage(markerTitle) %}
+				{% endif %}
+				<tr>
+					<td style="background-color: {{ marker.color }}">&nbsp;</td>
+					<td>{{ markerTitle }}</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+{% else %}
+	{{ messagebox.box(i18n.getMessage("leaguetable_block_noteamsavailable"), "", "info") }}
+{% endif %}
+{% endif %}

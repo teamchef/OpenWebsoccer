@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<!DOCTYPE pagecontents SYSTEM "termsandconditions.dtd">
+<pagecontents>
+	<pagecontent lang="de"><![CDATA[<h2>Teilnahme am Spiel</h2>
+		<i class="icon-chevron-sign-right"></i> Es ist nur ein Benutzerkonto pro Mitspieler erlaubt.
+		<i class="icon-chevron-sign-right"></i> Das Benutzerkonto darf nicht an Dritte weitergegeben werden. Vermuteter Missbrauch des eigenen Kontos muss unverzüglich gemeldet werden.
+		<i class="icon-chevron-sign-right"></i> Der frei wählbare Benutzername darf keine Schutzrechte Dritter verletzen. Insbesondere dürfen keine Namen von Vereinen oder Spieler aus der realen Fussballwelt benutzt werden.
+		<i class="icon-chevron-sign-right"></i> Die Mitgliedschaft kann jederzeit und ohne Angabe von Gründen von beiden Vertragsparteien gekündigt werden.
+		<i class="icon-chevron-sign-right"></i> Der Betreiber behält sich das Recht vor, diese Teilnahmebestimmungen jederzeit zu ändern oder zu ergänzen.
+		<h2>Datenschutz</h2>
+		<i class="icon-chevron-sign-right"></i> Der Betreiber speichert personenbezogene Daten nur soweit rechtlich zulässig und sofern sie für den Spielbetrieb nötig sind. Darunter fallen unter anderem die IP-Adresse des Nutzers und seine E-Mail-Adresse.
+		<i class="icon-chevron-sign-right"></i> Der Nutzer hat jederzeit das Recht, Art und Umfang seiner gespeicherten Daten unentgeltlich bei dem Betreiber zu erfragen.
+		<i class="icon-chevron-sign-right"></i> Für den Betrieb der Webseite ist es erforderlich, sogenannte "Cookies" auf Ihrem Gerät zu speichern. Dabei handelt es sich um kleine Textdateien, die Informationen über Sie zur Wiedererkennung für das System enthalten. ]]>
+	</pagecontent>
+</pagecontents>

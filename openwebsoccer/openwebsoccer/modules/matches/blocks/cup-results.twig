@@ -1,0 +1,71 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
+{% import "profileelements.twig" as profile %}
+<h3>{{ env.getRequestParameter("cup") }}</h3>
+{% if round|length > 0 and round.cup_logo|length > 0 %}
+	<div style="text-align: center; margin-bottom: 10px;">
+		{% if env.getConfig("cdn_root_set") %}
+			<img src="{{ env.getConfig("cdn_root") }}/uploads/cup/{{ round.cup_logo }}" class="img-rounded">
+		{% else %}
+			<img src="{{ env.getConfig("context_root") }}/uploads/cup/{{ round.cup_logo }}" class="img-rounded">
+		{% endif %}
+    </div>
+{% endif %}
+<h4>{{ env.getRequestParameter("round") }}</h4>
+{% if round|length > 0 %}
+	{% if round.prev_round_winners|length > 0 %}
+		<p>{{ i18n.getMessage("cup_created_from_winners_of_round", round.prev_round_winners|e)|raw }}</p>
+	{% elseif round.prev_round_loosers|length > 0 %}
+		<p>{{ i18n.getMessage("cup_created_from_loosers_of_round", round.prev_round_loosers|e)|raw }}</p>
+	{% endif %}
+	{% if groups|length > 0 %}
+		<h5>{{ i18n.getMessage("cup_title_groups") }}</h5>
+		<ul class="nav nav-pills">
+			{% for group in groups %}
+				<li class="clientsideNavItem{% if group == preSelectedGroup %} active{% endif %}"><a href="#" class="ajaxLink{% if group == preSelectedGroup %} triggerClickOnLoad{% endif %}" data-ajaxtarget="grouptable" data-ajaxblock="cupgroupdetails" data-ajaxquerystr="roundid={{ round.round_id }}&group={{ group }}">{{ group }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+		<hr>
+		<div id="grouptable">{{ i18n.getMessage("cup_group_select_group_placeholder") }}</div>
+	{% else %}
+		{% if round.secondround_date < 1 %}
+			{{ profile.infofield(i18n.getMessage("cup_firstround_only_date"), env.getFormattedDatetime(round.firstround_date)) }}
+		{% else %}
+			{{ profile.infofield(i18n.getMessage("cup_firstround"), env.getFormattedDatetime(round.firstround_date)) }}
+			{{ profile.infofield(i18n.getMessage("cup_secondround"), env.getFormattedDatetime(round.secondround_date)) }}
+		{% endif %}
+	{% endif %}
+{% endif %}
+{% if groups is not defined or groups|length == 0 %}
+	<hr>
+	{% include 'blocks/results-list.twig' %}
+{% endif %}
+{% endif %}

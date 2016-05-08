@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version="OpenWebsoccer">
+	<pages>
+		<page id="home" 					 	role="guest,user" navitem="true"  navweight="0" 							template="home"/>
+		<page id="news" 					 	role="guest,user" navitem="true"  navweight="1" 							template="news-overview"			  model="NewsListModel"/>
+		<page id="news-details" 			 	role="guest,user" navitem="false" navweight="1"  parentItem="news"			template="news-details"				  model="NewsDetailsModel"/>
+		<page id="login" 					 	role="guest" 	  navitem="true"  navweight="2" 							template="login"/>
+		<page id="forgot-password" 			 	role="guest" 	  navitem="true"  navweight="1"  parentItem="login" 		template="forgot-password"			  model="ForgotPasswordModel"/>
+		<page id="register" 				 	role="guest" 	  navitem="true"  navweight="3" 							template="register-form"			  model="RegisterFormModel"		ConfigSet="allow_userregistration"/>
+		<page id="register-success" 		 	role="guest" 									 parentItem="register"		template="register-success"/>
+		<page id="activate-user" 			 	role="guest" 	  navitem="true"  navweight="1"  parentItem="register"		template="activate-user"/>
+		<page id="user" 						role="user" 	  navitem="true"  navweight="6" 							template="user-details" 			  model="UserDetailsModel"/>
+		<page id="messages" 				 	role="user" 	  navitem="true"  navweight="1"  parentItem="user"			template="messages"					  model="MessagesInboxModel"	ConfigSet="messages_enabled"/>
+		<page id="who-is-online" 			 	role="user" 	  navitem="true"  navweight="2"  parentItem="user" 			template="who_is_online"			  model="WhoIsOnlineModel"/>
+		<page id="premiumaccount" 			 	role="user" 	  navitem="true"  navweight="3"  parentItem="user"			template="premiumaccount"			  model="PremiumAccountModel"	ConfigSet="premium_enabled"/>
+		<page id="premium-feature-requested" 	role="user" 	  navitem="true"  navweight="4"  parentItem="user"			template="premium_feature_requested"								ConfigSet="premium_enabled"/>
+		<page id="premium-confirm-action" 	 	role="user" 	  navitem="true"  navweight="5"  parentItem="user"			template="premium_confirm_action"									ConfigSet="premium_enabled"/>
+		<page id="premium-exchange" 		 	role="user"		  navitem="true"  navweight="6"  parentItem="user"			template="premium_exchange"											ConfigSet="premium_enabled"/>
+		<page id="premium-exchange-confirm"  	role="user" 	  navitem="true"  navweight="7"  parentItem="user"			template="premium_exchange_confirm"									ConfigSet="premium_enabled"/>
+		<page id="badges" 					 	role="user" 	  navitem="true"  navweight="8"  parentItem="user"			template="badges"					  model="BadgesModel"/>
+		<page id="upload-clublogo" 			 	role="user" 	  navitem="true"  navweight="9"  parentItem="user"			template="upload_clublogo"/>
+		<page id="rename-club" 				 	role="user" 	  navitem="true"  navweight="10" parentItem="user"			template="rename_club"												ConfigSet="rename_club_enabled"/>
+		<page id="enter-username" 			 	role="user" 					  navweight="11" parentItem="user"			template="enter_username"/>
+		<page id="profile" 					 	role="user" 	  navitem="true"  navweight="12" parentItem="user"			template="profile"					  model="ProfileModel"/>
+		<page id="change-profile-picture" 	 	role="user" 	  navitem="true"  navweight="13" parentItem="user"			template="change_profile_picture"									ConfigSet="user_picture_upload_enabled"/>
+		<page id="absence"					 	role="user" 	  navitem="true"  navweight="14" parentItem="user" 			template="absence" 					  model="AbsenceModel"/>
+		<page id="cancellation" 			 	role="user" 	  navitem="true"  navweight="15" parentItem="user" 			template="cancellation"/>
+		<page id="termsandconditions" 		 	role="user,guest" navitem="true"  navweight="16" parentItem="user" 			template="termsandconditions"		  model="TermsAndConditionsModel"/>
+		<page id="imprint" 					 	role="user,guest" navitem="true"  navweight="17" parentItem="user" 			template="imprint" 					  model="ImprintModel"/>
+		<page id="allaktivities" 			 	role="user,admin" navitem="true"  navweight="18" parentItem="user" 			template="user-activities-all"		  model="AllActivitiesModel"/>
+		<page id="finances" 				 	role="user" 	  navitem="true"  navweight="7" 							template="finances" 				  model="FinancesModel"/>
+		<page id="tickets" 					 	role="user" 	  navitem="true"  navweight="1"  parentItem="finances"		template="tickets" 			 		  model="TicketsModel"/>
+		<page id="sponsor" 					 	role="user" 	  navitem="true"  navweight="2"  parentItem="finances"		template="sponsor" 					  model="SponsorModel"/>
+		<page id="stadium" 					 	role="user" 	  navitem="true"  navweight="3"  parentItem="finances"		template="stadium" 					  model="StadiumModel"/>
+		<page id="stadium-extend-confirm" 	 	role="user" 	  navitem="false" navweight="4"  parentItem="finances"		template="stadium-extend-confirm"	  model="StadiumExtensionModel"/>
+		<page id="stadiumenvironment" 		 	role="user" 	  navitem="true"  navweight="5"  parentItem="finances"		template="stadiumenvironment"		  model="StadiumEnvironmentModel"/>
+		<page id="myteam" 					 	role="user" 	  navitem="true"  navweight="8" 							template="myteam-overview" 			  model="MyTeamModel"/>
+		<page id="player" 					 	role="user" 	  navitem="false" navweight="1"  parentItem="myteam" 		template="player-details" 			  model="PlayerDetailsWithDependenciesModel"/>
+		<page id="extend-contract" 			 	role="user" 	  navitem="false" navweight="2"  parentItem="myteam" 		template="extend-contract" 			  model="PlayerDetailsModel"/>
+		<page id="training" 				 	role="user" 	  navitem="true"  navweight="3"  parentItem="myteam" 		template="training" 				  model="TrainingModel"/>
+		<page id="trainer-details" 			 	role="user" 	  navitem="false" navweight="4"  parentItem="myteam" 		template="training-trainerdetails"	  model="TrainerDetailsModel"/>
+		<page id="trainingcamp" 			 	role="user" 	  navitem="true"  navweight="5"  parentItem="myteam" 		template="trainingcamp" 			  model="TrainingCampsModel"/>
+		<page id="camp-details" 			 	role="user" 	  navitem="false" navweight="6"  parentItem="myteam" 		template="camp-details" 			  model="TrainingCampsDetailsModel"/>
+		<page id="lend-player" 				 	role="user" 	  navitem="false" navweight="7"  parentItem="myteam"		template="lend-player"				  model="PlayerDetailsModel"		ConfigSet="lending_enabled"/>
+		<page id="borrow-player" 			 	role="user" 	  navitem="false" navweight="8"  parentItem="myteam" 		template="borrow-player" 			  model="PlayerDetailsModel"/>
+		<page id="sell-player" 				 	role="user" 	  navitem="false" navweight="9"  parentItem="myteam" 		template="sell-player" 				  model="PlayerDetailsModel"/>
+		<page id="playerssearch" 			 	role="user" 	  navitem="true"  navweight="10" parentItem="myteam" 		template="playerssearch"/>
+		<page id="transfermarket" 			 	role="user" 	  navitem="true"  navweight="11" parentItem="myteam"		template="transfermarket-overview"  model="TransfermarketOverviewModel" ConfigSet="transfermarket_enabled"/>
+		<page id="transferoffers" 			 	role="user" 	  navitem="true"  navweight="12" parentItem="myteam"		template="transferoffers" 			  model="TransferOffersModel"		ConfigSet="transferoffers_enabled"/>
+		<page id="team" 					 	role="user" 					  navweight="13" parentItem="myteam" 		template="team-details" 			  model="TeamDetailsModel"/>
+		<page id="todaysmatches" 			 	role="user" 	  navitem="true"  navweight="9" 							template="todaysmatchespage"/>
+		<page id="office" 					 	role="user" 	  navitem="true"  navweight="1"  parentItem="todaysmatches" template="office-overview"			  model="OfficeModel"/>
+		<page id="formation" 				 	role="user" 	  navitem="true"  navweight="2"  parentItem="todaysmatches" template="formation" 				  model="FormationModel"/>
+		<page id="league" 					 	role="user" 	  navitem="true"  navweight="3"  parentItem="todaysmatches" template="league-details"			  model="LeagueDetailsModel"/>
+		<page id="myschedule" 				 	role="user" 	  navitem="true"  navweight="4"  parentItem="todaysmatches" template="myschedule" 				  model="MyScheduleModel"/>
+		<page id="results" 					 	role="user" 	  navitem="true"  navweight="5"  parentItem="todaysmatches" template="results-overview"			  model="LeaguesListModel"/>
+		<page id="match" 					 	role="user" 	  navitem="false" navweight="6"  parentItem="todaysmatches" template="match-details"			  model="MatchDetailsModel"/>
+		<page id="match-live-changes" 	 	 	role="user" 	  navitem="false" navweight="7"  parentItem="todaysmatches" template="match_live_changes"		  model="MatchChangesModel"/>
+		<page id="rss-results" 				 	role="user" 	  navitem="false" navweight="8"  parentItem="todaysmatches" template="rss" 						  model="RssResultsOfUserModel"/>
+		<page id="transfer-bid" 			 	role="user" 	  navitem="false" navweight="9"  parentItem="todaysmatches" template="transfer-bid" 			  model="PlayerDetailsModel"/>
+		<page id="youth-team" 				 	role="user" 	  navitem="true"  navweight="10" 							template="youth_team" 				  model="MyYouthTeamModel"			ConfigSet="youth_enabled"/>
+		<page id="youth-matches" 			 	role="user" 	  navitem="true"  navweight="1"  parentItem="youth-team"	template="youth_matches" 			  model="YouthMatchesModel"			ConfigSet="youth_enabled"/>
+		<page id="youthplayer-sell" 		 	role="user" 	  navitem="false" navweight="2"  parentItem="youth-team" 	template="youth_sell"/>
+		<page id="youthplayer-fire" 		 	role="user" 	  navitem="false" navweight="3"  parentItem="youth-team" 	template="youth_fire"/>
+		<page id="youthplayer-buy" 			 	role="user" 	  navitem="false" navweight="4"  parentItem="youth-team" 	template="youth_buy"/>
+		<page id="youthplayer-makeprofessional" role="user" 	  navitem="false" navweight="5"  parentItem="youth-team" 	template="youth_makeprofessional"	  model="YouthPlayerDetailsModel"/>
+		<page id="youth-matchrequests" 			role="user" 	  navitem="true"  navweight="6"  parentItem="youth-team" 	template="youth_matchrequests"	    model="YouthMatchRequestsModel" ConfigSet="youth_matchrequests_enabled"/>
+		<page id="youth-matchrequests-create" 	role="user" 	  navitem="true"  navweight="7"  parentItem="youth-team" 	template="youth_matchrequests_create" model="YouthMatchRequestsCreateModel" ConfigSet="youth_enabled"/>
+		<page id="youth-formation" 				role="user" 	  navitem="false" navweight="8"  parentItem="youth-team" 	template="youth_formation" 			  model="YouthMatchFormationModel"	ConfigSet="youth_enabled"/>
+		<page id="youth-match" 					role="user" 	  navitem="false" navweight="9"  parentItem="youth-team" 	template="youth_match" 				  model="YouthMatchReportModel"	ConfigSet="youth_enabled"/>
+		<page id="youth-scouting" 				role="user" 	  navitem="true"  navweight="10" parentItem="youth-team"	template="youth_scouting"			  model="YouthScoutingModel"		ConfigSet="youth_scouting_enabled"/>
+		<page id="youth-marketplace" 			role="user" 	  navitem="true"  navweight="11" parentItem="youth-team" 	template="youth_marketplace"		  model="YouthMarketplaceModel"		ConfigSet="youth_enabled"/>
+		<page id="nationalteam" 				role="user" 	  navitem="true"  navweight="11" 							template="nationalteam"				  model="NationalPlayersModel"		ConfigSet="nationalteams_enabled"/>
+		<page id="nationalmatches" 				role="user" 	  navitem="true"  navweight="1"  parentItem="nationalteam"	template="nationalmatches"			  model="NationalTeamMatchesModel"	ConfigSet="nationalteams_enabled"/>
+		<page id="nominate-national-players" 	role="user" 	  navitem="true"  navweight="2"  parentItem="nationalteam"	template="nominate_national_players"  model="FindNationalPlayersModel"	ConfigSet="nationalteams_enabled"/>
+		<page id="statistiken" 					role="user" 	  navitem="true"  navweight="12" 							template="halloffame"				  model="HallOfFameModel"/>
+		<page id="teamoftheday" 				role="user" 	  navitem="true"  navweight="1"  parentItem="statistiken"	template="teamoftheday"				  model="TeamOfTheDayModel"/>
+		<page id="tablehistory" 				role="user" 	  navitem="false" navweight="2"  parentItem="statistiken"	template="tablehistory"				  model="TableHistoryModel"/>
+		<page id="highscore" 					role="user" 	  navitem="true"  navweight="3"  parentItem="statistiken"	template="users-highscore"			  model="HighscoreModel"/>
+		<page id="topstrikers" 					role="user" 	  navitem="true"  navweight="4"  parentItem="statistiken"	template="strikers"					  model="TopStrikersModel"/>
+		<page id="topassist" 					role="user" 	  navitem="true"  navweight="5"  parentItem="statistiken"	template="assist"					  model="TopAssistModel"/>
+		<page id="topscorers" 					role="user" 	  navitem="true"  navweight="6"  parentItem="statistiken"	template="scorers"					  model="TopScorersModel"/>
+		<page id="alltimetable" 				role="user" 	  navitem="true"  navweight="7"  parentItem="statistiken"	template="alltimetable"				  model="LeagueDetailsModel"/>
+		<page id="freeclubs" 					role="user,guest" navitem="true"  navweight="13" 							template="freeclubs"				  model="FreeClubsModel"/>
+	</pages>
+</module>

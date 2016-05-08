@@ -1,0 +1,57 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
+{% macro infofieldnobr(label, value, doNotEscape = false) %}
+	{% block stylesheets %}
+		<style type="text/css">
+			.inforow {
+				margin-top: 10px;
+			}
+			.infolabel {
+				font-weight: bold;
+				background: url({{env.getConfig("bild_hintergrund")}});
+				padding: 8px;
+				border-radius: 4px;
+			}
+			.infovalue {
+				padding: 8px;
+			}
+			.alert-info {
+				background-color: rgb(255, 0, 0);
+				border-color: #ff0000;
+				color: #ffffff;
+			}
+		</style>
+	{% endblock %}
+	<div class="row-fluid inforow">
+		<div class="span6 infolabel">{% if doNotEscape %}{{ label|raw }}{% else %}{{ label }}{% endif %}</div>
+		<div class="span6 infovalue">{% if doNotEscape %}{{ value|raw }}{% else %}{{ value }}{% endif %}</div>
+	</div>
+{% endmacro %}
+{% endif %}

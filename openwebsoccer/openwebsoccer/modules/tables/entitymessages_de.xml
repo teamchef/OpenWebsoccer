@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version="OpenWebsoccer">
+	<messages>
+		<message id="entity_tablemarker">Tabellenmarkierung</message>
+		<message id="entity_tablemarker_bezeichnung">Bezeichnung</message>
+		<message id="entity_tablemarker_bezeichnung_help">Kann auch ein Messages-Schlüssel sein.</message>
+		<message id="entity_tablemarker_liga_id">Liga</message>
+		<message id="entity_tablemarker_platz_von">Platzierung von</message>
+		<message id="entity_tablemarker_platz_bis">Platzierung bis</message>
+		<message id="entity_tablemarker_farbe">Farbe</message>
+		<message id="entity_tablemarker_farbe_help">HTML-Farbwert. Wird kein Farbwähler in Ihrem Browser angezeigt, können Sie<a href="http://html-color-codes.info/webfarben_hexcodes/" target="_blank">online einen Wert auswählen</a>.</message>
+		<message id="entity_tablemarker_target_league_id">Zielliga</message>
+		<message id="entity_tablemarker_target_league_id_help">Vereine dieser Platzierungen werden am Ende einer Saison automatisch in die ausgewählte Zielliga verschoben (z.B. Auf- und Absteiger).</message>
+	</messages>
+</module>

@@ -1,0 +1,58 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
+<div class="row-fluid">
+	<div class="span3">
+		{% if cups is defined and cups|length > 0 %}
+			<div class="accordion" id="cups">
+				{% for cupName, rounds in cups %}
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a class="accordion-toggle" data-toggle="collapse" data-parent="#cups" href="#collapseCup{{ loop.index }}"><strong>{{ cupName }}</strong></a>
+						</div>
+						<div id="collapseCup{{ loop.index }}" class="accordion-body collapse">
+							<div class="accordion-inner">
+								<ul class="unstyled">
+									{% set cupIndex = loop.index %}
+									{% for round in rounds %}
+										<li><a href="#cup{{ cupIndex }}round{{ loop.index }}" class="ajaxLink" data-ajaxblock="cup-results" data-ajaxtarget="cup-results" data-ajaxquerystr="cup={{ cupName }}&amp;round={{ round }}">{{ round }}</a></li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+	<div class="span9">
+		<div id="cup-results"></div>
+	</div>
+</div>
+{% endif %}

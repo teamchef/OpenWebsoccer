@@ -1,0 +1,83 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if OPEN_WEBSOCCER is defined %}
+{% extends "base.twig" %}
+{% block page_title %}
+	{{ i18n.getMessage("results_navlabel") }}
+{% endblock %}
+{% block page_content %}
+	<ul class="nav nav-tabs" id="resultsTab">
+		<li class="active"><a href="#leagues" data-toggle="tab">{{ i18n.getMessage("results_tab_leagues") }}</a></li>
+		<li><a href="#cups" data-toggle="tab" class="ajaxLink" data-ajaxblock="cups-list" data-ajaxtarget="cups-content">{{ i18n.getMessage("results_tab_cups") }}</a></li>
+		<li><a href="#latest" data-toggle="tab" class="ajaxLink" data-ajaxblock="latest-results" data-ajaxtarget="latest-results_block">{{ i18n.getMessage("results_tab_latest_results") }}</a></li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="leagues">
+			<div class="row-fluid">
+				<div class="span3">
+					{% if countries is defined and countries|length > 0 %}
+						<div id="countries">
+							{% for countryName, leagues in countries %}
+								<div class="accordion-group">
+									<div class="accordion-heading">
+										{% if env.getConfig("cdn_root_set") %}
+											<img src="{{ env.getConfig("cdn_root") }}/img/flags/{{ countryName }}.png" style="max-width: 40px;"/>
+										{% else %}
+											<img src="{{ env.getConfig("context_root") }}/img/flags/{{ countryName }}.png" style="max-width: 40px;"/>
+										{% endif %}
+										<a data-toggle="collapse" data-parent="#countries" href="#collapse{{ loop.index }}"><strong>{{ countryName }}</strong></a>
+									</div>
+									<div id="collapse{{ loop.index }}" class="accordion-body collapse">
+										<div class="accordion-inner">
+											<ul class="unstyled">
+												{% for league in leagues %}
+													<li><a href="#league{{ league.id }}" class="ajaxLink" data-ajaxblock="season-picker" data-ajaxtarget="season-picker_block" data-ajaxquerystr="leagueid={{ league.id }}">{{ league.name }}</a></li>
+												{% endfor %}
+											</ul>
+										</div>
+									</div>
+								</div>
+							{% endfor %}
+						</div>
+					{% endif %}
+				</div>
+				<div class="span9">
+					<span id="season-picker_block">{{ viewHandler.renderBlock("season-picker")|raw }}</span>
+				</div>
+			</div>
+		</div>
+		<div class="tab-pane" id="cups">
+			<div id="cups-content"></div>
+		</div>
+		<div class="tab-pane" id="latest">
+			<span id="latest-results_block">{{ viewHandler.renderBlock("latest-results")|raw }}</span>
+		</div>
+	</div>
+{% endblock %}
+{% endif %}

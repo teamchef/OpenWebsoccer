@@ -1,0 +1,3 @@
+<!ELEMENT pagecontents (pagecontent+)>
+<!ELEMENT pagecontent (#PCDATA)>
+<!ATTLIST pagecontent lang ID #REQUIRED>

@@ -1,0 +1,34 @@
+Module:	transferoffers
+
+<admin>
+	entity_transfer_offer_admin_approval_pending																converter="TransferOfferApprovalLinkConverter"
+
+<pages>
+	transferoffers												template="transferoffers"					model="TransferOffersModel"
+
+<blocks>
+	directtransfer-sentoffers										template="directtransfer-sentoffers"				model="TransferOffersSentModel"
+	directtransfer-offer											template="directtransfer-offer"					model="DirectTransferOfferModel"
+	directtransfer-offer-form										template="directtransfer-offer-form"				
+
+<actions>
+	directtransfer-offer 																			controller="DirectTransferOfferController"
+	directtransfer-accept 																			controller="DirectTransferAcceptController"
+	directtransfer-cancel 																			controller="DirectTransferCancelController"
+	directtransfer-reject 																			controller="DirectTransferRejectController"
+
+Dateien:
+														transferoffers.twig						TransferOfferApprovalLinkConverter.class.php
+
+														directtransfer-sentoffers.twig					TransferOffersModel.class.php
+														directtransfer-offer.twig
+														directtransfer-offer-form.twig					TransferOffersSentModel.class.php
+																						DirectTransferOfferModel.class.php
+
+																						DirectTransferOfferController.class.php
+																						DirectTransferAcceptController.class.php
+																						DirectTransferCancelController.class.php
+																						DirectTransferRejectController.class.php
+
+sonstige Dateien:
+																						DirectTransfersDataService.class.php
