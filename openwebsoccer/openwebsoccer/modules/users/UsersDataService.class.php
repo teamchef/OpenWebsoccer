@@ -237,7 +237,7 @@ class UsersDataService
 	{
 		$columns = 'nick';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_user';
-		$whereCondition = 'UPPER(nick) LIKE "%s%%" AND status = 1';
+		$whereCondition = 'UPPER(nick) LIKE "%%%s%%" AND status = 1';
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, strtoupper($nickStart), 10);
 		$users = [];
 		while ($user = $result->fetch_array()) {

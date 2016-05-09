@@ -769,7 +769,7 @@ function actionMoveFiles()
 ?>
 			<hr>
 			<footer>
-				<a href="https://github.com/rolfjoseph/OpenWebsoccer" target="_blank"> <?php readfile('../admin/config/version.txt'); readfile('../modules/core/step.txt'); ?>
+				<a href="https://github.com/rolfjoseph/OpenWebsoccer" target="_blank"> <?php readfile('../admin/config/version.txt'); readfile('../build.txt'); ?>
 			</footer>
 		</div>
 		<script src="http://code.jquery.com/jquery-latest.js"></script>

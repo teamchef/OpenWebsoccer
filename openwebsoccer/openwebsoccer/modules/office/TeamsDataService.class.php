@@ -376,7 +376,7 @@ class TeamsDataService
 	public static function findTeamNames(WebSoccer $websoccer, DbConnection $db, $query) {
 		$columns = 'name';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_verein';
-		$whereCondition = 'UPPER(name) LIKE \'%%s%%\' AND status = 1';
+		$whereCondition = 'UPPER(name) LIKE \'%%%s%%\' AND status = 1';
 		$result = $db->querySelect($columns, $fromTable, $whereCondition, strtoupper($query), 10);
 		$teams = array();
 		while($team = $result->fetch_array()) {

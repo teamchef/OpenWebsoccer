@@ -393,12 +393,12 @@ class PlayersDataService
 		$parameters = array();
 		if ($firstName != null) {
 			$firstName = ucfirst($firstName);
-			$whereCondition .= ' AND P.vorname LIKE \'%%s%%\'';
+			$whereCondition .= ' AND P.vorname LIKE \'%%%s%%\'';
 			$parameters[] = $firstName;
 		}
 		if ($lastName != null) {
 			$lastName = ucfirst($lastName);
-			$whereCondition .= ' AND (P.nachname LIKE \'%s%%\' OR P.kunstname LIKE \'%s%%\')';
+			$whereCondition .= ' AND (P.nachname LIKE \'%%%s%%\' OR P.kunstname LIKE \'%%%s%%\')';
 			$parameters[] = $lastName;
 			$parameters[] = $lastName;
 		}
