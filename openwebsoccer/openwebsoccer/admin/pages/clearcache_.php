@@ -27,33 +27,18 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
-if (isset($id) && $id) {
-	$del_id = array($id);
+echo '<h1>'. $i18n->getMessage('clearcache_title') .'</h1>';
+$website->resetConfigCache();
+if (file_exists(BASE_FOLDER . '/install')){
+	require ('deldir.inc.php');
+	deldir ('../install');
 }
-if ($admin["r_demo"]) {
-	throw new Exception($i18n->getMessage("error_access_denied"));
+if (file_exists(BASE_FOLDER . '/update')){
+	require ('deldir.inc.php');
+	deldir ('../update');
 }
-if (count($del_id)) {
-	$dependencies = ModuleConfigHelper::findDependentEntities($dbTableWithoutPrefix);
-	foreach ($del_id as $deleteId) {
-		// log action
-		if ($loggingEnabled) {
-			$result = $db->querySelect($loggingColumns, $dbTable, "id = %d", $deleteId);
-			$item = $result->fetch_array(MYSQLI_ASSOC);
-			$result->free();
-			logAdminAction($website, LOG_TYPE_DELETE, $admin["name"], $entity, json_encode($item));
-		}
-		// delete item
-		$db->queryDelete($dbTable, "id = %d", $deleteId);
-		foreach ($dependencies as $dependency) {
-			$fromTable = $website->getConfig("db_prefix") . "_" . $dependency["dbtable"];
-			$whereCondition = $dependency["columnid"] . " = %d";
-			if (strtolower($dependency["cascade"]) == "delete") {
-				$db->queryDelete($fromTable, $whereCondition, $deleteId);
-			} else {
-				$db->queryUpdate(array($dependency["columnid"] => 0), $fromTable, $whereCondition, $deleteId);
-			}
-		}
-	}
-	echo createSuccessMessage($i18n->getMessage("manage_success_delete"), "");
-}
+require (BASE_FOLDER . '/admin/pages/deldir.inc.php');
+deldir (BASE_FOLDER .'/cache');
+mkdir (BASE_FOLDER .'/cache', 0700);
+$website->getTemplateEngine($i18n)->clearCache();
+echo createSuccessMessage($i18n->getMessage('clearcache_success_title'), $i18n->getMessage('clearcache_success_message'));

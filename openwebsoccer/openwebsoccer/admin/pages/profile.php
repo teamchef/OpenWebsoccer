@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -63,25 +63,25 @@ elseif ($show == "save") {
 		include("validationerror.inc.php");
 	}
 	else {
-		echo "<h1>". $mainTitle ." &raquo; ". $i18n->getMessage("subpage_save_title") . "</h1>";
-		$fromTable = $conf['db_prefix'] ."_admin";
-		$whereCondition = "id = %d";
-		$parameter = $admin['id'];
-		if ($_POST['newpassword']) {
-			// create new salt
-			if (!strlen($admin["passwort_salt"])) {
-				$salt = SecurityUtil::generatePasswordSalt();
-				$db->queryUpdate(array("passwort_salt" => $salt), $fromTable, $whereCondition, $parameter);
-			} else {
-				$salt = $admin["passwort_salt"];
-			}
-			$passwort = SecurityUtil::hashPassword(trim($_POST['newpassword']), $salt);
-			} else {
-				$passwort = $admin['passwort'];
-			}
-			$columns = array("passwort" => $passwort, "email" => $_POST['email'], "lang" => $_POST['language']);
-			$db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);
-			echo createSuccessMessage($i18n->getMessage("alert_save_success"), "");
-			echo "<p>&raquo; <a href=\"?site=". $site ."\">". $i18n->getMessage("back_label") . "</a></p>\n";
+	echo "<h1>". $mainTitle ." &raquo; ". $i18n->getMessage("subpage_save_title") . "</h1>";
+	$fromTable = $conf['db_prefix'] ."_admin";
+	$whereCondition = "id = %d";
+	$parameter = $admin['id'];
+	if ($_POST['newpassword']) {
+		// create new salt
+		if (!strlen($admin["passwort_salt"])) {
+			$salt = SecurityUtil::generatePasswordSalt();
+			$db->queryUpdate(array("passwort_salt" => $salt), $fromTable, $whereCondition, $parameter);
+		} else {
+			$salt = $admin["passwort_salt"];
 		}
+			$passwort = SecurityUtil::hashPassword(trim($_POST['newpassword']), $salt);
+		} else {
+			$passwort = $admin['passwort'];
+		}
+		$columns = array("passwort" => $passwort, "email" => $_POST['email'], "lang" => $_POST['language']);
+		$db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);
+		echo createSuccessMessage($i18n->getMessage("alert_save_success"), "");
+		echo "<p>&raquo; <a href=\"?site=". $site ."\">". $i18n->getMessage("back_label") . "</a></p>\n";
+	}
 }

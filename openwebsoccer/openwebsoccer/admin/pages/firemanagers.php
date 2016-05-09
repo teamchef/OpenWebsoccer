@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -33,7 +33,7 @@ $mainTitle = $i18n->getMessage('firemanagers_navlabel');
 if (!$admin['r_admin'] && !$admin['r_demo'] && !$admin[$page['permissionrole']]) {
 	throw new Exception($i18n->getMessage('error_access_denied'));
 }
-echo '<h1>$mainTitle</h1>';
+echo '<h1>Manager kündigen</h1>';
 //********** search form **********
 if (!$show) {
 	?>

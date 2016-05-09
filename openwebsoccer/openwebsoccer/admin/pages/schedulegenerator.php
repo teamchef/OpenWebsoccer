@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -70,11 +70,9 @@ elseif ($show == "generate") {
 	if (!isset($_POST['rounds']) || $_POST['rounds'] <= 0 || $_POST['rounds'] > 10) $err[] = $i18n->getMessage("schedulegenerator_err_invalidrounds");
 	if (!isset($_POST['timebreak']) || $_POST['timebreak'] <= 0 || $_POST['timebreak'] > 50) $err[] = $i18n->getMessage("schedulegenerator_err_invalidtimebreak");
 	if ($admin['r_demo']) $err[] = $i18n->getMessage("validationerror_no_changes_as_demo");
-	//##### Output error messages #####
 	if (isset($err)) {
 		include("validationerror.inc.php");
 	}
-	//##### Save #####
 	else {
 		// get teams
 		$result = $db->querySelect("id", $website->getConfig("db_prefix") . "_verein", "liga_id = %d", $_POST['league']);

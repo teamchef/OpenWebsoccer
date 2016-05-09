@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -32,7 +32,7 @@ if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
 	throw new Exception($i18n->getMessage("error_access_denied"));
 }
 echo "<p><a href=\"?site=manage&entity=match\" class=\"btn\">". $i18n->getMessage("back_label") . "</a></p>";
-$matchId = (isset($_REQUEST["match"]) && is_numeric($_REQUEST["match"])) ? $_REQUEST["match"] : 0;
+matchId = (isset($_REQUEST["match"]) && is_numeric($_REQUEST["match"])) ? $_REQUEST["match"] : 0;
 $teamPrefixes = array("home", "guest");
 $formFields = array("minuten_gespielt", "note", "tore", "assists", "karte_gelb", "karte_rot", "verletzt", "gesperrt", "ballcontacts", "wontackles", "shoots", "passes_successed", "passes_failed");
 // ******** action: delete player from match
@@ -182,10 +182,7 @@ echo "<option value=\"". $match["match_guest_id"] . "\">". escapeOutput($match["
 echo "</select>";
 echo "</div>";
 echo "</div>";
-echo FormBuilder::createFormGroup($i18n, "playerid", array("type" => "foreign_key",
-		"jointable" => "spieler",
-		"entity" => "player",
-		"labelcolumns" => "vorname,nachname,kunstname"), "", "match_manage_createplayer_label_");
+echo FormBuilder::createFormGroup($i18n, "playerid", array("type" => "foreign_key", "jointable" => "spieler", "entity" => "player", "labelcolumns" => "vorname,nachname,kunstname"), "", "match_manage_createplayer_label_");
 echo "<div class=\"control-group\">";
 echo "<label class=\"control-label\" for=\"position\">". $i18n->getMessage("entity_player_position_main") . "</label>";
 echo "<div class=\"controls\">";
@@ -207,19 +204,17 @@ echo "<input type=\"hidden\" name=\"action\" value=\"update\"/>";
 echo "<input type=\"hidden\" name=\"match\" value=\"$matchId\"/>";
 foreach ($teamPrefixes as $teamPrefix) {
 	echo "<h2><a href=\"". $website->getInternalUrl("team", "id=" . $match["match_". $teamPrefix . "_id"]) . "\" target=\"_blank\">". escapeOutput($match["match_". $teamPrefix . "_name"]) . "</a></h2>";
-	// tactic
+// tactic
 	echo "<div class=\"form-horizontal\">";
-	echo FormBuilder::createFormGroup($i18n, $teamPrefix . "_offensive", array("type" => "number",
-			"value" => $match["match_". $teamPrefix . "_offensive"]), $match["match_". $teamPrefix . "_offensive"], "formation_");
-	echo FormBuilder::createFormGroup($i18n, $teamPrefix . "_longpasses", array("type" => "boolean",
-			"value" => $match["match_". $teamPrefix . "_longpasses"]), $match["match_". $teamPrefix . "_longpasses"], "formation_");
-	echo FormBuilder::createFormGroup($i18n, $teamPrefix . "_counterattacks", array("type" => "boolean",
-			"value" => $match["match_". $teamPrefix . "_counterattacks"]), $match["match_". $teamPrefix . "_counterattacks"], "formation_");
+	echo FormBuilder::createFormGroup($i18n, $teamPrefix . "_offensive", array("type" => "number", "value" => $match["match_". $teamPrefix . "_offensive"]), $match["match_". $teamPrefix . "_offensive"], "formation_");
+	echo FormBuilder::createFormGroup($i18n, $teamPrefix . "_longpasses", array("type" => "boolean", "value" => $match["match_". $teamPrefix . "_longpasses"]), $match["match_". $teamPrefix . "_longpasses"], "formation_");
+	echo FormBuilder::createFormGroup($i18n, $teamPrefix . "_counterattacks", array("type" => "boolean", "value" => $match["match_". $teamPrefix . "_counterattacks"]), $match["match_". $teamPrefix . "_counterattacks"], "formation_");
 	echo "</div>";
 	// get existing players
 	$playerTable = $website->getConfig("db_prefix") . "_spiel_berechnung SB";
 	$playerTable .= " INNER JOIN " . $website->getConfig("db_prefix") . "_spieler S ON S.id = SB.spieler_id";
-	$result = $db->querySelect("SB.*", $playerTable, "spiel_id = %d AND team_id = %d ORDER BY feld ASC, field(SB.position_main, 'T', 'LV', 'IV', 'RV', 'DM', 'LM', 'ZM', 'RM', 'OM', 'LS', 'MS', 'RS')", array($matchId, $match["match_". $teamPrefix . "_id"]));
+	$result = $db->querySelect("SB.*", $playerTable, "spiel_id = %d AND team_id = %d ORDER BY feld ASC, field(SB.position_main, 'T', 'LV', 'IV', 'RV', 'DM', 'LM', 'ZM', 'RM', 'OM', 'LS', 'MS', 'RS')",
+		array($matchId, $match["match_". $teamPrefix . "_id"]));
 	$playersCount = $result->num_rows;
 	// no player records
 	if (!$playersCount) {

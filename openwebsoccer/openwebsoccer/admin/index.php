@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -28,7 +28,7 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 define('BASE_FOLDER', __DIR__ .'/..');
-if (!file_exists('../cache')){ mkdir  (BASE_FOLDER . '/cache'); }
+if (!file_exists(BASE_FOLDER . '/cache')){ mkdir  (BASE_FOLDER . '/cache'); }
 include(BASE_FOLDER . '/admin/adminglobal.inc.php');
 // building nav
 $navItems['settings'] = array();

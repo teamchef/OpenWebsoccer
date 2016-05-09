@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -72,7 +72,7 @@ elseif ($show == "generate") {
 	if ($admin['r_demo']) $err[] = $i18n->getMessage("validationerror_no_changes_as_demo");
 	if (isset($err)) {
 		include("validationerror.inc.php");
-		}
+	}
 	else {
 		DataGeneratorService::generateTeams($website, $db, $_POST['numberofteams'], $_POST['league'], $_POST['budget'], (isset($_POST['generatestadium']) && $_POST['generatestadium']),
 			$_POST['stadiumpattern'], $_POST['stadium_p_stands'], $_POST['stadium_p_seats'], $_POST['stadium_p_stands_grand'], $_POST['stadium_p_seats_grand'], $_POST['stadium_p_vip'] );

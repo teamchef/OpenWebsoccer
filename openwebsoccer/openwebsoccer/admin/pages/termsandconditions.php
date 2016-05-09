@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -55,9 +55,9 @@ if (!$show) {
 			foreach($i18n->getSupportedLanguages() as $language) {
 				echo "<option value=\"$language\"";
 				if ($language == $selectedLang) echo " selected";
-					echo ">$language</option>";
-				}
-				?>
+				echo ">$language</option>";
+			}
+			?>
 		</select>
 		<button type="submit" class="btn"><?php echo $i18n->getMessage("button_display"); ?></button>
 	</form>

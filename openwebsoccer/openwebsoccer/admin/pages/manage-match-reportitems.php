@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -58,13 +58,13 @@ elseif ($action == "create") {
 	$goals = $_POST["intermediateresult"];
 	if ($message_id && $minute) {
 		$db->queryInsert(array(
-				"match_id" => $matchId,
-				"message_id" => $message_id,
-				"active_home" => $homeActive,
-				"minute" => $minute,
-				"goals" => $goals,
-				"playernames" => $playerNames
-				), $website->getConfig("db_prefix") . "_matchreport");
+			"match_id" => $matchId,
+			"message_id" => $message_id,
+			"active_home" => $homeActive,
+			"minute" => $minute,
+			"goals" => $goals,
+			"playernames" => $playerNames
+		), $website->getConfig("db_prefix") . "_matchreport");
 	}
 }
 // ******** form for adding new item
@@ -115,7 +115,8 @@ if (!count($reportItems)) {
 	$guestTeam = escapeOutput($match["match_guest_name"]);
 	foreach ($reportItems as $reportItem) {
 		echo "<tr>";
-		echo "<td><a href=\"?site=$site&action=delete&match=$matchId&itemid=". $reportItem["report_id"] . "\" title=\"". $i18n->getMessage("manage_delete") . "\" class=\"deleteLink\"><i class=\"icon-trash\"></i></a> ". $reportItem["minute"] . "</td>";
+		echo "<td><a href=\"?site=$site&action=delete&match=$matchId&itemid=". $reportItem["report_id"] . "\" title=\"". $i18n->getMessage("manage_delete")
+			. "\" class=\"deleteLink\"><i class=\"icon-trash\"></i></a> ". $reportItem["minute"] . "</td>";
 		echo "<td><small>";
 		if ($reportItem["active_home"]) {
 			echo $homeTeam;

@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -178,8 +178,8 @@ function renderRound($roundNode) {
 	// display edit form
 	if($showEditForm) {
 		?>
-		  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
-	    <input type="hidden" name="action" value="edit-save">
+		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
+		<input type="hidden" name="action" value="edit-save">
 		<input type="hidden" name="site" value="<?php echo $site; ?>">
 		<input type="hidden" name="cup" value="<?php echo $cupid; ?>">
 		<input type="hidden" name="id" value="<?php echo $roundNode["round"]["id"]; ?>">
@@ -255,41 +255,41 @@ function renderRound($roundNode) {
 }
 // Create new round
 ?>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
-		<input type="hidden" name="action" value="create">
-		<input type="hidden" name="site" value="<?php echo $site; ?>">
-		<input type="hidden" name="cup" value="<?php echo $cupid; ?>">
-		<fieldset>
-			<legend><?php echo $i18n->getMessage("managecuprounds_label_create"); ?></legend>
-			<?php
-			foreach ($formFields as $fieldId => $fieldInfo) {
-				echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "managecuprounds_label_");
-			}
-			?>
-			<hr>
-			<?php
-			echo FormBuilder::createFormGroup($i18n, "round_generation", array(
-				"type" => "select",
-				"selection" => "self,winners_from,loosers_from,generate_from_groups",
-				"value" => "",
-				"required" => "true"
-			), $fieldInfo["value"], "managecuprounds_label_");
-			?>
-			<div class="control-group">
-				<label class="control-label" for="from_round_id"><?php echo $i18n->getMessage("managecuprounds_label_previous_round")?></label>
-				<div class="controls">
-					<select name="from_round_id" id="from_round_id">
-						<option></option>
-						<?php
-						foreach ($hierarchy as $roundId => $roundInfo) {
-							echo "<option value=\"". $roundId . "\">". escapeOutput($roundInfo["round"]["name"]) . "</option>\n";
-						}
-						?>
-					</select>
-				</div>
-			</div>
-		</fieldset>
-		<div class="form-actions">
-			<input type="submit" class="btn btn-primary" accesskey="s" title="Alt + s" value="<?php echo $i18n->getMessage("button_save"); ?>">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
+	<input type="hidden" name="action" value="create">
+	<input type="hidden" name="site" value="<?php echo $site; ?>">
+	<input type="hidden" name="cup" value="<?php echo $cupid; ?>">
+	<fieldset>
+	<legend><?php echo $i18n->getMessage("managecuprounds_label_create"); ?></legend>
+	<?php
+	foreach ($formFields as $fieldId => $fieldInfo) {
+		echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "managecuprounds_label_");
+	}
+	?>
+	<hr>
+	<?php
+	echo FormBuilder::createFormGroup($i18n, "round_generation", array(
+			"type" => "select",
+			"selection" => "self,winners_from,loosers_from,generate_from_groups",
+			"value" => "",
+			"required" => "true"
+		), $fieldInfo["value"], "managecuprounds_label_");
+	?>
+	<div class="control-group">
+		<label class="control-label" for="from_round_id"><?php echo $i18n->getMessage("managecuprounds_label_previous_round")?></label>
+		<div class="controls">
+			<select name="from_round_id" id="from_round_id">
+				<option></option>
+				<?php
+				foreach ($hierarchy as $roundId => $roundInfo) {
+					echo "<option value=\"". $roundId . "\">". escapeOutput($roundInfo["round"]["name"]) . "</option>\n";
+				}
+				?>
+			</select>
 		</div>
-	</form>
+	</div>
+	</fieldset>
+	<div class="form-actions">
+		<input type="submit" class="btn btn-primary" accesskey="s" title="Alt + s" value="<?php echo $i18n->getMessage("button_save"); ?>">
+	</div>
+</form>

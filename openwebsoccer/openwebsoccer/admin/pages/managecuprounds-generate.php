@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -80,54 +80,54 @@ if ($action == "generate" && isset($_POST["teams"]) && is_array($_POST["teams"])
 }
 // ****** Display selection form ***********
 ?>
-	<div id="noCupPossibleAlert" class="alert" style="display: none;">
-		<h5><?php echo $i18n->getMessage("managecuprounds_generate_noroundspossible"); ?></h5>
-	</div>
-	<div id="possibleCupRoundsAlert" class="alert alert-info" style="display: none;">
-		<h5><?php echo $i18n->getMessage("managecuprounds_generate_possiblerounds"); ?>: <span id="roundsNo">0</span></h5>
-	</div>
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
-		<input type="hidden" name="action" value="generate">
-		<input type="hidden" name="site" value="<?php echo $site; ?>">
-		<input type="hidden" name="round" value="<?php echo $roundid; ?>">
-		<fieldset>
-			<legend><?php echo $i18n->getMessage("managecuprounds_generate_formlabel"); ?> (<span id="numberOfTeamsSelected">0</span>)</legend>
-			<div style="width: 600px; height: 300px; overflow: auto; border: 1px solid #cccccc;">
-				<table class="table table-striped table-hover">
-					<colgroup>
-						<col style="width: 30px">
-						<col>
-						<col>
-					</colgroup>
-					<thead>
-						<tr>
-							<th>&nbsp;</th>
-							<th><?php echo $i18n->getMessage("entity_club")?></th>
-							<th><?php echo $i18n->getMessage("entity_league")?></th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php
-						$result = $db->querySelect("T.id AS team_id,T.name AS team_name,L.name AS league_name,L.land AS league_country",
+<div id="noCupPossibleAlert" class="alert" style="display: none;">
+	<h5><?php echo $i18n->getMessage("managecuprounds_generate_noroundspossible"); ?></h5>
+</div>
+<div id="possibleCupRoundsAlert" class="alert alert-info" style="display: none;">
+	<h5><?php echo $i18n->getMessage("managecuprounds_generate_possiblerounds"); ?>: <span id="roundsNo">0</span></h5>
+</div>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
+	<input type="hidden" name="action" value="generate">
+	<input type="hidden" name="site" value="<?php echo $site; ?>">
+	<input type="hidden" name="round" value="<?php echo $roundid; ?>">
+	<fieldset>
+		<legend><?php echo $i18n->getMessage("managecuprounds_generate_formlabel"); ?> (<span id="numberOfTeamsSelected">0</span>)</legend>
+		<div style="width: 600px; height: 300px; overflow: auto; border: 1px solid #cccccc;">
+			<table class="table table-striped table-hover">
+				<colgroup>
+					<col style="width: 30px">
+					<col>
+					<col>
+				</colgroup>
+				<thead>
+					<tr>
+						<th>&nbsp;</th>
+						<th><?php echo $i18n->getMessage("entity_club")?></th>
+						<th><?php echo $i18n->getMessage("entity_league")?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					$result = $db->querySelect("T.id AS team_id,T.name AS team_name,L.name AS league_name,L.land AS league_country",
 							$website->getConfig("db_prefix") . "_verein AS T LEFT JOIN " . $website->getConfig("db_prefix") . "_liga AS L ON L.id = T.liga_id",
 							"1=1 ORDER BY team_name ASC");
-						while ($team = $result->fetch_array()) {
-							echo "<tr>";
-							echo "<td><input type=\"checkbox\" class=\"teamForCupCheckbox\" name=\"teams[]\" value=\"". $team["team_id"] . "\"></td>";
-							echo "<td class=\"tableRowSelectionCell\">". escapeOutput($team["team_name"]) . "</td>";
-							echo "<td class=\"tableRowSelectionCell\">". escapeOutput($team["league_name"] . " (" . $team["league_country"] . ")") . "</td>";
-							echo "</tr>";
-						}
-						$result->free();
-						?>
-					</tbody>
-				</table>
-			</div>
-		</fieldset>
-		<div class="form-actions">
-			<input type="submit" class="btn btn-primary" accesskey="s" title="Alt + s" value="<?php echo $i18n->getMessage("managecuprounds_generate_submitbutton"); ?>">
-			<?php
-			echo " <a href=\"?site=managecuprounds&cup=". $round["cup_id"] . "\" class=\"btn\">" . $i18n->getMessage("button_cancel") ."</a>";
-			?>
+					while ($team = $result->fetch_array()) {
+						echo "<tr>";
+						echo "<td><input type=\"checkbox\" class=\"teamForCupCheckbox\" name=\"teams[]\" value=\"". $team["team_id"] . "\"></td>";
+						echo "<td class=\"tableRowSelectionCell\">". escapeOutput($team["team_name"]) . "</td>";
+						echo "<td class=\"tableRowSelectionCell\">". escapeOutput($team["league_name"] . " (" . $team["league_country"] . ")") . "</td>";
+						echo "</tr>";
+					}
+					$result->free();
+					?>
+				</tbody>
+			</table>
 		</div>
-	</form>
+	</fieldset>
+	<div class="form-actions">
+		<input type="submit" class="btn btn-primary" accesskey="s" title="Alt + s" value="<?php echo $i18n->getMessage("managecuprounds_generate_submitbutton"); ?>">
+		<?php
+		echo " <a href=\"?site=managecuprounds&cup=". $round["cup_id"] . "\" class=\"btn\">" . $i18n->getMessage("button_cancel") ."</a>";
+		?>
+	</div>
+</form>

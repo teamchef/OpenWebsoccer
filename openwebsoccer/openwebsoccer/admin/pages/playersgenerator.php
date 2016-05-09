@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -51,47 +51,48 @@ if (!$show) {
 				echo ">". $league["land"] . " - " . $league["name"] . "</option>";
 			}
 			$result->free();
- 			?>
+			?>
 		</select>
 		<button type="submit" class="btn btn-primary"><?php echo $i18n->getMessage("button_display") ?></button>
 		<a href="index.php?site=<?php echo $site ?>" class="btn"><?php echo $i18n->getMessage("button_reset") ?></a>
 		<input type="hidden" name="site" value="<?php echo $site ?>" />
 	</form>
 	<p><a href="index.php?site=<?php echo $site ?>&show=generateform&transfermarket=1" class="btn"><?php echo $i18n->getMessage("playersgenerator_generator_for_transfermarket") ?></a></p>
-	<?php
-	if ($leagueid > 0) {
-		$columns = array();
-		$columns["T1.id"] = "id";
-		$columns["T1.name"] = "name";
-		$columns["(SELECT COUNT(*) FROM " . $conf['db_prefix'] . "_spieler AS S WHERE S.verein_id = T1.id)"] = "playerscount";
-		$fromTable = $conf['db_prefix'] . "_verein AS T1";
-		$whereCondition = "T1.liga_id = %d ORDER BY T1.name ASC";
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $leagueid);
-		if (!$result->num_rows) {
-			echo "<p>" . $i18n->getMessage("playersgenerator_noteams") . "</p>";
-		} else {
-		?>
-		<p><a href="?site=<?php echo $site ?>&show=generateform&leagueid=<?php echo $leagueid ?>" class="btn"><?php echo $i18n->getMessage("playersgenerator_create_for_all_teams"); ?></a></p>
-		<h4 style="margin-top:20px"><?php echo $i18n->getMessage("playersgenerator_create_for_single_teams"); ?></h4>
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th><?php echo $i18n->getMessage("entity_club_name"); ?></th>
-					<th><?php echo $i18n->getMessage("playersgenerator_head_playerscount"); ?></th>
-				</tr>
-			</thead>
-			<tbody>
-			<?php
-			while ($team = $result->fetch_array()) {
-				echo "<tr>";
-				echo "<td><a href=\"?site=". $site . "&show=generateform&teamid=". $team["id"] . "\">". $team["name"] . "</a></td>";
-				echo "<td>". $team["playerscount"] . "</td>";
-				echo "</tr>";
-			}
-			?>
-			</tbody>
-		</table>
 		<?php
+		if ($leagueid > 0) {
+			$columns = array();
+			$columns["T1.id"] = "id";
+			$columns["T1.name"] = "name";
+			$columns["(SELECT COUNT(*) FROM " . $conf['db_prefix'] . "_spieler AS S WHERE S.verein_id = T1.id)"] = "playerscount";
+			$fromTable = $conf['db_prefix'] . "_verein AS T1";
+			$whereCondition = "T1.liga_id = %d ORDER BY T1.name ASC";
+			$result = $db->querySelect($columns, $fromTable, $whereCondition, $leagueid);
+			if (!$result->num_rows) {
+				echo "<p>" . $i18n->getMessage("playersgenerator_noteams") . "</p>";
+			} else {
+			?>
+			<p><a href="?site=<?php echo $site ?>&show=generateform&leagueid=<?php echo $leagueid ?>"
+			class="btn"><?php echo $i18n->getMessage("playersgenerator_create_for_all_teams"); ?></a></p>
+			<h4 style="margin-top:20px"><?php echo $i18n->getMessage("playersgenerator_create_for_single_teams"); ?></h4>
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th><?php echo $i18n->getMessage("entity_club_name"); ?></th>
+						<th><?php echo $i18n->getMessage("playersgenerator_head_playerscount"); ?></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php
+					while ($team = $result->fetch_array()) {
+						echo "<tr>";
+						echo "<td><a href=\"?site=". $site . "&show=generateform&teamid=". $team["id"] . "\">". $team["name"] . "</a></td>";
+						echo "<td>". $team["playerscount"] . "</td>";
+						echo "</tr>";
+					}
+					?>
+				</tbody>
+			</table>
+			<?php
 		}
 		$result->free();
 	}
@@ -105,15 +106,15 @@ elseif ($show == "generateform") {
 		<input type="hidden" name="teamid" value="<?php echo $teamid; ?>">
 		<input type="hidden" name="leagueid" value="<?php echo $leagueid; ?>">
 		<fieldset>
-			<legend><?php echo $i18n->getMessage("generator_label"); ?></legend>
-			<?php
-			$formFields = array();
-			if (isset($_REQUEST["transfermarket"]) && $_REQUEST["transfermarket"]) {
-				$formFields["entity_player_nation"] = array("type" => "text", "value" => "Deutschland");
-			}
-			else{
-				$formFields["entity_player_foreigners"] = array("type" => "percent", "value" => 30);
-			}
+		<legend><?php echo $i18n->getMessage("generator_label"); ?></legend>
+		<?php
+		$formFields = array();
+		if (isset($_REQUEST["transfermarket"]) && $_REQUEST["transfermarket"]) {
+			$formFields["entity_player_nation"] = array("type" => "text", "value" => "Deutschland");
+		}
+		else{
+			$formFields["entity_player_foreigners"] = array("type" => "percent", "value" => 30);
+		}
 			$formFields["player_age"] = array("type" => "number", "value" => 25);
 			$formFields["player_age_deviation"] = array("type" => "number", "value" => 3);
 			$formFields["entity_player_vertrag_gehalt"] = array("type" => "number", "value" => 10000);
@@ -151,7 +152,7 @@ elseif ($show == "generateform") {
 //********** validate, generate **********
 elseif ($show == "generate") {
 	if ($admin['r_demo']) $err[] = $i18n->getMessage("validationerror_no_changes_as_demo");
-	//##### Evtl. Fehler ausgeben #####
+		//##### Evtl. Fehler ausgeben #####
 	if (isset($err)) {
 		include("validationerror.inc.php");
 	}
@@ -178,23 +179,23 @@ elseif ($show == "generate") {
 	if ($teamid > 0) {
 		DataGeneratorService::generatePlayers($website, $db, $teamid, $_POST['player_age'], $_POST['player_age_deviation'], $_POST['entity_player_vertrag_gehalt'],
 			$_POST['entity_player_vertrag_spiele'], $strengths, $positions, $_POST["playersgenerator_label_deviation"], $_POST["entity_player_foreigners"]);
-	} elseif ($leagueid > 0) {
-		// generate for all teams of league
-		$columns = "id";
-		$fromTable = $conf['db_prefix'] . "_verein";
-		$whereCondition = "liga_id = %d";
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $leagueid);
-		while ($team = $result->fetch_array()) {
-			DataGeneratorService::generatePlayers($website, $db, $team["id"], $_POST['player_age'], $_POST['player_age_deviation'], $_POST['entity_player_vertrag_gehalt'],
-				$_POST['entity_player_vertrag_spiele'], $strengths, $positions, $_POST["playersgenerator_label_deviation"], $_POST["entity_player_foreigners"]);
-		}
-		$result->free();
-	} else {
+		} elseif ($leagueid > 0) {
+			// generate for all teams of league
+			$columns = "id";
+			$fromTable = $conf['db_prefix'] . "_verein";
+			$whereCondition = "liga_id = %d";
+			$result = $db->querySelect($columns, $fromTable, $whereCondition, $leagueid);
+			while ($team = $result->fetch_array()) {
+				DataGeneratorService::generatePlayers($website, $db, $team["id"], $_POST['player_age'], $_POST['player_age_deviation'], $_POST['entity_player_vertrag_gehalt'],
+					$_POST['entity_player_vertrag_spiele'], $strengths, $positions, $_POST["playersgenerator_label_deviation"], $_POST["entity_player_foreigners"]);
+			}
+			$result->free();
+		} else {
 		// generate for transfer market
 		DataGeneratorService::generatePlayers($website, $db, 0, $_POST['player_age'], $_POST['player_age_deviation'], $_POST['entity_player_vertrag_gehalt'],
 			$_POST['entity_player_vertrag_spiele'], $strengths, $positions, $_POST["playersgenerator_label_deviation"], 0, $_POST['entity_player_nation']);
-	}
-	echo createSuccessMessage($i18n->getMessage("generator_success"), "");
-	echo "<p>&raquo; <a href=\"?site=". $site ."&leagueid=". $leagueid . "\">". $i18n->getMessage("back_label") . "</a></p>\n";
+		}
+		echo createSuccessMessage($i18n->getMessage("generator_success"), "");
+		echo "<p>&raquo; <a href=\"?site=". $site ."&leagueid=". $leagueid . "\">". $i18n->getMessage("back_label") . "</a></p>\n";
 	}
 }

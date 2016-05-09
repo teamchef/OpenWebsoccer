@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -129,34 +129,32 @@ if ($action == "execute" && !$admin["r_demo"]) {
 <?php
 }
 function my_file($url) {
-  // URL zerlegen
-  $parsedurl = @parse_url($url);
-  // Host ermitteln
-  $host = $parsedurl['host'];
-  // Pfadangabe ermitteln
-  $documentpath = empty($parsedurl['path']) ? '/' : $documentpath = $parsedurl['path'];
-  // Parameter ermitteln
-  if (!empty($parsedurl['query']))
-    $documentpath .= '?'.$parsedurl['query'];
-  // Port ermitteln
-  $port = empty($parsedurl['port']) ? 80 : $port = $parsedurl['port'];
-  // Socket öffnen
-  $fp = fsockopen ($host, $port, $errno, $errstr, 30);
-  if (!$fp)
-    return null;
-  // Request senden
-  fputs ($fp, "GET {$documentpath} HTTP/1.0\r\nHost: {$host}\r\n\r\n");
-  // Header auslesen
-  $header = '';
-  do {
-    $line = chop(fgets($fp));
-    $header .= $line."\n";
-  } while (!empty($line) and !feof($fp));
-  // Daten auslesen
-  $result = Array();
-  while (!feof($fp)) {
-    $result[] = fgets($fp);
-  }
-  // Socket schliessen
-  fclose($fp);
+	// URL zerlegen
+	$parsedurl = @parse_url($url);
+	// Host ermitteln
+	$host = $parsedurl['host'];
+	// Pfadangabe ermitteln
+	$documentpath = empty($parsedurl['path']) ? '/' : $documentpath = $parsedurl['path'];
+	// Parameter ermitteln
+	if (!empty($parsedurl['query'])) $documentpath .= '?'.$parsedurl['query'];
+	// Port ermitteln
+	$port = empty($parsedurl['port']) ? 80 : $port = $parsedurl['port'];
+	// Socket öffnen
+	$fp = fsockopen ($host, $port, $errno, $errstr, 30);
+	if (!$fp) return null;
+	// Request senden
+	fputs ($fp, "GET {$documentpath} HTTP/1.0\r\nHost: {$host}\r\n\r\n");
+	// Header auslesen
+	$header = '';
+	do {
+		$line = chop(fgets($fp));
+		$header .= $line."\n";
+	} while (!empty($line) and !feof($fp));
+	// Daten auslesen
+	$result = Array();
+	while (!feof($fp)) {
+		$result[] = fgets($fp);
+	}
+	// Socket schliessen
+	fclose($fp);
 }

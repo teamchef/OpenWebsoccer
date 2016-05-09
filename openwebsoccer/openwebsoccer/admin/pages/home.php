@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -33,14 +33,14 @@ if (!$show) {
 	<p><?php echo $i18n->getMessage('home_intro'); ?></p>
 	<h3><?php echo $i18n->getMessage('home_softwareinfo_title'); ?></h3>
 	<table class='table table-bordered' style='width: 500px;'>
-		<tr>
+ 		<tr>
 			<td><b><?php echo $i18n->getMessage('home_softwareinfo_name'); ?></b></td>
 			<td>OpenWebSoccer-Sim</td>
-		</tr>
-		<tr>
+ 		</tr>
+ 		<tr>
 			<td><b><?php echo $i18n->getMessage('home_softwareinfo_version'); ?></b></td>
 			<td><?php readfile('config/version.txt'); readfile('../build.txt');?></td>
-		</tr>
+ 		</tr>
 	</table>
 	<h3><?php echo $i18n->getMessage('home_projectinfo_title'); ?></h3>
 	<table class='table table-bordered' style='width: 500px;'>

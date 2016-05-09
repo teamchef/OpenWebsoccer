@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -91,20 +91,17 @@ if (!$show) {
 //********** Validate and save **********
 elseif ($show == 'speichern') {
 	if ($admin['r_demo']) $err[] = $i18n->getMessage('validationerror_no_changes_as_demo');
-	//##### output errors #####
 	if (isset($err)) {
- 		include('validationerror.inc.php');
+		include('validationerror.inc.php');
 	}
-	//##### Save #####
 	else {
-		$newSettings = array();
-		foreach ($setting as $settingId => $settingData) {
-			$newSettings[$settingId] = (isset($_POST[$settingId])) ? prepareFielfValueForSaving($_POST[$settingId]) : '';
-		}
-		$cf = ConfigFileWriter::getInstance($conf);
-		$cf->saveSettings($newSettings);
-		include('success.inc.php');
-		echo createWarningMessage($i18n->getMessage('settings_saved_note_restartjobs'),
-			$i18n->getMessage('settings_saved_note_restartjobs_details'));
+	$newSettings = array();
+	foreach ($setting as $settingId => $settingData) {
+		$newSettings[$settingId] = (isset($_POST[$settingId])) ? prepareFielfValueForSaving($_POST[$settingId]) : '';
+	}
+	$cf = ConfigFileWriter::getInstance($conf);
+	$cf->saveSettings($newSettings);
+	include('success.inc.php');
+	echo createWarningMessage($i18n->getMessage('settings_saved_note_restartjobs'), $i18n->getMessage('settings_saved_note_restartjobs_details'));
 	}
 }

@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -43,7 +43,7 @@ if (!$show) {
 	else {
 		$datei_gr = filesize($datei);
 		if (!$datei_gr) echo '<p>'. $i18n->getMessage('empty_list') . '</p>';
-		else {
+			else {
 			?>
 			<table class='table table-bordered table-striped' style='margin-top: 10px'>
 				<tr>
@@ -58,40 +58,40 @@ if (!$show) {
 				$lines = count($file);
 				$min = $lines - 50;
 				if ($min < 0) $min = 0;
-				for ($i = $lines-1; $i >= $min; $i--) {
-					$line = $file[$i];
-					$row = explode(';', $line);
-					$n = $i + 1;
-					echo '<tr>
+					for ($i = $lines-1; $i >= $min; $i--) {
+						$line = $file[$i];
+						$row = explode(';', $line);
+						$n = $i + 1;
+						echo '<tr>
 							<td><b>'. $n .'</b></td>
 							<td>'. $row[0] .'</td>
 							<td>'. escapeOutput($row[1]) .' ('. escapeOutput($row[2]) . ')</td>
 							<td>';
-							if ($row[3] == LOG_TYPE_EDIT) {
-								echo '<span class=\'label label-info\'><i class=\'icon-white icon-pencil\'></i> '. $i18n->getMessage('entitylogging_action_edit') . '</span>';
-							} elseif ($row[3] == LOG_TYPE_DELETE) {
-								echo '<span class=\'label label-important\'><i class=\'icon-white icon-trash\'></i> '. $i18n->getMessage('entitylogging_action_delete') . '</span>';
-							} else {
-								echo $row[3];
-							}
-							echo '</td>
-							<td>'. $i18n->getMessage('entity_' . $row[4]) .': { ';
-							$itemFields = json_decode($row[5], TRUE);
-							$firstField = TRUE;
-							foreach ($itemFields as $fieldKey => $fieldValue) {
-								if ($firstField) {
-									$firstField = FALSE;
+								if ($row[3] == LOG_TYPE_EDIT) {
+									echo '<span class=\'label label-info\'><i class=\'icon-white icon-pencil\'></i> '. $i18n->getMessage('entitylogging_action_edit') . '</span>';
+								} elseif ($row[3] == LOG_TYPE_DELETE) {
+									echo '<span class=\'label label-important\'><i class=\'icon-white icon-trash\'></i> '. $i18n->getMessage('entitylogging_action_delete') . '</span>';
 								} else {
+									echo $row[3];
+								}
+								echo '</td>
+								<td>'. $i18n->getMessage('entity_' . $row[4]) .': { ';
+								$itemFields = json_decode($row[5], TRUE);
+								$firstField = TRUE;
+								foreach ($itemFields as $fieldKey => $fieldValue) {
+									if ($firstField) {
+										$firstField = FALSE;
+									} else {
 									echo ', ';
 								}
 								echo $fieldKey . ': ' . escapeOutput($fieldValue);
 							}
 							echo ' }</td>
 						</tr>';
-				}
-				?>
+					}
+					?>
 			</table>
-			<?php
+		<?php
 		}
 	}
 }

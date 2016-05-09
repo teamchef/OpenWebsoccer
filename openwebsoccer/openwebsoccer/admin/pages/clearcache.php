@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -30,15 +30,15 @@
 echo '<h1>'. $i18n->getMessage('clearcache_title') .'</h1>';
 $website->resetConfigCache();
 if (file_exists(BASE_FOLDER . '/install')){
-	require 'deldir.inc.php';
+	require ('deldir.inc.php');
 	deldir ('../install');
 }
 if (file_exists(BASE_FOLDER . '/update')){
-	require 'deldir.inc.php';
+	require ('deldir.inc.php');
 	deldir ('../update');
 }
-require (BASE_FOLDER . '/admin/pages/deldir.inc.php');
-deldir (BASE_FOLDER .'/cache');
-mkdir (BASE_FOLDER .'/cache', 0700);
-$website->getTemplateEngine($i18n)->clearCache();
+require ('deldir.inc.php');
+deldir (BASE_FOLDER . '/cache');
+mkdir (BASE_FOLDER . '/cache', 0700);
+// $website->getTemplateEngine($i18n)->clearCache();
 echo createSuccessMessage($i18n->getMessage('clearcache_success_title'), $i18n->getMessage('clearcache_success_message'));

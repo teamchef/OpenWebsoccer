@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -34,8 +34,7 @@ if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
 }
 $roundid = (isset($_REQUEST["round"]) && is_numeric($_REQUEST["round"])) ? $_REQUEST["round"] : 0;
 $result = $db->querySelect("R.id AS round_id,R.name AS round_name,firstround_date,secondround_date,C.id AS cup_id,C.name as cup_name",
-		$website->getConfig("db_prefix") . "_cup_round AS R INNER JOIN " . $website->getConfig("db_prefix") . "_cup AS C ON C.id = R.cup_id",
-		"R.id = %d", $roundid);
+		$website->getConfig("db_prefix") . "_cup_round AS R INNER JOIN " . $website->getConfig("db_prefix") . "_cup AS C ON C.id = R.cup_id", "R.id = %d", $roundid);
 $round = $result->fetch_array();
 $result->free();
 if (!isset($round["round_name"])) {
@@ -45,8 +44,7 @@ echo "<h2>". $i18n->getMessage("entity_cup") . " - " . escapeOutput($round["roun
 echo "<p><a href=\"?site=managecuprounds&cup=". $round["cup_id"] . "\" class=\"btn\">" . $i18n->getMessage("managecuprounds_groups_back") ."</a></p>";
 // get teams for team selection
 $result = $db->querySelect("T.id AS team_id,T.name AS team_name,L.name AS league_name,L.land AS league_country",
-		$website->getConfig("db_prefix") . "_verein AS T INNER JOIN " . $website->getConfig("db_prefix") . "_liga AS L ON L.id = T.liga_id",
-		"1=1 ORDER BY team_name ASC");
+		$website->getConfig("db_prefix") . "_verein AS T INNER JOIN " . $website->getConfig("db_prefix") . "_liga AS L ON L.id = T.liga_id", "1=1 ORDER BY team_name ASC");
 $teams = array();
 while ($team = $result->fetch_array()) {
 	$teams[] = $team;
@@ -236,7 +234,7 @@ if (count($groups)) {
 			$noOfTeams = 0;
 			foreach ($groupItems as $groupItem) {
 				echo "<li>" . escapeOutput($groupItem["team_name"]) . " <a class=\"deleteLink\" href=\"?site=". $site . "&round=". $roundid . "&group=". urlencode(escapeOutput($groupName))
-					. "&action=deletegroupassignment&teamid=". $groupItem["team_id"] . "\" title=\"". $i18n->getMessage("manage_delete") . "\"><i class=\"icon-remove-sign\"></i></a></li>";
+				. "&action=deletegroupassignment&teamid=". $groupItem["team_id"] . "\" title=\"". $i18n->getMessage("manage_delete") . "\"><i class=\"icon-remove-sign\"></i></a></li>";
 				$noOfTeams++;
 			}
 			echo "</ul>\n";
@@ -280,9 +278,9 @@ if (count($groups)) {
 			<?php
 			echo "</td>";
 			echo "<td><a href=\"?site=". $site . "&round=". $roundid . "&action=edit&group=". urlencode(escapeOutput($groupName)) . "\" title=\"". $i18n->getMessage("manage_edit") . "\"><i class=\"icon-pencil\"></i></a></td>";
-			echo "<td><a class=\"deleteLink\" href=\"?site=". $site . "&round=". $roundid . "&group=". urlencode(escapeOutput($groupName)) . "&action=delete\" title=\"". $i18n->getMessage("manage_delete") . "\">
-			<i class=\"icon-trash\"></i></a></td>";
-		echo "</tr>\n";
+			echo "<td><a class=\"deleteLink\" href=\"?site=". $site . "&round=". $roundid . "&group=". urlencode(escapeOutput($groupName)) . "&action=delete\" title=\""
+			. $i18n->getMessage("manage_delete") . "\"><i class=\"icon-trash\"></i></a></td>";
+			echo "</tr>\n";
 		}
 		?>
 		</tbody>
@@ -322,7 +320,7 @@ if (count($groups)) {
 					}
 				}
 			}
-			// create matches
+		// create matches
 			$matchTimestamp = $dateObj->getTimestamp();
 			foreach($schedule as $matchDay => $matches) {
 				foreach ($matches as $match) {
@@ -338,13 +336,14 @@ if (count($groups)) {
 					$matchcolumns["datum"] = $matchTimestamp;
 					$db->queryInsert($matchcolumns, $dbTable);
 				}
-				$matchTimestamp += $timeBreakSeconds;
+			$matchTimestamp += $timeBreakSeconds;
 			}
 		}
 		echo createSuccessMessage($i18n->getMessage("alert_save_success"), "");
 	}
 	// count matches
-	$result = $db->querySelect("COUNT(*) AS hits", $website->getConfig("db_prefix") . "_spiel", "pokalname = '%s' AND pokalrunde = '%s'", array($round["cup_name"], $round["round_name"]));
+	$result = $db->querySelect("COUNT(*) AS hits", $website->getConfig("db_prefix") . "_spiel",
+					"pokalname = '%s' AND pokalrunde = '%s'", array($round["cup_name"], $round["round_name"]));
 	$matches = $result->fetch_array();
 	$result->free();
 	$matchesUrl = "?site=manage&entity=match&" . http_build_query(array( "entity_match_pokalname" => escapeOutput($round["cup_name"]), "entity_match_pokalrunde" => escapeOutput($round["round_name"])));
@@ -356,28 +355,28 @@ if (count($groups)) {
 		<p><a href="#generateModal" role="button" class="btn" data-toggle="modal"><?php echo $i18n->getMessage("managecuprounds_groups_open_generate_matches_popup"); ?></a></p>
 	</div>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
-		<input type="hidden" name="action" value="generateschedule">
+	    <input type="hidden" name="action" value="generateschedule">
 		<input type="hidden" name="site" value="<?php echo $site; ?>">
 		<input type="hidden" name="round" value="<?php echo $roundid; ?>">
 		<div id="generateModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="generateModalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">??</button>
-				<h3 id="generateModalLabel"><?php echo $i18n->getMessage("managecuprounds_groups_generate_title"); ?></h3>
-			</div>
-			<div class="modal-body">
-				<div class="alert">
-					<?php echo $i18n->getMessage("managecuprounds_groups_generate_alert"); ?>
-				</div>
-				<?php
-				foreach ($generateFormFields as $fieldId => $fieldInfo) {
-					echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "schedulegenerator_label_");
-				}
-				?>
-			</div>
-			<div class="modal-footer">
-				<button class="btn btn-primary" type="submit"><?php echo $i18n->getMessage("managecuprounds_groups_generate_submit"); ?></button>
-				<button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo $i18n->getMessage("button_cancel"); ?></button>
-			</div>
+		  <div class="modal-header">
+		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">??</button>
+		    <h3 id="generateModalLabel"><?php echo $i18n->getMessage("managecuprounds_groups_generate_title"); ?></h3>
+		  </div>
+		  <div class="modal-body">
+		  	<div class="alert">
+		  		<?php echo $i18n->getMessage("managecuprounds_groups_generate_alert"); ?>
+		  	</div>
+			<?php
+			foreach ($generateFormFields as $fieldId => $fieldInfo) {
+				echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "schedulegenerator_label_");
+			}
+			?>
+		  </div>
+		  <div class="modal-footer">
+		    <button class="btn btn-primary" type="submit"><?php echo $i18n->getMessage("managecuprounds_groups_generate_submit"); ?></button>
+		    <button class="btn" data-dismiss="modal" aria-hidden="true"><?php echo $i18n->getMessage("button_cancel"); ?></button>
+		  </div>
 		</div>
 	</form>
 	<?php
@@ -389,15 +388,15 @@ if (count($groups)) {
 	<input type="hidden" name="site" value="<?php echo $site; ?>">
 	<input type="hidden" name="round" value="<?php echo $roundid; ?>">
 	<fieldset>
-		<legend><?php echo $i18n->getMessage("managecuprounds_groups_label_create"); ?></legend>
-		<?php
-		foreach ($formFields as $fieldId => $fieldInfo) {
-			echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "managecuprounds_group_label_");
-		}
-		?>
-		<div>
-			<label><?php echo $i18n->getMessage("managecuprounds_groups_label_selectteams"); ?></label>
-		</div>
+	<legend><?php echo $i18n->getMessage("managecuprounds_groups_label_create"); ?></legend>
+	<?php
+	foreach ($formFields as $fieldId => $fieldInfo) {
+		echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "managecuprounds_group_label_");
+	}
+	?>
+	<div>
+	<label><?php echo $i18n->getMessage("managecuprounds_groups_label_selectteams"); ?></label>
+	</div>
 		<div style="width: 600px; height: 300px; overflow: auto; border: 1px solid #cccccc;">
 			<table class="table table-striped table-hover">
 				<colgroup>
@@ -428,8 +427,8 @@ if (count($groups)) {
 	</fieldset>
 	<div class="form-actions">
 		<input type="submit" class="btn btn-primary" accesskey="s" title="Alt + s" value="<?php echo $i18n->getMessage("button_save"); ?>">
-		<?php
-		echo "<a href=\"?site=managecuprounds&cup=". $round["cup_id"] . "\" class=\"btn\">" . $i18n->getMessage("button_cancel") ."</a>";
-		?>
+	<?php
+	echo "<a href=\"?site=managecuprounds&cup=". $round["cup_id"] . "\" class=\"btn\">" . $i18n->getMessage("button_cancel") ."</a>";
+	?>
 	</div>
 </form>

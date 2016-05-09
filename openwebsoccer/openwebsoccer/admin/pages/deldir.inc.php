@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -32,15 +32,15 @@ function deldir ($path) {
 	if (!$dir) {
 		return;
 	}
- 	while (($entry = @readdir($dir)) !== false) {
- 		if ($entry == '.' || $entry == '..') continue;
+	while (($entry = @readdir($dir)) !== false) {
+		if ($entry == '.' || $entry == '..') continue;
 			if (is_dir ($path.'/'.$entry)) {
- 				$res = deldir ($path.'/'.$entry);
- 			} else if (is_file ($path.'/'.$entry) || is_link ($path.'/'.$entry)) {
- 				$res = @unlink ($path.'/'.$entry);
+				$res = deldir ($path.'/'.$entry);
+			} else if (is_file ($path.'/'.$entry) || is_link ($path.'/'.$entry)) {
+				$res = @unlink ($path.'/'.$entry);
 			}
 		}
 		@closedir ($dir);
 		$res = @rmdir ($path);
-		return;
+	return;
 }

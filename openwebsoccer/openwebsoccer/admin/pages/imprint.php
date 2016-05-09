@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -51,10 +51,10 @@ if (!$show) {
 			}
 			?>
 		</fieldset>
-			<div class='form-actions'>
-				<input type='submit' class='btn btn-primary' accesskey='s' title='Alt + s' value='<?php echo $i18n->getMessage('button_save'); ?>'>
-				<input type='reset' class='btn' value='<?php echo $i18n->getMessage('button_reset'); ?>'>
-			</div>
+		<div class='form-actions'>
+			<input type='submit' class='btn btn-primary' accesskey='s' title='Alt + s' value='<?php echo $i18n->getMessage('button_save'); ?>'>
+			<input type='reset' class='btn' value='<?php echo $i18n->getMessage('button_reset'); ?>'>
+		</div>
 	</form>
 	<?php
 }

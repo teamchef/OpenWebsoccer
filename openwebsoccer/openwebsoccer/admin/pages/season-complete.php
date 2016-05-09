@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -48,25 +48,25 @@ if (!$show) {
 	$result = $db->querySelect($columns, $fromTable, $whereCondition);
 	if (!$result->num_rows) {
 	echo '<p><strong>' . $i18n->getMessage('season_complete_noseasons') . '</strong></p>';
-} else {
-	?>
+	} else {
+?>
 	<table class='table table-striped'>
- 		<thead>
- 			<tr>
- 				<th><?php echo $i18n->getMessage('entity_season_name'); ?></th>
- 				<th><?php echo $i18n->getMessage('entity_season_liga_id'); ?></th>
- 			</tr>
- 		</thead>
- 		<tbody>
- 		<?php
+		<thead>
+			<tr>
+				<th><?php echo $i18n->getMessage('entity_season_name'); ?></th>
+				<th><?php echo $i18n->getMessage('entity_season_liga_id'); ?></th>
+			</tr>
+		</thead>
+		<tbody>
+ 			<?php
 			while ($season = $result->fetch_array()) {
 				echo '<tr>';
 				echo '<td><a href=\'?site='. $site . '&show=select&id='. $season['id'] . '\'>'. $season['name'] . '</a></td>';
 				echo '<td>'. $season['league_name'] . '</td>';
 				echo '</tr>';
 			}
-		?>
- 		</tbody>
+			?>
+		</tbody>
 	</table>
 	<?php
 	}
@@ -106,7 +106,7 @@ elseif ($show == 'select') {
 		<input type='submit' class='btn btn-primary' accesskey='s' title='Alt + s' value='<?php echo $i18n->getMessage('season_complete_submit'); ?>'>
 		<input type='reset' class='btn' value='<?php echo $i18n->getMessage('button_reset'); ?>'>
 	</div>
-</form>
+	</form>
 	<?php
 	//********** end season **********
 } elseif ($show == 'complete') {

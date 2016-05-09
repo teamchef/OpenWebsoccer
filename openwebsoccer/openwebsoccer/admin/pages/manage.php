@@ -19,7 +19,7 @@
 * If not, see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
-* Base Version: OpenWebSoccer-Sim  5.2.4-SNAPSHOT - 2015
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
 *
 * This Version called "OpenWebsoccer" is a advanced modification
 * by Rolf Joseph / ErdemCan 2015 - 2016
@@ -34,7 +34,7 @@ if (!isset($adminpage[$entity])) {
 $page = json_decode($adminpage[$entity], true);
 // check permission
 if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin[$page["permissionrole"]]) {
-  throw new Exception($i18n->getMessage("error_access_denied"));
+	throw new Exception($i18n->getMessage("error_access_denied"));
 }
 // get module config
 $configfile = FOLDER_MODULES ."/". $page["module"] ."/". MODULE_CONFIG_FILENAME;
@@ -50,6 +50,7 @@ $overviewConfig = $entityConfig[0]->xpath("overview[1]");
 if (!$overviewConfig) {
 	throw new Exception("No overview config found.");
 }
+
 // shall delete and edit be logged?
 $loggingEnabled = (boolean) $overviewConfig[0]->attributes()->logging;
 if ($loggingEnabled) {
@@ -149,12 +150,7 @@ if ($show == "add" || $show == "edit") {
 					$fieldValue = $website->getNowAsTimestamp();
 				} else if ($fieldInfo["type"] == "file") {
 					if (isset($_FILES[$fieldId]) && isset($_FILES[$fieldId]["tmp_name"]) && strlen($_FILES[$fieldId]["tmp_name"])) {
-						if ($_FILES["picture"]["name"]) {
-						$fieldValue = substr($_FILES["picture"]["name"], 0, -4);
-						}
-						else if ($_FILES["bild"]["name"]) {
-						$fieldValue = substr($_FILES["bild"]["name"], 0, -4);
-						}
+						$fieldValue = md5($entity . "-". $website->getNowAsTimestamp());
 						$fieldValue .= "." . FileUploadHelper::uploadImageFile($i18n, $fieldId, $fieldValue, $entity);
 					} else {
 						continue;
@@ -194,4 +190,3 @@ if ($show == "add") {
 if ($showOverview) {
 	include(__DIR__ . "/manage-overview.inc.php");
 }
-?>
