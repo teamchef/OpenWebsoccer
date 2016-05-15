@@ -14,40 +14,41 @@ License: GPL2
 */
 /*  Copyright 2012  Gokhan Muharremoglu  (email : gokhan.muharremoglu@iosec.org)
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
-    published by the Free Software Foundation.
+	This program is free software; you can redistribute it and/or modify
+	it under the terms of the GNU General Public License, version 2, as
+	published by the Free Software Foundation.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
 
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	You should have received a copy of the GNU General Public License
+	along with this program; if not, write to the Free Software
+	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 */
- error_reporting(0);
- /////////////////////////////////// CONFIGURATION MENU ///////////////////////////////////////////////
- $use_captcha                       = "y"; //If you want to use reCAPTCHA set value to "y" otherwise leave it empty (default is "y").
- $publickey                         = "6Ld6fNESAAAAAIM4YzckCmfqyzFOmrrTj2Qq55Tq"; // Get a key from https://www.google.com/recaptcha/admin/create
- $privatekey                        = "6Ld6fNESAAAAAKWYKMAypEffxoUlpW8RZ5UYGmaK"; // Get a key from https://www.google.com/recaptcha/admin/create
- $interval                          = 0.5; //Connection Interval in seconds (e.g. 1, 0.5, 0.001, etc.).
- $conection_limit                   = 1; //Connection count in the interval value (e.g. 1, 3, 5, 100).
- $block_proxies                     = ""; //If you want to block proxies set value to "y" otherwise leave it empty.
- $refresh_timeout                   = 10; //Suspended Process Timeout value in seconds.
- $redirection                       = ""; //If you want to redirect user after the suspended process, you can enter URL here.
- $mail_info                         = ""; //Mail address to notify (admin mail).
- $debug_info                        = "y"; //If you want to show debug info then set value to "y" otherwise leave it empty.
- $behind_reverse_proxy              = ""; //If your web server behind a reverse proxy, set this value to "y".
- $incremental_blocking              = "y"; //If you want to use incremental blocking, set this value to "y" (default is "y").
- $implicit_deny_timeout             = 0; // (Token access) If you want to block every request as default and let the human users (use_captcha) to view page for a timeout period (seconds), set this value to greater than "0" (default is "0").
- $implicit_deny_for_banlist_timeout = 0; // (Token access) If you want to block every recorded IP that is listed in the banlist as default and let the human users (use_captcha) to view page for a timeout period (seconds), set this value to greater than "0" (default is "0").
- $cached_requests                   = 150; //Monitoring data window size for the last requests (for "ips" file size) (default is "150").
- $use_whitelist                     = ""; //If you want to use whitelist set value to "y" otherwise leave it empty (default is empty).
- $use_excluded                      = ""; //If you want to use excluded file list, set this value to "y" otherwise leave it empty (default is empty).
- /////////////////////////////////////////////////////////////////////////////////////////////
- ///////////////////////////////////////////////////////////////////////////////////////////
+error_reporting(0);
+/////////////////////////////////// CONFIGURATION MENU ///////////////////////////////////////////////
+$use_captcha                       = "y";	//If you want to use reCAPTCHA set value to "y" otherwise leave it empty (default is "y").
+$publickey                         = "6Ld6fNESAAAAAIM4YzckCmfqyzFOmrrTj2Qq55Tq"; // Get a key from https://www.google.com/recaptcha/admin/create
+$privatekey                        = "6Ld6fNESAAAAAKWYKMAypEffxoUlpW8RZ5UYGmaK"; // Get a key from https://www.google.com/recaptcha/admin/create
+$interval                          = 0.5;	//Connection Interval in seconds (e.g. 1, 0.5, 0.001, etc.).
+$conection_limit                   = 1;		//Connection count in the interval value (e.g. 1, 3, 5, 100).
+$block_proxies                     = "";	//If you want to block proxies set value to "y" otherwise leave it empty.
+$refresh_timeout                   = 10;	//Suspended Process Timeout value in seconds.
+$redirection                       = "";	//If you want to redirect user after the suspended process, you can enter URL here.
+$mail_info                         = "";	//Mail address to notify (admin mail).
+$debug_info                        = "y";	//If you want to show debug info then set value to "y" otherwise leave it empty.
+$behind_reverse_proxy              = "";	//If your web server behind a reverse proxy, set this value to "y".
+$incremental_blocking              = "y";	//If you want to use incremental blocking, set this value to "y" (default is "y").
+$implicit_deny_timeout             = 0;		// (Token access) Block every request as default and let the human users (use_captcha) to view page for a timeout period (seconds), set this value to greater than "0" (default is "0").
+$implicit_deny_for_banlist_timeout = 0;		// (Token access) Block every recorded IP that is listed in the banlist as default and let the human users (use_captcha) to view page for a timeout period (seconds),
+											// set this value to greater than "0" (default is "0").
+$cached_requests                   = 150;	//Monitoring data window size for the last requests (for "ips" file size) (default is "150").
+$use_whitelist                     = "";	//If you want to use whitelist set value to "y" otherwise leave it empty (default is empty).
+$use_excluded                      = "";	//If you want to use excluded file list, set this value to "y" otherwise leave it empty (default is empty).
+/////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////
  if (($behind_reverse_proxy == "y") && ($block_proxies == "y")) {
      die("IOSEC - You can not use Reverse Proxy support with Proxy Blocking feature. Please choose only one of them");
  }
@@ -106,7 +107,6 @@ License: GPL2
          $errorpart = "&amp;error=" . $error;
      }
      return '<script type="text/javascript" src="' . $server . '/challenge?k=' . $pubkey . $errorpart . '"></script>
-
     <noscript>
           <iframe src="' . $server . '/noscript?k=' . $pubkey . $errorpart . '" height="300" width="500" frameborder="0"></iframe><br/>
           <textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea>
@@ -184,13 +184,10 @@ License: GPL2
      $HTTP_X_FORWARDED_FOR = "";
  }
  $let_it_go = 0;
- 
-
  if (!fopen($banlist, 'r')) {
      fopen($banlist, 'a');
      fclose($banlist);
  }
- 
  if ($use_excluded == "y") {
  if (!fopen($excluded, 'r')) {
      fopen($excluded, 'a');
@@ -201,9 +198,7 @@ License: GPL2
      $let_it_go = 1;
  }
  }
- 
  $read_blacklist = implode('\n', file($banlist));
- 
  if ($use_whitelist == "y") {
  if (!fopen($whitelist, 'r')) {
      fopen($whitelist, 'a');
@@ -214,8 +209,6 @@ License: GPL2
      $let_it_go = 1;
  }
  }
-
-
  if ($let_it_go == 0) {
      if (eregi($REMOTE_ADDR, $read_blacklist) && ($implicit_deny_for_banlist_timeout > 0)) {
          $implicit_deny_timeout = $implicit_deny_for_banlist_timeout;
@@ -224,7 +217,6 @@ License: GPL2
          session_start();
      }
 	 if ($implicit_deny_for_banlist_timeout == 0 or ($implicit_deny_for_banlist_timeout > 0 and $_SESSION['unblocked_time'] > time())) {
-	 
      $linesx = file($banlisttemp);
      foreach ($linesx as $teksira) {
          $ipcheck = explode('|', $teksira);
@@ -252,7 +244,6 @@ License: GPL2
 ?>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-9" />
-
 <meta http-equiv="Content-Language" content="tr">
 <meta http-equiv="Refresh" content="<?php
                  echo $refresh_timeout;
@@ -261,16 +252,12 @@ License: GPL2
 ?>">
 <title>IOSec.org Anti Flood Security Gateway Module</title>
 </head>
-
-
 <body topmargin="0" leftmargin="0" rightmargin="0" bottommargin="0" marginwidth="0" marginheight="0" bgcolor="#C0C0C0">
 <script>
 var count=<?php
                  echo $refresh_timeout;
 ?>;
-
-var counter=setInterval("timer()",1000); 
-
+var counter=setInterval("timer()",1000);
 function timer()
 {
   count=count-1;
@@ -279,9 +266,7 @@ function timer()
      clearInterval(counter);
      return;
   }
-
  document.getElementById("timer").innerHTML=count + " ";
-
 }
 </script>
 <p>
@@ -304,7 +289,6 @@ function timer()
                             <font face="Verdana" style="font-size: 9pt; font-weight: 700"  color="#C0C0C0">
                             <br>
                             </font>
-                        
                             <font face="Arial" style="font-size: 8pt" color="#C0C0C0">
                             <b>Your Process Interrupted by Module<br>Your IP Address has been Logged</b><br>
                     ~ Please Wait <b><span id="timer"></span></b> Second(s) ~<br> &nbsp;</font></td>
@@ -318,7 +302,6 @@ function timer()
 ?></font>
 </table>
 <p>&nbsp;</p>
-
 <?php
                  for ($e = 0; $e < $cached_requests; $e++) {
                      $veri_handler = "$veri_handler;$array_gokhan[$e]";
@@ -350,7 +333,6 @@ function timer()
                  $hatali = 1;
                  if ($use_captcha == "y") {
 ?>
-
 <html>
   <center><body>
     <form action="" method="post">
@@ -434,11 +416,9 @@ function timer()
                                                 </tr>
                                         </table>
                                 </div>
-
 <?php
          if ($use_captcha == "y") {
 ?>
-
 <html>
   <center><body>
     <form action="" method="post">
@@ -464,5 +444,4 @@ function timer()
          }
          exit;
      }
- }
-?>
+}

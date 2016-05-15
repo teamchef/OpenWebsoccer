@@ -1,1 +1,1 @@
-Dieser Leere Ordner ist für eigene Anpassungen & Test.
+Platzhalter für den leeren Ordner, damit dieser nicht beim Github-Abgleich verschwindet.

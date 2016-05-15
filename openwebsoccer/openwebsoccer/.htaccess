@@ -1,3 +1,4 @@
+SetEnv PHP5_VERSION 7.0.99
 ## Start: OpenWebsoccer - Sicherheitseinstellungen über .htaccess
 ##
 # verhindern das Dateien und  Verzeichnisse gelistet werden

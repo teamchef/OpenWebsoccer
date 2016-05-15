@@ -1,5 +1,6 @@
-<?php
-/******************************************************************
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
 *
 * This file is part of OpenWebSoccer-Sim.
 *
@@ -26,21 +27,14 @@
 *
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
-******************************************************************/
-// defined('OpenWebsoccer') or header('location: ../../index.php');
-/**
- * offene Spiele simulieren.
- */
-class SimulateMatchesJob extends AbstractJob
-{
-	/**
-	 * wird über AbstractJob::execute() aufgerufen
-	 */
-	public function execute() {
-		MatchSimulationExecutor::simulateOpenMatches($this->_websoccer, $this->_db);
-	}
-	public function isTraitable()
-	{
-		return true;
-	}
-}
+*
+* Modul: MoveMatchDay
+*
+* Author: Schabbell
+*
+-->
+<module version="OpenWebsoccer">
+	<admin>
+		<adminpage id="movematchday" permissionrole="r_daten" navcategory="season" filename="movematchday"/>
+	</admin>
+</module>

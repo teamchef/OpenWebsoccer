@@ -30,38 +30,52 @@
 {% extends "base.twig" %}
 {% import "profileelements.twig" as profile %}
 {% block page_title %}
+	{{ team.team_name }}
+{% endblock %}
+{% block page_content %}
 	<table>
-	<td>
-		<div style="width:400px;height:120px;">
-			{{ team.team_name }}
-			<small>
-			<br>Kader: {{ teamsize }} Spieler
-			<br>Vertragsdauer in Ordnung    : {{ teamsizecontract }}
-			<br><br>{% if teamsizecontract > 17 %}
-			</small>
-			<img src="{{ env.getConfig("context_root") }}/img/siegel.png" class="img-rounded" style="margin-left:340px;margin-top:-150px;width:30px;height:35px;">{% endif %}{% if team.team_logo|length > 0 %}
-		</div>
-	</td>
-	<td><img src="{{ env.getConfig("context_root") }}/uploads/club/{{ team.team_logo }}"class="img-rounded" style="top:10px;width:120px;height:120px;">{% endif %}</td>
-	<td>
-		{% if stadium.stadium_id is defined and stadium.stadium_id > 0 and stadium.picture|length > 0 %}
-			<div style="top:-20px;width:240px;height:120px;">
+		<td style="width:300px;height:120px;">
+			<h4>
+				<div>
+					<br>Kader: {{ teamsize }} Spieler
+					<br>Vertragsdauer in Ordnung    : {{ teamsizecontract }}
+					<br><br>{% if teamsizecontract > 17 %}
+					{% if env.getConfig("cdn_root_set") %}
+						<img src="{{ env.getConfig("cdn_root") }}/img/siegel.png" class="img-rounded" style="margin-left:260px;margin-top:-70px;width:30px;height:35px;">{% endif %}{% if team.team_logo|length > 0 %}
+					{% else %}
+						<img src="{{ env.getConfig("context_root") }}/img/siegel.png" class="img-rounded" style="margin-left:260px;margin-top:-70px;width:30px;height:35px;">{% endif %}{% if team.team_logo|length > 0 %}
+					{% endif %}
+					{% endif %}
+				</div>
+			</h4>
+		</td>
+		<td style="width:120px;height:120px;">
+			{% if team.team_logo is defined and team.team_logo > 0 and stadium.picture|length > 0 %}
+				{% if env.getConfig("cdn_root_set") %}
+					<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ team.team_logo }}"class="img-rounded" style="top:10px;width:120px;height:120px;">
+				{% else %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ team.team_logo }}"class="img-rounded" style="top:10px;width:120px;height:120px;">
+				{% endif %}
+			{% endif %}
+		</td>
+		<td style="width:60px;height:120px;"></td>
+		<td style="width:240px;height:120px;">
+			{% if stadium.stadium_id is defined and stadium.stadium_id > 0 and stadium.picture|length > 0 %}
 				{% if env.getConfig("cdn_root_set") %}
 					<img src="{{ env.getConfig("cdn_root") }}/uploads/stadium/{{ stadium.picture }}">
 				{% else %}
 					<img src="{{ env.getConfig("context_root") }}/uploads/stadium/{{ stadium.picture }}">
 				{% endif %}
-			</div>
-		{% endif %}
-	</td>
+			{% endif %}
+		</td>
+		<tr>
+			<p style="font-size: 20px; margin-top: -15px;">
+				{% for strengthlevel in 1..5 %}
+					<i class="icon-star{% if (30 + strengthlevel * 10) > team.team_strength %}-empty{% endif %}"></i>
+				{% endfor %}
+			</p>
+		</tr>
 	</table>
-{% endblock %}
-{% block page_content %}
-	<p style="font-size: 20px; margin-top: -15px;">
-		{% for strengthlevel in 1..5 %}
-			<i class="icon-star{% if (30 + strengthlevel * 10) > team.team_strength %}-empty{% endif %}"></i>
-		{% endfor %}
-	</p>
 	<ul class="nav nav-tabs" id="teamTab">
 		<li class="active"><a href="#general" data-toggle="tab">{{ i18n.getMessage("team_details_tab_general") }}</a></li>
 		<li><a href="#results" data-toggle="tab" class="ajaxLink" data-ajaxtarget="resultslist" data-ajaxblock="team-results" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("results_tab_latest_results") }}</a></li>
