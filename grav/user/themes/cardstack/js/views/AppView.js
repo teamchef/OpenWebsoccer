@@ -2,8 +2,7 @@ app.AppView = Backbone.View.extend({
   el: '#card_app',
   initialize: function () {
     app.cardList.on('add', this.addOne, this);
-    app.cardList.on('reset', this.sortAll, this);
-    app.cardList.on('sort', this.sortAll, this);
+    app.cardList.on('reset', this.reset, this);
     app.cardList.on('filter_keyword', this.filterKeyword, this);
     app.cardList.on('filter_category', this.filterCategory, this);
     app.cardList.on('select_page', this.selectPage, this);
@@ -15,18 +14,23 @@ app.AppView = Backbone.View.extend({
   },
   addOne: function(card){
     var view = new app.CardView({model: card});
-    $('#card_view').append(view.render().el);
-    app.cardgrid.init();
+    view.model.set('dataToBeRendered', true);
+    view.initialize();
+    
   },
   addAll: function(){
     this.$('#card_view').html('');
+    app.cardList.sortByField('lastmodified_ticks','descending');
     app.cardList.each(this.addOne, this);
   },
-  sortAll: function(){
+  reset: function(){
+    var that = this;
     this.$('#card_view').html(''); 
     this.$('#card_page').html('');
     app.cardList.sortByField('lastmodified_ticks','descending');
-    app.cardList.each(this.addOne, this);
+    app.cardList.each(function(model) {
+        that.addOne(model);
+    });
     app.eventAggregator.trigger('domchange:title', app.site_title);
   },
   filterKeyword: function(){
@@ -41,7 +45,8 @@ app.AppView = Backbone.View.extend({
         }); 
     });
     _.each(KeywordsFiltered, this.addOne);
-    app.eventAggregator.trigger('domchange:title', app.Keyword + ' - ' + app.site_title);
+    app.eventAggregator.trigger('domchange:title', app.Keyword.replace(/_/g, ' ') + ' - ' + app.site_title);
+    app.cardgrid.init();
   },
   filterCategory: function(){
     this.$('#card_view').html(''); 
@@ -58,6 +63,7 @@ app.AppView = Backbone.View.extend({
     });
     _.each(CategoriesFiltered, this.addOne);
     app.eventAggregator.trigger('domchange:title', app.Category.replace(/_/g, ' ') + ' - ' + app.site_title);
+    app.cardgrid.init();
   },
   selectPage: function(){
     this.$('#card_view').html(''); 
@@ -68,7 +74,9 @@ app.AppView = Backbone.View.extend({
     app.router.setActiveEntry( '/#' + RouteToModel.get('category_clean') );
     app.cardgrid.init();
     view = '';
+    $('.loading').html('<p>&nbsp;</p>');
     app.eventAggregator.trigger('domchange:title', RouteToModel.get('title') + ' - ' + app.site_title);
+    app.cardgrid.init();
   },
   searchTerm: function(){
     this.$('#card_view').html(''); 
@@ -83,10 +91,15 @@ app.AppView = Backbone.View.extend({
     });
     _.each(TermsSearched, this.addOne);
     app.eventAggregator.trigger('domchange:title', app.SearchTerm + ' - ' + app.site_title);
+    app.cardgrid.init();
+
   },
   author: function(){
     this.$('#card_view').html(''); 
     this.$('#card_page').html('');
+    var view = new app.AuthorView({});
+    $('#card_page').html(view.render().el);
+    var PrettyAuthor;
     app.cardList.sortByField('lastmodified_ticks','descending');
     var AuthorCards = app.cardList.filter(function(model) {
         return _.any(model.attributes, function(val, attr) {
@@ -94,6 +107,7 @@ app.AppView = Backbone.View.extend({
           if ( 'author_name'.indexOf(attr) > -1 ) {
               if ( ~val.toUpperCase().indexOf( Author ) ) {
                   if (val.toUpperCase().replace(Author, "").length == 0 ) {
+                      PrettyAuthor = val;
                       return true;
                   }
               }
@@ -104,8 +118,7 @@ app.AppView = Backbone.View.extend({
         });
     });
     _.each(AuthorCards, this.addOne);
-    var view = new app.AuthorView({});
-    $('#card_page').html(view.render().el);
-    app.eventAggregator.trigger('domchange:title', app.Author + ' - ' + app.site_title);
+    app.eventAggregator.trigger('domchange:title', PrettyAuthor + ' - ' + app.site_title);
+    app.cardgrid.init();
   }
 });

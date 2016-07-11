@@ -1,3 +1,23 @@
+# v1.4.3
+## 05/27/2016
+
+1. [](#new)
+    * Reverted compression checks
+    
+# v1.4.2
+## 05/23/2016
+
+1. [](#new)
+    * Check for compression issues
+
+# v1.4.1
+## 05/03/2016
+
+1. [](#new)
+    * Added a check for XML support in PHP
+1. [](#improved)
+    * Use common language strings in blueprints
+
 # v1.4.0
 ## 01/06/2016
 

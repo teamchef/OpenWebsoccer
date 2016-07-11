@@ -1,3 +1,22 @@
+# v1.1.2
+## 06/22/2016
+1.[](#bugfix)  
+    * fixed blueprints.yaml homepage and demo information
+
+# v1.1.1
+## 06/21/2016
+1.[](#improved)  
+    * added mdi icons support
+    
+1.[](#bugfix)  
+    * fixed assets are not added for common plugins
+    * fixed gravstrap-list-item  shortcode does not show the items
+
+# v1.1.0
+## 06/12/2016
+1.[](#improved)  
+    * improved to work with new Grav 1.1
+
 # v1.0.3
 ## 03/17/2016
 1.[](#improved)  

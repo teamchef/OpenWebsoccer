@@ -19,9 +19,15 @@ body {
   background: #d8e0e5;
 }
 
-.uk-navbar {
-  z-index: 1000 !important;
+.uk-dropdown-navbar {
+  z-index: 20 !important;
 }
+
+.uk-navbar {
+  z-index: 10 !important;
+}
+
+
 
 blockquote {
   }
@@ -142,6 +148,17 @@ form input {
   font-weight: 400; }
 
 
-  .hidden {
-    display: none
+.hidden {
+  display: none
+}
+
+/* Main part of overlay fix*/
+.uk-offcanvas-page {
+  margin-left: 0px !important; 
+  margin-right: 0px !important;
+  width: 100% !important; 
+}
+
+.uk-navbar-brand, .uk-navbar-content, .uk-navbar-toggle {
+  padding: 0 10px;
 }

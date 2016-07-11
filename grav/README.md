@@ -1,4 +1,16 @@
-# ![](https://avatars1.githubusercontent.com/u/8237355?v=2&s=50) Grav 
+# Grav-Bundle für OpenWebsoccer 2016 ( PHP 7 )
+# powered by Rolf Joseph / ErdemCan
+
+## Grav benötigt mindestens PHP 5.5.9
+
+Daher ist auch bei Grav es sinvoller ebenfalls auf PHP laufen zu lassen.
+
+Grav 1.0.10 wird mittlerweile schon seit Februar 2016 nicht mehr weiterentwicklet.
+Grav 1.1.0 ist mittlerweile schon im RC und wird wohl blad zur Verfügung stehen.
+
+
+
+# ![](https://avatars1.githubusercontent.com/u/8237355?v=2&s=50) Grav
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/cfd20465-d0f8-4a0a-8444-467f5b5f16ad/mini.png)](https://insight.sensiolabs.com/projects/cfd20465-d0f8-4a0a-8444-467f5b5f16ad) [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/getgrav/grav?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![Build Status](https://travis-ci.org/getgrav/grav.svg?branch=develop)](https://travis-ci.org/getgrav/grav)
 

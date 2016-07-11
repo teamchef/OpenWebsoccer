@@ -78,20 +78,39 @@ class ProblemsPlugin extends Plugin
 
         $html = file_get_contents(__DIR__ . '/html/problems.html');
 
-        $problems = '';
-        foreach ($this->results as $key => $result) {
-            if ($key == 'files' || $key == 'apache' || $key == 'execute') {
-                foreach ($result as $key_text => $value_text) {
-                    foreach ($value_text as $status => $text) {
-                        $problems .= $this->getListRow($status, '<b>' . $key_text . '</b> ' . $text);
+        /**
+         * Process the results, ignore the statuses passed as $ignore_status
+         *
+         * @param $results
+         * @param $ignore_status
+         */
+        $processResults = function ($results, $ignore_status) {
+            $problems = '';
+
+            foreach ($results as $key => $result) {
+                if ($key == 'files' || $key == 'apache' || $key == 'execute') {
+                    foreach ($result as $key_text => $value_text) {
+                        foreach ($value_text as $status => $text) {
+                            if ($status == $ignore_status) continue;
+                            $problems .= $this->getListRow($status, '<b>' . $key_text . '</b> ' . $text);
+                        }
+                    }
+                } else {
+                    foreach ($result as $status => $text) {
+                        if ($status == $ignore_status) continue;
+                        $problems .= $this->getListRow($status, $text);
                     }
                 }
-            } else {
-                foreach ($result as $status => $text) {
-                    $problems .= $this->getListRow($status, $text);
-                }
             }
-        }
+
+            return $problems;
+        };
+
+        // First render the errors
+        $problems  = $processResults($this->results, 'success');
+
+        // Then render the successful checks
+        $problems .= $processResults($this->results, 'error');
 
         $html = str_replace('%%BASE_URL%%', $baseUrlRelative, $html);
         $html = str_replace('%%THEME_URL%%', $themeUrl, $html);
@@ -217,6 +236,17 @@ class ProblemsPlugin extends Plugin
             $ssl_status = 'error';
         }
         $this->results['ssl'] = [$ssl_status => 'PHP OpenSSL (Secure Sockets Library) is '. $ssl_adjective . 'installed'];
+
+        // Check for PHP XML library
+        if (extension_loaded('xml')) {
+            $xml_adjective = '';
+            $xml_status = 'success';
+        } else {
+            $problems_found = true;
+            $xml_adjective = 'not ';
+            $xml_status = 'error';
+        }
+        $this->results['xml'] = [$xml_status => 'PHP XML Library is '. $xml_adjective . 'installed'];
 
         // Check for PHP MbString library
         if (extension_loaded('mbstring')) {
