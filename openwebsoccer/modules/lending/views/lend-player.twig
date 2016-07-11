@@ -1,0 +1,61 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% extends "base.twig" %}
+{% block page_title %}
+	{{ i18n.getMessage("lend-player_navlabel") }}:
+	{% if player.player_pseudonym|length > 0 %}
+		{{ player.player_pseudonym }}
+	{% else %}
+		{{ player.player_firstname ~ " " ~ player.player_lastname }}
+	{% endif %}
+{% endblock %}
+{% block page_content %}
+	<dl class="dl-horizontal">
+		<dt>{{ i18n.getMessage("entity_player_marktwert") }}</dt>
+		<dd>{{ player.player_marketvalue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+		<dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
+		<dd>{{ player.player_contract_salary|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+		<dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
+		<dd>{{ player.player_contract_goalbonus|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+		<dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
+		<dd>{{ player.player_contract_matches }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
+	</dl>
+	<p style="margin-top: 30px;"><i class="icon-arrow-right"></i><a href="{{ env.getInternalUrl("player", "id=" ~ player.player_id) }}">{{ i18n.getMessage("player_navlabel") }}</a></p>
+	<p>{{ i18n.getMessage("lend-player_intro", env.getConfig("lending_matches_max"))|raw }}</p>
+	<form class="form-horizontal" method="post">
+		{{ macro.textfield('fee', i18n.getMessage('entity_player_lending_fee'), env.getRequestParameter('fee'), true, validationMsg, 'number') }}
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_submit') }}</button>
+			<a href="{{ env.getInternalUrl("myteam") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+		</div>
+		<input type="hidden" name="page" value="lend-player"/>
+		<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
+		<input type="hidden" name="action" value="lend-player"/>
+	</form>
+{% endblock %}

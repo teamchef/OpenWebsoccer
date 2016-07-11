@@ -1,0 +1,75 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% import "macro.twig" as macro %}
+{% if leagues|length == 0 and cups|length == 0 %}
+	{{ macro.box("", i18n.getMessage("history_no_records"), "info") }}
+{% else %}
+	{% for leagueName,seasons in leagues %}
+		<h4>{{ leagueName }}</h4>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{ i18n.getMessage("entity_season") }}</th>
+					<th>{{ i18n.getMessage("entity_club") }}</th>
+					<th>{{ i18n.getMessage("leaguetable_head_place") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for season in seasons %}
+					<tr>
+						<td>{{ season.season_name }}</td>
+						<td><a href="{{ env.getInternalUrl("team", "id=" ~ season.team_id) }}">{{ season.team_name }}</a></td>
+						<td>{{ season.season_rank }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endfor %}
+	{% if cups|length > 0 %}
+		<h4>{{ i18n.getMessage("entity_cup") }}</h4>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{ i18n.getMessage("entity_cup") }}</th>
+					<th>{{ i18n.getMessage("entity_club") }}</th>
+					<th>{{ i18n.getMessage("entity_cup_rounds") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for cup in cups %}
+					<tr>
+						<td>{{ cup.cup_name }}</td>
+						<td><a href="{{ env.getInternalUrl("team", "id=" ~ cup.team_id) }}">{{ cup.team_name }}</a></td>
+						<td>{{ cup.cup_round_name }}<br>{{ env.getFormattedDate(cup.achievement_date) }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% endif %}
+{% endif %}

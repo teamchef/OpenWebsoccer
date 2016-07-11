@@ -1,0 +1,40 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+<h4 class="colour"> Shoutbox-Message</h4>
+{% if env.user.id and (hidesubmit is not defined or not hidesubmit) %}
+	<form class="form form-inline" method="post">
+		<input type="hidden" name="action" value="send-shoutbox-msg"/>
+		<input type="hidden" name="block" value="shoutbox"/>
+		<input type="hidden" name="id" value="{{ env.getRequestParameter("id") }}"/>
+		<label for="msgtext"></label>
+		<input class="span13" id="msgtext" name="msgtext" type="text" required="true" value="" onFocus="this.form.reset();"/>
+	</form>
+{% else %}
+	<p><small>{{ i18n.getMessage('shoutbox_hiddensubmit_note') }}</small></p>
+{% endif %}

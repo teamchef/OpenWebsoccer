@@ -1,0 +1,95 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% import "macro.twig" as macro %}
+{% if match.match_deprecated_report|length > 0 %}
+	{{ match.match_deprecated_report|raw|nl2br }}
+{% else %}
+	<table id="reporttable">
+		<tbody>
+			{% if match.match_simulated %}
+				<tr>
+					<td style="text-align: center;"><i class="websoccericon-matchcompleted"></i></td>
+					<td><h4>{{ i18n.getMessage("match_details_match_completed") }}</h4></td>
+				</tr>
+			{% endif %}
+			{% set previousMinute = 0 %}
+			{% for reportmessage in reportmessages %}
+				{# half-time #}
+				{% if previousMinute > 45 and reportmessage.minute <= 45 %}
+					<tr>
+						<td></td>
+						<td><h4>{{ i18n.getMessage("match_details_report_halftime")|format(reportmessage.goals) }}</h4></td>
+					</tr>
+				{% elseif (match.match_penalty_enabled or match.match_type == "cup") and previousMinute > 91 and reportmessage.minute <= 91 %}
+					<tr>
+						<td></td>
+						<td><h4>{{ i18n.getMessage("match_details_report_extension")|format(reportmessage.goals) }}</h4></td>
+					</tr>
+				{% elseif displayPenaltyMsg is defined and displayPenaltyMsg == 1 and reportmessage.type != "Elfmeter_erfolg" and reportmessage.type != "Elfmeter_verschossen" %}
+					<tr>
+						<td></td>
+						<td><h4>{{ i18n.getMessage("match_details_report_penaltyshooting")|format(reportmessage.goals) }}</h4></td>
+					</tr>
+					{% set displayPenaltyMsg = 0 %}
+				{% endif %}
+				<tr>
+					<td style="text-align: center;">
+						{% if reportmessage.type == "Tor" or reportmessage.type == "Elfmeter_erfolg" or reportmessage.type == "Tor_mit_vorlage" or reportmessage.type == "Freistoss_treffer" %}	<i class="websoccericon-goal"></i>
+						{% elseif reportmessage.type == "Karte_gelb" %}																														<i class="websoccericon-yellowcard"></i>
+						{% elseif reportmessage.type == "Karte_gelb_rot" or reportmessage.type == "Karte_rot" %}																			<i class="websoccericon-redcard"></i>
+						{% elseif reportmessage.type == "Auswechslung" %}																													<i class="websoccericon-substitution"></i>
+						{% elseif reportmessage.type == "Verletzung" %}																														<i class="websoccericon-injury"></i>
+						{% elseif reportmessage.type == "Torschuss_daneben" %}																												<i class="websoccericon-shoot"></i>
+						{% elseif reportmessage.type == "Torschuss_auf_Tor" %}																												<i class="websoccericon-attempt"></i>
+						{% elseif reportmessage.type == "Elfmeter_verschossen" or reportmessage.type == "Freistoss_daneben" %}																<i class="websoccericon-penalty"></i>
+						{% elseif reportmessage.type == "Ecke" %}																															<i class="websoccericon-corner"></i>
+						{% elseif reportmessage.type == "Taktikaenderung" %}																												<i class="websoccericon-tacticschange"></i>
+						{% endif %}
+					</td>
+					<td>
+						{% set teamMarkerClass = (reportmessage.active_home) ? "report_team_home" : "report_team_guest" %}
+						<div class="report_minute {{ teamMarkerClass }}">{{ i18n.getMessage("match_report_minute", reportmessage.minute) }}
+							{% if reportmessage.type == "Elfmeter_erfolg" or reportmessage.type == "Elfmeter_verschossen" %} - {{ i18n.getMessage("match_details_commenttitle_penalty") }}
+							{% elseif reportmessage.type == "Tor" or reportmessage.type == "Tor_mit_vorlage" %} - {{ i18n.getMessage("match_details_commenttitle_goal") }}
+							{% endif %}
+						</div>
+						{% if (reportmessage.type == "Elfmeter_erfolg" or reportmessage.type == "Elfmeter_verschossen" or reportmessage.type == "Tor" or reportmessage.type == "Tor_mit_vorlage" or reportmessage.type == "Freistoss_treffer") and reportmessage.goals|length > 0 %}
+							<div class="report_comment">{{ reportmessage.goals }}</div>
+						{% endif %}
+						<div class="report_comment">{{ reportmessage.message|raw }}</div>
+					</td>
+				</tr>
+				{% set previousMinute = reportmessage.minute %}
+				{% if reportmessage.minute == 121 and (reportmessage.type == "Elfmeter_erfolg" or reportmessage.type == "Elfmeter_verschossen") %}
+					{% set displayPenaltyMsg = 1 %}
+				{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+{% endif %}

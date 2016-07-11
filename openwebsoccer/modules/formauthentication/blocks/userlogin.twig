@@ -1,0 +1,61 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+<div class="box">
+{% import "macro.twig" as macro %}
+{% block box_title %}
+	{% if env.getConfig("login_noshow") == 0 %}
+		<h4 class="colour"> {{ i18n.getMessage('formlogin_block_title') }}</h4>
+		<h5 class="colour">
+	{% else %}
+		Login mit Anmelden !
+	{% endif %}
+{% endblock %}
+{% block box_content %}
+	{% if env.getConfig("login_noshow") == 0 %}
+		<form method="post">
+			{%  if env.getConfig("login_type") == "email" %}
+				<label for="loginstr">{{ i18n.getMessage('entity_users_email') }}</label>
+				<input type="email" id="loginstr" name="loginstr" placeholder="{{ i18n.getMessage('entity_users_email') }}" required>
+ 			{% else %}
+ 				<label for="loginstr">{{ i18n.getMessage('entity_users_nick') }}</label>
+				<input type="text" id="loginstr" name="loginstr" placeholder="{{ i18n.getMessage('entity_users_nick') }}" required>
+ 			{% endif %}
+			<label for="loginpassword">{{ i18n.getMessage('entity_users_passwort') }}</label>
+			<input type="password" id="loginpassword" name="loginpassword" placeholder="{{ i18n.getMessage('entity_users_passwort') }}" required>
+			<label class="checkbox">
+				<input type="checkbox" id="rememberme" name="rememberme" value="1"> {{ i18n.getMessage('formlogin_option_rememberme') }}
+			</label>
+			<br>
+			<button type="submit" class="btn btn-primary">{{ i18n.getMessage('formlogin_submit_button') }}</button>
+			<input type="hidden" name="page" value="login"/>
+			<input type="hidden" name="action" value="login"/>
+		</form>
+	{% endif %}
+{% endblock %}
+</div>

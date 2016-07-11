@@ -1,0 +1,87 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% import "macro.twig" as macro %}
+        <div id="report_result">
+		<span id="report_goals_home">
+		{% if match.match_home_picture|length %}<img
+            src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_home_picture }}"
+            style="max-height: 120px; margin-right: 20px;"/>{% endif %}
+            {{ match.match_goals_home }}</span>
+            <span id="report_goals_separator">-</span>
+		<span id="report_goals_guest">{{ match.match_goals_guest }}
+            {% if match.match_guest_picture|length %}<img
+                src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_guest_picture }}"
+                style="max-height: 120px; margin-left: 20px;"/>{% endif %}
+		</span>
+            <div class="row" style="margin: -40px 0 10px 0;">
+                <div style="width: 50%; float: left;">
+                    {% for goalMessage in homeStrikerMessages %}
+                        <small style="font-weight: bold;">{{ goalMessage.playerNames|split(';')[0] }}
+                            ({{ goalMessage.minute }}
+                            .{% if goalMessage.type == "Elfmeter_erfolg" %}, {{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0, 1) }}.{% endif %}
+                            )<br></small>
+                    {% endfor %}
+                    <br>
+                </div>
+                <div style="width: 50%; float: right;">
+                    {% for goalMessage in guestStrikerMessages %}
+                        <small style="font-weight: bold;">{{ goalMessage.playerNames|split(';')[0] }}
+                            ({{ goalMessage.minute }}
+                            .{% if goalMessage.type == "Elfmeter_erfolg" %}, {{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0, 1) }}.{% endif %}
+                            )<br></small>
+                    {% endfor %}
+                    <br>
+                </div>
+            </div>
+            <br><br>
+        </div>
+        <p style="margin-top: 10px;">
+            {% if not match.match_simulated %}
+                {% if allowTacticChanges %}
+                    <a class="btn" href="{{ env.getInternalUrl("match-live-changes", "id=" ~ match.match_id) }}"><i
+                                class="icon-edit"></i> {{ i18n.getMessage("match_details_button_changes") }}</a>
+                {% endif %}
+            {% endif %}
+        </p>
+<div class="row-fluid">
+	<table>
+		<td>
+			<div class="span6">
+				<h4>{{ match.match_home_name }}</h4>
+				{{ macro.matchResultPlayers(match, home_players) }}
+			</div>
+		</td>
+		<td>
+			<div class="span6">
+				<h4>{{ match.match_guest_name }}</h4>
+				{{ macro.matchResultPlayers(match, guest_players) }}
+			</div>
+		</td>
+	</table>
+</div>

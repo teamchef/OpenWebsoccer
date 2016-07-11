@@ -1,0 +1,304 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% extends "base.twig" %}
+{% block stylesheets %}
+	{{ parent() }}
+	<style type="text/css">
+	{% if env.getConfig("cdn_root_set") %}
+		.websoccericon-goal {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -95px -32px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-yellowcard {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -96px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-redcard {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -160px -96px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-substitution {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -163px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-injury {
+			background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -222px -224px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+	{% else %}
+		.websoccericon-goal {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -95px -32px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-yellowcard {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -223px -96px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-redcard {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -160px -96px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-substitution {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -223px -163px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+		.websoccericon-injury {
+			background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -222px -224px;
+			width: 34px;
+			height: 32px;
+			display: inline-block;
+		}
+	{% endif %}
+		#report_result {
+			border-top: 1px solid black;
+			border-bottom: 1px solid black;
+			text-align: center;
+		}
+		#report_goals_home, #report_goals_separator, #report_goals_guest {
+			padding: 30px;
+			display: inline-block;
+			font-size: 36px;
+			font-weight: bold;
+		}
+		#report_goals_home {
+			padding-left: 0;
+		}
+		#report_goals_guest {
+			padding-right: 0;
+		}
+		#reportarea {
+			border: 1px solid black;
+			padding: 5px;
+			border: 1px solid #dde2e4;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+			border-radius: 4px;
+			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+		}
+		.report_minute {
+			font-weight: bold;
+			color: black;
+		}
+		.report_team_home {
+			color: #006699;
+		}
+		.minutesPlayed {
+			font-weight: bold;
+			font-size: 80%;
+			cursor: default;
+		}
+		.report_team_guest {
+			color: #FF6600;
+		}
+	</style>
+{% endblock %}
+{% block page_title %}
+{{ match.home_team_name }} - {{ match.guest_team_name }}
+{% endblock %}
+{% block page_content %}
+	{{ profile.infofield(i18n.getMessage("entity_youthmatch_matchdate"), env.getFormattedDatetime(match.matchdate)) }}
+	{% if match.simulated %}
+		<h3>{{ i18n.getMessage("match_details_report_title") }}</h3>
+		<div id="report_result">
+			<span id="report_goals_home">{{ match.home_goals }}</span>
+			<span id="report_goals_separator">-</span>
+			<span id="report_goals_guest">{{ match.guest_goals }}</span>
+		</div>
+		<div style="margin-top: 10px">
+		{% if match.home_noformation %}
+		{{ macro.box("", i18n.getMessage("match_details_noformation", match.home_team_name), "warning") }}
+		{% endif %}
+		{% if match.guest_noformation %}
+		{{ macro.box("", i18n.getMessage("match_details_noformation", match.guest_team_name), "warning") }}
+		{% endif %}
+		</div>
+		{% if reportMessages|length > 0 %}
+			<span class="report_team_home">{{ match.home_team_name }} <a href="{{ env.getInternalUrl("team", "id=" ~ match.home_team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}"><i class="icon-info-sign darkIcon"></i></a></span>
+		  	<span style="margin-left: 20px" class="report_team_guest">{{ match.guest_team_name }} <a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}"><i class="icon-info-sign darkIcon"></i></a></span>
+			<div id="reportarea">
+				<ul class="unstyled" style="margin: 1px 10px">
+					{% for reportMessage in reportMessages %}
+						{% set teamMarkerClass = (reportMessage.active_home) ? "report_team_home" : "report_team_guest" %}
+						<li style="margin-top: 10px">
+						{% if reportMessage.message_key == "ymreport_goal" or reportMessage.message_key == "ymreport_penalty_success"  %}
+							<i class="websoccericon-goal pull-right" style="margin-right: 10px;"></i>
+						{% elseif reportMessage.message_key == "ymreport_card_yellow" %}
+							<i class="websoccericon-yellowcard pull-right" style="margin-right: 10px;"></i>
+						{% elseif reportMessage.message_key == "ymreport_card_yellowred" or reportMessage.message_key == "ymreport_card_red" %}
+							<i class="websoccericon-redcard pull-right" style="margin-right: 10px;"></i>
+						{% elseif reportMessage.message_key == "ymreport_substitution" %}
+							<i class="websoccericon-substitution pull-right" style="margin-right: 10px;"></i>
+						{% elseif reportMessage.message_key == "ymreport_injury" %}
+							<i class="websoccericon-injury pull-right" style="margin-right: 10px;"></i>
+						{% endif %}
+						<span class="report_minute {{ teamMarkerClass }}">{{ i18n.getMessage("match_report_minute", reportMessage.minute) }}</span>
+						<br>
+						{{ reportMessage.message|raw }}</li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+		<h3>{{ i18n.getMessage("match_details_players_title") }}</h3>
+		<div class="row-fluid">
+			{% for teamPrefix,teamPlayers in players %}
+			<div class="span6">
+				<h5><a href="{{ env.getInternalUrl("team", "id=" ~ match[teamPrefix ~ "_team_id"]) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ match[teamPrefix ~ "_team_name"] }}</a></h5>
+				{% if teamPlayers|length > 0 %}
+					<table class="table table-striped table-condensed">
+						<colgroup>
+							<col style="width: 40px" />
+							<col />
+							<col style="width: 50px" />
+						</colgroup>
+						<thead>
+							<th><abbr title="{{ i18n.getMessage("playertable_head_position") }}">{{ i18n.getMessage("playertable_head_position_abbr") }}</abbr></th>
+							<th>{{ i18n.getMessage("match_details_players_name") }}</th>
+							<th>{{ i18n.getMessage("match_details_players_grade") }}</th>
+						</thead>
+						<tbody>
+						{% for player in teamPlayers %}
+							<tr>
+								{% if player.position_main is not empty %}
+								<td title="{{ i18n.getMessage("option_" ~ player.position_main) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}</td>
+								{% else %}
+								<td title="{{ i18n.getMessage("option_" ~ player.position) }}">{{ i18n.getMessage("option_" ~ player.position)|slice(0, 2)|upper }}</td>
+								{% endif %}
+								<td>{{ player.name }}
+{% if player.card_yellow > 0 %}
+						{% if env.getConfig("cdn_root_set") %}
+								{% if env.getConfig("cdn_root_set") %}
+									<img src="{{env.getConfig("cdn_root")}}/img/card_yellow.png" style="width:16px; height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+								{% else %}
+									<img src="{{env.getConfig("context_root")}}/img/card_yellow.png" style="width:16px; height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+								{% endif %}
+							{% else %}
+								{% if env.getConfig("cdn_root_set") %}
+									<img src="{{env.getConfig("cdn_root")}}/img/card_yellow.png" style="width:16px; height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+								{% else %}
+									<img src="{{env.getConfig("context_root")}}/img/card_yellow.png" style="width:16px; height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
+								{% endif %}
+						{% endif %}
+						{% if player.card_yellow > 1 %}
+							{% if env.getConfig("cdn_root_set") %}
+								<img src="{{env.getConfig("cdn_root")}}/img/card_red.png" style="width:16px; height:16px" alt="{{ i18n.getMessage("player_yellowredcard") }}" title="{{ i18n.getMessage("player_yellowredcard") }}" />
+							{% else %}
+								<img src="{{env.getConfig("context_root")}}/img/card_red.png" style="width:16px; height:16px" alt="{{ i18n.getMessage("player_yellowredcard") }}" title="{{ i18n.getMessage("player_yellowredcard") }}" />
+							{% endif %}
+						{% endif %}
+					{% endif %}
+					{% if player.card_red > 0 %}
+						{% if env.getConfig("cdn_root_set") %}
+							<img src="{{env.getConfig("cdn_root")}}/img/card_red.png" style="width:16px; height:16px" alt="{{ i18n.getMessage("player_redcard") }}" title="{{ i18n.getMessage("player_redcard") }}" />
+						{% else %}
+							<img src="{{env.getConfig("context_root")}}/img/card_red.png" style="width:16px; height:16px" alt="{{ i18n.getMessage("player_redcard") }}" title="{{ i18n.getMessage("player_redcard") }}" />
+						{% endif %}
+					{% endif %}
+					{% if player.goals > 0 %}
+					{% for i in 1..player.goals %}
+						{% if env.getConfig("cdn_root_set") %}
+							<img src="{{env.getConfig("cdn_root")}}/img/goal_scorer.png" style="width: 16px; height: 15px" alt="{{ i18n.getMessage("player_goalscorer") }}" title="{{ i18n.getMessage("player_goalscorer") }}"/>
+						{% else %}
+							<img src="{{env.getConfig("context_root")}}/img/goal_scorer.png" style="width: 16px; height: 15px" alt="{{ i18n.getMessage("player_goalscorer") }}" title="{{ i18n.getMessage("player_goalscorer") }}" />
+						{% endif %}
+					{% endfor %}
+					{% endif %}
+								{% if player.assists %}
+								<span title="{{ i18n.getMessage("player_assists") }}">
+									{% for i in 1..player.assists %}
+									<i class="icon-star"></i>
+									{% endfor %}
+								</span>
+								{% endif %}
+								{% if player.state == 'Ausgewechselt' %}
+								<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_out") }}"><i class="icon-arrow-down"></i></span>
+								{% elseif player.minutes_played < 90 %}
+								<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_in") }}"><i class="icon-arrow-up"></i></span>
+								{% endif %}
+								</td>
+								<td
+									{% if player.grade <= 2.3 %}class="text-success"
+									{% elseif player.grade >= 4.3 and player.grade <= 5 %}class="text-warning"
+									{% elseif player.grade > 5 %}class="text-error"
+									{% endif %}
+								>{{ player.grade }}</td>
+							</tr>
+						{% endfor %}
+						</tbody>
+					</table>
+				{% else %}
+					<p>{{ i18n.getMessage("match_details_noplayersset") }}</p>
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+		<h3>{{ i18n.getMessage("match_details_statistic_title") }}</h3>
+		<div class="row-fluid">
+			{% for teamPrefix,teamStatistics in statistics %}
+			<div class="span6">
+				<h5><a href="{{ env.getInternalUrl("team", "id=" ~ match[teamPrefix ~ "_team_id"]) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ match[teamPrefix ~ "_team_name"] }}</a></h5>
+				{% if teamStatistics|length > 0 %}
+					<p><em>{{ i18n.getMessage("match_details_statistic_shoots") }}:</em> {{ teamStatistics.shoots }}</p>
+					<p><em>{{ i18n.getMessage("youthmatch_statistic_avg_strength") }}</em></p>
+					{{ macro.progressbar(teamStatistics.avg_strength) }}
+					<p><em>{{ i18n.getMessage("match_details_statistic_ballcontacts") }}</em></p>
+					{{ macro.progressbar(teamStatistics.ballpossession) }}
+					<p><em>{{ i18n.getMessage("match_details_statistic_tackles") }}</em></p>
+					{% set tackles = (teamStatistics.wontackles * 100 / (teamStatistics.wontackles + teamStatistics.losttackles))|number_format %}
+					{{ macro.progressbar(tackles) }}
+					{% if teamStatistics.passes_successed > 0 or teamStatistics.passes_failed > 0 %}
+						{% set succesfulPasses = (teamStatistics.passes_successed * 100 / (teamStatistics.passes_successed + teamStatistics.passes_failed))|number_format %}
+						<p><em>{{ i18n.getMessage("match_details_statistic_successfulpasses") }}</em></p>
+						{{ macro.progressbar(succesfulPasses) }}
+					{% endif %}
+				{% endif %}
+			</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+{% endblock %}

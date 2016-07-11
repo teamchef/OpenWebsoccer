@@ -1,0 +1,279 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% extends "base.twig" %}
+{% block page_title %}
+	{{ team.team_name }}
+{% endblock %}
+{% block page_content %}
+	<table>
+		<td style="width:300px;height:120px;">
+			<h4>
+				<div>
+					<br>Kader: {{ teamsize }} Spieler
+					<br>Vertragsdauer in Ordnung    : {{ teamsizecontract }}
+					<br><br>{% if teamsizecontract > 17 %}
+					{% if env.getConfig("cdn_root_set") %}
+						<img src="{{ env.getConfig("cdn_root") }}/img/siegel.png" class="img-rounded" style="margin-left:260px;margin-top:-70px;width:30px;height:35px;">{% endif %}{% if team.team_logo|length > 0 %}
+					{% else %}
+						<img src="{{ env.getConfig("context_root") }}/img/siegel.png" class="img-rounded" style="margin-left:260px;margin-top:-70px;width:30px;height:35px;">{% endif %}{% if team.team_logo|length > 0 %}
+					{% endif %}
+					{% endif %}
+				</div>
+			</h4>
+		</td>
+		<td style="width:120px;height:120px;">
+			{% if team.team_logo is defined and team.team_logo > 0 and stadium.picture|length > 0 %}
+				{% if env.getConfig("cdn_root_set") %}
+					<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ team.team_logo }}"class="img-rounded" style="top:10px;width:120px;height:120px;">
+				{% else %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ team.team_logo }}"class="img-rounded" style="top:10px;width:120px;height:120px;">
+				{% endif %}
+			{% endif %}
+		</td>
+		<td style="width:60px;height:120px;"></td>
+		<td style="width:240px;height:120px;">
+			{% if stadium.stadium_id is defined and stadium.stadium_id > 0 and stadium.picture|length > 0 %}
+				{% if env.getConfig("cdn_root_set") %}
+					<img src="{{ env.getConfig("cdn_root") }}/uploads/stadium/{{ stadium.picture }}">
+				{% else %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/stadium/{{ stadium.picture }}">
+				{% endif %}
+			{% endif %}
+		</td>
+		<tr>
+			<p style="font-size: 20px; margin-top: -15px;">
+				{% for strengthlevel in 1..5 %}
+					<i class="icon-star{% if (30 + strengthlevel * 10) > team.team_strength %}-empty{% endif %}"></i>
+				{% endfor %}
+			</p>
+		</tr>
+	</table>
+	<ul class="nav nav-tabs" id="teamTab">
+		<li class="active"><a href="#general" data-toggle="tab">{{ i18n.getMessage("team_details_tab_general") }}</a></li>
+		<li><a href="#results" data-toggle="tab" class="ajaxLink" data-ajaxtarget="resultslist" data-ajaxblock="team-results" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("results_tab_latest_results") }}</a></li>
+		<li><a href="#players" data-toggle="tab" data-ajaxtarget="playerslist" data-ajaxblock="teamplayers" data-ajaxquerystr="teamid={{ team.team_id }}{% if team.is_nationalteam %}&nationalteam=1{% endif %}{% if team.captain_id %}&captain={{ team.captain_id }}{% endif %}" class="ajaxLink">{{ i18n.getMessage("team_details_tab_players") }}</a></li>
+		{% if not team.is_nationalteam %}
+			{% if env.getConfig("youth_enabled") %}
+				<li><a href="#youthplayers" data-toggle="tab" data-ajaxtarget="youthplayerslist" data-ajaxblock="youthplayers_of_team" data-ajaxquerystr="teamid={{ team.team_id }}" class="ajaxLink">{{ i18n.getMessage("team_details_tab_youthplayers") }}</a></li>
+			{% endif %}
+			{% if env.getConfig("transfermarket_enabled") or env.getConfig("transferoffers_enabled") %}
+				<li><a href="#transfers" data-toggle="tab" class="ajaxLink" data-ajaxtarget="transferslist" data-ajaxblock="teamtransfers" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("transfers_tab") }}</a></li>
+			{% endif %}
+		{% endif %}
+		<li><a href="#victories" data-toggle="tab" class="ajaxLink" data-ajaxtarget="historycontent" data-ajaxblock="team-history" data-ajaxquerystr="teamid={{ team.team_id }}">{{ i18n.getMessage("team_details_tab_victories") }}</a></li>
+	</ul>
+	<div class="tab-content">
+		<div class="tab-pane active" id="general">
+		<table>
+			<tr>
+			{% if team.team_league_id > 0 %}
+				{% set league = "<a href=\"" ~ env.getInternalUrl("league", "id=" ~ team.team_league_id) ~ "\">" ~ team.team_league_name|e ~ "</a>" %}
+			{% else %}
+				{% set league = "-" %}
+			{% endif %}
+			</tr>
+			<tr>
+			{% if team.team_user_id > 0 %}
+				{% set manager = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_user_id) ~ "\">" ~ team.team_user_name|e ~ "</a>" %}
+				{% if team.user_picture|length > 0 %}
+					{% set manager = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_user_id) ~ "\"><img src=\"" ~ team.user_picture ~ "\" style=\"width: 20px; height: 20px\"/></a> " ~ manager %}
+				{% endif %}
+				{% if team.interimmanager %}
+					{% set manager = manager ~ "<br/><em>" ~ i18n.getMessage("entity_club_interimmanager") ~ "</em>" %}
+				{% endif %}
+			{% else %}
+				{% set manager = "-" %}
+			{% endif %}
+			</tr>
+			<tr>
+			{% if team.team_deputyuser_id > 0 %}
+				{% set deputy = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_deputyuser_id) ~ "\">" ~ team.team_deputyuser_name|e ~ "</a>" %}
+				{% if team.user_picture|length > 0 %}
+					{% set deputy = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_deputyuser_id) ~ "\"><img src=\"" ~ team.deputyuser_picture ~ "\" style=\"width: 20px; height: 20px\"/></a> " ~ deputy %}
+				{% endif %}
+			{% endif %}
+			</tr>
+			<tr>
+			{% if stadium.stadium_id is defined and stadium.stadium_id > 0 %}
+				{% set capacity = stadium.places_stands + stadium.places_seats + stadium.places_stands_grand + stadium.places_seats_grand + stadium.places_vip %}
+				{% set stadiumLabel = stadium.name ~ " (" ~ capacity|number_format(0, ',', ' ') ~ ")" %}
+			{% else %}
+				{% set stadiumLabel = "-" %}
+			{% endif %}
+			</tr>
+			<tr>
+				<td>...................................</td>
+				<td>.......................................................</td>
+				<td>......</td>
+				<td>......................</td>
+				<td>..................................</td>
+				<td>..................................</td>
+			</tr>
+			<tr>
+				<th>{{ i18n.getMessage("entity_club_kurz")     }}</th><td>{{ team.team_short }}</td>
+				<th></th>
+				<th></th>
+				<th><h4>{{ i18n.getMessage("team_details_statistic_season") }}</h4></th>
+				<th><h4>{{ i18n.getMessage("team_details_statistic_total") }}</h4></th>
+			</tr>
+			<tr>
+				<th>{{ i18n.getMessage("entity_club_liga_id")  }}</th>
+				<td>{{ macro.infofield('', league, true) }}</td>
+				<td></td>
+				<th>{{ i18n.getMessage("team_details_statistic_matches") }}</th>
+				<td><center>{{ team.team_season_matches }}</center></td>
+				<td><center>{{ team.team_total_matches }}</center></td>
+			</tr>
+			<tr>
+				<th>{{ i18n.getMessage("team_details_manager") }}</th>
+				<td>{{ macro.infofield('', manager, true) }}</td>
+				<td></td>
+				<th>{{ i18n.getMessage("team_details_statistic_goals") }}</th>
+				<td><center>{{ team.team_season_goals }}</center></td>
+				<td><center>{{ team.team_total_goals }}</center></td>
+			</tr>
+			<tr>
+				{% if deputy is defined %}
+					<th>{{ i18n.getMessage("entity_club_user_id_actual") }}</th><td>{{ macro.infofield('', deputy, true) }}</td></tr>
+				{% endif %}
+			</tr>
+			{% if not team.is_nationalteam %}
+				<tr>
+				{% if team.team_min_target_rank > 0 %}
+					{{ macro.infofield(i18n.getMessage("entity_club_min_target_rank"), i18n.getMessage("team_details_season_place", team.team_min_target_rank)) }}
+				{% endif %}
+				</tr>
+				<tr>
+				<th>{{ i18n.getMessage("entity_club_stadion_id")}}</th><td>{{macro.infofield('', stadiumLabel, true) }}</td>
+				<td></td>
+				<th>{{ i18n.getMessage("team_details_statistic_againsts") }}</th>
+				<td><center>{{ team.team_season_againsts }}</center></td>
+				<td><center>{{ team.team_total_againsts }}</center></td>
+				</tr>
+				<tr>
+				{% if team.team_sponsor_name|length > 0 %}
+					{{ macro.infofield(i18n.getMessage("entity_club_sponsor_id"), team.team_sponsor_name) }}
+					{% if team.team_sponsor_picture|length > 0 %}
+						<div style="text-align: center; margin: 10px;">
+							{% if env.getConfig("cdn_root_set") %}
+								<img src="{{ env.getConfig("cdn_root") }}/uploads/sponsor/{{ team.team_sponsor_picture }}" class="img-rounded">
+							{% else %}
+								<img src="{{ env.getConfig("context_root") }}/uploads/sponsor/{{ team.team_sponsor_picture }}" class="img-rounded">
+							{% endif %}
+						</div>
+					{% endif %}
+				{% endif %}
+				<t/tr>
+				<tr>
+					<th>{{ i18n.getMessage("entity_player")          }}</th>
+					<td>{{macro.infofield('', playerfacts.numberOfPlayers) }}</td>
+					<td></td>
+					<th>{{ i18n.getMessage("team_details_statistic_wins") }}</th>
+					<td><center>{{ team.team_season_wins }}</center></td>
+					<td><center>{{ team.team_total_wins }}</center></td>
+				</tr>
+				<tr>
+					<th>{{ i18n.getMessage("entity_player_age")      }}</th>
+					<td>{{macro.infofield('&empty; ', playerfacts.avgAge|round(2), true) }}</td>
+					<td></td>
+					<th>{{ i18n.getMessage("team_details_statistic_losses") }}</th>
+					<td><center>{{ team.team_season_losses }}</center></td>
+					<td><center>{{ team.team_total_losses }}</center></td>
+				</tr>
+				<tr>
+					<th>{{ i18n.getMessage("entity_player_marktwert")}}</th>
+					<td>{{macro.infofield('&sum; '  , playerfacts.sumMarketValue|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"), true) }}</td>
+					<td></td>
+					<th>{{ i18n.getMessage("team_details_statistic_draws") }}</th>
+					<td><center>{{ team.team_season_draws }}</center></td>
+					<td><center>{{ team.team_total_draws }}</center></td>
+				</tr>
+				<tr>
+					<th>{{ i18n.getMessage("entity_player_marktwert")}}</th>
+					<td>{{macro.infofield('&empty; ', playerfacts.avgMarketValue|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"), true) }}</td>
+					<td></td>
+					<th>{{ i18n.getMessage("team_details_statistic_score") }}</th>
+					<td><center>{{ team.team_season_score }}</center></td>
+					<td><center>{{ team.team_total_score }}</center></td>
+				</tr>
+			{% endif %}
+			</div>
+			</table>
+		</div>
+		<div class="tab-pane" id="victories">
+			{% if team.victories is defined and team.victories|length > 0 %}
+				<ul>
+					{% for victory in team.victories %}
+						<li><strong>{{ i18n.getMessage("entity_season") }} {{ victory.season_name }} , {{ victory.league_name }}:</strong> {{ i18n.getMessage("team_details_season_place", victory.season_place) }}</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+			{% if team.cupvictories is defined and team.cupvictories|length > 0 %}
+				<ul>
+					{% for cupvictory in team.cupvictories %}
+						<li><strong>{{ i18n.getMessage("entity_cup") }}: {{ cupvictory.cup_name }}</strong>
+							{% if cupvictory.cup_logo|length > 0 %}
+								{% if env.getConfig("cdn_root_set") %}
+									<br><img src="{{ env.getConfig("cdn_root") }}/uploads/cup/{{ cupvictory.cup_logo }}" class="img-rounded">
+								{% else %}
+									<br><img src="{{ env.getConfig("context_root") }}/uploads/cup/{{ cupvictory.cup_logo }}" class="img-rounded">
+								{% endif %}
+							{% endif %}
+						</li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+			<div id="historycontent">
+				{% if team.victories|length == 0 %}
+					<p>{{ i18n.getMessage("team_details_noleaguevictories") }}</p>
+				{% endif %}
+			</div>
+			{% if team.team_history|length > 0 %}
+				<h4>{{ i18n.getMessage("entity_club_history") }}</h4>
+				{{ team.team_history|nl2br }}
+			{% endif %}
+		</div>
+		<div class="tab-pane" id="results">
+			<div id="resultslist">...</div>
+		</div>
+		<div class="tab-pane" id="players">
+			<div id="playerslist">...</div>
+		</div>
+		{% if env.getConfig("youth_enabled") %}
+			<div class="tab-pane" id="youthplayers">
+				<div id="youthplayerslist">...</div>
+			</div>
+		{% endif %}
+		{% if env.getConfig("transfermarket_enabled") or env.getConfig("transferoffers_enabled") %}
+			<div class="tab-pane" id="transfers">
+				<div id="transferslist">...</div>
+			</div>
+		{% endif %}
+	</div>
+{% endblock %}

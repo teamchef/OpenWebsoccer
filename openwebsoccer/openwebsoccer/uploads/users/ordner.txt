@@ -1,1 +1,0 @@
-Platzhalter für den leeren Ordner, damit dieser nicht beim Github-Abgleich verschwindet.

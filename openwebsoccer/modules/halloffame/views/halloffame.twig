@@ -1,0 +1,114 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation, either version 3 of
+* the License, or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful, but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not, see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% extends "base.twig" %}
+{% block page_title %}
+	{{ i18n.getMessage("halloffame_navlabel") }}
+{% endblock %}
+{% block page_content %}
+	<h3>{{ i18n.getMessage("entity_league") }}</h3>
+	{% if leagues|length > 0 %}
+		<div class="accordion" id="leagues">
+			{% for league,seasons in leagues %}
+				{% set country = seasons[0].league_country %}
+				{% set nationImg = skin.getImage("flags/" ~ country ~ ".png") %}
+				{% if i18n.hasMessage("option_" ~ country) %}
+					{% set countryLabel = i18n.getMessage("option_" ~ country) %}
+				{% else %}
+					{% set countryLabel = country %}
+				{% endif %}
+				<div class="accordion-group">
+					<div class="accordion-heading">
+						<a class="accordion-toggle" data-toggle="collapse" data-parent="#leagues" href="#collapse{{ loop.index }}">{% if nationImg %}<img src="{{ nationImg }}" alt="{{ countryLabel }}" /> {% endif %} {{ countryLabel }} - {{ league }}</a>
+					</div>
+					<div id="collapse{{ loop.index }}" class="accordion-body collapse">
+						<div class="accordion-inner">
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>{{ i18n.getMessage("entity_season") }}</th>
+										<th>{{ i18n.getMessage("entity_club") }}</th>
+										</tr>
+								</thead>
+								<tbody>
+									{% for season in seasons %}
+										<tr>
+											<td>{{ season.season_name }}</td>
+											<td>
+												{% if season.team_picture|length %}
+													{% if env.getConfig("cdn_root_set") %}
+														<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ season.team_picture }}" style="max-width: 40px;"/>
+													{% else %}
+														<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ season.team_picture }}" style="max-width: 40px;"/>
+													{% endif %}
+												{% endif %}
+												<a href="{{ env.getInternalUrl("team", "id=" ~ season.team_id ) }}">{{ season.team_name }}</a>
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	{% else %}
+		<p>{{ i18n.getMessage("halloffame_no_seasons") }}</p>
+	{% endif %}
+	<h3>{{ i18n.getMessage("entity_cup") }}</h3>
+	{% if cups|length > 0 %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{ i18n.getMessage("entity_cup_name") }}</th>
+					<th>{{ i18n.getMessage("entity_cup_winner_id") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for cup in cups %}
+					<tr>
+						<td>{{ cup.cup_name }}</td>
+						<td>
+							{% if cup.team_picture|length %}
+								{% if env.getConfig("cdn_root_set") %}
+									<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ cup.team_picture }}" style="max-width: 40px;"/>
+								{% else %}
+									<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ cup.team_picture }}" style="max-width: 40px;"/>
+								{% endif %}
+							{% endif %}
+							<a href="{{ env.getInternalUrl("team", "id=" ~ cup.team_id ) }}">{{ cup.team_name }}</a>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>{{ i18n.getMessage("halloffame_no_cups") }}</p>
+	{% endif %}
+{% endblock %}

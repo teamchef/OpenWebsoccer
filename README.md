@@ -1,4 +1,7 @@
-# OpenWebsoccer - powered by Rolf Joseph / ErdemCan - Starten Sie Ihren eigenen Online-Fußball-Manager !
+# OpenWebsoccer 2016 ( PHP 7 )
+# powered by Rolf Joseph / ErdemCan
+
+- Starten Sie Ihren eigenen Online-Fußball-Manager !
 
 Mit dieser auf PHP und Twig basierten Web-Anwendung können sie Ihren Website-Besuchern einen virtuellen Fußball-Manager anbieten.
 
@@ -9,6 +12,19 @@ Die Software simuliert alle Spiele automatisch und in Echtzeit. Der Spielbericht
 Live-Spiel, wo der User Live in das Spiel eingreifen kann.
 
 Viele Optionen und viele Einstellungsmöglichkeiten runden den OpenWebsoccer ab.
+
+
+## PHP 7 - neue Möglichkeiten
+
+In PHP 7 sind Neuerungen enthalten, welche nicht in PHP 5 mehr unterstützt werden. Einige Funktionen aus PHP 5 werden zudem nicht in PHP 7 unterstützt. Die Folge ist, das durch die Entwicklung der OpenWebsoccer nicht mehr auf PHP 5 läuft, ohne Anpassungen vorzunehmen. Um den Code nicht mit der Kompatibilität zu PHP 5 zu überfrachten, wird auf die PHP 5 Unterstützung verzichtet.
+
+Einer der wichtigen Neuerungen ist z.B. die Nutzung von Konstanten. In PHP 7 sind nun auch Konstanten-Array´s einfach zu definieren. Hierdurch wurde es erst möglich die starre Struktur für die Verzeichnisssuche bei Definitionen aufzubrechen. Der Code für die Suche nach den Templates ist nun deutlich kleiner und einfacher. Genau diese Veränderung führt unter PHP 5 zu folgender Fehlermeldung:
+Warning: Constants may only evaluate to scalar values.
+
+
+## Unterstützung von nativen PHP Funktionen
+
+Nun hat mann zusätzlich die Möglichkeit mittels PHP Funktionen direkt in Twig einsetzen zu können.
 
 
 ## Strukturänderungen
