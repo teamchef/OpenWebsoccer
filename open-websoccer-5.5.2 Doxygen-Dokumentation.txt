@@ -4,3 +4,5 @@ Es handelt sich um die Dokumentation des Original Inizial-Realease des Open Webs
 Sie kann hier abgerufen werden, da auf Github sonst die Datei mit einbezogen wird:
 
 http://topligclub.de/open-websoccer-5.5.2%20Dokumentation.zip
+
+Zum neuen OpenWebsoccer wird es auch eine separate Doxygen-Dokumentation geben.
