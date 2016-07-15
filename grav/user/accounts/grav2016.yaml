@@ -1,0 +1,11 @@
+email: gravadmin@localhost.de
+fullname: Grav2016
+title: Administrator
+state: enabled
+access:
+  admin:
+    login: true
+    super: true
+  site:
+    login: true
+hashed_password: $2y$10$AIrI0z5dNWxwxX/64sBkm.xuz1Ge46tycLMKzHESWMppo85wEK0..

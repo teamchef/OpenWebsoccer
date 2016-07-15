@@ -1,0 +1,39 @@
+<?php
+return [
+    '@class' => 'Grav\\Common\\File\\CompiledYamlFile',
+    'filename' => 'C:/_/12_4_2/www/grav/user/plugins/twigcache/blueprints.yaml',
+    'modified' => 1460326222,
+    'data' => [
+        'name' => 'Twig Cache',
+        'version' => '1.2.0',
+        'description' => 'This plugin adds another layer of cache to specify portions your Twig output. Uses the [twig-cache-extension](https://github.com/asm89/twig-cache-extension) extension.',
+        'icon' => 'hdd-o',
+        'author' => [
+            'name' => 'Team Grav',
+            'email' => 'devs@getgrav.org',
+            'url' => 'http://getgrav.org'
+        ],
+        'homepage' => 'https://github.com/getgrav/grav-plugin-twigcache',
+        'keywords' => 'twigcache, plugin, cache, twig, extension',
+        'bugs' => 'https://github.com/getgrav/grav-plugin-twigcache/issues',
+        'license' => 'MIT',
+        'form' => [
+            'validation' => 'strict',
+            'fields' => [
+                'enabled' => [
+                    'type' => 'toggle',
+                    'label' => 'Plugin status',
+                    'highlight' => 1,
+                    'default' => 1,
+                    'options' => [
+                        1 => 'Enabled',
+                        0 => 'Disabled'
+                    ],
+                    'validate' => [
+                        'type' => 'bool'
+                    ]
+                ]
+            ]
+        ]
+    ]
+];
