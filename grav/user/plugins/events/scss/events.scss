@@ -1,0 +1,133 @@
+/* taken from antimatter theme */
+$core-text:						#444;
+$core-accent:					#1BB3E9;
+$border-radius: 				3px;
+$font-weight-bold: 				600;
+$border-color: 					#EEEEEE;
+
+/* Events Plugin CSS */
+
+.calendar {
+	margin-top: 2em;
+
+	.controls {
+		text-align: center;
+		font-size: 1.2em;
+	}
+
+	.title {
+		display: inline-block;
+		min-width: 170px;
+	}
+
+	td {
+		vertical-align: top;
+
+		&.current {
+			background: #f7f7f7;
+		}
+	}
+
+	.calendar-button {
+		display: inline-block;
+		line-height: 18px;
+		padding: 0.05em 0.25em 0.25em;
+		background-color: #bbb;
+		color: #fff;
+		border-radius: 4px;
+		min-width: 1.2em;
+		margin: 0 0.05em;
+
+		&:hover {
+			color: #fff;
+			transition: background-color 0.15s ease;
+			background-color: #999;
+		}
+	}
+
+	.calendar-button
+	.headings {
+		text-align: center;
+	}
+
+	.event {
+		background: #efefef;
+		text-align: right;
+		padding: 0.5em;
+		font-size: 0.9em;
+		line-height: 1.1em;
+		border-radius: 4px;
+		margin-bottom: 5px;
+		display: block;
+
+		a {			
+		}
+	}
+}
+
+/* Events Display */
+
+.event-meta {
+	text-align: left;
+	font-style: italic;
+
+	ul {
+		list-style: none;
+		padding: 0;
+
+		li {
+			display: inline-block;
+		}
+	}
+}
+
+.list-event-header {
+    position: relative;
+    h4 {
+
+        margin-bottom: 0.5rem;
+        a {
+            color: $core-text;
+            &:hover {
+                color: $core-accent;
+            }
+        }
+    }
+
+    img {
+        display: block;
+        margin-top: 1rem;
+        border-radius: $border-radius;
+    }
+}
+
+.list-event-date {
+    float: right;
+    text-align: right;
+	width: 150px;
+	margin-bottom: 1em;
+	span.day {
+		display: inline-block;
+		font-size: 3rem;
+		line-height: 1em;
+		margin-right: 2px;
+		font-weight: $font-weight-bold;
+	}
+	div.month-year {
+		display: inline-block;
+	}
+    span.month {
+        display: block;
+        font-size: 1rem;
+        font-weight: $font-weight-bold;
+		text-transform: uppercase;
+        line-height: 110%;
+    }
+    em {
+        display: block;
+        border-top: 1px solid $border-color;
+        font-style: normal;
+        text-transform: uppercase;
+		line-height: 1em;
+    }
+}
