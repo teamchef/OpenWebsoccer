@@ -28,15 +28,15 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 error_reporting(E_ALL);
-define('BASE_FOLDER', $_SERVER['DOCUMENT_ROOT'].'/openwebsoccer/');
+include('defines.php');
 define("WRITABLE_FOLDERS", "generated/");
-define("CONFIGFILE", BASE_FOLDER . "/generated/config.inc.php");
-define("CONFIGFILE_OLD", BASE_FOLDER . "/admin/config/config.inc.php");
+define("CONFIGFILE", ROOT . "/generated/config.inc.php");
+define("CONFIGFILE_OLD", ROOT . "/admin/config/config.inc.php");
 session_start();
 $supportedLanguages = array("de" => "Deutsch");
 ignore_user_abort(TRUE);
 set_time_limit(0);
-include(BASE_FOLDER . "/modules/DbConnection.class.php");
+include(ROOT . "/modules/core/DbConnection.class.php");
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -62,7 +62,7 @@ include(BASE_FOLDER . "/modules/DbConnection.class.php");
 			echo '<p>"OpenWebsoocer / Co-Powered by Rolf Joseph / ErdemCan"</p>';
 			exit;
 		}
-		else if (version_compare(PHP_VERSION, '7.0.8', '>')) {
+		else if (version_compare(PHP_VERSION, '7.0.9', '>')) {
 			echo 'Ihre PHP Version ' . PHP_VERSION . ' ist zu hoch, daher funktioniert die Installation eventuell nicht.';
 		}
 		else {
@@ -101,6 +101,7 @@ function UpdateScreen($messages) {
 	?>
 		<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="post">
 			<br><p><b>Update - Auswahl<br/></b><br>
+			<input type="checkbox" name="tabellenhistory" /> Stadionausbau Status-Feld setzen<br />
 			<input type="checkbox" name="stadionausbau_status" /> Stadionausbau Status-Feld setzen<br />
 			<input type="checkbox" name="stadionausbau" /> Stadionausbau<br />
 			<input type="checkbox" name="zufallsereignisse_status" /> Zufallsereignisse Status-Feld setzen<br />
@@ -132,6 +133,26 @@ function UpdateScreen($messages) {
  				}
 				catch(PDOException $e) { echo $sql . $e->getMessage() . "<br>"; }
 				$conn = null;
+ 			}
+ 			if(isset($_POST['tabellenhistory']))
+ 			{
+ 				echo ' Tabellen-History von 5 auf 20 ->';
+ 				$sql = "
+ 				ALTER TABLE `_saison` ADD `platz_6_id` INT(10) NOT NULL AFTER `platz_5_id`;
+				ALTER TABLE `_saison` ADD `platz_7_id` INT(10) NOT NULL AFTER `platz_6_id`;
+				ALTER TABLE `_saison` ADD `platz_8_id` INT(10) NOT NULL AFTER `platz_7_id`;
+				ALTER TABLE `_saison` ADD `platz_9_id` INT(10) NOT NULL AFTER `platz_8_id`;
+				ALTER TABLE `_saison` ADD `platz_10_id` INT(10) NOT NULL AFTER `platz_9_id`;
+				ALTER TABLE `_saison` ADD `platz_11_id` INT(10) NOT NULL AFTER `platz_10_id`;
+				ALTER TABLE `_saison` ADD `platz_12_id` INT(10) NOT NULL AFTER `platz_11_id`;
+				ALTER TABLE `_saison` ADD `platz_13_id` INT(10) NOT NULL AFTER `platz_12_id`;
+				ALTER TABLE `_saison` ADD `platz_14_id` INT(10) NOT NULL AFTER `platz_13_id`;
+				ALTER TABLE `_saison` ADD `platz_15_id` INT(10) NOT NULL AFTER `platz_14_id`;
+				ALTER TABLE `_saison` ADD `platz_16_id` INT(10) NOT NULL AFTER `platz_15_id`;
+				ALTER TABLE `_saison` ADD `platz_17_id` INT(10) NOT NULL AFTER `platz_16_id`;
+				ALTER TABLE `_saison` ADD `platz_18_id` INT(10) NOT NULL AFTER `platz_17_id`;
+				ALTER TABLE `_saison` ADD `platz_19_id` INT(10) NOT NULL AFTER `platz_18_id`;
+				ALTER TABLE `_saison` ADD `platz_20_id` INT(10) NOT NULL AFTER `platz_19_id`;"
  			}
 			if(isset($_POST['stadionausbau']))
  			{

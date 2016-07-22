@@ -5,7 +5,7 @@
  *
  * (c) 2015 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -19,7 +19,7 @@ class Twig_Cache_Null implements Twig_CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function generateKey($name, $className)
+    public function generateKey($name,$className)
     {
         return '';
     }
@@ -27,7 +27,7 @@ class Twig_Cache_Null implements Twig_CacheInterface
     /**
      * {@inheritdoc}
      */
-    public function write($key, $content)
+    public function write($key,$content)
     {
     }
 

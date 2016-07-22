@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -40,9 +40,9 @@
 <h4>{{ env.getRequestParameter("round") }}</h4>
 {% if round|length > 0 %}
 	{% if round.prev_round_winners|length > 0 %}
-		<p>{{ i18n.getMessage("cup_created_from_winners_of_round", round.prev_round_winners|e)|raw }}</p>
+		<p>{{ i18n.getMessage("cup_created_from_winners_of_round",round.prev_round_winners|e)|raw }}</p>
 	{% elseif round.prev_round_loosers|length > 0 %}
-		<p>{{ i18n.getMessage("cup_created_from_loosers_of_round", round.prev_round_loosers|e)|raw }}</p>
+		<p>{{ i18n.getMessage("cup_created_from_loosers_of_round",round.prev_round_loosers|e)|raw }}</p>
 	{% endif %}
 	{% if groups|length > 0 %}
 		<h5>{{ i18n.getMessage("cup_title_groups") }}</h5>
@@ -56,10 +56,10 @@
 		<div id="grouptable">{{ i18n.getMessage("cup_group_select_group_placeholder") }}</div>
 	{% else %}
 		{% if round.secondround_date < 1 %}
-			{{ profile.infofield(i18n.getMessage("cup_firstround_only_date"), env.getFormattedDatetime(round.firstround_date)) }}
+			{{ profile.infofield(i18n.getMessage("cup_firstround_only_date"),env.getFormattedDatetime(round.firstround_date)) }}
 		{% else %}
-			{{ profile.infofield(i18n.getMessage("cup_firstround"), env.getFormattedDatetime(round.firstround_date)) }}
-			{{ profile.infofield(i18n.getMessage("cup_secondround"), env.getFormattedDatetime(round.secondround_date)) }}
+			{{ profile.infofield(i18n.getMessage("cup_firstround"),env.getFormattedDatetime(round.firstround_date)) }}
+			{{ profile.infofield(i18n.getMessage("cup_secondround"),env.getFormattedDatetime(round.secondround_date)) }}
 		{% endif %}
 	{% endif %}
 {% endif %}

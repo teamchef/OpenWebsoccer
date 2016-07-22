@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -229,7 +229,7 @@
                         <option value=""></option>
                     </select>
                     <h5>{{ i18n.getMessage("formation_offensive_title") }}</h5>
-                    {{ macro.slider("offensive", formation.offensive) }}
+                    {{ macro.slider("offensive",formation.offensive) }}
                     <br><br>
                     <div class="form-horizontal" style="margin-top: 10px; min-width: 140px; max-width: 140px;">
                         <table>
@@ -272,7 +272,7 @@
                         </table>
                         {% if env.getConfig("formation_max_templates") > 0 and not env.getRequestParameter("nationalteam") %}
                             <small>
-                                {{ macro.textfield('templatename', i18n.getMessage('formation_templatename_field'), env.getRequestParameter('templatename'), false, validationMsg, 'text', i18n.getMessage('formation_templatename_field_help')) }} </small>
+                                {{ macro.textfield('templatename',i18n.getMessage('formation_templatename_field'),env.getRequestParameter('templatename'),false,validationMsg,'text',i18n.getMessage('formation_templatename_field_help')) }} </small>
                         {% endif %}
                     </div>
                     <div class="form-actions" style="text-align: center;">
@@ -324,7 +324,7 @@
                                             <h3 id="subModal{{ benchNo }}Label">{{ i18n.getMessage("formation_bench_sub_title") }}</h3>
                                         </div>
                                         <div class="modal-body form-horizontal">
-                                            {{ macro.textfield("sub_minute" ~ benchNo, i18n.getMessage("formation_substitutions_minute"), "", false, null, "number") }}
+                                            {{ macro.textfield("sub_minute" ~ benchNo,i18n.getMessage("formation_substitutions_minute"),"",false,null,"number") }}
                                             <div class="control-group">
                                                 <label class="control-label"
                                                        for="sub_out{{ benchNo }}">{{ i18n.getMessage("formation_substitutions_out") }}</label>
@@ -355,7 +355,7 @@
                                                     <select name="sub_position{{ benchNo }}"
                                                             id="sub_position{{ benchNo }}">
                                                         <option value="">{{ i18n.getMessage("formation_substitutions_position_default") }}</option>
-                                                        {% for subPosition in ['T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS'] %}
+                                                        {% for subPosition in ['T','LV','IV','RV','LM','DM','ZM','OM','RM','LS','MS','RS'] %}
                                                             <option value="{{ subPosition }}">{{ i18n.getMessage("option_" ~ subPosition) }}</option>
                                                         {% endfor %}
                                                     </select>
@@ -371,7 +371,7 @@
                                     </div>
                                     <small class="benchPlayerSubInfo">
                                         {{ i18n.getMessage("formation_substitutions_minute") }}: <strong
-                                                class="benchPlayerSubInfoMinute"></strong>, <br>
+                                                class="benchPlayerSubInfoMinute"></strong>,<br>
                                         {% if validationMsg["sub" ~ benchNo ~ "_minute"] is defined %}
                                             <span class="text-error"><strong>{{ validationMsg["sub" ~ benchNo ~ "_minute"] }}</strong></span>
                                             <br>
@@ -397,7 +397,7 @@
             <div class="span10 playersColumn" style="margin-top:-600px; margin-left:800px; min-width: 360px; max-width: 360px;">
                 {% if players is defined and players|length > 0 %}
                     <div class="span10" id="playersSelection">
-                        {% for playerPosition, positionPlayers in players %}
+                        {% for playerPosition,positionPlayers in players %}
                             <div class="accordion-group">
                                 <div class="accordion-heading">
                                     {% set typeImage = skin.getImage("icons/playertype_" ~ playerPosition ~ ".png") %}
@@ -415,7 +415,7 @@
                                         {% if player.pseudonym is defined and player.pseudonym|length > 0 %}
                                             {% set playerName = player.pseudonym %}
                                         {% else %}
-                                            {% set playerName = player.firstname|slice(0, 1) ~ ". " ~ player.lastname %}
+                                            {% set playerName = player.firstname|slice(0,1) ~ ". " ~ player.lastname %}
                                         {% endif %}
                                         <div id="playerinfo{{ player.id }}"
                                              class="playerinfo{% if (player.matches_injured is not defined or player.matches_injured == 0) and (player.matches_blocked is not defined or player.matches_blocked == 0) %} playerDraggable{% else %} playerBlocked{% endif %}"
@@ -494,7 +494,7 @@
                                                                     class="icon-retweet"></i> {{ i18n.getMessage("player_button_to_bench") }}
                                                         </a>
                                                         {% if youthFormation is not defined or not youthFormation %}
-                                                            <a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}"
+                                                            <a href="{{ env.getInternalUrl("player","id=" ~ player.id) }}"
                                                                class="btn btn-mini" target="_blank"><i
                                                                         class="icon-info-sign"></i> {{ i18n.getMessage("player_navlabel") }}
                                                             </a>
@@ -554,30 +554,30 @@
                                                 | {{ i18n.getMessage("player_details_statistic_yellow") }}
                                                 : {{ player.st_cards_yellow }}
                                                 {% if player.marketvalue is defined %}
-                                                    | {{ i18n.getMessage("entity_player_marktwert") }}: {{ player.marketvalue|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+                                                    | {{ i18n.getMessage("entity_player_marktwert") }}: {{ player.marketvalue|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}
                                                 {% endif %}
                                             </small>
                                             {% if env.getConfig("hide_strength_attributes") != "1" or youthFormation is defined and youthFormation %}
                                                 <div class="playerinfoStrengthRow">
                                                     <div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_staerke") }}</div>
-                                                    {{ macro.progressbar(player.strength, "playerinfoStrength") }}
+                                                    {{ macro.progressbar(player.strength,"playerinfoStrength") }}
                                                 </div>
                                                 {% if player.strength_technique is defined %}
                                                     <div class="playerinfoStrengthRow">
                                                         <div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_technik") }}</div>
-                                                        {{ macro.progressbar(player.strength_technique, "playerinfoStrength") }}
+                                                        {{ macro.progressbar(player.strength_technique,"playerinfoStrength") }}
                                                     </div>
                                                     <div class="playerinfoStrengthRow">
                                                         <div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_kondition") }}</div>
-                                                        {{ macro.progressbar(player.strength_stamina, "playerinfoStrength") }}
+                                                        {{ macro.progressbar(player.strength_stamina,"playerinfoStrength") }}
                                                     </div>
                                                     <div class="playerinfoStrengthRow">
                                                         <div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_frische") }}</div>
-                                                        {{ macro.progressbar(player.strength_freshness, "playerinfoStrength") }}
+                                                        {{ macro.progressbar(player.strength_freshness,"playerinfoStrength") }}
                                                     </div>
                                                     <div class="playerinfoStrengthRow">
                                                         <div class="playerinfoStrengthLabelFull">{{ i18n.getMessage("entity_player_w_zufriedenheit") }}</div>
-                                                        {{ macro.progressbar(player.strength_satisfaction, "playerinfoStrength") }}
+                                                        {{ macro.progressbar(player.strength_satisfaction,"playerinfoStrength") }}
                                                     </div>
                                                 {% endif %}
                                                 <br>

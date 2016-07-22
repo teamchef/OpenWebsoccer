@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,9 +30,9 @@
 SEC;
 class LanguageSwitcherController extends BaseModel
 {
-	FUNCTION __construct($i18n, $websoccer, $db)
+	FUNCTION __construct($i18n,$websoccer,$db)
 	{
-		parent::__construct($db, $i18n, $websoccer);
+		parent::__construct($db,$i18n,$websoccer);
 	}
 	FUNCTION executeAction($parameters)
 	{
@@ -44,13 +44,13 @@ class LanguageSwitcherController extends BaseModel
 			$fromTable = $this->_websoccer->getConfig('db_prefix') . '_user';
 			$columns = ['lang' => $lang];
 			$whereCondition = 'id = %d';
-			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $user->id);
+			$this->_db->queryUpdate($columns,$fromTable,$whereCondition,$user->id);
 		}
 		// re-include messages in order to update UI immediately
 		global $msg;
 		$msg = [];
-		include(sprintf(CONFIGCACHE_MESSAGES, $lang));
-		include(sprintf(CONFIGCACHE_ENTITYMESSAGES, $lang));
+		include(sprintf(CONFIGCACHE_MESSAGES,$lang));
+		include(sprintf(CONFIGCACHE_ENTITYMESSAGES,$lang));
 		return NULL;
 	}
 }

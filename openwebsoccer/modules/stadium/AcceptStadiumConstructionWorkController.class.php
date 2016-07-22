@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
@@ -30,16 +30,16 @@
 SEC;
 class AcceptStadiumConstructionWorkController extends BaseModel
 {
-	FUNCTION __construct($i18n, $websoccer, $db)
+	FUNCTION __construct($i18n,$websoccer,$db)
 	{
-		parent::__construct($db, $i18n, $websoccer);
+		parent::__construct($db,$i18n,$websoccer);
 	}
 	FUNCTION executeAction($parameters)
 	{
 		$user = $this->_websoccer->getUser();
-		$clubId = $user->getClubId($this->_websoccer, $this->_db);
+		$clubId = $user->getClubId($this->_websoccer,$this->_db);
 		// verify that it is due
-		$construction = StadiumsDataService::getCurrentConstructionOrderOfTeam($this->_websoccer, $this->_db, $clubId);
+		$construction = StadiumsDataService::getCurrentConstructionOrderOfTeam($this->_websoccer,$this->_db,$clubId);
 		if ($construction == NULL || $construction['deadline'] > $this->_websoccer->getNowAsTimestamp()) {
 			throw new Exception($this->_i18n->getMessage('stadium_acceptconstruction_err_nonedue'));
 		}
@@ -50,8 +50,8 @@ class AcceptStadiumConstructionWorkController extends BaseModel
 		// not completed: postpone deadline
 		if ($constructionResult == 'notcompleted') {
 			$newDeadline = $this->_websoccer->getNowAsTimestamp() + $this->_websoccer->getConfig('stadium_construction_delay') * 24 * 3600;
-			$this->_db->queryUpdate(array('deadline' => $newDeadline), $this->_websoccer->getConfig('db_prefix') . '_stadium_construction',
-					'id = %d', $construction['id']);
+			$this->_db->queryUpdate(array('deadline' => $newDeadline),$this->_websoccer->getConfig('db_prefix') . '_stadium_construction',
+					'id = %d',$construction['id']);
 			// show warning alert
 			$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_WARNING,
 					$this->_i18n->getMessage('stadium_acceptconstruction_notcompleted_title'),
@@ -59,18 +59,18 @@ class AcceptStadiumConstructionWorkController extends BaseModel
 			// completed
 		} else {
 			// update stadium
-			$stadium = StadiumsDataService::getStadiumByTeamId($this->_websoccer, $this->_db, $clubId);
+			$stadium = StadiumsDataService::getStadiumByTeamId($this->_websoccer,$this->_db,$clubId);
 			$columns = array();
 			$columns['p_steh'] = $stadium['places_stands'] + $construction['p_steh'];
 			$columns['p_sitz'] = $stadium['places_seats'] + $construction['p_sitz'];
 			$columns['p_haupt_steh'] = $stadium['places_stands_grand'] + $construction['p_haupt_steh'];
 			$columns['p_haupt_sitz'] = $stadium['places_seats_grand'] + $construction['p_haupt_sitz'];
 			$columns['p_vip'] = $stadium['places_vip'] + $construction['p_vip'];
-			$this->_db->queryUpdate($columns, $this->_websoccer->getConfig('db_prefix') . '_stadion', 'id = %d',
+			$this->_db->queryUpdate($columns,$this->_websoccer->getConfig('db_prefix') . '_stadion','id = %d',
 					$stadium['stadium_id']);
 			// delete order
 			$this->_db->queryDelete($this->_websoccer->getConfig('db_prefix') . '_stadium_construction',
-					'id = %d', $construction['id']);
+					'id = %d',$construction['id']);
 			// create success message
 			$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
 					$this->_i18n->getMessage('stadium_acceptconstruction_completed_title'),

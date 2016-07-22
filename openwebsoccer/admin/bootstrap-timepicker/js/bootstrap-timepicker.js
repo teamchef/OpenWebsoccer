@@ -5,15 +5,15 @@
  *
  * Contributors https://github.com/jdewit/bootstrap-timepicker/graphs/contributors
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
-;(function($, window, document, undefined) {
+;(function($,window,document,undefined) {
 
   'use strict'; // jshint ;_;
 
   // TIMEPICKER PUBLIC CLASS DEFINITION
-  var Timepicker = function(element, options) {
+  var Timepicker = function(element,options) {
     this.widget = '';
     this.$element = $(element);
     this.defaultTime = options.defaultTime;
@@ -39,33 +39,33 @@
 
       if (this.$element.parent().hasClass('input-append')) {
           this.$element.parent('.input-append').find('.add-on').on({
-            'click.timepicker': $.proxy(this.showWidget, this)
+            'click.timepicker': $.proxy(this.showWidget,this)
           });
           this.$element.on({
-            'focus.timepicker': $.proxy(this.highlightUnit, this),
-            'click.timepicker': $.proxy(this.highlightUnit, this),
-            'keydown.timepicker': $.proxy(this.elementKeydown, this),
-            'blur.timepicker': $.proxy(this.blurElement, this)
+            'focus.timepicker': $.proxy(this.highlightUnit,this),
+            'click.timepicker': $.proxy(this.highlightUnit,this),
+            'keydown.timepicker': $.proxy(this.elementKeydown,this),
+            'blur.timepicker': $.proxy(this.blurElement,this)
           });
       } else {
         if (this.template) {
           this.$element.on({
-            'focus.timepicker': $.proxy(this.showWidget, this),
-            'click.timepicker': $.proxy(this.showWidget, this),
-            'blur.timepicker': $.proxy(this.blurElement, this)
+            'focus.timepicker': $.proxy(this.showWidget,this),
+            'click.timepicker': $.proxy(this.showWidget,this),
+            'blur.timepicker': $.proxy(this.blurElement,this)
           });
         } else {
           this.$element.on({
-            'focus.timepicker': $.proxy(this.highlightUnit, this),
-            'click.timepicker': $.proxy(this.highlightUnit, this),
-            'keydown.timepicker': $.proxy(this.elementKeydown, this),
-            'blur.timepicker': $.proxy(this.blurElement, this)
+            'focus.timepicker': $.proxy(this.highlightUnit,this),
+            'click.timepicker': $.proxy(this.highlightUnit,this),
+            'keydown.timepicker': $.proxy(this.elementKeydown,this),
+            'blur.timepicker': $.proxy(this.blurElement,this)
           });
         }
       }
 
       if (this.template !== false) {
-        this.$widget = $(this.getTemplate()).appendTo(this.$element.parents('.bootstrap-timepicker')).on('click', $.proxy(this.widgetClick, this));
+        this.$widget = $(this.getTemplate()).appendTo(this.$element.parents('.bootstrap-timepicker')).on('click',$.proxy(this.widgetClick,this));
       } else {
         this.$widget = false;
       }
@@ -74,7 +74,7 @@
           this.$widget.find('input').each(function() {
             $(this).on({
               'click.timepicker': function() { $(this).select(); },
-              'keydown.timepicker': $.proxy(self.widgetKeydown, self)
+              'keydown.timepicker': $.proxy(self.widgetKeydown,self)
             });
           });
       }
@@ -224,7 +224,7 @@
       }
     },
 
-    formatTime: function(hour, minute, second, meridian) {
+    formatTime: function(hour,minute,second,meridian) {
       hour = hour < 10 ? '0' + hour : hour;
       minute = minute < 10 ? '0' + minute : minute;
       second = second < 10 ? '0' + second : second;
@@ -243,7 +243,7 @@
         var sel = document.selection.createRange(),
           selLen = document.selection.createRange().text.length;
 
-        sel.moveStart('character', - input.value.length);
+        sel.moveStart('character',- input.value.length);
 
         return sel.text.length - selLen;
       }
@@ -335,7 +335,7 @@
     },
 
     getTime: function() {
-      return this.formatTime(this.hour, this.minute, this.second, this.meridian);
+      return this.formatTime(this.hour,this.minute,this.second,this.meridian);
     },
 
     hideWidget: function() {
@@ -439,7 +439,7 @@
 
       setTimeout(function() {
         $element.get(0).setSelectionRange(0,2);
-      }, 0);
+      },0);
     },
 
     highlightMinute: function() {
@@ -449,7 +449,7 @@
 
       setTimeout(function() {
         $element.get(0).setSelectionRange(3,5);
-      }, 0);
+      },0);
     },
 
     highlightSecond: function() {
@@ -459,7 +459,7 @@
 
       setTimeout(function() {
         $element.get(0).setSelectionRange(6,8);
-      }, 0);
+      },0);
     },
 
     highlightMeridian: function() {
@@ -470,11 +470,11 @@
       if (this.showSeconds) {
         setTimeout(function() {
           $element.get(0).setSelectionRange(9,11);
-        }, 0);
+        },0);
       } else {
         setTimeout(function() {
           $element.get(0).setSelectionRange(6,8);
-        }, 0);
+        },0);
       }
     },
 
@@ -586,9 +586,9 @@
         timeArray = time.split(':');
       }
 
-      this.hour = parseInt(timeArray[0], 10);
-      this.minute = parseInt(timeArray[1], 10);
-      this.second = parseInt(timeArray[2], 10);
+      this.hour = parseInt(timeArray[0],10);
+      this.minute = parseInt(timeArray[1],10);
+      this.second = parseInt(timeArray[2],10);
 
       if (isNaN(this.hour)) {
         this.hour = 0;
@@ -646,8 +646,8 @@
       }
 
       var self = this;
-      $(document).on('mousedown.timepicker', function (e) {
-        // Clicked outside the timepicker, hide it
+      $(document).on('mousedown.timepicker',function (e) {
+        // Clicked outside the timepicker,hide it
         if ($(e.target).closest('.bootstrap-timepicker-widget').length === 0) {
           self.hideWidget();
         }
@@ -671,7 +671,7 @@
       this.updateFromElementVal();
 
       if (this.template === 'modal') {
-        this.$widget.modal('show').on('hidden', $.proxy(this.hideWidget, this));
+        this.$widget.modal('show').on('hidden',$.proxy(this.hideWidget,this));
       } else {
         if (this.isOpen === false) {
           this.$widget.addClass('open');
@@ -746,10 +746,10 @@
       if (this.$widget === false) {
         return;
       }
-      var time = $('input.bootstrap-timepicker-hour', this.$widget).val() + ':' +
-        $('input.bootstrap-timepicker-minute', this.$widget).val() +
-        (this.showSeconds ? ':' + $('input.bootstrap-timepicker-second', this.$widget).val() : '') +
-        (this.showMeridian ? ' ' + $('input.bootstrap-timepicker-meridian', this.$widget).val() : '');
+      var time = $('input.bootstrap-timepicker-hour',this.$widget).val() + ':' +
+        $('input.bootstrap-timepicker-minute',this.$widget).val() +
+        (this.showSeconds ? ':' + $('input.bootstrap-timepicker-second',this.$widget).val() : '') +
+        (this.showMeridian ? ' ' + $('input.bootstrap-timepicker-meridian',this.$widget).val() : '');
 
       this.setTime(time);
     },
@@ -832,7 +832,7 @@
 
   //TIMEPICKER PLUGIN DEFINITION
   $.fn.timepicker = function(option) {
-    var args = Array.apply(null, arguments);
+    var args = Array.apply(null,arguments);
     args.shift();
     return this.each(function() {
       var $this = $(this),
@@ -840,11 +840,11 @@
         options = typeof option === 'object' && option;
 
       if (!data) {
-        $this.data('timepicker', (data = new Timepicker(this, $.extend({}, $.fn.timepicker.defaults, options, $(this).data()))));
+        $this.data('timepicker',(data = new Timepicker(this,$.extend({},$.fn.timepicker.defaults,options,$(this).data()))));
       }
 
       if (typeof option === 'string') {
-        data[option].apply(data, args);
+        data[option].apply(data,args);
       }
     });
   };
@@ -864,4 +864,4 @@
 
   $.fn.timepicker.Constructor = Timepicker;
 
-})(jQuery, window, document);
+})(jQuery,window,document);

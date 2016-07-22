@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -77,14 +77,14 @@
  		{% for message in messages %}
  			<tr>
  				<td>{{ env.getFormattedDatetime(message.date) }}</td>
- 				<td><a href="{{ env.getInternalUrl("user", "id=" ~ message.sender_id) }}">{{ message.sender_name }}</a></td>
+ 				<td><a href="{{ env.getInternalUrl("user","id=" ~ message.sender_id) }}">{{ message.sender_name }}</a></td>
  				<td>
  				{% if not message.seen %}<strong>{% endif %}
  				<a href="#showMessage" data-toggle="modal" class="ajaxLink"
  					data-ajaxtarget="messagecontent" data-ajaxblock="message-details" data-ajaxquerystr="id={{ message.message_id }}">{{ message.subject }}</a>
  				{% if not message.seen %}</strong>{% endif %}
  				</td>
- 				<td><a href="{{ env.getInternalUrl("messages", "action=delete-message&id=" ~ message.message_id) }}" title="{{ i18n.getMessage("messages_delete") }}"><i class="icon-trash"></i></a></td>
+ 				<td><a href="{{ env.getInternalUrl("messages","action=delete-message&id=" ~ message.message_id) }}" title="{{ i18n.getMessage("messages_delete") }}"><i class="icon-trash"></i></a></td>
  			</tr>
  		{% endfor %}
  		</tbody>

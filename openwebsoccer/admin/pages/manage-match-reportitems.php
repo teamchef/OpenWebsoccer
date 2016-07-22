@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -33,7 +33,7 @@ if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
 }
 echo "<p><a href=\"?site=manage&entity=match\" class=\"btn\">". $i18n->getMessage("back_label") . "</a></p>";
 $matchId = (isset($_REQUEST["match"]) && is_numeric($_REQUEST["match"])) ? $_REQUEST["match"] : 0;
-$match = MatchesDataService::getMatchById($website, $db, $matchId, FALSE, FALSE);
+$match = MatchesDataService::getMatchById($website,$db,$matchId,FALSE,FALSE);
 if (!count($match)) {
 	throw new Exception("illegal match id");
 }
@@ -43,8 +43,8 @@ if ($action == "delete") {
 		throw new Exception($i18n->getMessage("validationerror_no_changes_as_demo"));
 	}
 	$itemId = (int) $_REQUEST["itemid"];
-	$db->queryDelete($website->getConfig("db_prefix") . "_matchreport", "id = %d", array($itemId));
-	echo createSuccessMessage($i18n->getMessage("manage_success_delete"), "");
+	$db->queryDelete($website->getConfig("db_prefix") . "_matchreport","id = %d",array($itemId));
+	echo createSuccessMessage($i18n->getMessage("manage_success_delete"),"");
 }
 // ******** create match report item
 elseif ($action == "create") {
@@ -64,7 +64,7 @@ elseif ($action == "create") {
 			"minute" => $minute,
 			"goals" => $goals,
 			"playernames" => $playerNames
-		), $website->getConfig("db_prefix") . "_matchreport");
+		),$website->getConfig("db_prefix") . "_matchreport");
 	}
 }
 // ******** form for adding new item
@@ -82,22 +82,22 @@ echo "<option value=\"". $match["match_guest_id"] . "\">". escapeOutput($match["
 echo "</select>";
 echo "</div>";
 echo "</div>";
-echo FormBuilder::createFormGroup($i18n, "message_id", array("type" => "foreign_key",
+echo FormBuilder::createFormGroup($i18n,"message_id",array("type" => "foreign_key",
 		"jointable" => "spiel_text",
 		"entity" => "matchtext",
-		"labelcolumns" => "aktion,nachricht"), "", "match_manage_reportmsg_");
-echo FormBuilder::createFormGroup($i18n, "playernames", array("type" => "text"), "", "match_manage_reportmsg_");
-echo FormBuilder::createFormGroup($i18n, "minute", array("type" => "number"), "", "match_manage_reportmsg_");
-echo FormBuilder::createFormGroup($i18n, "intermediateresult", array("type" => "text"), "", "match_manage_reportmsg_");
+		"labelcolumns" => "aktion,nachricht"),"","match_manage_reportmsg_");
+echo FormBuilder::createFormGroup($i18n,"playernames",array("type" => "text"),"","match_manage_reportmsg_");
+echo FormBuilder::createFormGroup($i18n,"minute",array("type" => "number"),"","match_manage_reportmsg_");
+echo FormBuilder::createFormGroup($i18n,"intermediateresult",array("type" => "text"),"","match_manage_reportmsg_");
 echo "</fieldset>";
 echo "<div class=\"form-actions\">";
 echo "<button type=\"submit\" class=\"btn btn-primary\">". $i18n->getMessage("button_save") . "</button>";
 echo "</div></form>";
 // ******** list items
-$reportItems = MatchesDataService::getMatchReportMessages($website, $db, $i18n, $matchId);
+$reportItems = MatchesDataService::getMatchReportMessages($website,$db,$i18n,$matchId);
 // no items
 if (!count($reportItems)) {
-	echo createInfoMessage("", $i18n->getMessage("match_manage_reportitems_noitems"));
+	echo createInfoMessage("",$i18n->getMessage("match_manage_reportitems_noitems"));
 	// list items
 } else {
 	echo "<table class=\"table table-bordered table-striped table-hover\">";

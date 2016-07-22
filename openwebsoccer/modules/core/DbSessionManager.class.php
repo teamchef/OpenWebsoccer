@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -32,12 +32,12 @@ class DbSessionManager
 {
 	private $_db;
 	private $_websoccer;
-	FUNCTION __construct(DbConnection $db, WebSoccer $websoccer)
+	FUNCTION __construct(DbConnection $db,WebSoccer $websoccer)
 	{
 		$this->_db = $db;
 		$this->_websoccer = $websoccer;
 	}
-	FUNCTION open($save_path, $session_name)
+	FUNCTION open($save_path,$session_name)
 	{
 		return true;
 	}
@@ -49,16 +49,16 @@ class DbSessionManager
 	{
 		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_session';
 		$whereCondition = 'session_id = \'%s\'';
-		$this->_db->queryDelete($fromTable, $whereCondition, $sessionId);
+		$this->_db->queryDelete($fromTable,$whereCondition,$sessionId);
 		return true;
 	}
 	FUNCTION read($sessionId)
 	{
-		$columns = 'expires, session_data';
+		$columns = 'expires,session_data';
 		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_session';
 		$whereCondition = 'session_id = \'%s\'';
 		$data = NULL;
-		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $sessionId);
+		$result = $this->_db->querySelect($columns,$fromTable,$whereCondition,$sessionId);
 		if ($result->num_rows > 0) {
 			$row = $result->fetch_array();
 			// check whether expired
@@ -74,7 +74,7 @@ class DbSessionManager
 		$result->free();
 		return $data;
 	}
-	FUNCTION write($sessionId, $data)
+	FUNCTION write($sessionId,$data)
 	{
 		$lifetime = (int) $this->_websoccer->getConfig('session_lifetime');
 		$expiry = $this->_websoccer->getNowAsTimestamp() + $lifetime;
@@ -84,10 +84,10 @@ class DbSessionManager
 		// either insert or update
 		if ($this->read($sessionId) !== NULL) {
 			$whereCondition = 'session_id = \'%s\'';
-			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $sessionId);
+			$this->_db->queryUpdate($columns,$fromTable,$whereCondition,$sessionId);
 		} else {
 			$columns['session_id'] = $sessionId;
-			$this->_db->queryInsert($columns, $fromTable);
+			$this->_db->queryInsert($columns,$fromTable);
 		}
 	}
 	FUNCTION gc()
@@ -99,6 +99,6 @@ class DbSessionManager
 	{
 		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_session';
 		$whereCondition = 'expires < %d';
-		$this->_db->queryDelete($fromTable, $whereCondition, $this->_websoccer->getNowAsTimestamp());
+		$this->_db->queryDelete($fromTable,$whereCondition,$this->_websoccer->getNowAsTimestamp());
 	}
 }

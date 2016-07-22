@@ -19,7 +19,7 @@ module.exports = function(grunt) {
         '*/'
     },
     lint: {
-      files: ['js/bootstrap-timepicker.js', 'grunt.js', 'package.json', 'spec/js/*Spec.js']
+      files: ['js/bootstrap-timepicker.js','grunt.js','package.json','spec/js/*Spec.js']
     },
     less: {
       development: {
@@ -81,8 +81,8 @@ module.exports = function(grunt) {
     uglify: {},
     watch: {
       master: {
-        files: ['spec/js/*Spec.js', 'js/bootstrap-timepicker.js'],
-        tasks: ['lint', 'jasmine'],
+        files: ['spec/js/*Spec.js','js/bootstrap-timepicker.js'],
+        tasks: ['lint','jasmine'],
         options: {
           interrupt: true
         }
@@ -96,7 +96,7 @@ module.exports = function(grunt) {
       }
     },
     jasmine: {
-      src : ['spec/js/libs/jquery/jquery.min.js', 'spec/js/libs/bootstrap/js/bootstrap.min.js', 'spec/js/libs/autotype/index.js', 'js/bootstrap-timepicker.js'],
+      src : ['spec/js/libs/jquery/jquery.min.js','spec/js/libs/bootstrap/js/bootstrap.min.js','spec/js/libs/autotype/index.js','js/bootstrap-timepicker.js'],
       specs : 'spec/js/*Spec.js',
       helpers : 'spec/js/helpers/*.js',
       timeout : 100,
@@ -124,9 +124,9 @@ module.exports = function(grunt) {
   });
 
   // Default task.
-  grunt.registerTask('default', 'watch:master');
-  grunt.registerTask('test', 'jasmine lint');
-  grunt.registerTask('dump', 'min less:production');
-  grunt.registerTask('copy', 'exec:copyAssets');
+  grunt.registerTask('default','watch:master');
+  grunt.registerTask('test','jasmine lint');
+  grunt.registerTask('dump','min less:production');
+  grunt.registerTask('copy','exec:copyAssets');
 
 };

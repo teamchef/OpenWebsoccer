@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,7 +28,8 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-class UpdateStatisticsJob extends AbstractJob {
+class UpdateStatisticsJob extends AbstractJob
+{
 	FUNCTION execute() {
 		$pointsWin = 3;
 		$statisticTable = $this->_websoccer->getConfig('db_prefix') . '_team_league_statistics';
@@ -59,7 +60,7 @@ SELECT team_id,
 	guest_wins,
 	guest_draws,
 	guest_losses
-FROM (SELECT C.id AS team_id, M.saison_id AS season_id,
+FROM (SELECT C.id AS team_id,M.saison_id AS season_id,
 		SUM(CASE WHEN M.home_verein = C.id AND M.home_tore > M.gast_tore THEN 1 ELSE 0 END) AS home_wins,
 		SUM(CASE WHEN M.home_verein = C.id AND M.home_tore < M.gast_tore THEN 1 ELSE 0 END) AS home_losses,
 		SUM(CASE WHEN M.home_verein = C.id AND M.home_tore = M.gast_tore THEN 1 ELSE 0 END) AS home_draws,
@@ -73,10 +74,10 @@ FROM (SELECT C.id AS team_id, M.saison_id AS season_id,
 	FROM $clubTable AS C
 	INNER JOIN $matchTable AS M ON M.home_verein = C.id OR M.gast_verein = C.id
 	WHERE M.saison_id > 0 AND M.berechnet = '1'
-	GROUP BY C.id, M.saison_id) AS matches";
+	GROUP BY C.id,M.saison_id) AS matches";
 		$this->_db->executeQuery($query);
 		$strengthQuery = ' UPDATE '. $this->_websoccer->getConfig('db_prefix') .'_verein c INNER JOIN (';
-		$strengthQuery .= ' SELECT verein_id, AVG( w_staerke ) AS strength_avg';
+		$strengthQuery .= ' SELECT verein_id,AVG( w_staerke ) AS strength_avg';
 		$strengthQuery .= ' FROM '. $this->_websoccer->getConfig('db_prefix') .'_spieler';
 		$strengthQuery .= ' GROUP BY verein_id';
 		$strengthQuery .= ' ) AS r ON r.verein_id = c.id';

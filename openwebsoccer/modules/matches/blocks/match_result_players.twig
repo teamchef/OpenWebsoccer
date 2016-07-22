@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -44,7 +44,7 @@
                     {% for goalMessage in homeStrikerMessages %}
                         <small style="font-weight: bold;">{{ goalMessage.playerNames|split(';')[0] }}
                             ({{ goalMessage.minute }}
-                            .{% if goalMessage.type == "Elfmeter_erfolg" %}, {{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0, 1) }}.{% endif %}
+                            .{% if goalMessage.type == "Elfmeter_erfolg" %},{{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0,1) }}.{% endif %}
                             )<br></small>
                     {% endfor %}
                     <br>
@@ -53,7 +53,7 @@
                     {% for goalMessage in guestStrikerMessages %}
                         <small style="font-weight: bold;">{{ goalMessage.playerNames|split(';')[0] }}
                             ({{ goalMessage.minute }}
-                            .{% if goalMessage.type == "Elfmeter_erfolg" %}, {{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0, 1) }}.{% endif %}
+                            .{% if goalMessage.type == "Elfmeter_erfolg" %},{{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0,1) }}.{% endif %}
                             )<br></small>
                     {% endfor %}
                     <br>
@@ -64,7 +64,7 @@
         <p style="margin-top: 10px;">
             {% if not match.match_simulated %}
                 {% if allowTacticChanges %}
-                    <a class="btn" href="{{ env.getInternalUrl("match-live-changes", "id=" ~ match.match_id) }}"><i
+                    <a class="btn" href="{{ env.getInternalUrl("match-live-changes","id=" ~ match.match_id) }}"><i
                                 class="icon-edit"></i> {{ i18n.getMessage("match_details_button_changes") }}</a>
                 {% endif %}
             {% endif %}
@@ -74,13 +74,13 @@
 		<td>
 			<div class="span6">
 				<h4>{{ match.match_home_name }}</h4>
-				{{ macro.matchResultPlayers(match, home_players) }}
+				{{ macro.matchResultPlayers(match,home_players) }}
 			</div>
 		</td>
 		<td>
 			<div class="span6">
 				<h4>{{ match.match_guest_name }}</h4>
-				{{ macro.matchResultPlayers(match, guest_players) }}
+				{{ macro.matchResultPlayers(match,guest_players) }}
 			</div>
 		</td>
 	</table>

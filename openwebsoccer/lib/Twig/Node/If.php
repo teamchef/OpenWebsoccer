@@ -6,7 +6,7 @@
  * (c) 2009 Fabien Potencier
  * (c) 2009 Armin Ronacher
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -17,15 +17,15 @@
  */
 class Twig_Node_If extends Twig_Node
 {
-    public function __construct(Twig_NodeInterface $tests, Twig_NodeInterface $else = null, $lineno, $tag = null)
+    public function __construct(Twig_NodeInterface $tests,Twig_NodeInterface $else = null,$lineno,$tag = null)
     {
-        parent::__construct(array('tests' => $tests, 'else' => $else), array(), $lineno, $tag);
+        parent::__construct(array('tests' => $tests,'else' => $else),array(),$lineno,$tag);
     }
 
     public function compile(Twig_Compiler $compiler)
     {
         $compiler->addDebugInfo($this);
-        for ($i = 0, $count = count($this->getNode('tests')); $i < $count; $i += 2) {
+        for ($i = 0,$count = count($this->getNode('tests')); $i < $count; $i += 2) {
             if ($i > 0) {
                 $compiler
                     ->outdent()

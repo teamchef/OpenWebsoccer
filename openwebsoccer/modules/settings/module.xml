@@ -1,0 +1,292 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE module SYSTEM '../openwebsoccer.dtd'>
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called 'OpenWebsoccer' is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module>
+	<settings>
+		<setting id='projectname'										category='general'				type='text'										default='OpenWebsoccer PHP 7 Project'/>
+		<setting id='context_root'										category='general'				type='text'										default=''/>
+		<setting id='homepage'											category='general'				type='url'										default=''/>
+		<setting id='systememail'										category='general'				type='email'									default='E-Mail'/>
+		<setting id='session_lifetime'									category='general'				type='number'									default='7200'/>
+		<setting id='time_zone'											category='general'				type='text'										default='Europe/Berlin'/>
+		<setting id='time_offset'										category='general'				type='number'									default='0'/>
+		<setting id='supported_languages'								category='general'				type='tags'										default='de'/>
+		<setting id='date_format'										category='general'				type='text'										default='d.m.Y'/>
+		<setting id='datetime_format'									category='general'				type='text'										default='d.m.Y,H:i'/>
+		<setting id='time_format'										category='general'				type='text'										default='H:i'/>
+		<setting id='password_protected'								category='general'				type='boolean'									default='0'/>
+		<setting id='password_protected_startpage'						category='general'				type='boolean'									default='0'/>
+		<setting id='privacypolicy_url'									category='general'				type='url'										default=''/>
+		<setting id='webjobexecution_enabled'							category='general'				type='boolean'									default='1'/>
+		<setting id='webjobexecution_key'								category='general'				type='text'										default='-'/>
+		<setting id='skin'												category='frontend'				type='text'										default='DefaultBootstrapSkin'/>
+		<setting id='entries_per_page'									category='frontend'				type='number'									default='20'/>
+		<setting id='head_code'											category='frontend'				type='textarea'/>
+		<setting id='frontend_ads_hide_for_premiumusers'				category='frontend'				type='boolean'									default='0'/>
+		<setting id='frontend_ads_code_sidebar'							category='frontend'				type='textarea'/>
+		<setting id='frontend_ads_code_top'								category='frontend'				type='textarea'/>
+		<setting id='frontend_ads_code_bottom'							category='frontend'				type='textarea'/>
+		<setting id='frontend_si_code_sidebar'							category='frontend'				type='textarea'/>
+		<setting id='frontend_si_code_top'								category='frontend'				type='textarea'/>
+		<setting id='frontend_si_code_bottom'							category='frontend'				type='textarea'/>
+		<setting id='frontend_sif_code_sidebar'							category='frontend'				type='textarea'/>
+		<setting id='frontend_sif_code_top'								category='frontend'				type='textarea'/>
+		<setting id='frontend_sif_code_bottom'							category='frontend'				type='textarea'/>
+		<setting id='notifications_max'									category='frontend'				type='number'									default='5'/>
+		<setting id='upload_clublogo_max_size'							category='game'					type='number'									default='0'/>
+		<setting id='rename_club_enabled'								category='game'					type='boolean'									default='0'/>
+		<setting id='game_currency'										category='game'					type='text'										default='EUR'/>
+		<setting id='enable_player_resignation'							category='game'					type='boolean'									default='1'/>
+		<setting id='player_resignation_compensation_matches'			category='game'					type='number'									default='10'/>
+		<setting id='formation_max_next_matches'						category='game'					type='number'									default='34'/>
+		<setting id='formation_max_templates'							category='game'					type='number'									default='10'/>
+		<setting id='assign_team_automatically'							category='game'					type='boolean'									default='1'/>
+		<setting id='max_number_teams_per_user'							category='game'					type='number'									default='1'/>
+		<setting id='additional_team_min_highscore'						category='game'					type='number'									default='0'/>
+		<setting id='lending_enabled'									category='game'					type='boolean'									default='1'/>
+		<setting id='lending_matches_min'								category='game'					type='number'									default='17'/>
+		<setting id='lending_matches_max'								category='game'					type='number'									default='34'/>
+		<setting id='contract_max_number_of_remaining_matches'			category='game'					type='number'									default='17'/>
+		<setting id='hide_strength_attributes'							category='game'					type='boolean'									default='0'/>
+		<setting id='players_aging'										category='game'					type='select'	selection='birthday,static'		default='birthday'/>
+		<setting id='no_transactions_for_teams_without_user'			category='game'					type='boolean'									default='0'/>
+		<setting id='nationalteams_enabled'								category='game'					type='boolean'									default='1'/>
+		<setting id='randomevents_interval_days'						category='game'					type='number'									default='10'/>
+		<setting id='sponsor_matches'									category='game'					type='number'									default='34'/>
+		<setting id='sponsor_earliest_matchday'							category='game'					type='number'									default='1'/>
+		<setting id='training_min_hours_between_execution'				category='game'					type='number'									default='24'/>
+		<setting id='trainingcamp_min_days'								category='game'					type='number'									default='1'/>
+		<setting id='trainingcamp_max_days'								category='game'					type='number'									default='7'/>
+		<setting id='trainingcamp_booking_max_days_in_future'			category='game'					type='number'									default='30'/>
+		<setting id='hide_strength_attributes'							category='game'					type='boolean'									default='0'/>
+		<setting id='hide_market_values'								category='game'					type='boolean'									default='0'/>
+		<setting id='offline'											category='offlinemode'			type='select'	selection='online,offline'		default='online'/>
+		<setting id='offline_text'										category='offlinemode'			type='textarea'									default='Interne Arbeiten - wir sind bald wieder voll erreichbar.'/>
+		<setting id='offline_times'										category='offlinemode'			type='tags'										default=''/>
+		<setting id='premium_enabled'									category='premium'				type='boolean'									default='false'/>
+		<setting id='premium_credit_unit'								category='premium'				type='text'										default='Coins'/>
+		<setting id='premium_infopage'									category='premium'				type='text'										default='premium-feature-requested'/>
+		<setting id='premium_price_options'								category='premium'				type='tags'										default='5:10,20:50,50:150'/>
+		<setting id='premium_currency'									category='premium'				type='text'										default='EUR'/>
+		<setting id='premium_initial_credit'							category='premium'				type='number'									default='0'/>
+		<setting id='premium_exchangerate_gamecurrency'					category='premium'				type='number'									default='1000000'/>
+		<setting id='sim_noformation_oneteam'							category='simulation'			type='select'	selection='computer'			default='computer'/>
+		<setting id='sim_noformation_bothteams'							category='simulation'			type='select'	selection='computer'			default='computer'/>
+		<setting id='sim_createformation_without_manager'				category='simulation'			type='boolean'									default='1'/>
+		<setting id='sim_createformation_without_manager_offensive'		category='simulation'			type='number'									default='50'/>
+		<setting id='sim_createformation_on_invalidsubmission'			category='simulation'			type='boolean'									default='1'/>
+		<setting id='sim_createformation_strength'						category='simulation'			type='number'									default='100'/>
+		<setting id='sim_income_trough_friendly'						category='simulation'			type='boolean'									default='0'/>
+		<setting id='sim_injured_after_friendly'						category='simulation'			type='boolean'									default='1'/>
+		<setting id='sim_tiredness_through_friendly'					category='simulation'			type='boolean'									default='1'/>
+		<setting id='sim_playerupdate_through_nationalteam'				category='simulation'			type='boolean'									default='1'/>
+		<setting id='sim_goaly_influence'								category='simulation'			type='number'									default='75'/>
+		<setting id='sim_shootprobability'								category='simulation'			type='number'									default='300'/>
+		<setting id='sim_cardsprobability'								category='simulation'			type='number'									default='100'/>
+		<setting id='sim_injuredprobability'							category='simulation'			type='number'									default='100'/>
+		<setting id='sim_weight_strength'								category='simulation'			type='number'									default='40'/>
+		<setting id='sim_weight_strengthTech'							category='simulation'			type='number'									default='30'/>
+		<setting id='sim_weight_strengthStamina'						category='simulation'			type='number'									default='20'/>
+		<setting id='sim_weight_strengthFreshness'						category='simulation'			type='number'									default='5'/>
+		<setting id='sim_weight_strengthSatisfaction'					category='simulation'			type='number'									default='5'/>
+		<setting id='sim_strength_reduction_secondary'					category='simulation'			type='number'									default='10'/>
+		<setting id='sim_strength_reduction_wrongposition'				category='simulation'			type='number'									default='50'/>
+		<setting id='sim_home_field_advantage'							category='simulation'			type='number'									default='2'/>
+		<setting id='sim_shootstrength_defense'							category='simulation'			type='number'									default='70'/>
+		<setting id='sim_shootstrength_midfield'						category='simulation'			type='number'									default='90'/>
+		<setting id='sim_shootstrength_striker'							category='simulation'			type='number'									default='100'/>
+		<setting id='sim_block_player_after_yellowcards'				category='simulation'			type='number'									default='5'/>
+		<setting id='sim_played_min_minutes'							category='simulation'			type='number'									default='10'/>
+		<setting id='sim_decrease_freshness'							category='simulation'			type='boolean'									default='1'/>
+		<setting id='sim_strengthchange_stamina'						category='simulation'			type='number'									default='1'/>
+		<setting id='sim_strengthchange_satisfaction'					category='simulation'			type='number'									default='1'/>
+		<setting id='sim_strengthchange_freshness_notplayed'			category='simulation'			type='number'									default='4'/>
+		<setting id='sim_maxmatches_injured'							category='simulation'			type='number'									default='12'/>
+		<setting id='sim_maxmatches_blocked'							category='simulation'			type='number'									default='5'/>
+		<setting id='sim_allow_livechanges'								category='simulation'			type='boolean'									default='1'/>
+		<setting id='sim_allow_offensivechanges'						category='simulation'			type='number'									default='2'/>
+		<setting id='sim_interval'										category='simulation_expert'	type='number'									default='5'/>
+		<setting id='sim_max_matches_per_run'							category='simulation_expert'	type='number'									default='20'/>
+		<setting id='sim_strategy'										category='simulation_expert'	type='text'										default='DefaultSimulationStrategy'/>
+		<setting id='sim_simulation_observers'							category='simulation_expert'	type='tags'										default='MatchReportSimulationObserver'/>
+		<setting id='sim_simulator_observers'							category='simulation_expert'	type='tags'										default='MatchReportSimulatorObserver,DataUpdateSimulatorObserver'/>
+		<setting id='social_likebutton_twitter'							category='social'				type='boolean'									default='0'/>
+		<setting id='social_likebutton_xing'							category='social'				type='boolean'									default='0'/>
+		<setting id='stadium_max_grand'									category='stadium'				type='number'									default='60000'/>
+		<setting id='stadium_max_side'									category='stadium'				type='number'									default='30000'/>
+		<setting id='stadium_max_vip'									category='stadium'				type='number'									default='1000'/>
+		<setting id='stadium_cost_standing'								category='stadium'				type='number'									default='100'/>
+		<setting id='stadium_cost_seats'								category='stadium'				type='number'									default='200'/>
+		<setting id='stadium_cost_standing_grand'						category='stadium'				type='number'									default='150'/>
+		<setting id='stadium_cost_seats_grand'							category='stadium'				type='number'									default='300'/>
+		<setting id='stadium_cost_vip'									category='stadium'				type='number'									default='2000'/>
+		<setting id='stadium_construction_delay'						category='stadium'				type='number'									default='7'/>
+		<setting id='stadium_hide_builders_reliability'					category='stadium'				type='boolean'									default='1'/>
+		<setting id='stadium_maintenanceinterval_pitch'					category='stadium'				type='number'									default='2'/>
+		<setting id='stadium_maintenanceinterval_videowall'				category='stadium'				type='number'									default='10'/>
+		<setting id='stadium_maintenanceinterval_seatsquality'			category='stadium'				type='number'									default='5'/>
+		<setting id='stadium_maintenanceinterval_vipquality'			category='stadium'				type='number'									default='5'/>
+		<setting id='stadium_pitch_price'								category='stadium'				type='number'									default='10000'/>
+		<setting id='stadium_videowall_price'							category='stadium'				type='number'									default='100000'/>
+		<setting id='stadium_seatsquality_price'						category='stadium'				type='number'									default='10'/>
+		<setting id='stadium_vipquality_price'							category='stadium'				type='number'									default='50'/>
+		<setting id='stadium_maintenance_priceincrease_per_level'		category='stadium'				type='number'									default='10'/>
+		<setting id='stadium_pitch_effect'								category='stadium'				type='number'									default='1'/>
+		<setting id='stadium_videowall_effect'							category='stadium'				type='number'									default='1'/>
+		<setting id='stadium_seatsquality_effect'						category='stadium'				type='number'									default='2'/>
+		<setting id='stadium_vipquality_effect'							category='stadium'				type='number'									default='5'/>
+		<setting id='projectStatistics_noshow'							category='tlc'					type='boolean'									default='0'/>
+		<setting id='news_noshow'										category='tlc'					type='boolean'									default='0'/>
+		<setting id='todaysmatches_noshow'								category='tlc'					type='boolean'									default='0'/>
+		<setting id='latestResults_noshow'								category='tlc'					type='boolean'									default='0'/>
+		<setting id='activities_noshow'									category='tlc'					type='boolean'									default='0'/>
+		<setting id='login_noshow'										category='tlc'					type='boolean'									default='0'/>
+		<setting id='spoiler_noshow'									category='tlc'					type='boolean'									default='0'/>
+		<setting id='spoiler_button_noshow'								category='tlc'					type='boolean'									default='0'/>
+		<setting id='spoiler_bild'										category='tlc'					type='text'										default=''/>
+		<setting id='grav_enabled'										category='tlc'					type='boolean'									default='0'/>
+		<setting id='amount_aufstellung_enabled'						category='tlc'					type='boolean'									default='1'/>
+		<setting id='amount_aufstellung'								category='tlc'					type='text'										default='100000'/>
+		<setting id='sim_auto_deblock'									category='tlc'					type='boolean'									default='1'/>
+		<setting id='nextgames_set'										category='tlc'					type='boolean'									default='4'/>
+		<setting id='player_delete_from_db'								category='tlc'					type='boolean'									default='0'/>
+		<setting id='cdn_root_set'										category='tlc'					type='boolean'									default='0'/>
+		<setting id='cdn_root'											category='tlc'					type='text'										default=''/>
+		<setting id='externlink1'										category='tlc'					type='text'										default=''/>
+		<setting id='externlink1txt'									category='tlc'					type='text'										default=''/>
+		<setting id='externlink2'										category='tlc'					type='text'										default=''/>
+		<setting id='externlink2txt'									category='tlc'					type='text'										default=''/>
+		<setting id='externlink3'										category='tlc'					type='text'										default=''/>
+		<setting id='externlink3txt'									category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkoben1'									category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkoben1txt'								category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkoben2'									category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkoben2txt'								category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkoben3'									category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkoben3txt'								category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkrechts'									category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkrechtstxt'								category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkunten1'									category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkunten1txt'								category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkunten2'									category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkunten2txt'								category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkunten3'									category='tlc'					type='text'										default=''/>
+		<setting id='footerlinkunten3txt'								category='tlc'					type='text'										default=''/>
+		<setting id='addplyr'											category='tlc'					type='text'										default='AddPlayerWithoutTeamToTransfermarketJob'/>
+		<setting id='extransf'											category='tlc'					type='text'										default='ExecuteTransfersJob'/>
+		<setting id='sim'												category='tlc'					type='text'										default='SimulateMatchesJob'/>
+		<setting id='usractv'											category='tlc'					type='text'										default='UserInactivityCheckJob'/>
+		<setting id='stats'												category='tlc'					type='text'										default='UpdateStatisticsJob'/>
+		<setting id='stadium'											category='tlc'					type='text'										default='AcceptStadiumConstructionWorkJob'/>
+		<setting id='facebook_on'										category='tlc'					type='text'										default=''/>
+		<setting id='gravatar_enable'									category='tlc'					type='text'										default=''/>
+		<setting id='bild_hintergrund'									category='tlcdesign'			type='text'										default=''/>
+		<setting id='bild_navbar'										category='tlcdesign'			type='text'										default=''/>
+		<setting id='color_navbar'										category='tlcdesign'			type='text'										default='darkblue'/>
+		<setting id='bild_spoiler'										category='tlcdesign'			type='text'										default=''/>
+		<setting id='color_spoiler'										category='tlcdesign'			type='text'										default='darkblue'/>
+		<setting id='spoiler_border'									category='tlcdesign'			type='text'										default='darkblue'/>
+		<setting id='spoiler_border_color'								category='tlcdesign'			type='text'										default='darkblue'/>
+		<setting id='bild_infolabel'									category='tlcdesign'			type='text'										default=''/>
+		<setting id='color_infolabel'									category='tlcdesign'			type='text'										default='darkblue'/>
+		<setting id='color_container'									category='tlcdesign'			type='text'										default=''/>
+		<setting id='bild_footer'										category='tlcdesign'			type='text'										default=''/>
+		<setting id='color_footer'										category='tlcdesign'			type='text'										default=''/>
+		<setting id='box_background_image'								category='tlcdesign'			type='text'										default=''/>
+		<setting id='box_background_color'								category='tlcdesign'			type='text'										default=''/>
+		<setting id='box_border'										category='tlcdesign'			type='text'										default=''/>
+		<setting id='box_border_color'									category='tlcdesign'			type='text'										default=''/>
+		<setting id='navbar_brand_color'								category='tlcdesign'			type='text' 									default=''/>
+		<setting id='navbar_brand_color_shadow'							category='tlcdesign'			type='text'										default=''/>
+		<setting id='navbar_text_color'									category='tlcdesign'			type='text'										default=''/>
+		<setting id='navbar_text_color_shadow'							category='tlcdesign'			type='text'										default=''/>
+		<setting id='spoiler_text_header'								category='tlcdesign'			type='text'										default='OpenWebsoccer'/>
+		<setting id='spoiler_text_header_color'							category='tlcdesign'			type='text'										default='white'/>
+		<setting id='spoiler_text'										category='tlcdesign'			type='text'										default='Zeige dein taktisches Geschick als Manager.'/>
+		<setting id='spoiler_text_color'								category='tlcdesign'			type='text'										default='white'/>
+		<setting id='spoiler_text_2'									category='tlcdesign'			type='text'										default='Werde ein Teil der Community !'/>
+		<setting id='spoiler_text_2_color'								category='tlcdesign'			type='text'										default='yellow'/>
+		<setting id='link_text_color'									category='tlcdesign'			type='text'										default=''/>
+		<setting id='header_text_color'									category='tlcdesign'			type='text'										default=''/>
+		<setting id='transfermarket_enabled'							category='transfermarket'		type='boolean'									default='1'/>
+		<setting id='transfermarket_duration_days'						category='transfermarket'		type='number'									default='7'/>
+		<setting id='transfermarket_computed_marketvalue'				category='transfermarket'		type='boolean'									default='1'/>
+		<setting id='transfermarket_value_per_strength'					category='transfermarket'		type='number'									default='10000'/>
+		<setting id='transfermarket_min_teamsize'						category='transfermarket'		type='number'									default='18'/>
+		<setting id='transfermarket_max_transactions_between_users'		category='transfermarket'		type='number'									default='2'/>
+		<setting id='transferoffers_enabled'							category='transfermarket'		type='boolean'									default='1'/>
+		<setting id='transferoffers_transfer_stop_days'					category='transfermarket'		type='number'									default='30'/>
+		<setting id='transferoffers_adminapproval_required'				category='transfermarket'		type='boolean'									default='0'/>
+		<setting id='transferoffers_contract_matches'					category='transfermarket'		type='number'									default='20'/>
+		<setting id='login_type'										category='users'				type='select'	selection='email,username'		default='email'/>
+		<setting id='login_method'										category='users'				type='text'										default='DefaultUserLoginMethod'/>
+		<setting id='login_allow_sendingpassword'						category='users'				type='boolean'									default='1'/>
+		<setting id='messages_enabled'									category='users'				type='boolean'									default='1'/>
+		<setting id='messages_break_minutes'							category='users'				type='number'									default='2'/>
+		<setting id='authentication_mechanism'							category='users'				type='tags'										default='SessionBasedUserAuthentication'/>
+		<setting id='allow_userregistration'							category='users'				type='boolean'									default='1'/>
+		<setting id='registration_url'									category='users'				type='text'										default=''/>
+		<setting id='register_use_captcha'								category='users'				type='boolean'									default='0'/>
+		<setting id='register_captcha_publickey'						category='users'				type='text'										default='-'/>
+		<setting id='register_captcha_privatekey'						category='users'				type='text'										default='-'/>
+		<setting id='max_number_of_users'								category='users'				type='number'									default='0'/>
+		<setting id='illegal_usernames'									category='users'				type='tags'										default='admin,administrator,root,test,user'/>
+		<setting id='user_picture_upload_enabled'						category='users' 				type='boolean'									default='1'/>
+		<setting id='user_picture_upload_maxsize_kb'					category='users'				type='number'									default='512'/>
+		<setting id='highscore_win'										category='users'				type='number'									default='5'/>
+		<setting id='highscore_draw'									category='users'				type='number'									default='3'/>
+		<setting id='highscore_loss'									category='users'				type='number'									default='1'/>
+		<setting id='youth_enabled'										category='youth'				type='boolean'									default='1'/>
+		<setting id='youth_scouting_enabled'							category='youth'				type='boolean'									default='1'/>
+		<setting id='youth_matchrequests_enabled'						category='youth'				type='boolean'									default='1'/>
+		<setting id='youth_min_age_professional'						category='youth'				type='number'									default='16'/>
+		<setting id='youth_salary_per_strength'							category='youth'				type='number'									default='50'/>
+		<setting id='youth_scouting_break_hours'						category='youth'				type='number'									default='24'/>
+		<setting id='youth_scouting_success_probability'				category='youth'				type='number'									default='75'/>
+		<setting id='youth_scouting_min_strength'						category='youth'				type='number'									default='5'/>
+		<setting id='youth_scouting_max_strength'						category='youth'				type='number'									default='70'/>
+		<setting id='youth_scouting_standard_deviation'					category='youth'				type='number'									default='5'/>
+		<setting id='youth_scouting_min_age'							category='youth'				type='number'									default='14'/>
+		<setting id='youth_professionalmove_matches'					category='youth'				type='number'									default='30'/>
+		<setting id='youth_professionalmove_technique'					category='youth'				type='number'									default='50'/>
+		<setting id='youth_professionalmove_stamina'					category='youth'				type='number'									default='60'/>
+		<setting id='youth_professionalmove_freshness'					category='youth'				type='number'									default='100'/>
+		<setting id='youth_professionalmove_satisfaction'				category='youth'				type='number'									default='100'/>
+		<setting id='youth_matchrequest_max_open_requests'				category='youth'				type='number'									default='2'/>
+		<setting id='youth_matchrequest_max_futuredays'					category='youth'				type='number'									default='14'/>
+		<setting id='youth_matchrequest_allowedtimes'					category='youth'				type='tags'										default='14:00,15:00'/>
+		<setting id='youth_matchrequest_accept_hours_in_advance'		category='youth'				type='number'									default='2'/>
+		<setting id='youth_match_maxperday'								category='youth'				type='number'									default='1'/>
+		<setting id='youth_strengthchange_verygood'						category='youth'				type='number'									default='2'/>
+		<setting id='youth_strengthchange_good'							category='youth'				type='number'									default='1'/>
+		<setting id='youth_strengthchange_bad'							category='youth'				type='number'									default='-1'/>
+		<setting id='youth_strengthchange_verybad'						category='youth'				type='number'									default='-2'/>
+	</settings>
+</module>

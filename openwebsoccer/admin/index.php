@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
@@ -27,14 +27,14 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
-define('ROOT', $_SERVER['DOCUMENT_ROOT']. dirname($_SERVER['PHP_SELF']) . '/..');
+define('ROOT',$_SERVER['DOCUMENT_ROOT']. dirname($_SERVER['PHP_SELF']) . '/..');
 if (!file_exists(ROOT . '/cache')){ mkdir  (ROOT . '/cache'); }
 include(ROOT . '/admin/adminglobal.inc.php');
 // building nav
 $navItems['settings'] = array();
 $navItems['website'] = array();
 foreach ($adminpage as $pageId => $pageData) {
-	$pageInfo = json_decode($pageData, true);
+	$pageInfo = json_decode($pageData,true);
 	// check permission
 	if ((!isset($admin['r_admin']) || !$admin['r_admin']) && (!isset($admin['r_demo']) || !$admin['r_demo']) && (!isset($admin[$pageInfo['permissionrole']]) || !$admin[$pageInfo['permissionrole']])) {
 		continue;
@@ -50,7 +50,7 @@ foreach ($adminpage as $pageId => $pageData) {
 	}
 	$navItems[$pageInfo['navcategory']][] = $siteInfo;
 }
-function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
+function printNavItem($currentSite,$pageId,$navLabel,$entity = '') {
 	$url = '?site='. $pageId;
 	$active = ($currentSite == $pageId);
 	if (strlen($entity)) {
@@ -126,7 +126,7 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
 								foreach ($navItems as $navCategory => $categoryItems) {
 									echo "<li class=\"nav-header\">". $i18n->getNavigationLabel("category_" . $navCategory) . "</li>";
 									foreach ($categoryItems as $navInfo) {
-										printNavItem($site, $navInfo["pageid"], $navInfo["label"], $navInfo["entity"]);
+										printNavItem($site,$navInfo["pageid"],$navInfo["label"],$navInfo["entity"]);
 									}
 								}
 							?>
@@ -142,14 +142,14 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
 							$site = 'home';
 						}
 						$includeFile = 'pages/' . $site .'.php';
-						if (preg_match('#^[a-z0-9_-]+$#i', $site) && file_exists($includeFile) ) {
+						if (preg_match('#^[a-z0-9_-]+$#i',$site) && file_exists($includeFile) ) {
 							try {
 								include( $includeFile );
 							} catch(Exception $e) {
-							echo createErrorMessage($i18n->getMessage('alert_error_title'), $e->getMessage());
+							echo createErrorMessage($i18n->getMessage('alert_error_title'),$e->getMessage());
 							}
 						} else {
-							echo createErrorMessage($i18n->getMessage('alert_error_title'), $i18n->getMessage('error_page_not_found'));
+							echo createErrorMessage($i18n->getMessage('alert_error_title'),$i18n->getMessage('error_page_not_found'));
 						}
 					?>
 				</div><!--/span-->
@@ -178,7 +178,7 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
 		<script src="js/bootstrap-tag.js"></script>
 		<script>
 			$(function() {
-				$(document).on("click", ".deleteBtn", function(e) {
+				$(document).on("click",".deleteBtn",function(e) {
 					bootbox.confirm("<?php echo $i18n->getMessage("manage_delete_multiselect_confirm"); ?>",
 						"<?php echo $i18n->getMessage("option_no"); ?>",
 						"<?php echo $i18n->getMessage("option_yes"); ?>",
@@ -188,7 +188,7 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
 					}
 				});
 			});
-			$(document).on("click", ".deleteLink", function(e) {
+			$(document).on("click",".deleteLink",function(e) {
 				e.preventDefault();
 				var link = $(this);
 				bootbox.confirm("<?php echo $i18n->getMessage("manage_delete_link_confirm"); ?>",
@@ -201,7 +201,7 @@ function printNavItem($currentSite, $pageId, $navLabel, $entity = '') {
 				});
 			});
 			$(".datepicker").datepicker({
-				format: "<?php echo str_replace("Y", "yyyy", $website->getConfig("date_format")); ?>",
+				format: "<?php echo str_replace("Y","yyyy",$website->getConfig("date_format")); ?>",
 				language: "<?php echo $i18n->getCurrentLanguage(); ?>",
 				autoclose: true
 			});

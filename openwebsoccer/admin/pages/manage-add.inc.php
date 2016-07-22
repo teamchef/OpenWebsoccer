@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -43,11 +43,11 @@ if (!$showOverview) {
 				$fieldValue = null;
 				if (isset($_REQUEST[$fieldId])) {
 				$fieldValue = $_REQUEST[$fieldId];
-				// use default value only if no data has been submitted, since page could be re-rendered after a validation error
+				// use default value only if no data has been submitted,since page could be re-rendered after a validation error
 				} else if (!count($_POST) && strlen($fieldInfo["default"])) {
 					$fieldValue = $fieldInfo["default"];
 				}
-				echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldValue, $labelPrefix);
+				echo FormBuilder::createFormGroup($i18n,$fieldId,$fieldInfo,$fieldValue,$labelPrefix);
 			}
 			?>
 		</fieldset>

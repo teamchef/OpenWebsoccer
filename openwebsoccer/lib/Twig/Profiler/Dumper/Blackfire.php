@@ -5,7 +5,7 @@
  *
  * (c) 2015 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -17,8 +17,8 @@ class Twig_Profiler_Dumper_Blackfire
     public function dump(Twig_Profiler_Profile $profile)
     {
         $data = array();
-        $this->dumpProfile('main()', $profile, $data);
-        $this->dumpChildren('main()', $profile, $data);
+        $this->dumpProfile('main()',$profile,$data);
+        $this->dumpChildren('main()',$profile,$data);
 
         $start = microtime(true);
         $str = <<<EOF
@@ -36,20 +36,20 @@ EOF;
         return $str;
     }
 
-    private function dumpChildren($parent, Twig_Profiler_Profile $profile, &$data)
+    private function dumpChildren($parent,Twig_Profiler_Profile $profile,&$data)
     {
         foreach ($profile as $p) {
             if ($p->isTemplate()) {
                 $name = $p->getTemplate();
             } else {
-                $name = sprintf('%s::%s(%s)', $p->getTemplate(), $p->getType(), $p->getName());
+                $name = sprintf('%s::%s(%s)',$p->getTemplate(),$p->getType(),$p->getName());
             }
-            $this->dumpProfile(sprintf('%s==>%s', $parent, $name), $p, $data);
-            $this->dumpChildren($name, $p, $data);
+            $this->dumpProfile(sprintf('%s==>%s',$parent,$name),$p,$data);
+            $this->dumpChildren($name,$p,$data);
         }
     }
 
-    private function dumpProfile($edge, Twig_Profiler_Profile $profile, &$data)
+    private function dumpProfile($edge,Twig_Profiler_Profile $profile,&$data)
     {
         if (isset($data[$edge])) {
             $data[$edge]['ct'] += 1;

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
@@ -28,7 +28,7 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 // Basis-Ordner für die Klassendatein definieren
-define('TEMPLATE_MODUL_FOLDER', ROOT . '/modules');
+define('TEMPLATE_MODUL_FOLDER',ROOT . '/modules');
 // alle Unterordner des Basis-Ordners einbinden
 $directory = TEMPLATE_MODUL_FOLDER . "/";
 $files = glob($directory . "*");
@@ -38,8 +38,8 @@ foreach($files as $file){
 	}
 }
 // die gefundenen Ordner als globale Array-Konstante setzen
-define('CLASSPATH', $twigarray);
-define('DEBUG', FALSE);
+define('CLASSPATH',$twigarray);
+define('DEBUG',FALSE);
 if (DEBUG) {
 	error_reporting(E_ALL);
 } else {
@@ -47,26 +47,25 @@ if (DEBUG) {
 }
 // Die angeforderte Klasse suchen und einbinnden
 function classes_autoloader($class) {
-	set_include_path(implode(PATH_SEPARATOR, CLASSPATH));
+	set_include_path(implode(PATH_SEPARATOR,CLASSPATH));
 	@include( $class . '.class.php');
 }
 // die gefundene Klasse registrieren
 spl_autoload_register('classes_autoloader');
-define('FOLDER_MODULES', ROOT . '/modules');
-define('MODULE_CONFIG_FILENAME', 'module.xml');
-define('GLOBAL_CONFIG_FILE', ROOT . '/generated/config.inc.php');
-define('CONFIGCACHE_FILE_FRONTEND', ROOT . '/cache/wsconfigfront.inc.php');
-define('CONFIGCACHE_FILE_ADMIN', ROOT . '/cache/wsconfigadmin.inc.php');
-define('CONFIGCACHE_MESSAGES', ROOT . '/cache/messages_%s.inc.php');
-define('CONFIGCACHE_ADMINMESSAGES', ROOT . '/cache/adminmessages_%s.inc.php');
-define('CONFIGCACHE_ENTITYMESSAGES', ROOT . '/cache/entitymessages_%s.inc.php');
-define('CONFIGCACHE_SETTINGS', ROOT . '/cache/settingsconfig.inc.php');
-define('CONFIGCACHE_EVENTS', ROOT . '/cache/eventsconfig.inc.php');
-define('UPLOAD_FOLDER', ROOT . '/uploads/');
-define('IMPRINT_FILE', ROOT . '/generated/imprint.php');
-define('TEMPLATES_FOLDER', ROOT . '/templates');
-define('PROFPIC_UPLOADFOLDER', UPLOAD_FOLDER . 'users');
-// dependencies
+define('FOLDER_MODULES',ROOT . '/modules');
+define('MODULE_CONFIG_FILENAME','module.xml');
+define('GLOBAL_CONFIG_FILE',ROOT . '/generated/config.inc.php');
+define('CONFIGCACHE_FILE_FRONTEND',ROOT . '/cache/wsconfigfront.inc.php');
+define('CONFIGCACHE_FILE_ADMIN',ROOT . '/cache/wsconfigadmin.inc.php');
+define('CONFIGCACHE_MESSAGES',ROOT . '/cache/messages_%s.inc.php');
+define('CONFIGCACHE_ADMINMESSAGES',ROOT . '/cache/adminmessages_%s.inc.php');
+define('CONFIGCACHE_ENTITYMESSAGES',ROOT . '/cache/entitymessages_%s.inc.php');
+define('CONFIGCACHE_SETTINGS',ROOT . '/cache/settingsconfig.inc.php');
+define('CONFIGCACHE_EVENTS',ROOT . '/cache/eventsconfig.inc.php');
+define('UPLOAD_FOLDER',ROOT . '/uploads/');
+define('IMPRINT_FILE',ROOT . '/generated/imprint.php');
+define('TEMPLATES_FOLDER',ROOT . '/templates');
+define('PROFPIC_UPLOADFOLDER',UPLOAD_FOLDER . 'users');
 include(GLOBAL_CONFIG_FILE);
 if (!isset($conf)) {
 	header('location: install/index.php');
@@ -75,25 +74,20 @@ if (!isset($conf)) {
 $page = null;
 $action = null;
 $block = null;
-// init application
 try {
 	$website = WebSoccer::getInstance();
 	if (!file_exists(CONFIGCACHE_FILE_FRONTEND)) {
 		$website->resetConfigCache();
 	}
 } catch(Exception $e) {
-	// write to log
 	try {
 		$log = new FileWriter('errorlog.txt');
 		$log->writeLine('Website Configuration Error: ' . $e->getMessage());
 		$log->close();
-	} catch(Exception $e) {
-		// ignore
-	}
+	} catch(Exception $e) {}
 	header('HTTP/1.0 500 Error');
 	die();
 }
-// connect to DB
 try {
 	$db = DbConnection::getInstance();
 	$db->connect($website->getConfig('db_host'),
@@ -101,33 +95,24 @@ try {
 			$website->getConfig('db_passwort'),
 			$website->getConfig('db_name'));
 } catch(Exception $e) {
-	// write to log
 	try {
 		$log = new FileWriter('dberrorlog.txt');
 		$log->writeLine('DB Error: ' . $e->getMessage());
 		$log->close();
-	} catch(Exception $e) {
-		// ignore
-	}
-	die('<h1>Sorry, our data base is currently not available</h1><p>We are working on it.</p>');
+	} catch(Exception $e) {}
+	die('<h1>Die Datenbank ist zur Zeit nicht erreichbar</h1><p>Wir bitten um Gedduld.</p>');
 }
-// register own session handler
-$handler = new DbSessionManager($db, $website);
+$handler = new DbSessionManager($db,$website);
 session_set_save_handler(
-	array($handler, 'open'),
-	array($handler, 'close'),
-	array($handler, 'read'),
-	array($handler, 'write'),
-	array($handler, 'destroy'),
-	array($handler, 'gc')
+	array($handler,'open'),
+	array($handler,'close'),
+	array($handler,'read'),
+	array($handler,'write'),
+	array($handler,'destroy'),
+	array($handler,'gc')
 );
-// the following prevents unexpected effects when using objects as save handlers
-// see http://php.net/manual/en/function.session-set-save-handler.php
-register_shutdown_function('session_write_close');
 session_start();
-// always set time zone in order to prevent PHP warnings
+// Um eine PHP Warnung vorzubeugen wird die Zeitzone gesetzt
 try {
 	date_default_timezone_set($website->getConfig('time_zone'));
-} catch (Exception $e) {
-	// do not set time zone. This Exception can appear in particular when updating from older version.
-}
+} catch (Exception $e) {}

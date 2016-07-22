@@ -5,7 +5,7 @@
  *
  * (c) Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -19,25 +19,25 @@ abstract class Twig_BaseNodeVisitor implements Twig_NodeVisitorInterface
     /**
      * {@inheritdoc}
      */
-    final public function enterNode(Twig_NodeInterface $node, Twig_Environment $env)
+    final public function enterNode(Twig_NodeInterface $node,Twig_Environment $env)
     {
         if (!$node instanceof Twig_Node) {
             throw new LogicException('Twig_BaseNodeVisitor only supports Twig_Node instances.');
         }
 
-        return $this->doEnterNode($node, $env);
+        return $this->doEnterNode($node,$env);
     }
 
     /**
      * {@inheritdoc}
      */
-    final public function leaveNode(Twig_NodeInterface $node, Twig_Environment $env)
+    final public function leaveNode(Twig_NodeInterface $node,Twig_Environment $env)
     {
         if (!$node instanceof Twig_Node) {
             throw new LogicException('Twig_BaseNodeVisitor only supports Twig_Node instances.');
         }
 
-        return $this->doLeaveNode($node, $env);
+        return $this->doLeaveNode($node,$env);
     }
 
     /**
@@ -48,7 +48,7 @@ abstract class Twig_BaseNodeVisitor implements Twig_NodeVisitorInterface
      *
      * @return Twig_Node The modified node
      */
-    abstract protected function doEnterNode(Twig_Node $node, Twig_Environment $env);
+    abstract protected function doEnterNode(Twig_Node $node,Twig_Environment $env);
 
     /**
      * Called after child nodes are visited.
@@ -58,5 +58,5 @@ abstract class Twig_BaseNodeVisitor implements Twig_NodeVisitorInterface
      *
      * @return Twig_Node|false The modified node or false if the node must be removed
      */
-    abstract protected function doLeaveNode(Twig_Node $node, Twig_Environment $env);
+    abstract protected function doLeaveNode(Twig_Node $node,Twig_Environment $env);
 }

@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -56,10 +56,10 @@
 				{% for player in players %}
 					<tr>
 						<td><strong>{{ loop.index }}</strong></td>
-						<td><p><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a></p></td>
+						<td><p><a href="{{ env.getInternalUrl("player","id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a></p></td>
 						<td>
 							{% if player.team_id > 0 %}
-								<a href="{{ env.getInternalUrl("team", "id=" ~ player.team_id) }}">{{ player.team_name }}</a>
+								<a href="{{ env.getInternalUrl("team","id=" ~ player.team_id) }}">{{ player.team_name }}</a>
 							{% else %}
 								 -
 							{% endif %}
@@ -70,6 +70,6 @@
 			</tbody>
 		</table>
 	{% else %}
-		{{ macro.box(i18n.getMessage("no_players_found"), "", "info") }}
+		{{ macro.box(i18n.getMessage("no_players_found"),"","info") }}
 	{% endif %}
 {% endblock %}

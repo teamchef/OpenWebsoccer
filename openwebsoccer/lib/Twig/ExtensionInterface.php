@@ -5,7 +5,7 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -23,7 +23,7 @@ interface Twig_ExtensionInterface
      *
      * @param Twig_Environment $environment The current Twig_Environment instance
      *
-     * @deprecated since 1.23 (to be removed in 2.0), implement Twig_Extension_InitRuntimeInterface instead
+     * @deprecated since 1.23 (to be removed in 2.0),implement Twig_Extension_InitRuntimeInterface instead
      */
     public function initRuntime(Twig_Environment $environment);
 
@@ -74,7 +74,7 @@ interface Twig_ExtensionInterface
      *
      * @return array An array of global variables
      *
-     * @deprecated since 1.23 (to be removed in 2.0), implement Twig_Extension_GlobalsInterface instead
+     * @deprecated since 1.23 (to be removed in 2.0),implement Twig_Extension_GlobalsInterface instead
      */
     public function getGlobals();
 

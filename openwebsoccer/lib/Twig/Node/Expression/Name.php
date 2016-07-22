@@ -6,7 +6,7 @@
  * (c) 2009 Fabien Potencier
  * (c) 2009 Armin Ronacher
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 class Twig_Node_Expression_Name extends Twig_Node_Expression
@@ -17,9 +17,9 @@ class Twig_Node_Expression_Name extends Twig_Node_Expression
         '_charset' => '$this->env->getCharset()',
     );
 
-    public function __construct($name, $lineno)
+    public function __construct($name,$lineno)
     {
-        parent::__construct(array(), array('name' => $name, 'is_defined_test' => false, 'ignore_strict_check' => false, 'always_defined' => false), $lineno);
+        parent::__construct(array(),array('name' => $name,'is_defined_test' => false,'ignore_strict_check' => false,'always_defined' => false),$lineno);
     }
 
     public function compile(Twig_Compiler $compiler)
@@ -32,7 +32,7 @@ class Twig_Node_Expression_Name extends Twig_Node_Expression
             if ($this->isSpecial()) {
                 $compiler->repr(true);
             } else {
-                $compiler->raw('array_key_exists(')->repr($name)->raw(', $context)');
+                $compiler->raw('array_key_exists(')->repr($name)->raw(',$context)');
             }
         } elseif ($this->isSpecial()) {
             $compiler->raw($this->specialVars[$name]);
@@ -59,16 +59,16 @@ class Twig_Node_Expression_Name extends Twig_Node_Expression
                 if ($this->getAttribute('ignore_strict_check') || !$compiler->getEnvironment()->isStrictVariables()) {
                     $compiler->raw('null)');
                 } else {
-                    $compiler->raw('$this->getContext($context, ')->string($name)->raw('))');
+                    $compiler->raw('$this->getContext($context,')->string($name)->raw('))');
                 }
             } else {
                 $compiler
-                    ->raw('$this->getContext($context, ')
+                    ->raw('$this->getContext($context,')
                     ->string($name)
                 ;
 
                 if ($this->getAttribute('ignore_strict_check')) {
-                    $compiler->raw(', true');
+                    $compiler->raw(',true');
                 }
 
                 $compiler

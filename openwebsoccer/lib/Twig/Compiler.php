@@ -6,7 +6,7 @@
  * (c) 2009 Fabien Potencier
  * (c) 2009 Armin Ronacher
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -69,7 +69,7 @@ class Twig_Compiler implements Twig_CompilerInterface
      *
      * @return Twig_Compiler The current compiler instance
      */
-    public function compile(Twig_NodeInterface $node, $indentation = 0)
+    public function compile(Twig_NodeInterface $node,$indentation = 0)
     {
         $this->lastLine = null;
         $this->source = '';
@@ -88,7 +88,7 @@ class Twig_Compiler implements Twig_CompilerInterface
         return $this;
     }
 
-    public function subcompile(Twig_NodeInterface $node, $raw = true)
+    public function subcompile(Twig_NodeInterface $node,$raw = true)
     {
         if (false === $raw) {
             $this->addIndentation();
@@ -136,7 +136,7 @@ class Twig_Compiler implements Twig_CompilerInterface
      */
     public function addIndentation()
     {
-        $this->source .= str_repeat(' ', $this->indentation * 4);
+        $this->source .= str_repeat(' ',$this->indentation * 4);
 
         return $this;
     }
@@ -150,7 +150,7 @@ class Twig_Compiler implements Twig_CompilerInterface
      */
     public function string($value)
     {
-        $this->source .= sprintf('"%s"', addcslashes($value, "\0\t\"\$\\"));
+        $this->source .= sprintf('"%s"',addcslashes($value,"\0\t\"\$\\"));
 
         return $this;
     }
@@ -165,14 +165,14 @@ class Twig_Compiler implements Twig_CompilerInterface
     public function repr($value)
     {
         if (is_int($value) || is_float($value)) {
-            if (false !== $locale = setlocale(LC_NUMERIC, 0)) {
-                setlocale(LC_NUMERIC, 'C');
+            if (false !== $locale = setlocale(LC_NUMERIC,0)) {
+                setlocale(LC_NUMERIC,'C');
             }
 
             $this->raw($value);
 
             if (false !== $locale) {
-                setlocale(LC_NUMERIC, $locale);
+                setlocale(LC_NUMERIC,$locale);
             }
         } elseif (null === $value) {
             $this->raw('null');
@@ -183,7 +183,7 @@ class Twig_Compiler implements Twig_CompilerInterface
             $first = true;
             foreach ($value as $key => $v) {
                 if (!$first) {
-                    $this->raw(', ');
+                    $this->raw(',');
                 }
                 $first = false;
                 $this->repr($key);
@@ -208,16 +208,16 @@ class Twig_Compiler implements Twig_CompilerInterface
     public function addDebugInfo(Twig_NodeInterface $node)
     {
         if ($node->getLine() != $this->lastLine) {
-            $this->write(sprintf("// line %d\n", $node->getLine()));
+            $this->write(sprintf("// line %d\n",$node->getLine()));
 
             // when mbstring.func_overload is set to 2
             // mb_substr_count() replaces substr_count()
             // but they have different signatures!
             if (((int) ini_get('mbstring.func_overload')) & 2) {
                 // this is much slower than the "right" version
-                $this->sourceLine += mb_substr_count(mb_substr($this->source, $this->sourceOffset), "\n");
+                $this->sourceLine += mb_substr_count(mb_substr($this->source,$this->sourceOffset),"\n");
             } else {
-                $this->sourceLine += substr_count($this->source, "\n", $this->sourceOffset);
+                $this->sourceLine += substr_count($this->source,"\n",$this->sourceOffset);
             }
             $this->sourceOffset = strlen($this->source);
             $this->debugInfo[$this->sourceLine] = $node->getLine();
@@ -272,6 +272,6 @@ class Twig_Compiler implements Twig_CompilerInterface
 
     public function getVarName()
     {
-        return sprintf('__internal_%s', hash('sha256', uniqid(mt_rand(), true), false));
+        return sprintf('__internal_%s',hash('sha256',uniqid(mt_rand(),true),false));
     }
 }

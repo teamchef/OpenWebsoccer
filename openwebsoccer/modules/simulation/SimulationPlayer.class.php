@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -48,7 +48,7 @@ class SimulationPlayer
 	public $position;
 	/**
 	 * @var main position (as in DB) on which player is actually playing during this match.
-	 * NOTE that before version 4.0.0, this had been the player's main position, regardless of actual positiom.
+	 * NOTE that before version 4.0.0,this had been the player's main position,regardless of actual positiom.
 	 */
 	public $mainPosition;
 	/**
@@ -106,7 +106,7 @@ class SimulationPlayer
 	private $passesFailed;
 	private $assists;
 	private $needsStrengthRecomputation;
-	FUNCTION __construct($id, $team, $position, $mainPosition, $mark, $age, $strength, $strengthTech, $strengthStamina, $strengthFreshness, $strengthSatisfaction)
+	FUNCTION __construct($id,$team,$position,$mainPosition,$mark,$age,$strength,$strengthTech,$strengthStamina,$strengthFreshness,$strengthSatisfaction)
 	{
  		$this->id = $id;
  		$this->team = $team;
@@ -131,7 +131,7 @@ class SimulationPlayer
  		$this->passesFailed = 0;
  		$this->assists = 0;
  	}
-    FUNCTION getTotalStrength(WebSoccer $websoccer, SimulationMatch $match)
+    FUNCTION getTotalStrength(WebSoccer $websoccer,SimulationMatch $match)
     {
     	if ($this->totalStrength == null || $this->needsStrengthRecomputation == TRUE) {
     		$this->recomputeTotalStrength($websoccer,$match);
@@ -151,15 +151,15 @@ class SimulationPlayer
     }
     FUNCTION improveMark($improvement)
     {
-    	$newMark = max((float) $this->mark - $improvement, 1);
+    	$newMark = max((float) $this->mark - $improvement,1);
     	$this->setMark($newMark);
     }
     FUNCTION downgradeMark($downgrade)
     {
-    	$newMark = min((float) $this->mark + $downgrade, 6);
+    	$newMark = min((float) $this->mark + $downgrade,6);
     	$this->setMark($newMark);
     }
-    FUNCTION recomputeTotalStrength(WebSoccer $websoccer, SimulationMatch $match)
+    FUNCTION recomputeTotalStrength(WebSoccer $websoccer,SimulationMatch $match)
     {
     	$mainStrength = $this->strength;
     	// home field advantage
@@ -182,9 +182,9 @@ class SimulationPlayer
     	$totalStrength += $this->strengthFreshness * $websoccer->getConfig("sim_weight_strengthFreshness");
     	$totalStrength += $this->strengthSatisfaction * $websoccer->getConfig("sim_weight_strengthSatisfaction");
     	$totalStrength = $totalStrength / $weightsSum;
-    	// consider mark (1.0 -> +10%, 6.0 -> -10%)
+    	// consider mark (1.0 -> +10%,6.0 -> -10%)
     	$totalStrength = $totalStrength * (114 - 4 * $this->mark) / 100;
-    	$this->totalStrength = min(100, round($totalStrength));
+    	$this->totalStrength = min(100,round($totalStrength));
     	$this->needsStrengthRecomputation = FALSE;
     }
     FUNCTION getWonTackles()
@@ -271,14 +271,14 @@ class SimulationPlayer
     {
     	return $this->minutesPlayed;
     }
-    FUNCTION setMinutesPlayed($minutesPlayed, $recomputeFreshness = TRUE)
+    FUNCTION setMinutesPlayed($minutesPlayed,$recomputeFreshness = TRUE)
     {
     	if ($this->minutesPlayed < $minutesPlayed) {
     		$this->minutesPlayed = $minutesPlayed;
     		if ($recomputeFreshness && $minutesPlayed % 20 == 0) {
     			// goaly looses only 1 freshness only after 20 minutes
     			if ($minutesPlayed == 20 && $this->position == PLAYER_POSITION_GOALY) {
-    				$this->strengthFreshness = max(1, $this->strengthFreshness - 1);
+    				$this->strengthFreshness = max(1,$this->strengthFreshness - 1);
     				$this->needsStrengthRecomputation = TRUE;
     			} else if ($this->position != PLAYER_POSITION_GOALY) {
     				$this->looseFreshness();
@@ -304,13 +304,13 @@ class SimulationPlayer
     	if ($this->strengthStamina < 40) {
     		$freshness -= 1;
     	}
-    	$freshness = max(1, $freshness);
+    	$freshness = max(1,$freshness);
     	$this->strengthFreshness = $freshness;
     	$this->needsStrengthRecomputation = TRUE;
     }
     FUNCTION __toString()
     {
-    	return "{id: ". $this->id .", team: ". $this->team->id . ", position: ". $this->position .", mark: ". $this->mark
-    		.", strength: " . $this->strength . ", strengthTech: " . $this->strengthTech . ", strengthStamina: " . $this->strengthStamina . ", strengthFreshness: " . $this->strengthFreshness . ", strengthSatisfaction: " . $this->strengthSatisfaction . "}";
+    	return "{id: ". $this->id .",team: ". $this->team->id . ",position: ". $this->position .",mark: ". $this->mark
+    		.",strength: " . $this->strength . ",strengthTech: " . $this->strengthTech . ",strengthStamina: " . $this->strengthStamina . ",strengthFreshness: " . $this->strengthFreshness . ",strengthSatisfaction: " . $this->strengthSatisfaction . "}";
     }
 }

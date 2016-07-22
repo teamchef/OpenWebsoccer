@@ -6,7 +6,7 @@
  * (c) 2009 Fabien Potencier
  * (c) 2009 Armin Ronacher
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -33,7 +33,7 @@ class Twig_Node implements Twig_NodeInterface
      * @param int    $lineno     The line number
      * @param string $tag        The tag name associated with the Node
      */
-    public function __construct(array $nodes = array(), array $attributes = array(), $lineno = 0, $tag = null)
+    public function __construct(array $nodes = array(),array $attributes = array(),$lineno = 0,$tag = null)
     {
         $this->nodes = $nodes;
         $this->attributes = $attributes;
@@ -45,20 +45,20 @@ class Twig_Node implements Twig_NodeInterface
     {
         $attributes = array();
         foreach ($this->attributes as $name => $value) {
-            $attributes[] = sprintf('%s: %s', $name, str_replace("\n", '', var_export($value, true)));
+            $attributes[] = sprintf('%s: %s',$name,str_replace("\n",'',var_export($value,true)));
         }
 
-        $repr = array(get_class($this).'('.implode(', ', $attributes));
+        $repr = array(get_class($this).'('.implode(',',$attributes));
 
         if (count($this->nodes)) {
             foreach ($this->nodes as $name => $node) {
                 $len = strlen($name) + 4;
                 $noderepr = array();
-                foreach (explode("\n", (string) $node) as $line) {
-                    $noderepr[] = str_repeat(' ', $len).$line;
+                foreach (explode("\n",(string) $node) as $line) {
+                    $noderepr[] = str_repeat(' ',$len).$line;
                 }
 
-                $repr[] = sprintf('  %s: %s', $name, ltrim(implode("\n", $noderepr)));
+                $repr[] = sprintf('  %s: %s',$name,ltrim(implode("\n",$noderepr)));
             }
 
             $repr[] = ')';
@@ -66,7 +66,7 @@ class Twig_Node implements Twig_NodeInterface
             $repr[0] .= ')';
         }
 
-        return implode("\n", $repr);
+        return implode("\n",$repr);
     }
 
     /**
@@ -74,18 +74,18 @@ class Twig_Node implements Twig_NodeInterface
      */
     public function toXml($asDom = false)
     {
-        @trigger_error(sprintf('%s is deprecated since version 1.16.1 and will be removed in 2.0.', __METHOD__), E_USER_DEPRECATED);
+        @trigger_error(sprintf('%s is deprecated since version 1.16.1 and will be removed in 2.0.',__METHOD__),E_USER_DEPRECATED);
 
-        $dom = new DOMDocument('1.0', 'UTF-8');
+        $dom = new DOMDocument('1.0','UTF-8');
         $dom->formatOutput = true;
         $dom->appendChild($xml = $dom->createElement('twig'));
 
         $xml->appendChild($node = $dom->createElement('node'));
-        $node->setAttribute('class', get_class($this));
+        $node->setAttribute('class',get_class($this));
 
         foreach ($this->attributes as $name => $value) {
             $node->appendChild($attribute = $dom->createElement('attribute'));
-            $attribute->setAttribute('name', $name);
+            $attribute->setAttribute('name',$name);
             $attribute->appendChild($dom->createTextNode($value));
         }
 
@@ -95,8 +95,8 @@ class Twig_Node implements Twig_NodeInterface
             }
 
             $child = $n->toXml(true)->getElementsByTagName('node')->item(0);
-            $child = $dom->importNode($child, true);
-            $child->setAttribute('name', $name);
+            $child = $dom->importNode($child,true);
+            $child->setAttribute('name',$name);
 
             $node->appendChild($child);
         }
@@ -126,11 +126,11 @@ class Twig_Node implements Twig_NodeInterface
      *
      * @param string $name The attribute name
      *
-     * @return bool true if the attribute is defined, false otherwise
+     * @return bool true if the attribute is defined,false otherwise
      */
     public function hasAttribute($name)
     {
-        return array_key_exists($name, $this->attributes);
+        return array_key_exists($name,$this->attributes);
     }
 
     /**
@@ -142,8 +142,8 @@ class Twig_Node implements Twig_NodeInterface
      */
     public function getAttribute($name)
     {
-        if (!array_key_exists($name, $this->attributes)) {
-            throw new LogicException(sprintf('Attribute "%s" does not exist for Node "%s".', $name, get_class($this)));
+        if (!array_key_exists($name,$this->attributes)) {
+            throw new LogicException(sprintf('Attribute "%s" does not exist for Node "%s".',$name,get_class($this)));
         }
 
         return $this->attributes[$name];
@@ -155,7 +155,7 @@ class Twig_Node implements Twig_NodeInterface
      * @param string $name
      * @param mixed  $value
      */
-    public function setAttribute($name, $value)
+    public function setAttribute($name,$value)
     {
         $this->attributes[$name] = $value;
     }
@@ -179,7 +179,7 @@ class Twig_Node implements Twig_NodeInterface
      */
     public function hasNode($name)
     {
-        return array_key_exists($name, $this->nodes);
+        return array_key_exists($name,$this->nodes);
     }
 
     /**
@@ -191,8 +191,8 @@ class Twig_Node implements Twig_NodeInterface
      */
     public function getNode($name)
     {
-        if (!array_key_exists($name, $this->nodes)) {
-            throw new LogicException(sprintf('Node "%s" does not exist for Node "%s".', $name, get_class($this)));
+        if (!array_key_exists($name,$this->nodes)) {
+            throw new LogicException(sprintf('Node "%s" does not exist for Node "%s".',$name,get_class($this)));
         }
 
         return $this->nodes[$name];
@@ -204,7 +204,7 @@ class Twig_Node implements Twig_NodeInterface
      * @param string    $name
      * @param Twig_Node $node
      */
-    public function setNode($name, $node = null)
+    public function setNode($name,$node = null)
     {
         $this->nodes[$name] = $node;
     }

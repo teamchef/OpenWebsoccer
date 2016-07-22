@@ -5,7 +5,7 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -27,7 +27,7 @@ class Twig_NodeTraverser
      * @param Twig_Environment            $env      A Twig_Environment instance
      * @param Twig_NodeVisitorInterface[] $visitors An array of Twig_NodeVisitorInterface instances
      */
-    public function __construct(Twig_Environment $env, array $visitors = array())
+    public function __construct(Twig_Environment $env,array $visitors = array())
     {
         $this->env = $env;
         foreach ($visitors as $visitor) {
@@ -61,29 +61,29 @@ class Twig_NodeTraverser
         ksort($this->visitors);
         foreach ($this->visitors as $visitors) {
             foreach ($visitors as $visitor) {
-                $node = $this->traverseForVisitor($visitor, $node);
+                $node = $this->traverseForVisitor($visitor,$node);
             }
         }
 
         return $node;
     }
 
-    protected function traverseForVisitor(Twig_NodeVisitorInterface $visitor, Twig_NodeInterface $node = null)
+    protected function traverseForVisitor(Twig_NodeVisitorInterface $visitor,Twig_NodeInterface $node = null)
     {
         if (null === $node) {
             return;
         }
 
-        $node = $visitor->enterNode($node, $this->env);
+        $node = $visitor->enterNode($node,$this->env);
 
         foreach ($node as $k => $n) {
-            if (false !== $n = $this->traverseForVisitor($visitor, $n)) {
-                $node->setNode($k, $n);
+            if (false !== $n = $this->traverseForVisitor($visitor,$n)) {
+                $node->setNode($k,$n);
             } else {
                 $node->removeNode($k);
             }
         }
 
-        return $visitor->leaveNode($node, $this->env);
+        return $visitor->leaveNode($node,$this->env);
     }
 }

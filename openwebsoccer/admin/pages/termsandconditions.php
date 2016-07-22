@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -69,9 +69,9 @@ if (!$show) {
 			<?php
 			$formFields = array();
 			$terms = (string) $termsConfig[0];
-			$formFields["content"] = array("type" => "html", "value" => $terms, "required" => "true");
+			$formFields["content"] = array("type" => "html","value" => $terms,"required" => "true");
 			foreach ($formFields as $fieldId => $fieldInfo) {
-				echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "imprint_label_");
+				echo FormBuilder::createFormGroup($i18n,$fieldId,$fieldInfo,$fieldInfo["value"],"imprint_label_");
 			}
 			?>
 		</fieldset>
@@ -85,7 +85,7 @@ if (!$show) {
 // Eingabe speichern
 elseif ($show == "save") {
 	if (!isset($_POST['content']) || !strlen($_POST['content'])) $err[] = $i18n->getMessage("imprint_validationerror_content");
-	if (!is_writable($termsFile)) $err[] = $i18n->getMessage("termsandconditions_err_filenotwritable", $termsFile);
+	if (!is_writable($termsFile)) $err[] = $i18n->getMessage("termsandconditions_err_filenotwritable",$termsFile);
 	if ($admin['r_demo']) $err[] = $i18n->getMessage("validationerror_no_changes_as_demo");
 	if (isset($err)) {
 		include("validationerror.inc.php");
@@ -93,7 +93,7 @@ elseif ($show == "save") {
 	else {
 		echo "<h1>". $mainTitle ." &raquo; ". $i18n->getMessage("subpage_save_title") . "</h1>";
 		$termsContent = stripslashes($_POST['content']);
-		// replace CDATA. Well, not easy with nice PHP, so this trick does it somehow...
+		// replace CDATA. Well,not easy with nice PHP,so this trick does it somehow...
 		$node= dom_import_simplexml($termsConfig[0]);
 		$no = $node->ownerDocument;
 		// remove existing CDATA
@@ -105,7 +105,7 @@ elseif ($show == "save") {
 		// add new CDATA
 		$node->appendChild($no->createCDATASection($termsContent));
 		$xml->asXML($termsFile);
-		echo createSuccessMessage($i18n->getMessage("alert_save_success"), "");
+		echo createSuccessMessage($i18n->getMessage("alert_save_success"),"");
 		echo "<p>&raquo; <a href=\"?site=". $site ."\">". $i18n->getMessage("back_label") . "</a></p>\n";
 	}
 }

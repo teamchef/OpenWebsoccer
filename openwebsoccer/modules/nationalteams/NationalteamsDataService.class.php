@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,16 +30,16 @@
 SEC;
 class NationalteamsDataService
 {
-	FUNCTION getNationalTeamManagedByCurrentUser(WebSoccer $websoccer, DbConnection $db)
+	FUNCTION getNationalTeamManagedByCurrentUser($websoccer,$db)
 	{
-		$result = $db->queryCachedSelect("id", $websoccer->getConfig("db_prefix") . "_verein",
-				"user_id = %d AND nationalteam = '1'", $websoccer->getUser()->id, 1);
+		$result = $db->queryCachedSelect("id",$websoccer->getConfig("db_prefix") . "_verein",
+				"user_id = %d AND nationalteam = '1'",$websoccer->getUser()->id,1);
 		if (count($result)) {
 			return $result[0]["id"];
 		}
 		return NULL;
 	}
-	FUNCTION getNationalPlayersOfTeamByPosition(WebSoccer $websoccer, DbConnection $db, $clubId, $positionSort = "ASC")
+	FUNCTION getNationalPlayersOfTeamByPosition($websoccer,$db,$clubId,$positionSort = "ASC")
 	{
 		$columns = array(
 				"P.id" => "id",
@@ -77,30 +77,30 @@ class NationalteamsDataService
 		$fromTable = $websoccer->getConfig("db_prefix") . "_spieler AS P";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_nationalplayer AS NP ON NP.player_id = P.id";
 		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.id = P.verein_id";
-		$whereCondition = "P.status = 1 AND NP.team_id = %d ORDER BY position ". $positionSort . ", position_main ASC, nachname ASC, vorname ASC";
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 50);
+		$whereCondition = "P.status = 1 AND NP.team_id = %d ORDER BY position ". $positionSort . ",position_main ASC,nachname ASC,vorname ASC";
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$clubId,50);
 		$players = array();
 		while ($player = $result->fetch_array()) {
 			$player["position"] = PlayersDataService::_convertPosition($player["position"]);
 			$player["player_nationality_filename"] = PlayersDataService::getFlagFilename($player["player_nationality"]);
-			$player["marketvalue"] = PlayersDataService::getMarketValue($websoccer, $player, "");
+			$player["marketvalue"] = PlayersDataService::getMarketValue($websoccer,$player,"");
 			$players[$player["position"]][] = $player;
 		}
 		$result->free();
 		return $players;
 	}
-	FUNCTION findPlayersCount(WebSoccer $websoccer, DbConnection $db, $nationality, $teamId, $firstName, $lastName, $position, $mainPosition)
+	FUNCTION findPlayersCount($websoccer,$db,$nationality,$teamId,$firstName,$lastName,$position,$mainPosition)
 	{
 		$columns = "COUNT(*) AS hits";
-		$result = self::executeFindQuery($websoccer, $db, $columns, 1, $nationality, $teamId, $firstName, $lastName, $position, $mainPosition);
+		$result = self::executeFindQuery($db,$columns,1,$nationality,$teamId,$firstName,$lastName,$position,$mainPosition);
 		$players = $result->fetch_array();
 		$result->free();
 		if (isset($players["hits"])) {
 			return $players["hits"];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION findPlayers(WebSoccer $websoccer, DbConnection $db, $nationality, $teamId, $firstName, $lastName, $position, $mainPosition, $startIndex, $entries_per_page)
+	FUNCTION findPlayers($websoccer,$db,$nationality,$teamId,$firstName,$lastName,$position,$mainPosition,$startIndex,$entries_per_page)
 	{
 		$columns["P.id"] = "id";
 		$columns["P.vorname"] = "firstname";
@@ -117,7 +117,7 @@ class NationalteamsDataService
 		$columns["C.id"] = "team_id";
 		$columns["C.name"] = "team_name";
 		$limit = $startIndex .",". $entries_per_page;
-		$result = self::executeFindQuery($websoccer, $db, $columns, $limit, $nationality, $teamId, $firstName, $lastName, $position, $mainPosition);
+		$result = self::executeFindQuery($websoccer,$db,$columns,$limit,$nationality,$teamId,$firstName,$lastName,$position,$mainPosition);
 		$players = array();
 		while ($player = $result->fetch_array()) {
 			$player["position"] = PlayersDataService::_convertPosition($player["position"]);
@@ -126,7 +126,7 @@ class NationalteamsDataService
 		$result->free();
 		return $players;
 	}
-	FUNCTION executeFindQuery(WebSoccer $websoccer, DbConnection $db, $columns, $limit, $nationality, $teamId, $firstName, $lastName, $position, $mainPosition)
+	FUNCTION executeFindQuery($websoccer,$db,$columns,$limit,$nationality,$teamId,$firstName,$lastName,$position,$mainPosition)
 	{
 		$whereCondition = "P.status = 1 AND P.nation = '%s' AND P.verletzt = 0 AND P.id NOT IN (SELECT player_id FROM ". $websoccer->getConfig("db_prefix") . "_nationalplayer WHERE team_id = %d)";
 		$parameters = array();
@@ -152,44 +152,43 @@ class NationalteamsDataService
 			$parameters[] = $mainPosition;
 			$parameters[] = $mainPosition;
 		}
-		$whereCondition .= " ORDER BY w_staerke DESC, w_technik DESC";
+		$whereCondition .= " ORDER BY w_staerke DESC,w_technik DESC";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_spieler AS P";
 		$fromTable .= " LEFT JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS C ON C.id = P.verein_id";
-		return $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		return $db->querySelect($columns,$fromTable,$whereCondition,$parameters,$limit);
 	}
-	FUNCTION countNextMatches(WebSoccer $websoccer, DbConnection $db, $teamId)
+	FUNCTION countNextMatches($websoccer,$db,$teamId)
 	{
 		$columns = "COUNT(*) AS hits";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_spiel";
-		$result = $db->querySelect($columns, $fromTable, "(home_verein = %d OR gast_verein = %d) AND datum > %d", array($teamId, $teamId, $websoccer->getNowAsTimestamp()));
+		$result = $db->querySelect($columns,$fromTable,"(home_verein = %d OR gast_verein = %d) AND datum > %d",array($teamId,$teamId,$websoccer->getNowAsTimestamp()));
 		$matches = $result->fetch_array();
 		$result->free();
 		if (isset($matches["hits"])) {
 			return $matches["hits"];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION getNextMatches(WebSoccer $websoccer, DbConnection $db, $teamId, $startIndex, $eps)
+	FUNCTION getNextMatches($websoccer,$db,$teamId,$startIndex,$eps)
 	{
 		$whereCondition = "(home_verein = %d OR gast_verein = %d) AND datum > %d ORDER BY datum ASC";
-		return MatchesDataService::getMatchesByCondition($websoccer, $db, $whereCondition,
-				array($teamId, $teamId, $websoccer->getNowAsTimestamp()), $startIndex . "," . $eps);
+		return MatchesDataService::getMatchesByCondition($websoccer,$db,$whereCondition,array($teamId,$teamId,$websoccer->getNowAsTimestamp()),$startIndex . "," . $eps);
 	}
-	FUNCTION countSimulatedMatches(WebSoccer $websoccer, DbConnection $db, $teamId)
+	FUNCTION countSimulatedMatches($websoccer,$db,$teamId)
 	{
 		$columns = "COUNT(*) AS hits";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_spiel";
-		$result = $db->querySelect($columns, $fromTable, "(home_verein = %d OR gast_verein = %d) AND berechnet = '1'", array($teamId, $teamId));
+		$result = $db->querySelect($columns,$fromTable,"(home_verein = %d OR gast_verein = %d) AND berechnet = '1'",array($teamId,$teamId));
 		$matches = $result->fetch_array();
 		$result->free();
 		if (isset($matches["hits"])) {
 			return $matches["hits"];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION getSimulatedMatches(WebSoccer $websoccer, DbConnection $db, $teamId, $startIndex, $eps) {
+	FUNCTION getSimulatedMatches($websoccer,$db,$teamId,$startIndex,$eps)
+	{
 		$whereCondition = "(home_verein = %d OR gast_verein = %d) AND berechnet = '1' ORDER BY datum DESC";
-		return MatchesDataService::getMatchesByCondition($websoccer, $db, $whereCondition,
-				array($teamId, $teamId), $startIndex . "," . $eps);
+		return MatchesDataService::getMatchesByCondition($websoccer,$db,$whereCondition,array($teamId,$teamId),$startIndex . "," . $eps);
 	}
 }

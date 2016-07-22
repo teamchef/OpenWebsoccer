@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,13 +28,13 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-define("NOTIFICATION_TYPE", "transferoffer");
-define("NOTIFICATION_TARGETPAGE", "transferoffers");
+define("NOTIFICATION_TYPE","transferoffer");
+define("NOTIFICATION_TARGETPAGE","transferoffers");
 class DirectTransfersDataService
 {
-	FUNCTION createTransferOffer(WebSoccer $websoccer, DbConnection $db, $playerId,
-			$senderUserId, $senderClubId, $receiverUserId, $receiverClubId,
-			$offerAmount, $offerMessage, $offerPlayerId1 = null, $offerPlayerId2 = null) {
+	FUNCTION createTransferOffer(WebSoccer $websoccer,DbConnection $db,$playerId,
+			$senderUserId,$senderClubId,$receiverUserId,$receiverClubId,
+			$offerAmount,$offerMessage,$offerPlayerId1 = null,$offerPlayerId2 = null) {
 		$columns = array(
 				"player_id" => $playerId,
 				"sender_user_id" => $senderUserId,
@@ -46,63 +46,63 @@ class DirectTransfersDataService
 				"offer_player1" => $offerPlayerId1,
 				"offer_player2" => $offerPlayerId2
 				);
-		$db->queryInsert($columns, $websoccer->getConfig("db_prefix") . "_transfer_offer");
-		$sender = UsersDataService::getUserById($websoccer, $db, $senderUserId);
+		$db->queryInsert($columns,$websoccer->getConfig("db_prefix") . "_transfer_offer");
+		$sender = UsersDataService::getUserById($websoccer,$db,$senderUserId);
 		// create notification
-		NotificationsDataService::createNotification($websoccer, $db, $receiverUserId, "transferoffer_notification_offerreceived",
-			array("sendername" => $sender["nick"]), NOTIFICATION_TYPE, NOTIFICATION_TARGETPAGE, null, $receiverClubId);
+		NotificationsDataService::createNotification($websoccer,$db,$receiverUserId,"transferoffer_notification_offerreceived",
+			array("sendername" => $sender["nick"]),NOTIFICATION_TYPE,NOTIFICATION_TARGETPAGE,null,$receiverClubId);
 	}
-	FUNCTION executeTransferFromOffer(WebSoccer $websoccer, DbConnection $db, $offerId) {
+	FUNCTION executeTransferFromOffer(WebSoccer $websoccer,DbConnection $db,$offerId) {
 		// offer data
-		$result = $db->querySelect("*", $websoccer->getConfig("db_prefix") . "_transfer_offer", "id = %d", $offerId);
+		$result = $db->querySelect("*",$websoccer->getConfig("db_prefix") . "_transfer_offer","id = %d",$offerId);
 		$offer = $result->fetch_array();
 		$result->free();
 		if (!$offer) {
 			return;
 		}
-		$currentTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $offer["receiver_club_id"]);
-		$targetTeam = TeamsDataService::getTeamSummaryById($websoccer, $db, $offer["sender_club_id"]);
+		$currentTeam = TeamsDataService::getTeamSummaryById($websoccer,$db,$offer["receiver_club_id"]);
+		$targetTeam = TeamsDataService::getTeamSummaryById($websoccer,$db,$offer["sender_club_id"]);
 		// move player (and create transfer log)
-		self::_transferPlayer($websoccer, $db, $offer["player_id"], $offer["sender_club_id"], $offer["sender_user_id"],
-				$currentTeam["user_id"], $offer["receiver_club_id"], $offer["offer_amount"], $offer["offer_player1"], $offer["offer_player2"]);
+		self::_transferPlayer($websoccer,$db,$offer["player_id"],$offer["sender_club_id"],$offer["sender_user_id"],
+				$currentTeam["user_id"],$offer["receiver_club_id"],$offer["offer_amount"],$offer["offer_player1"],$offer["offer_player2"]);
 		// credit amount
-		BankAccountDataService::creditAmount($websoccer, $db, $offer["receiver_club_id"], $offer["offer_amount"], "directtransfer_subject",
+		BankAccountDataService::creditAmount($websoccer,$db,$offer["receiver_club_id"],$offer["offer_amount"],"directtransfer_subject",
 			$targetTeam["team_name"]);
 		// debit amount
-		BankAccountDataService::debitAmount($websoccer, $db, $offer["sender_club_id"], $offer["offer_amount"], "directtransfer_subject",
+		BankAccountDataService::debitAmount($websoccer,$db,$offer["sender_club_id"],$offer["offer_amount"],"directtransfer_subject",
 			$currentTeam["team_name"]);
 		// move exchange players
 		if ($offer["offer_player1"]) {
-			self::_transferPlayer($websoccer, $db, $offer["offer_player1"], $offer["receiver_club_id"], $currentTeam["user_id"],
-					$targetTeam["user_id"], $offer["sender_club_id"], 0, $offer["player_id"]);
+			self::_transferPlayer($websoccer,$db,$offer["offer_player1"],$offer["receiver_club_id"],$currentTeam["user_id"],
+					$targetTeam["user_id"],$offer["sender_club_id"],0,$offer["player_id"]);
 		}
 		if ($offer["offer_player2"]) {
-			self::_transferPlayer($websoccer, $db, $offer["offer_player2"], $offer["receiver_club_id"], $currentTeam["user_id"],
-					$targetTeam["user_id"], $offer["sender_club_id"], 0, $offer["player_id"]);
+			self::_transferPlayer($websoccer,$db,$offer["offer_player2"],$offer["receiver_club_id"],$currentTeam["user_id"],
+					$targetTeam["user_id"],$offer["sender_club_id"],0,$offer["player_id"]);
 		}
 		// delete offer and other offers for this player
-		$db->queryDelete($websoccer->getConfig("db_prefix") . "_transfer_offer", "player_id = %d", $offer["player_id"]);
+		$db->queryDelete($websoccer->getConfig("db_prefix") . "_transfer_offer","player_id = %d",$offer["player_id"]);
 		// get player name for notification
-		$player = PlayersDataService::getPlayerById($websoccer, $db, $offer["player_id"]);
+		$player = PlayersDataService::getPlayerById($websoccer,$db,$offer["player_id"]);
 		if ($player["player_pseudonym"]) {
 			$playerName = $player["player_pseudonym"];
 		} else {
 			$playerName = $player["player_firstname"] . " " . $player["player_lastname"];
 		}
 		// notify and award users
-		NotificationsDataService::createNotification($websoccer, $db, $currentTeam["user_id"], "transferoffer_notification_executed",
-			array("playername" => $playerName), NOTIFICATION_TYPE, "player", "id=" . $offer["player_id"], $currentTeam["team_id"]);
-		NotificationsDataService::createNotification($websoccer, $db, $offer["sender_user_id"], "transferoffer_notification_executed",
-			array("playername" => $playerName), NOTIFICATION_TYPE, "player", "id=" . $offer["player_id"], $targetTeam['team_id']);
-		TransfermarketDataService::awardUserForTrades($websoccer, $db, $currentTeam["user_id"]);
-		TransfermarketDataService::awardUserForTrades($websoccer, $db, $offer["sender_user_id"]);
+		NotificationsDataService::createNotification($websoccer,$db,$currentTeam["user_id"],"transferoffer_notification_executed",
+			array("playername" => $playerName),NOTIFICATION_TYPE,"player","id=" . $offer["player_id"],$currentTeam["team_id"]);
+		NotificationsDataService::createNotification($websoccer,$db,$offer["sender_user_id"],"transferoffer_notification_executed",
+			array("playername" => $playerName),NOTIFICATION_TYPE,"player","id=" . $offer["player_id"],$targetTeam['team_id']);
+		TransfermarketDataService::awardUserForTrades($websoccer,$db,$currentTeam["user_id"]);
+		TransfermarketDataService::awardUserForTrades($websoccer,$db,$offer["sender_user_id"]);
 	}
-	FUNCTION _transferPlayer(WebSoccer $websoccer, DbConnection $db, $playerId,
-			$targetClubId, $targetUserId, $currentUserId, $currentClubId, $amount,
-			$exchangePlayer1 = 0, $exchangePlayer2 = 0) {
+	FUNCTION _transferPlayer(WebSoccer $websoccer,DbConnection $db,$playerId,
+			$targetClubId,$targetUserId,$currentUserId,$currentClubId,$amount,
+			$exchangePlayer1 = 0,$exchangePlayer2 = 0) {
 		$db->queryUpdate(array("verein_id" => $targetClubId,
 				"vertrag_spiele" => $websoccer->getConfig("transferoffers_contract_matches")),
-				$websoccer->getConfig("db_prefix") . "_spieler", "id = %d", $playerId);
+				$websoccer->getConfig("db_prefix") . "_spieler","id = %d",$playerId);
 		// create log
 		$db->queryInsert(array(
 				"bid_id" => 0,
@@ -115,43 +115,43 @@ class DirectTransfersDataService
 				"directtransfer_amount" => $amount,
 				"directtransfer_player1" => $exchangePlayer1,
 				"directtransfer_player2" => $exchangePlayer2
-				), $websoccer->getConfig("db_prefix") . "_transfer");
+				),$websoccer->getConfig("db_prefix") . "_transfer");
 	}
-	FUNCTION countReceivedOffers(WebSoccer $websoccer, DbConnection $db, $clubId) {
+	FUNCTION countReceivedOffers(WebSoccer $websoccer,DbConnection $db,$clubId) {
 		$columns = "COUNT(*) AS hits";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_transfer_offer";
 		$whereCondition = "receiver_club_id = %d AND (rejected_date = 0 OR admin_approval_pending = '1')";
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$clubId);
 		$players = $result->fetch_array();
 		$result->free();
 		if (isset($players["hits"])) {
 			return $players["hits"];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION getReceivedOffers(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $clubId) {
+	FUNCTION getReceivedOffers(WebSoccer $websoccer,DbConnection $db,$startIndex,$entries_per_page,$clubId) {
 		$whereCondition = "O.receiver_club_id = %d AND (O.rejected_date = 0 OR O.admin_approval_pending = '1')";
 		$parameters = array($clubId);
-		return self::_queryOffers($websoccer, $db, $startIndex, $entries_per_page, $whereCondition, $parameters);
+		return self::_queryOffers($websoccer,$db,$startIndex,$entries_per_page,$whereCondition,$parameters);
 	}
-	FUNCTION countSentOffers(WebSoccer $websoccer, DbConnection $db, $clubId, $userId) {
+	FUNCTION countSentOffers(WebSoccer $websoccer,DbConnection $db,$clubId,$userId) {
 		$columns = "COUNT(*) AS hits";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_transfer_offer";
 		$whereCondition = "sender_club_id = %d AND sender_user_id = %d";
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, array($clubId, $userId));
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,array($clubId,$userId));
 		$players = $result->fetch_array();
 		$result->free();
 		if (isset($players["hits"])) {
 			return $players["hits"];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION getSentOffers(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $clubId, $userId) {
+	FUNCTION getSentOffers(WebSoccer $websoccer,DbConnection $db,$startIndex,$entries_per_page,$clubId,$userId) {
 		$whereCondition = "O.sender_club_id = %d AND O.sender_user_id = %d";
-		$parameters = array($clubId, $userId);
-		return self::_queryOffers($websoccer, $db, $startIndex, $entries_per_page, $whereCondition, $parameters);
+		$parameters = array($clubId,$userId);
+		return self::_queryOffers($websoccer,$db,$startIndex,$entries_per_page,$whereCondition,$parameters);
 	}
-	FUNCTION _queryOffers(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $whereCondition, $parameters) {
+	FUNCTION _queryOffers(WebSoccer $websoccer,DbConnection $db,$startIndex,$entries_per_page,$whereCondition,$parameters) {
 		$columns = array(
 				"O.id" => "offer_id",
 				"O.submitted_date" => "offer_submitted_date",
@@ -201,9 +201,9 @@ class DirectTransfersDataService
 		$whereCondition .= " ORDER BY O.submitted_date DESC";
 		$limit = $startIndex .",". $entries_per_page;
 		$offers = array();
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters,$limit);
 		while ($offer = $result->fetch_array()) {
-			$offer["player_marketvalue"] = PlayersDataService::getMarketValue($websoccer, $offer);
+			$offer["player_marketvalue"] = PlayersDataService::getMarketValue($websoccer,$offer);
 			$offers[] = $offer;
 		}
 		$result->free();

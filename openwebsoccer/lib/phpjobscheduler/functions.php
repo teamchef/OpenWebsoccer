@@ -23,7 +23,7 @@ if (DBNAME=="")//not configured
 if (DEBUG)//warn set for testing 
 {
    error_reporting(E_ALL);
-   echo '<h2>Debug is on - to turn off see the: "readme.html" file, DEBUG section.  Error logs will not save fully until debug is off!</h2>';
+   echo '<h2>Debug is on - to turn off see the: "readme.html" file,DEBUG section.  Error logs will not save fully until debug is off!</h2>';
 }
 else error_reporting(0);
 
@@ -32,16 +32,16 @@ if (!function_exists('clean_input')) // check to see if function is not already 
  function clean_input($string)
  {
   $patterns = array(// strip out:
-                '@script*?>.*?</script@si', // javascript
-                '@<[\/\!]*?[^<>]*?>@si', // HTML tags
-                '@"@si', //double quotes
+                '@script*?>.*?</script@si',// javascript
+                '@<[\/\!]*?[^<>]*?>@si',// HTML tags
+                '@"@si',//double quotes
                 "@'@si" //single quotes
                 );
   $string = preg_replace($patterns,'',$string);
   $string = trim($string);
   $string = stripslashes($string);
 
-//return $string; // htmlentities($string);  // darf nicht umgewandelt werden, da sonst aus & dann &amo; wird
+//return $string; // htmlentities($string);  // darf nicht umgewandelt werden,da sonst aus & dann &amo; wird
   return $string;
  }
 }
@@ -78,7 +78,7 @@ function update_db()
   fire_time int(11) NOT NULL default '0',
   time_last_fired int(11) default NULL,
   run_only_once tinyint(1) NOT NULL DEFAULT '0',
-  currently_running BOOLEAN NOT NULL DEFAULT '0', 
+  currently_running BOOLEAN NOT NULL DEFAULT '0',
   PRIMARY KEY (id),
   KEY fire_time (fire_time))";
   $result = $dbc->prepare($query);
@@ -89,7 +89,7 @@ function update_db()
  $rows = $dbc->executeGetRows($result);
  if(count($rows)<1)
  {    
-  $result = $dbc->prepare("ALTER TABLE ".LOGS_TABLE." ADD date_added int AFTER id, CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
+  $result = $dbc->prepare("ALTER TABLE ".LOGS_TABLE." ADD date_added int AFTER id,CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT;
                            ALTER TABLE ".LOGS_TABLE." CHANGE `id` `id` INT( 11 ) NOT NULL AUTO_INCREMENT ; ");
   $result = $dbc->execute($result);
  }  
@@ -106,7 +106,7 @@ function update_db()
 function time_unit($time_interval)
 {
  global $app_name;
- $unit = array(0, 'type');
+ $unit = array(0,'type');
  //check if its minutes
  if ($time_interval <= (59 * 60))
  {
@@ -159,10 +159,10 @@ function show_jobs()
         else
         {
          $last_fire_hours = strftime("%H:%M:%S ",$time_last_fired);
-         $last_fire_date = strftime("on<br> %b %d, %Y",$time_last_fired);
+         $last_fire_date = strftime("on<br> %b %d,%Y",$time_last_fired);
         }
         $fire_hours = strftime("%H:%M:%S ",$fire_time);
-        $fire_date = strftime("%b %d, %Y",$fire_time);
+        $fire_date = strftime("%b %d,%Y",$fire_time);
         if ($bg_colour=="#E9E9E9") $bg_colour="#FFFFFF"; else $bg_colour="#E9E9E9";
         $run_only_once_txt= $run_only_once ? "<i><font color=\"#ff0000\"> Will run just once</font></i>":"";
         $time_interval = time_unit($time_interval);
@@ -205,7 +205,7 @@ function show_logs($qstart)
  $num=20;// logs to display
  $next_logs=$num+$qstart;
  $dbc = dbc::instance();
- $query="select * from ".LOGS_TABLE." ORDER BY id DESC LIMIT $qstart, $num";
+ $query="select * from ".LOGS_TABLE." ORDER BY id DESC LIMIT $qstart,$num";
  $result = $dbc->prepare($query);
  $rows = $dbc->executeGetRows($result);
  if(count($rows))
@@ -279,7 +279,7 @@ function fire_script($script,$id,$buffer_output=1)
         ob_end_clean();
       }
       if (!$buffer_output) $scriptRunning->output="";
-      $scriptRunning->execution_time=number_format( (microtime(true) - $start_time), 5 )." seconds via".$fire_type;
+      $scriptRunning->execution_time=number_format( (microtime(true) - $start_time),5 )." seconds via".$fire_type;
       $scriptRunning->Stopped($id);
  }
 }
@@ -287,7 +287,7 @@ function fire_script($script,$id,$buffer_output=1)
 function Clear($id)
 {
  $dbc = dbc::instance();
- //If things go wrong, or script timeout CLEAR script so will run next time
+ //If things go wrong,or script timeout CLEAR script so will run next time
  $result = $dbc->prepare("UPDATE ".PJS_TABLE." SET currently_running = '0' where id='$id' ");
  $result = $dbc->execute($result); 
 }
@@ -301,8 +301,8 @@ class scriptStatus {
    $dbc = dbc::instance();
    $result = $dbc->prepare("UPDATE ".PJS_TABLE." SET currently_running='1' where id='$id' ");
    $result = $dbc->execute($result);
-   register_shutdown_function('Clear', $id);//registered incase execution times out before scriptStatus->Stopped called
-   return $result;                          //register_shutdown_function always works, where destruct might not!
+   register_shutdown_function('Clear',$id);//registered incase execution times out before scriptStatus->Stopped called
+   return $result;                          //register_shutdown_function always works,where destruct might not!
   }
   public function Stopped($id)
   {
@@ -313,9 +313,9 @@ class scriptStatus {
    {
     $now = time();
     $this->script=clean_input($this->script);
-    $this->output=substr(htmlentities($this->output), 0, MAX_ERROR_LOG_LENGTH);// truncate output to defined length     
-    $query="INSERT INTO ".LOGS_TABLE." (`id`, `date_added`,`script`, `output`, `execution_time`)
-                VALUES (NULL,'$now', '$this->script','$this->output','$this->execution_time') ";
+    $this->output=substr(htmlentities($this->output),0,MAX_ERROR_LOG_LENGTH);// truncate output to defined length     
+    $query="INSERT INTO ".LOGS_TABLE." (`id`,`date_added`,`script`,`output`,`execution_time`)
+                VALUES (NULL,'$now','$this->script','$this->output','$this->execution_time') ";
     $result = $dbc->prepare($query);
     $result = $dbc->execute($result);
     if (DEBUG) echo "<br>QUERY to insert data to ".LOGS_TABLE." table:<br>$query (debug ref. 3.9c)<br>";
@@ -339,20 +339,20 @@ function fire_remote_script($url)
   if (function_exists('curl_exec'))
   {
    $ch = curl_init($scheme."://".$host.$path);
-   curl_setopt($ch, CURLOPT_PORT, $port);
-   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-   curl_setopt($ch, CURLOPT_HEADER, 0);
-   curl_setopt($ch, CURLOPT_SSL_VERIFYPEER,false);
-   curl_setopt($ch, CURLOPT_FAILONERROR,1); // true to fail silently
-   curl_setopt($ch, CURLOPT_AUTOREFERER,1);
-   curl_setopt($ch, CURLOPT_POSTFIELDS,$query);
-   curl_setopt($ch, CURLOPT_REFERER,$referer);
-   curl_setopt($ch, CURLOPT_USERAGENT,$useragent);
-   curl_setopt($ch, CURLOPT_USERPWD,$user.":".$pass);
+   curl_setopt($ch,CURLOPT_PORT,$port);
+   curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+   curl_setopt($ch,CURLOPT_HEADER,0);
+   curl_setopt($ch,CURLOPT_SSL_VERIFYPEER,false);
+   curl_setopt($ch,CURLOPT_FAILONERROR,1); // true to fail silently
+   curl_setopt($ch,CURLOPT_AUTOREFERER,1);
+   curl_setopt($ch,CURLOPT_POSTFIELDS,$query);
+   curl_setopt($ch,CURLOPT_REFERER,$referer);
+   curl_setopt($ch,CURLOPT_USERAGENT,$useragent);
+   curl_setopt($ch,CURLOPT_USERPWD,$user.":".$pass);
    $buffer = curl_exec($ch);
    curl_close($ch);
   }
-  elseif ( $fp = @fsockopen($host, $port, $errno, $errstr, 30) )
+  elseif ( $fp = @fsockopen($host,$port,$errno,$errstr,30) )
   {
    $header = "POST $path HTTP/1.0\r\nHost: $host\r\nReferer: $referer\r\n"
              ."Content-Type: application/x-www-form-urlencoded\r\n"
@@ -360,9 +360,9 @@ function fire_remote_script($url)
              ."Content-Length: ". strlen($query)."\r\n";
    if($user!= "") $header.= "Authorization: Basic ".base64_encode("$user:$pass")."\r\n";
    $header.= "Connection: close\r\n\r\n";
-   fputs($fp, $header);
-   fputs($fp, $query);
-   if ($fp) while (!feof($fp)) $buffer.= fgets($fp, 8192);
+   fputs($fp,$header);
+   fputs($fp,$query);
+   if ($fp) while (!feof($fp)) $buffer.= fgets($fp,8192);
    @fclose($fp);
   }
  echo $buffer;
@@ -425,7 +425,7 @@ class dbc extends PDO
   return self::$instance;
  }
 
- public function prepare($query, $options = NULL) {
+ public function prepare($query,$options = NULL) {
   try { return $this->dbconn->prepare($query); }
    catch (PDOException $e){ $this->reportDBError($e->getMessage()); }   
  }      

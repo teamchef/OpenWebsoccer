@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -34,9 +34,9 @@
 {% else %}
 	<h3>{{ i18n.getMessage("extend-contract_offer_title") }}</h3>
 	<form class="form-horizontal" method="post">
-		{{ macro.textfield('salary', i18n.getMessage('entity_player_vertrag_gehalt'), env.getRequestParameter('salary'), true, validationMsg, 'number') }}
-		{{ macro.textfield('goal_bonus', i18n.getMessage('entity_player_vertrag_torpraemie'), env.getRequestParameter('goal_bonus'), false, validationMsg, 'number') }}
-		{{ macro.textfield('matches', i18n.getMessage('entity_player_vertrag_spiele'), env.getRequestParameter('matches'), true, validationMsg, 'number') }}
+		{{ macro.textfield('salary',i18n.getMessage('entity_player_vertrag_gehalt'),env.getRequestParameter('salary'),true,validationMsg,'number') }}
+		{{ macro.textfield('goal_bonus',i18n.getMessage('entity_player_vertrag_torpraemie'),env.getRequestParameter('goal_bonus'),false,validationMsg,'number') }}
+		{{ macro.textfield('matches',i18n.getMessage('entity_player_vertrag_spiele'),env.getRequestParameter('matches'),true,validationMsg,'number') }}
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary ajaxSubmit" data-ajaxtarget="pagecontent">{{ i18n.getMessage('button_submit') }}</button>
 			<a href="{{ env.getInternalUrl("myteam") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>

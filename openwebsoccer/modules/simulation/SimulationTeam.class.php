@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -46,7 +46,7 @@ class SimulationTeam {
 	 */
 	public $isManagedByInterimManager;
 	/**
-	 * @var array with key=player position, value=array of players at this position
+	 * @var array with key=player position,value=array of players at this position
 	 */
 	public $positionsAndPlayers;
 	/**
@@ -66,11 +66,11 @@ class SimulationTeam {
 	 */
 	private $goals;
 	/**
-	 * @var array Array of SimulationSubstitution. Contains both planned and actual substitutions, maximum 3.
+	 * @var array Array of SimulationSubstitution. Contains both planned and actual substitutions,maximum 3.
 	 */
 	public $substitutions;
 	/**
-	 * @var array Removed (due to red card or substitution) players. array with key=player ID, value=player instance
+	 * @var array Removed (due to red card or substitution) players. array with key=player ID,value=player instance
 	 */
 	public $removedPlayers;
 	/**
@@ -86,14 +86,14 @@ class SimulationTeam {
 	 */
 	public $counterattacks;
 	/**
-	 * @var int Team morale in per cent. 0 means, it is not considerable.
+	 * @var int Team morale in per cent. 0 means,it is not considerable.
 	 */
 	public $morale;
 	/**
 	 * @var SimulationPlayer Please who takes free kicks. Not always be set.
 	 */
 	public $freeKickPlayer;
-    FUNCTION __construct($id, $offensive = null) {
+    FUNCTION __construct($id,$offensive = null) {
     	$this->id = $id;
     	$this->offensive = $offensive;
     	$this->positionsAndPlayers[PLAYER_POSITION_GOALY] = array();
@@ -133,11 +133,11 @@ class SimulationTeam {
     		$this->freeKickPlayer = NULL;
     	}
     }
-    FUNCTION computeTotalStrength(WebSoccer $websoccer, SimulationMatch $match) {
+    FUNCTION computeTotalStrength(WebSoccer $websoccer,SimulationMatch $match) {
     	$sum = 0;
     	foreach ($this->positionsAndPlayers as $position => $players) {
     		foreach ($players as $player) {
-    			$sum += $player->getTotalStrength($websoccer, $match);
+    			$sum += $player->getTotalStrength($websoccer,$match);
     		}
     	}
     	return $sum;

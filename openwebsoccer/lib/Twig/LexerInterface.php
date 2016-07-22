@@ -5,7 +5,7 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -28,5 +28,5 @@ interface Twig_LexerInterface
      *
      * @throws Twig_Error_Syntax When the code is syntactically wrong
      */
-    public function tokenize($code, $filename = null);
+    public function tokenize($code,$filename = null);
 }

@@ -5,7 +5,7 @@
  *
  * (c) 2015 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -31,15 +31,15 @@ class Twig_FileExtensionEscapingStrategy
      */
     public static function guess($filename)
     {
-        if (in_array(substr($filename, -1), array('/', '\\'))) {
+        if (in_array(substr($filename,-1),array('/','\\'))) {
             return 'html'; // return html for directories
         }
 
-        if ('.twig' === substr($filename, -5)) {
-            $filename = substr($filename, 0, -5);
+        if ('.twig' === substr($filename,-5)) {
+            $filename = substr($filename,0,-5);
         }
 
-        $extension = pathinfo($filename, PATHINFO_EXTENSION);
+        $extension = pathinfo($filename,PATHINFO_EXTENSION);
 
         switch ($extension) {
             case 'js':

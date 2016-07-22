@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -32,12 +32,12 @@ class MyTeamModel extends BaseModel
 {
 	FUNCTION getTemplateParameters()
 	{
-		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
-		$captain_id = TeamsDataService::getTeamCaptainIdOfTeam($this->_websoccer, $this->_db, $teamId);
+		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer,$this->_db);
+		$captain_id = TeamsDataService::getTeamCaptainIdOfTeam($this->_websoccer,$this->_db,$teamId);
 		$players = array();
 		if ($teamId > 0) {
-			$players = PlayersDataService::getPlayersOfTeamById($this->_websoccer, $this->_db, $teamId);
+			$players = PlayersDataService::getPlayersOfTeamById($this->_websoccer,$this->_db,$teamId);
 		}
-		return array("players" => $players, "captain_id" => $captain_id);
+		return array("players" => $players,"captain_id" => $captain_id);
 	}
 }

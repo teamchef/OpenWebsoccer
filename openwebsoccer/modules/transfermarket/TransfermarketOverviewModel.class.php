@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -36,7 +36,7 @@ class TransfermarketOverviewModel extends BaseModel
 	}
 	FUNCTION getTemplateParameters()
 	{
-		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer,$this->_db);
 		if ($teamId < 1) {
 			throw new Exception($this->_i18n->getMessage('feature_requires_team'));
 		}
@@ -51,17 +51,17 @@ class TransfermarketOverviewModel extends BaseModel
 		} else if ($positionInput === 'striker') {
 			$positionFilter = 'Sturm';
 		}
-		$count = PlayersDataService::countPlayersOnTransferList($this->_websoccer, $this->_db, $positionFilter);
+		$count = PlayersDataService::countPlayersOnTransferList($this->_websoccer,$this->_db,$positionFilter);
 		$eps = $this->_websoccer->getConfig('entries_per_page');
-		$paginator = new Paginator($count, $eps, $this->_websoccer);
+		$paginator = new Paginator($count,$eps,$this->_websoccer);
 		if ($positionFilter !== null) {
-			$paginator->addParameter('position', $positionInput);
+			$paginator->addParameter('position',$positionInput);
 		}
 		if ($count > 0) {
-			$players = PlayersDataService::getPlayersOnTransferList($this->_websoccer, $this->_db, $paginator->getFirstIndex(), $eps, $positionFilter);
+			$players = PlayersDataService::getPlayersOnTransferList($this->_websoccer,$this->_db,$paginator->getFirstIndex(),$eps,$positionFilter);
 		} else {
 			$players = [];
 		}
-		return ['transferplayers' => $players, 'playerscount' => $count, 'paginator' => $paginator];
+		return ['transferplayers' => $players,'playerscount' => $count,'paginator' => $paginator];
 	}
 }

@@ -5,7 +5,7 @@
  *
  * (c) 2011 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -20,7 +20,7 @@ class Twig_TokenParser_Flush extends Twig_TokenParser
     {
         $this->parser->getStream()->expect(Twig_Token::BLOCK_END_TYPE);
 
-        return new Twig_Node_Flush($token->getLine(), $this->getTag());
+        return new Twig_Node_Flush($token->getLine(),$this->getTag());
     }
 
     public function getTag()

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,9 +30,9 @@
 SEC;
 class RegisterFormController extends BaseModel
 {
-	FUNCTION __construct($i18n, $websoccer, $db)
+	FUNCTION __construct($i18n,$websoccer,$db)
 	{
-		parent::__construct($db, $i18n, $websoccer);
+		parent::__construct($db,$i18n,$websoccer);
 	}
 	FUNCTION executeAction($parameters)
 	{
@@ -41,8 +41,8 @@ class RegisterFormController extends BaseModel
 			throw new Exception($this->_i18n->getMessage('registration_disabled'));
 		}
 		// illegal user name?
-		$illegalUsernames = explode(',', strtolower(str_replace(', ', ', ', $this->_websoccer->getConfig('illegal_usernames'))));
-		if (array_search(strtolower($parameters['nick']), $illegalUsernames)) {
+		$illegalUsernames = explode(',',strtolower(str_replace(',',',',$this->_websoccer->getConfig('illegal_usernames'))));
+		if (array_search(strtolower($parameters['nick']),$illegalUsernames)) {
 			throw new Exception($this->_i18n->getMessage('registration_illegal_username'));
 		}
 		// repeated e-mail correct?
@@ -73,7 +73,7 @@ class RegisterFormController extends BaseModel
 		$maxNumUsers = (int)$this->_websoccer->getConfig('max_number_of_users');
 		if ($maxNumUsers > 0) {
 			$wherePart = 'status = 1';
-			$result = $this->_db->querySelect($columns, $fromTable, $wherePart);
+			$result = $this->_db->querySelect($columns,$fromTable,$wherePart);
 			$rows = $result->fetch_array();
 			$result->free();
 			if ($rows['hits'] >= $maxNumUsers) {
@@ -82,45 +82,45 @@ class RegisterFormController extends BaseModel
 		}
 		// check if e-mail or user exists
 		$wherePart = 'UPPER(nick) = "%s" OR UPPER(email) = "%s"';
-		$result = $this->_db->querySelect($columns, $fromTable, $wherePart, [strtoupper($parameters['nick']), strtoupper($parameters['email'])]);
+		$result = $this->_db->querySelect($columns,$fromTable,$wherePart,[strtoupper($parameters['nick']),strtoupper($parameters['email'])]);
 		$rows = $result->fetch_array();
 		$result->free();
 		if ($rows['hits']) {
 			throw new Exception($this->_i18n->getMessage('registration_user_exists'));
 		}
-		$this->_createUser($parameters, $fromTable);
-		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS, $this->_i18n->getMessage('register-success_message_title'),
+		$this->_createUser($parameters,$fromTable);
+		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,$this->_i18n->getMessage('register-success_message_title'),
 		$this->_i18n->getMessage('register-success_message_content')));
 		return 'register-success';
 	}
-	FUNCTION _createUser($parameters, $fromTable)
+	FUNCTION _createUser($parameters,$fromTable)
 	{
 		$dbcolumns = [];
 		$dbcolumns['nick'] = $parameters['nick'];
 		$dbcolumns['email'] = strtolower($parameters['email']);
 		$dbcolumns['passwort_salt'] = SecurityUtil::generatePasswordSalt();
-		$dbcolumns['passwort'] = SecurityUtil::hashPassword($parameters['pswd'], $dbcolumns['passwort_salt']);
+		$dbcolumns['passwort'] = SecurityUtil::hashPassword($parameters['pswd'],$dbcolumns['passwort_salt']);
 		$dbcolumns['datum_anmeldung'] = $this->_websoccer->getNowAsTimestamp();
-		$dbcolumns['schluessel'] = str_replace('&', '_', SecurityUtil::generatePassword());
+		$dbcolumns['schluessel'] = str_replace('&','_',SecurityUtil::generatePassword());
 		$dbcolumns['status'] = 2;
 		$dbcolumns['lang'] = $this->_i18n->getCurrentLanguage();
 		if ($this->_websoccer->getConfig('premium_initial_credit')) {
 			$dbcolumns['premium_balance'] = $this->_websoccer->getConfig('premium_initial_credit');
 		}
-		$this->_db->queryInsert($dbcolumns, $fromTable);
+		$this->_db->queryInsert($dbcolumns,$fromTable);
 		// get user id
 		$columns = 'id';
 		$wherePart = 'email = "%s"';
-		$result = $this->_db->querySelect($columns, $fromTable, $wherePart, $dbcolumns['email']);
+		$result = $this->_db->querySelect($columns,$fromTable,$wherePart,$dbcolumns['email']);
 		$newuser = $result->fetch_array();
 		$result->free();
 		$querystr = 'key=' . $dbcolumns['schluessel'] . '&userid=' . $newuser['id'];
-		$tplparameters['activationlink'] = $this->_websoccer->getInternalActionUrl('activate', $querystr, 'activate-user', TRUE);
+		$tplparameters['activationlink'] = $this->_websoccer->getInternalActionUrl('activate',$querystr,'activate-user',TRUE);
 		// send e-mail
-		EmailHelper::sendSystemEmailFromTemplate($this->_websoccer, $this->_i18n, $dbcolumns['email'],
-		$this->_i18n->getMessage('activation_email_subject'), 'useractivation', $tplparameters);
+		EmailHelper::sendSystemEmailFromTemplate($this->_websoccer,$this->_i18n,$dbcolumns['email'],
+		$this->_i18n->getMessage('activation_email_subject'),'useractivation',$tplparameters);
 		// trigger plug-ins
-		$event = new UserRegisteredEvent($this->_websoccer, $this->_db, $this->_i18n, $newuser['id'], $dbcolumns['nick'], $dbcolumns['email']);
+		$event = new UserRegisteredEvent($this->_websoccer,$this->_db,$this->_i18n,$newuser['id'],$dbcolumns['nick'],$dbcolumns['email']);
 		PluginMediator::dispatchEvent($event);
 	}
 }

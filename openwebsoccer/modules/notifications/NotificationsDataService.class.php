@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,9 +30,9 @@
 SEC;
 class NotificationsDataService
 {
-	FUNCTION createNotification($websoccer, $db, $userId, $messageKey, $messageData = null, $type = null, $targetPageId = null, $targetPageQueryString = null, $teamId = null)
+	FUNCTION createNotification($websoccer,$db,$userId,$messageKey,$messageData = null,$type = null,$targetPageId = null,$targetPageQueryString = null,$teamId = null)
 	{
-		$columns = [ 'user_id' => $userId, 'eventdate' => $websoccer->getNowAsTimestamp(), 'message_key' => $messageKey ];
+		$columns = [ 'user_id' => $userId,'eventdate' => $websoccer->getNowAsTimestamp(),'message_key' => $messageKey ];
 		if ($messageData !== null) {
 			$columns['message_data'] = json_encode($messageData);
 		}
@@ -48,11 +48,11 @@ class NotificationsDataService
 		if ($teamId !== null) {
 			$columns['team_id'] = $teamId;
 		}
-		$db->queryInsert($columns, $websoccer->getConfig('db_prefix') . '_notification');
+		$db->queryInsert($columns,$websoccer->getConfig('db_prefix') . '_notification');
 	}
-	FUNCTION countUnseenNotifications($websoccer, $db, $userId, $teamId)
+	FUNCTION countUnseenNotifications($websoccer,$db,$userId,$teamId)
 	{
-		$result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_notification', 'user_id = %d AND seen = \'0\' AND (team_id = %d OR team_id IS NULL)', [$userId, $teamId]);
+		$result = $db->querySelect('COUNT(*) AS hits',$websoccer->getConfig('db_prefix') . '_notification','user_id = %d AND seen = \'0\' AND (team_id = %d OR team_id IS NULL)',[$userId,$teamId]);
 		$rows = $result->fetch_array();
 		$result->free();
 		if ($rows) {
@@ -60,12 +60,12 @@ class NotificationsDataService
 		}
 		return NULL;
 	}
-	FUNCTION getLatestNotifications($websoccer, $db, $i18n, $userId, $teamId, $limit)
+	FUNCTION getLatestNotifications($websoccer,$db,$i18n,$userId,$teamId,$limit)
 	{
-		$result = $db->querySelect('*', $websoccer->getConfig('db_prefix') . '_notification', 'user_id = %d AND (team_id = %d OR team_id IS NULL) ORDER BY eventdate DESC', [$userId, $teamId], $limit);
+		$result = $db->querySelect('*',$websoccer->getConfig('db_prefix') . '_notification','user_id = %d AND (team_id = %d OR team_id IS NULL) ORDER BY eventdate DESC',[$userId,$teamId],$limit);
 		$notifications = [];
 		while ($row = $result->fetch_array()) {
-			$notification = [ 'id' => $row['id'], 'eventdate' => $row['eventdate'], 'eventtype' => $row['eventtype'], 'seen' => $row['seen'] ];
+			$notification = [ 'id' => $row['id'],'eventdate' => $row['eventdate'],'eventtype' => $row['eventtype'],'seen' => $row['seen'] ];
 			// prepare message
 			if ($i18n->hasMessage($row['message_key'])) {
 				$message = $i18n->getMessage($row['message_key']);
@@ -74,10 +74,10 @@ class NotificationsDataService
 			}
 			// replace place holders
 			if (strlen($row['message_data'])) {
-				$messageData = json_decode($row['message_data'], true);
+				$messageData = json_decode($row['message_data'],true);
 				if ($messageData) {
 					foreach ($messageData as $placeholderName => $placeholderValue) {
-						$message = str_replace('{' . $placeholderName . '}', htmlspecialchars($placeholderValue, ENT_COMPAT, 'UTF-8'), $message);
+						$message = str_replace('{' . $placeholderName . '}',htmlspecialchars($placeholderValue,ENT_COMPAT,'UTF-8'),$message);
 					}
 				}
 			}
@@ -86,7 +86,7 @@ class NotificationsDataService
 			$link = '';
 			if ($row['target_pageid']) {
 				if ($row['target_querystr']) {
-					$link = $websoccer->getInternalUrl($row['target_pageid'], $row['target_querystr']);
+					$link = $websoccer->getInternalUrl($row['target_pageid'],$row['target_querystr']);
 				} else {
 					$link = $websoccer->getInternalUrl($row['target_pageid']);
 				}

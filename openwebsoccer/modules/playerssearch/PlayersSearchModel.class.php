@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -43,26 +43,26 @@ class PlayersSearchModel extends BaseModel
 				|| $this->_strength !== null || $this->_lendableOnly);
 	}
 	FUNCTION getTemplateParameters() {
-		$playersCount = PlayersDataService::findPlayersCount($this->_websoccer, $this->_db,
-				$this->_firstName, $this->_lastName, $this->_club, $this->_position, $this->_strength, $this->_lendableOnly);
+		$playersCount = PlayersDataService::findPlayersCount($this->_websoccer,$this->_db,
+				$this->_firstName,$this->_lastName,$this->_club,$this->_position,$this->_strength,$this->_lendableOnly);
 		// setup paginator
 		$eps = $this->_websoccer->getConfig("entries_per_page");
-		$paginator = new Paginator($playersCount, $eps, $this->_websoccer);
-		$paginator->addParameter("block", "playerssearch-results");
-		$paginator->addParameter("fname", $this->_firstName);
-		$paginator->addParameter("lname", $this->_lastName);
-		$paginator->addParameter("club", $this->_club);
-		$paginator->addParameter("position", $this->_position);
-		$paginator->addParameter("strength", $this->_strength);
-		$paginator->addParameter("lendable", $this->_lendableOnly);
+		$paginator = new Paginator($playersCount,$eps,$this->_websoccer);
+		$paginator->addParameter("block","playerssearch-results");
+		$paginator->addParameter("fname",$this->_firstName);
+		$paginator->addParameter("lname",$this->_lastName);
+		$paginator->addParameter("club",$this->_club);
+		$paginator->addParameter("position",$this->_position);
+		$paginator->addParameter("strength",$this->_strength);
+		$paginator->addParameter("lendable",$this->_lendableOnly);
 		// get players records
 		if ($playersCount > 0) {
-			$players = PlayersDataService::findPlayers($this->_websoccer, $this->_db,
-						$this->_firstName, $this->_lastName, $this->_club, $this->_position, $this->_strength, $this->_lendableOnly,
-						$paginator->getFirstIndex(), $eps);
+			$players = PlayersDataService::findPlayers($this->_websoccer,$this->_db,
+						$this->_firstName,$this->_lastName,$this->_club,$this->_position,$this->_strength,$this->_lendableOnly,
+						$paginator->getFirstIndex(),$eps);
 		} else {
 			$players = array();
 		}
-		return array("playersCount" => $playersCount, "players" => $players, "paginator" => $paginator);
+		return array("playersCount" => $playersCount,"players" => $players,"paginator" => $paginator);
 	}
 }

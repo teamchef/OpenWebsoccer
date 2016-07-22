@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -50,12 +50,12 @@ class ConfigCacheFileWriter
 		$this->_adminMessagesFileWriters = array();
 		$this->_entityMessagesFileWriters = array();
 		foreach ($supportedLanguages as $language) {
-			$this->_messagesFileWriters[$language] = new FileWriter(sprintf(CONFIGCACHE_MESSAGES, $language));
-			$this->_adminMessagesFileWriters[$language] = new FileWriter(sprintf(CONFIGCACHE_ADMINMESSAGES, $language));
-			$this->_entityMessagesFileWriters[$language] = new FileWriter(sprintf(CONFIGCACHE_ENTITYMESSAGES, $language));
+			$this->_messagesFileWriters[$language] = new FileWriter(sprintf(CONFIGCACHE_MESSAGES,$language));
+			$this->_adminMessagesFileWriters[$language] = new FileWriter(sprintf(CONFIGCACHE_ADMINMESSAGES,$language));
+			$this->_entityMessagesFileWriters[$language] = new FileWriter(sprintf(CONFIGCACHE_ENTITYMESSAGES,$language));
 		}
 	}
-	public FUNCTION buildConfigCache()
+	FUNCTION buildConfigCache()
 	{
 		$this->_writeFileStart($this->_frontCacheFileWriter);
 		$this->_writeFileStart($this->_adminCacheFileWriter);
@@ -111,43 +111,43 @@ class ConfigCacheFileWriter
 				foreach ($files as $file) {
 					$pathToFile = FOLDER_MODULES .'/'. $module .'/' . $file;
 					if ($file == MODULE_CONFIG_FILENAME) {
-						$this->_processModule($pathToFile, $module);
-					} else if (StringUtil::startsWith($file, 'messages_')) {
-						$this->_processMessages($pathToFile, $this->_messagesFileWriters);
-					} else if (StringUtil::startsWith($file, 'adminmessages_')) {
-						$this->_processMessages($pathToFile, $this->_adminMessagesFileWriters);
-					} else if (StringUtil::startsWith($file, 'entitymessages_')) {
-						$this->_processMessages($pathToFile, $this->_entityMessagesFileWriters);
+						$this->_processModule($pathToFile,$module);
+					} else if (StringUtil::startsWith($file,'messages_')) {
+						$this->_processMessages($pathToFile,$this->_messagesFileWriters);
+					} else if (StringUtil::startsWith($file,'adminmessages_')) {
+						$this->_processMessages($pathToFile,$this->_adminMessagesFileWriters);
+					} else if (StringUtil::startsWith($file,'entitymessages_')) {
+						$this->_processMessages($pathToFile,$this->_entityMessagesFileWriters);
 					}
 				}
 			}
 		}
 	}
-	FUNCTION _processModule($file, $module)
+	FUNCTION _processModule($file,$module)
 	{
 		$doc = new DOMDocument();
-		$loaded = @$doc->load($file, LIBXML_DTDLOAD|LIBXML_DTDVALID);
+		$loaded = @$doc->load($file,LIBXML_DTDLOAD|LIBXML_DTDVALID);
 		if (!$loaded) {
 			throw new Exception('Die XML Config Datei konnte nicht geladen werden: ' + $file);
 		}
 		// validate (will throw warnings in development mode)
 		$isValid = $doc->validate();
-		$this->_processItem($doc, 'page', $this->_frontCacheFileWriter, $module);
-		$this->_processItem($doc, 'block', $this->_frontCacheFileWriter, $module);
-		$this->_processItem($doc, 'action', $this->_frontCacheFileWriter, $module);
-		$this->_processItem($doc, 'adminpage', $this->_adminCacheFileWriter, $module);
-		$this->_processItem($doc, 'setting', $this->_settingsCacheFileWriter, $module);
-		$this->_processItem($doc, 'eventlistener', $this->_eventsCacheFileWriter, $module);
+		$this->_processItem($doc,'page',$this->_frontCacheFileWriter,$module);
+		$this->_processItem($doc,'block',$this->_frontCacheFileWriter,$module);
+		$this->_processItem($doc,'action',$this->_frontCacheFileWriter,$module);
+		$this->_processItem($doc,'adminpage',$this->_adminCacheFileWriter,$module);
+		$this->_processItem($doc,'setting',$this->_settingsCacheFileWriter,$module);
+		$this->_processItem($doc,'eventlistener',$this->_eventsCacheFileWriter,$module);
 	}
-	FUNCTION _processItem($doc, $itemName, $fileWriter, $module, $keyAttribute = 'id')
+	FUNCTION _processItem($doc,$itemName,$fileWriter,$module,$keyAttribute = 'id')
 	{
 		$items = $doc->getElementsByTagName($itemName);
 		foreach ($items as $item) {
-			$line = $this->_buildConfigLine($itemName, $keyAttribute, $item, $module);
+			$line = $this->_buildConfigLine($itemName,$keyAttribute,$item,$module);
 			$fileWriter->writeLine($line);
 		}
 	}
-	FUNCTION _buildConfigLine($itemname, $keyAttribute, $xml, $module)
+	FUNCTION _buildConfigLine($itemname,$keyAttribute,$xml,$module)
 	{
 		if ($itemname == 'eventlistener') {
 			$line = '$'. $itemname .'[\''. $xml->getAttribute('event') . '\'][]';
@@ -194,7 +194,7 @@ class ConfigCacheFileWriter
 			}
 		}
 		$itemAttrs['module'] = $module;
-		$line .= ' = \'' . json_encode($itemAttrs, JSON_HEX_QUOT) . '\';';
+		$line .= ' = \'' . json_encode($itemAttrs,JSON_HEX_QUOT) . '\';';
 		// handle new setting
 		if ($itemname == 'setting') {
 			global $conf;
@@ -208,14 +208,14 @@ class ConfigCacheFileWriter
 		}
 		return $line;
 	}
-	FUNCTION _processMessages($file, $fileWriters)
+	FUNCTION _processMessages($file,$fileWriters)
 	{
 		$doc = new DOMDocument();
 		$loaded = @$doc->load($file);
 		if (!$loaded) {
 			throw new Exception('Die XML Messages Datei konnte nicht geladen werden: ' + $file);
 		}
-		$lang = substr($file, strrpos($file, '_') + 1, 2);
+		$lang = substr($file,strrpos($file,'_') + 1,2);
 		if (isset($fileWriters[$lang])) {
 			$messages = $doc->getElementsByTagName('message');
 			$fileWriter = $fileWriters[$lang];

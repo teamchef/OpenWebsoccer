@@ -5,11 +5,11 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
-@trigger_error('The Twig_Filter class is deprecated since version 1.12 and will be removed in 2.0. Use Twig_SimpleFilter instead.', E_USER_DEPRECATED);
+@trigger_error('The Twig_Filter class is deprecated since version 1.12 and will be removed in 2.0. Use Twig_SimpleFilter instead.',E_USER_DEPRECATED);
 
 /**
  * Represents a template filter.
@@ -20,7 +20,7 @@
  *
  * @deprecated since 1.12 (to be removed in 2.0)
  */
-abstract class Twig_Filter implements Twig_FilterInterface, Twig_FilterCallableInterface
+abstract class Twig_Filter implements Twig_FilterInterface,Twig_FilterCallableInterface
 {
     protected $options;
     protected $arguments = array();
@@ -33,7 +33,7 @@ abstract class Twig_Filter implements Twig_FilterInterface, Twig_FilterCallableI
             'pre_escape' => null,
             'preserves_safety' => null,
             'callable' => null,
-        ), $options);
+        ),$options);
     }
 
     public function setArguments($arguments)
@@ -63,7 +63,7 @@ abstract class Twig_Filter implements Twig_FilterInterface, Twig_FilterCallableI
         }
 
         if (isset($this->options['is_safe_callback'])) {
-            return call_user_func($this->options['is_safe_callback'], $filterArgs);
+            return call_user_func($this->options['is_safe_callback'],$filterArgs);
         }
     }
 

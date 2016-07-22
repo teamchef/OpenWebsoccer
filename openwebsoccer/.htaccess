@@ -5,6 +5,8 @@
 </Files>
 	# PHP7 Version auf die höchstmögliche setzen
 SetEnv PHP5_VERSION 7.99.99
+	# PHP Warnungen ausschalten
+php_value error_reporting off
 ## Start: OpenWebsoccer - Sicherheitseinstellungen über .htaccess
 	# verhindern das Dateien und  Verzeichnisse gelistet werden
 Options -Indexes
@@ -15,7 +17,7 @@ RedirectMatch 403 /\..*$
 	# Server Signature verbergen falls sie sichtbar ist
 ServerSignature Off
 RewriteEngine On
-	# manchmal nötig zu blocken, damit Clients mit Leeren USER AGENT und REFERER der Zugriff verweigert wird.
+	# manchmal nötig zu blocken,damit Clients mit Leeren USER AGENT und REFERER der Zugriff verweigert wird.
 RewriteCond %{REQUEST_METHOD} POST
 RewriteCond %{HTTP_REFERER} ^$ [NC]
 RewriteCond %{HTTP_USER_AGENT} ^$ [NC]
@@ -45,7 +47,7 @@ RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
 RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
 	# XST Angriff blocken
 RewriteCond %{REQUEST_METHOD} ^TRACE
-	# Beim verbotenen Anforderungen nicht 'Zugriff verboten' anzeigen, sondern auf die index.php umleiten
+	# Beim verbotenen Anforderungen nicht 'Zugriff verboten' anzeigen,sondern auf die index.php umleiten
 RewriteRule .* index.php [F]
 	# sonstige möglichen Angriffe verhindern
 RewriteCond %{REQUEST_METHOD} ^(connect|debug|delete|move|put|trace|track) [NC]

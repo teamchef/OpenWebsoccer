@@ -15,7 +15,7 @@ License: GPL2
 /*  Copyright 2012  Gokhan Muharremoglu  (email : gokhan.muharremoglu@iosec.org)
 
 	This program is free software; you can redistribute it and/or modify
-	it under the terms of the GNU General Public License, version 2, as
+	it under the terms of the GNU General Public License,version 2,as
 	published by the Free Software Foundation.
 
 	This program is distributed in the hope that it will be useful,
@@ -24,29 +24,29 @@ License: GPL2
 	GNU General Public License for more details.
 
 	You should have received a copy of the GNU General Public License
-	along with this program; if not, write to the Free Software
-	Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+	along with this program; if not,write to the Free Software
+	Foundation,Inc.,51 Franklin St,Fifth Floor,Boston,MA  02110-1301  USA
 */
 error_reporting(0);
 /////////////////////////////////// CONFIGURATION MENU ///////////////////////////////////////////////
 $use_captcha                       = "y";	//If you want to use reCAPTCHA set value to "y" otherwise leave it empty (default is "y").
 $publickey                         = "6Ld6fNESAAAAAIM4YzckCmfqyzFOmrrTj2Qq55Tq"; // Get a key from https://www.google.com/recaptcha/admin/create
 $privatekey                        = "6Ld6fNESAAAAAKWYKMAypEffxoUlpW8RZ5UYGmaK"; // Get a key from https://www.google.com/recaptcha/admin/create
-$interval                          = 0.5;	//Connection Interval in seconds (e.g. 1, 0.5, 0.001, etc.).
-$conection_limit                   = 1;		//Connection count in the interval value (e.g. 1, 3, 5, 100).
+$interval                          = 0.5;	//Connection Interval in seconds (e.g. 1,0.5,0.001,etc.).
+$conection_limit                   = 1;		//Connection count in the interval value (e.g. 1,3,5,100).
 $block_proxies                     = "";	//If you want to block proxies set value to "y" otherwise leave it empty.
 $refresh_timeout                   = 10;	//Suspended Process Timeout value in seconds.
-$redirection                       = "";	//If you want to redirect user after the suspended process, you can enter URL here.
+$redirection                       = "";	//If you want to redirect user after the suspended process,you can enter URL here.
 $mail_info                         = "";	//Mail address to notify (admin mail).
 $debug_info                        = "y";	//If you want to show debug info then set value to "y" otherwise leave it empty.
-$behind_reverse_proxy              = "";	//If your web server behind a reverse proxy, set this value to "y".
-$incremental_blocking              = "y";	//If you want to use incremental blocking, set this value to "y" (default is "y").
-$implicit_deny_timeout             = 0;		// (Token access) Block every request as default and let the human users (use_captcha) to view page for a timeout period (seconds), set this value to greater than "0" (default is "0").
+$behind_reverse_proxy              = "";	//If your web server behind a reverse proxy,set this value to "y".
+$incremental_blocking              = "y";	//If you want to use incremental blocking,set this value to "y" (default is "y").
+$implicit_deny_timeout             = 0;		// (Token access) Block every request as default and let the human users (use_captcha) to view page for a timeout period (seconds),set this value to greater than "0" (default is "0").
 $implicit_deny_for_banlist_timeout = 0;		// (Token access) Block every recorded IP that is listed in the banlist as default and let the human users (use_captcha) to view page for a timeout period (seconds),
 											// set this value to greater than "0" (default is "0").
 $cached_requests                   = 150;	//Monitoring data window size for the last requests (for "ips" file size) (default is "150").
 $use_whitelist                     = "";	//If you want to use whitelist set value to "y" otherwise leave it empty (default is empty).
-$use_excluded                      = "";	//If you want to use excluded file list, set this value to "y" otherwise leave it empty (default is empty).
+$use_excluded                      = "";	//If you want to use excluded file list,set this value to "y" otherwise leave it empty (default is empty).
 /////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
  if (($behind_reverse_proxy == "y") && ($block_proxies == "y")) {
@@ -60,18 +60,18 @@ $use_excluded                      = "";	//If you want to use excluded file list
  $excluded    = 'iosec_admin/excluded';
  $ips         = 'iosec_admin/ips';
  $banlist     = 'iosec_admin/banlist';
- define("RECAPTCHA_API_SERVER", "http://www.google.com/recaptcha/api");
- define("RECAPTCHA_API_SECURE_SERVER", "https://www.google.com/recaptcha/api");
- define("RECAPTCHA_VERIFY_SERVER", "www.google.com");
+ define("RECAPTCHA_API_SERVER","http://www.google.com/recaptcha/api");
+ define("RECAPTCHA_API_SECURE_SERVER","https://www.google.com/recaptcha/api");
+ define("RECAPTCHA_VERIFY_SERVER","www.google.com");
  function _recaptcha_qsencode($data)
  {
      $req = "";
      foreach ($data as $key => $value)
          $req .= $key . '=' . urlencode(stripslashes($value)) . '&';
-     $req = substr($req, 0, strlen($req) - 1);
+     $req = substr($req,0,strlen($req) - 1);
      return $req;
  }
- function _recaptcha_http_post($host, $path, $data, $port = 80)
+ function _recaptcha_http_post($host,$path,$data,$port = 80)
  {
      $req          = _recaptcha_qsencode($data);
      $http_request = "POST $path HTTP/1.0\r\n";
@@ -82,17 +82,17 @@ $use_excluded                      = "";	//If you want to use excluded file list
      $http_request .= "\r\n";
      $http_request .= $req;
      $response = '';
-     if (false == ($fs = @fsockopen($host, $port, $errno, $errstr, 10))) {
+     if (false == ($fs = @fsockopen($host,$port,$errno,$errstr,10))) {
          die('Could not open socket');
      }
-     fwrite($fs, $http_request);
+     fwrite($fs,$http_request);
      while (!feof($fs))
-         $response .= fgets($fs, 1160);
+         $response .= fgets($fs,1160);
      fclose($fs);
-     $response = explode("\r\n\r\n", $response, 2);
+     $response = explode("\r\n\r\n",$response,2);
      return $response;
  }
- function recaptcha_get_html($pubkey, $error = null, $use_ssl = false)
+ function recaptcha_get_html($pubkey,$error = null,$use_ssl = false)
  {
      if ($pubkey == null || $pubkey == '') {
          die("To use reCAPTCHA you must get an API key from <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>");
@@ -118,13 +118,13 @@ $use_excluded                      = "";	//If you want to use excluded file list
      var $is_valid;
      var $error;
  }
- function recaptcha_check_answer($privkey, $remoteip, $challenge, $response, $extra_params = array())
+ function recaptcha_check_answer($privkey,$remoteip,$challenge,$response,$extra_params = array())
  {
      if ($privkey == null || $privkey == '') {
          die("To use reCAPTCHA you must get an API key from <a href='https://www.google.com/recaptcha/admin/create'>https://www.google.com/recaptcha/admin/create</a>");
      }
      if ($remoteip == null || $remoteip == '') {
-         die("For security reasons, you must pass the remote ip to reCAPTCHA");
+         die("For security reasons,you must pass the remote ip to reCAPTCHA");
      }
      if ($challenge == null || strlen($challenge) == 0 || $response == null || strlen($response) == 0) {
          $recaptcha_response           = new ReCaptchaResponse();
@@ -132,13 +132,13 @@ $use_excluded                      = "";	//If you want to use excluded file list
          $recaptcha_response->error    = 'incorrect-captcha-sol';
          return $recaptcha_response;
      }
-     $response           = _recaptcha_http_post(RECAPTCHA_VERIFY_SERVER, "/recaptcha/api/verify", array(
+     $response           = _recaptcha_http_post(RECAPTCHA_VERIFY_SERVER,"/recaptcha/api/verify",array(
          'privatekey' => $privkey,
          'remoteip' => $remoteip,
          'challenge' => $challenge,
          'response' => $response
      ) + $extra_params);
-     $answers            = explode("\n", $response[1]);
+     $answers            = explode("\n",$response[1]);
      $recaptcha_response = new ReCaptchaResponse();
      if (trim($answers[0]) == 'true') {
          $recaptcha_response->is_valid = true;
@@ -148,7 +148,7 @@ $use_excluded                      = "";	//If you want to use excluded file list
      }
      return $recaptcha_response;
  }
- function recaptcha_get_signup_url($domain = null, $appname = null)
+ function recaptcha_get_signup_url($domain = null,$appname = null)
  {
      return "https://www.google.com/recaptcha/admin/create?" . _recaptcha_qsencode(array(
          'domains' => $domain,
@@ -159,7 +159,7 @@ $use_excluded                      = "";	//If you want to use excluded file list
  {
      $block_size = 16;
      $numpad     = $block_size - (strlen($val) % $block_size);
-     return str_pad($val, strlen($val) + $numpad, chr($numpad));
+     return str_pad($val,strlen($val) + $numpad,chr($numpad));
  }
  $resp  = null;
  $error = null;
@@ -171,7 +171,7 @@ $use_excluded                      = "";	//If you want to use excluded file list
  function isValidIP($ip)
  {
      $pattern = "/^([1]?\d{1,2}|2[0-4]{1}\d{1}|25[0-5]{1})(\.([1]?\d{1,2}|2[0-4]{1}\d{1}|25[0-5]{1})){3}$/";
-     return (preg_match($pattern, $ip) > 0) ? true : false;
+     return (preg_match($pattern,$ip) > 0) ? true : false;
  }
  if (isValidIP($_SERVER['HTTP_VIA'])) {
      $HTTP_VIA = $_SERVER['HTTP_VIA'];
@@ -184,33 +184,33 @@ $use_excluded                      = "";	//If you want to use excluded file list
      $HTTP_X_FORWARDED_FOR = "";
  }
  $let_it_go = 0;
- if (!fopen($banlist, 'r')) {
-     fopen($banlist, 'a');
+ if (!fopen($banlist,'r')) {
+     fopen($banlist,'a');
      fclose($banlist);
  }
  if ($use_excluded == "y") {
- if (!fopen($excluded, 'r')) {
-     fopen($excluded, 'a');
+ if (!fopen($excluded,'r')) {
+     fopen($excluded,'a');
      fclose($excluded);
  }
- $read_excluded  = implode('\n', file($excluded));
- if (eregi($_SERVER['PHP_SELF'], $read_excluded)) {
+ $read_excluded  = implode('\n',file($excluded));
+ if (eregi($_SERVER['PHP_SELF'],$read_excluded)) {
      $let_it_go = 1;
  }
  }
- $read_blacklist = implode('\n', file($banlist));
+ $read_blacklist = implode('\n',file($banlist));
  if ($use_whitelist == "y") {
- if (!fopen($whitelist, 'r')) {
-     fopen($whitelist, 'a');
+ if (!fopen($whitelist,'r')) {
+     fopen($whitelist,'a');
      fclose($whitelist);
  }
- $read_whitelist = implode('\n', file($whitelist));
- if (eregi($REMOTE_ADDR, $read_whitelist)) {
+ $read_whitelist = implode('\n',file($whitelist));
+ if (eregi($REMOTE_ADDR,$read_whitelist)) {
      $let_it_go = 1;
  }
  }
  if ($let_it_go == 0) {
-     if (eregi($REMOTE_ADDR, $read_blacklist) && ($implicit_deny_for_banlist_timeout > 0)) {
+     if (eregi($REMOTE_ADDR,$read_blacklist) && ($implicit_deny_for_banlist_timeout > 0)) {
          $implicit_deny_timeout = $implicit_deny_for_banlist_timeout;
      }
 	  if (!isset($_SESSION) && $implicit_deny_timeout > 0) {
@@ -219,20 +219,20 @@ $use_excluded                      = "";	//If you want to use excluded file list
 	 if ($implicit_deny_for_banlist_timeout == 0 or ($implicit_deny_for_banlist_timeout > 0 and $_SESSION['unblocked_time'] > time())) {
      $linesx = file($banlisttemp);
      foreach ($linesx as $teksira) {
-         $ipcheck = explode('|', $teksira);
+         $ipcheck = explode('|',$teksira);
      }
      $connection_count = 1;
      $saniye           = (time() + microtime());
      $adres            = $REMOTE_ADDR;
      $dosya            = $ips;
-     $dosya_ac         = fopen($dosya, 'r');
-     $oku              = fgets($dosya_ac, ($cached_requests * 30));
+     $dosya_ac         = fopen($dosya,'r');
+     $oku              = fgets($dosya_ac,($cached_requests * 30));
      fclose($dosya_ac);
-     $sira         = explode(">", $oku);
+     $sira         = explode(">",$oku);
      $array        = $sira[0] + 1;
-     $array_gokhan = explode(";", $sira[1]);
+     $array_gokhan = explode(";",$sira[1]);
      for ($i = 0; $i < $cached_requests; $i++) {
-         $ayikla = explode("|", $array_gokhan[$i]);
+         $ayikla = explode("|",$array_gokhan[$i]);
          if ($HTTP_VIA > "") {
              $kaynak = $HTTP_X_FORWARDED_FOR;
          } else {
@@ -306,28 +306,28 @@ function timer()
                  for ($e = 0; $e < $cached_requests; $e++) {
                      $veri_handler = "$veri_handler;$array_gokhan[$e]";
                  }
-                 $g_muharremoglu = fopen($dosya, 'w');
+                 $g_muharremoglu = fopen($dosya,'w');
                  $veri_handler   = "$sira[0]>$veri_handler";
-                 fputs($g_muharremoglu, "$veri_handler");
+                 fputs($g_muharremoglu,"$veri_handler");
                  fclose($g_muharremoglu);
                  if (($ipcheck[0] == $adres) && ($ipcheck[1] + $refresh_timeout >= (time() + microtime()))) {
                      $logfile = $banlist;
-                     $read    = implode('\n', file($logfile));
-                     if (eregi($adres, $read)) {
+                     $read    = implode('\n',file($logfile));
+                     if (eregi($adres,$read)) {
                      } else {
-                         $htaccess2 = fopen($banlist, 'a');
-                         fwrite($htaccess2, $adres . "\n");
+                         $htaccess2 = fopen($banlist,'a');
+                         fwrite($htaccess2,$adres . "\n");
                          fclose($htaccess2);
                          if ($mail_yolla <> "") {
-                             mail($mail_yolla, "$adres", "http://" . $_SERVER['HTTP_HOST'] . "/" . $_SERVER['PATH_INFO'] . $banlist, "From: IOSEC Anti Flood <iosec@" . $_SERVER['HTTP_HOST'] . ">\r\n");
+                             mail($mail_yolla,"$adres","http://" . $_SERVER['HTTP_HOST'] . "/" . $_SERVER['PATH_INFO'] . $banlist,"From: IOSEC Anti Flood <iosec@" . $_SERVER['HTTP_HOST'] . ">\r\n");
                          }
                      }
                  } else {
-                     $htaccess = fopen($banlisttemp, 'a+');
+                     $htaccess = fopen($banlisttemp,'a+');
                      if (filesize($banlisttemp) > ($cached_requests * 30)) {
-                         fopen($banlisttemp, 'w');
+                         fopen($banlisttemp,'w');
                      }
-                     fwrite($htaccess, $adres . "|" . (time() + microtime()) . "\n");
+                     fwrite($htaccess,$adres . "|" . (time() + microtime()) . "\n");
                      fclose($htaccess);
                  }
                  $hatali = 1;
@@ -338,11 +338,11 @@ function timer()
     <form action="" method="post">
 <?php
                      if ($_POST["recaptcha_response_field"]) {
-                         $resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+                         $resp = recaptcha_check_answer($privatekey,$_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
                          if ($resp->is_valid) {
                              $hatali   = 0;
-                             $htaccess = fopen($banlisttemp, 'a+');
-                             fwrite($htaccess, $adres . "|" . (time() + microtime() - $refresh_timeout) . "\n");
+                             $htaccess = fopen($banlisttemp,'a+');
+                             fwrite($htaccess,$adres . "|" . (time() + microtime() - $refresh_timeout) . "\n");
                              fclose($htaccess);
                              echo "<meta http-equiv=\"Refresh\" content=\"" . ($interval + 1) . "; url=\">";
                              exit;
@@ -350,7 +350,7 @@ function timer()
                              $error = $resp->error;
                          }
                      }
-                     echo recaptcha_get_html($publickey, $error);
+                     echo recaptcha_get_html($publickey,$error);
 ?>
  <br/>
     <input type="submit" value="Unblock" />
@@ -366,11 +366,11 @@ function timer()
                          echo "Microtime: " . (time() + microtime());
                      }
                      if ($incremental_blocking == "y") {
-                         $htaccess = fopen($banlisttemp, 'a+');
+                         $htaccess = fopen($banlisttemp,'a+');
                          if (filesize($banlisttemp) > ($cached_requests * 30)) {
-                             fopen($banlisttemp, 'w');
+                             fopen($banlisttemp,'w');
                          }
-                         fwrite($htaccess, $adres . "|" . (time() + microtime()) . "\n");
+                         fwrite($htaccess,$adres . "|" . (time() + microtime()) . "\n");
                          fclose($htaccess);
                      }
                      exit;
@@ -386,8 +386,8 @@ function timer()
          $array = 1;
      }
      $write_it       = "$array>$veri_handler";
-     $g_muharremoglu = fopen($dosya, 'w');
-     fputs($g_muharremoglu, $write_it);
+     $g_muharremoglu = fopen($dosya,'w');
+     fputs($g_muharremoglu,$write_it);
      fclose($g_muharremoglu);
     }
      if (($block_proxies == "y" and $HTTP_VIA > "") or ($implicit_deny_timeout > 0 and $_SESSION['unblocked_time'] < time())) {
@@ -424,7 +424,7 @@ function timer()
     <form action="" method="post">
 <?php
              if ($_POST["recaptcha_response_field"]) {
-                 $resp = recaptcha_check_answer($privatekey, $_SERVER["REMOTE_ADDR"], $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]);
+                 $resp = recaptcha_check_answer($privatekey,$_SERVER["REMOTE_ADDR"],$_POST["recaptcha_challenge_field"],$_POST["recaptcha_response_field"]);
                  if ($resp->is_valid) {
                      $_SESSION['unblocked_time'] = time() + $implicit_deny_timeout;
                      echo "<meta http-equiv=\"Refresh\" content=\"" . ($interval + 1) . "; url=\">";
@@ -433,7 +433,7 @@ function timer()
                      $error = $resp->error;
                  }
              }
-             echo recaptcha_get_html($publickey, $error);
+             echo recaptcha_get_html($publickey,$error);
 ?>
  <br/>
     <input type="submit" value="Unblock" />

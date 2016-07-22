@@ -171,6 +171,21 @@ CREATE TABLE _saison (
   platz_3_id INT(10) NOT NULL,
   platz_4_id INT(10) NOT NULL,
   platz_5_id INT(10) NOT NULL,
+  platz_6_id INT(10) NOT NULL,
+  platz_7_id INT(10) NOT NULL,
+  platz_8_id INT(10) NOT NULL,
+  platz_9_id INT(10) NOT NULL,
+  platz_10_id INT(10) NOT NULL,
+  platz_11_id INT(10) NOT NULL,
+  platz_12_id INT(10) NOT NULL,
+  platz_13_id INT(10) NOT NULL,
+  platz_14_id INT(10) NOT NULL,
+  platz_15_id INT(10) NOT NULL,
+  platz_16_id INT(10) NOT NULL,
+  platz_17_id INT(10) NOT NULL,
+  platz_18_id INT(10) NOT NULL,
+  platz_19_id INT(10) NOT NULL,
+  platz_20_id INT(10) NOT NULL,
   beendet ENUM('1','0') NOT NULL DEFAULT '0'
 ) DEFAULT CHARSET=utf8, ENGINE=InnoDB;
 

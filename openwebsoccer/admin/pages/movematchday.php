@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -49,7 +49,7 @@ if (!$show) {
  			<?php
  			$columns = "id,land,name";
  			$fromTable = $website->getConfig("db_prefix") . "_liga";
- 			$result = $db->querySelect($columns, $fromTable, "1 ORDER BY land ASC, name ASC", array());
+ 			$result = $db->querySelect($columns,$fromTable,"1 ORDER BY land ASC,name ASC",array());
  			while ($league = $result->fetch_array()) {
 				echo "<option value=\"". $league["id"] . "\"";
 				if ($leagueid == $league["id"]) echo " selected";
@@ -66,7 +66,7 @@ if (!$show) {
 		$columns = "id,saison_id,liga_id,spieltag,berechnet,datum";
 		$fromTable = $conf['db_prefix'] . "_spiel";
 		$whereCondition = "liga_id = %d AND berechnet = '0'";
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $leagueid);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$leagueid);
 		if (!$result->num_rows) {
 			echo "<p>" . createInfoMessage($i18n->getMessage("movematchday_no_matchday"),"") . "</p>";
 		} else {
@@ -81,7 +81,7 @@ if (!$show) {
 			$columns["(SELECT name FROM " . $conf['db_prefix'] . "_liga AS L WHERE L.id = G1.liga_id)"] = "liganame";
 			$fromTable = $conf['db_prefix'] . "_spiel AS G1";
 			$whereCondition = "G1.liga_id = %d AND G1.berechnet = '0' GROUP BY spieltag ORDER BY spieltag ASC";
-			$result = $db->querySelect($columns, $fromTable, $whereCondition, $leagueid);
+			$result = $db->querySelect($columns,$fromTable,$whereCondition,$leagueid);
 	 		?>
 			<h4 style="margin-top:20px"><?php echo $i18n->getMessage("movematchday_description"); ?></h4>
 			<table class="table table-condensed table-bordered">
@@ -100,7 +100,7 @@ if (!$show) {
 						if ($check['berechnet'] == 0) $edit = "<a href=\"". $url ."\" title=\"". $i18n->getMessage("movematchday_tooltip") . "\"><i class=\"icon-pencil\"></i></a>";
 						else $edit = "";
 	 						echo "<tr>";
-	 						echo "<td>". date("d.m.y, H:i",$check["datum"]) . "</td>";
+	 						echo "<td>". date("d.m.y,H:i",$check["datum"]) . "</td>";
 							echo "<td>". $check["spieltag"] . "</td>";
 	 						echo "<td>". $check["liganame"] ." (".$check["saisonname"].")". "</td>";
 							echo "<td>". $edit ."</td>";
@@ -118,7 +118,7 @@ if (!$show) {
 elseif ($show == "edit") {
 	$columns = '*';
 	$whereCondition = 'id = %d';
-	$result = $db->querySelect($columns, $conf['db_prefix'] .'_spiel', $whereCondition, $id, 1);
+	$result = $db->querySelect($columns,$conf['db_prefix'] .'_spiel',$whereCondition,$id,1);
 	$spiel = $result->fetch_array();
 	?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" class="form-horizontal">
@@ -132,9 +132,9 @@ elseif ($show == "edit") {
 			<legend><?php echo $i18n->getMessage("movematchday_navlabel"); ?></legend>
 			<?php
 			$formFields = array();
-			$formFields["movematchday_newdate"] = array("type" => "timestamp", "value" =>  $spiel['datum']);
+			$formFields["movematchday_newdate"] = array("type" => "timestamp","value" =>  $spiel['datum']);
 			foreach ($formFields as $fieldId => $fieldInfo) {
-				echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "");
+				echo FormBuilder::createFormGroup($i18n,$fieldId,$fieldInfo,$fieldInfo["value"],"");
 			}
 			?>
 		</fieldset>
@@ -144,9 +144,9 @@ elseif ($show == "edit") {
 	</form>
 	<?php
 }
-//********** validate, generate **********
+//********** validate,generate **********
 elseif ($show == "save") {
-	$dateObj = DateTime::createFromFormat($website->getConfig("date_format") .", H:i", $_POST["movematchday_newdate_date"] .", ". $_POST["movematchday_newdate_time"]);
+	$dateObj = DateTime::createFromFormat($website->getConfig("date_format") .",H:i",$_POST["movematchday_newdate_date"] .",". $_POST["movematchday_newdate_time"]);
 	$fieldValue = ($dateObj) ? $dateObj->getTimestamp() : 0;
 	if ($admin['r_demo']) $err[] = $i18n->getMessage("validationerror_no_changes_as_demo");
 	if ($fieldValue <= $website->getNowAsTimestamp()) $err[] = $i18n->getMessage("movematchday_alert");
@@ -156,21 +156,21 @@ elseif ($show == "save") {
 	}
 	//##### Abspeichern #####
 else {
-	$columns = 'id, liga_id, datum, spieltag';
+	$columns = 'id,liga_id,datum,spieltag';
 	$fromTable = $conf['db_prefix'] .'_spiel';
 	$whereCondition = "liga_id = ".$_POST['liga_id']." AND spieltag = ".$_POST['spieltag']." AND datum =  ".$_POST['datum']." ORDER BY id ASC";
 	$parameter = "";
-	$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameter);
+	$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameter);
 	$counter = 0;
 	while($spiel = $result->fetch_array()) {
 			// update match
 			$db->queryUpdate(array(
 				"datum" => $fieldValue
-			), $website->getConfig("db_prefix") . "_spiel", 'id = %d' , $spiel['id']);
+			),$website->getConfig("db_prefix") . "_spiel",'id = %d' ,$spiel['id']);
 			$counter++;
 		}
 		$result->free();
-		echo createSuccessMessage($i18n->getMessage("movematchday_success",$counter), "");
+		echo createSuccessMessage($i18n->getMessage("movematchday_success",$counter),"");
 	}
 }
 echo "<p>".$i18n->getMessage("movematchday_version")." Developped 2014 by <b>".$i18n->getMessage("movematchday_author")."</b> powered by ".$i18n->getMessage("movematchday_poweredauthor")."</p>"."OpenSource seit 14.05.2016";

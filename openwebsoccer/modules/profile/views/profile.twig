@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -32,22 +32,22 @@
 {% endblock %}
 {% block page_content %}
 	<form class="form-horizontal" method="post">
-		{{ macro.readonly(i18n.getMessage('entity_users_nick'), env.user.username) }}
-		{{ macro.readonly(i18n.getMessage('entity_users_email'), env.user.email) }}
+		{{ macro.readonly(i18n.getMessage('entity_users_nick'),env.user.username) }}
+		{{ macro.readonly(i18n.getMessage('entity_users_email'),env.user.email) }}
 		{% if env.getConfig("login_method") == "DefaultUserLoginMethod" %}
-			{{ macro.textfield('newemail', i18n.getMessage('profile_field_newemail'), env.getRequestParameter('newemail'), false, validationMsg, 'email') }}
-			{{ macro.textfield('newpassword', i18n.getMessage('profile_field_newpassword'), '', false, validationMsg, 'password') }}
+			{{ macro.textfield('newemail',i18n.getMessage('profile_field_newemail'),env.getRequestParameter('newemail'),false,validationMsg,'email') }}
+			{{ macro.textfield('newpassword',i18n.getMessage('profile_field_newpassword'),'',false,validationMsg,'password') }}
 		{% endif %}
-		{{ macro.checkbox("c_hideinonlinelist", i18n.getMessage('entity_users_c_hideinonlinelist'), user.c_hideinonlinelist, true) }}
+		{{ macro.checkbox("c_hideinonlinelist",i18n.getMessage('entity_users_c_hideinonlinelist'),user.c_hideinonlinelist,true) }}
 		<hr>
-		{{ macro.textfield('realname', i18n.getMessage('entity_users_name'), user.realname, false, validationMsg) }}
-		{{ macro.textfield('place', i18n.getMessage('entity_users_wohnort'), user.place, false, validationMsg) }}
-		{{ macro.textfield('country', i18n.getMessage('entity_users_land'), user.country, false, validationMsg) }}
-		{{ macro.textfield('birthday', i18n.getMessage('entity_users_geburtstag'), user.birthday, false, validationMsg, "text") }}
-		{{ macro.textfield('occupation', i18n.getMessage('entity_users_beruf'), user.occupation, false, validationMsg) }}
-		{{ macro.textfield('interests', i18n.getMessage('entity_users_interessen'), user.interests, false, validationMsg) }}
-		{{ macro.textfield('favorite_club', i18n.getMessage('entity_users_lieblingsverein'), user.favorite_club, false, validationMsg) }}
-		{{ macro.textfield('homepage', i18n.getMessage('entity_users_homepage'), user.homepage, false, validationMsg, "url") }}
+		{{ macro.textfield('realname',i18n.getMessage('entity_users_name'),user.realname,false,validationMsg) }}
+		{{ macro.textfield('place',i18n.getMessage('entity_users_wohnort'),user.place,false,validationMsg) }}
+		{{ macro.textfield('country',i18n.getMessage('entity_users_land'),user.country,false,validationMsg) }}
+		{{ macro.textfield('birthday',i18n.getMessage('entity_users_geburtstag'),user.birthday,false,validationMsg,"text") }}
+		{{ macro.textfield('occupation',i18n.getMessage('entity_users_beruf'),user.occupation,false,validationMsg) }}
+		{{ macro.textfield('interests',i18n.getMessage('entity_users_interessen'),user.interests,false,validationMsg) }}
+		{{ macro.textfield('favorite_club',i18n.getMessage('entity_users_lieblingsverein'),user.favorite_club,false,validationMsg) }}
+		{{ macro.textfield('homepage',i18n.getMessage('entity_users_homepage'),user.homepage,false,validationMsg,"url") }}
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
 			<a href="{{ env.getInternalUrl("profile") }}" class="btn">{{ i18n.getMessage('button_reset') }}</a>

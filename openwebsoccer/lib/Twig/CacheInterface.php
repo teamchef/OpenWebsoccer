@@ -5,7 +5,7 @@
  *
  * (c) 2015 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -28,7 +28,7 @@ interface Twig_CacheInterface
      *
      * @return string
      */
-    public function generateKey($name, $className);
+    public function generateKey($name,$className);
 
     /**
      * Writes the compiled template to cache.
@@ -36,7 +36,7 @@ interface Twig_CacheInterface
      * @param string $key     The cache key
      * @param string $content The template representation as a PHP class
      */
-    public function write($key, $content);
+    public function write($key,$content);
 
     /**
      * Loads a template from the cache.

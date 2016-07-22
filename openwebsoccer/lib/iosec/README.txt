@@ -4,7 +4,7 @@
     .        . . . . . .........................................................
  .....       . . . . . .........................................................
 ...... MMMMMMM.....~$MM.MM: ......,8MM.MN?Z7..7MMMMMM.MMMMM ....:DMM MO+O8......
-...... .MMMMM. ..:MMM, .=MMM,... MMM= ..~MMM....MMMMM. ~MMM ..~MMM? ..?MMM......
+...... .MMMMM. ..:MMM,.=MMM,... MMM= ..~MMM....MMMMM. ~MMM ..~MMM? ..?MMM......
    ..   MMMMM....MMMM ..~MMMM,..MMMM:....,MM....MMMMM... MM ..MMMM ....ZMM......
 ......  MMMMM. .MMMMM  .~MMMMM..MMMMMD+...$$....MMMMM...I ~ .MMMMM .....NM......
     .   MMMMM. .MMMMM  .~MMMMM .MMMMMMMMMN .....MMMMM..MM...?MMMMM .....  ......
@@ -79,7 +79,7 @@ To use reCAPTCHA Get a different key from https://www.google.com/recaptcha/admin
 
 --What does this module do?
 This module provides security enhancements against (HTTP) Flood & Brute Force Attacks for PHP scripts. 
-Massive scanning tools (vulnerability scanners), HTTP flood tools can be blocked by this module via htaccess or iptables, etc.("banlist" file)
+Massive scanning tools (vulnerability scanners),HTTP flood tools can be blocked by this module via htaccess or iptables,etc.("banlist" file)
 
 --How can i use this module?
 It is really simple! You can use this module by including "iosec.php" to any PHP file which is wanted to be protected.
@@ -93,8 +93,8 @@ BENEFITS:
 
 - You can block proxies (via header information)
 - You can detect flooding IP addresses.
-- You can slow down or restrict access for automated tools (HTTP DoS tools & Flood tools, Brute force tools, Vulnerability scanners, etc.)
-- You can save your server resources (database, cpu, ram, etc.) under an attack.
+- You can slow down or restrict access for automated tools (HTTP DoS tools & Flood tools,Brute force tools,Vulnerability scanners,etc.)
+- You can save your server resources (database,cpu,ram,etc.) under an attack.
 - You can restrict access permanently or temporarily for listed IP addresses in "banlist" file.  
 - You can notify yourself via email alerts when attacks begin.
 
@@ -109,19 +109,19 @@ USAGE & EXPLANATATIONS
 Files:
 
 /
--test.php (This is just a test file so, you can see how module works. Delete this file when script goes live.)
+-test.php (This is just a test file so,you can see how module works. Delete this file when script goes live.)
 -iosec.php  (The core script module. This file should be included to the pages that should be protected. NEVER leave it writeable.)
 
 iosec_admin/
 -.iosec_config (!REMOVED v.1.5!) (The main configuration file for "iosec.php". You can embed this file into "iosec.php" this will reduce attack surface on script files.)
 -index.php (!REMOVED v.1.5!) (This is just a GUI for ".iosec_config" file.)
--banlist (Detected IP addresses listed here. You can use this file with iptables, htaccess with bash scripts.)
+-banlist (Detected IP addresses listed here. You can use this file with iptables,htaccess with bash scripts.)
 -banlisttemp  (Just a system file. IP and Time correlations listed in it.)
 -ips  (Just a system file. Every request is listed in it.) 
 -whitelist (Excluded IP List seperated by new lines.)
 -excluded (Excluded File List seperated by new lines. To see a demo rename http://YOUR_SITE/test.php file to http://YOUR_SITE/test2.php. Look in the file "excluded")
--sample.htaccess (You can use this file for restricting access to public. Before use, rename it.)
--sample.htpasswd (Username: iosec, Password: iosec_demo)
+-sample.htaccess (You can use this file for restricting access to public. Before use,rename it.)
+-sample.htpasswd (Username: iosec,Password: iosec_demo)
 
 
 Default Password and User for Admin Panel Basic Auth. (sample.htaccess): 
@@ -154,13 +154,13 @@ CONFIGURATION DESCRIPTIONS
 Open "iosec.php" file and edit values.
 
 1. Connection Interval: This is second based interval for accepting another connection.
-If you choose value 1 (1 second), another request in 1 second will be suspended by module. You can enter values like 0.1, 0.001, etc.
+If you choose value 1 (1 second),another request in 1 second will be suspended by module. You can enter values like 0.1,0.001,etc.
 
 2. Max. Connection Count: This is the interval based maximum connection limit count for accepting another connection.
 If you choose value 10 and your connection interval is 1 second. This means only 10 connections permitted in 1 second.
 
-3. Suspended Process Timeout: When a connection interval rule finds a connection is not prohibited, this timeout value will be activated.
-For example, if connection interval is 1 and this value is 30 then, second connection in 1 second will be suspended for 30 seconds.
+3. Suspended Process Timeout: When a connection interval rule finds a connection is not prohibited,this timeout value will be activated.
+For example,if connection interval is 1 and this value is 30 then,second connection in 1 second will be suspended for 30 seconds.
 
 4. Page Redirection: You redirect your detected users to another page after timeout page disappears.
 
@@ -171,15 +171,15 @@ For example, if connection interval is 1 and this value is 30 then, second conne
 7. Show Debug Info: Time and IP information will be displayed on suspension page when this option is activated.
 
 8. Use Incremental Blocking: This option will increase time of suspension if attack is still happening.
-For example,  if C.I. is 1 and a second connection happens in 1 second this will be suspended for 30 seconds (above ex.). 
-If  one connection in 10 seconds happens, this will increase suspension time when this option is activated.
+For example,if C.I. is 1 and a second connection happens in 1 second this will be suspended for 30 seconds (above ex.). 
+If  one connection in 10 seconds happens,this will increase suspension time when this option is activated.
 
-9. Implicit Deny Timeout: If you want to block every request as default for a timeout period (seconds), set this value to greater than "0". 
+9. Implicit Deny Timeout: If you want to block every request as default for a timeout period (seconds),set this value to greater than "0". 
 This is an emergency option for DDoS attacks etc. 
 
 10. Cached Requests:  Monitoring data window size for last requests (for "ips" file size) (default is "150"). 
 
-11. Implicit Deny for banlist Timeout: If you want to block every recorded IP that is listed in the banlist as default and let the human users to view page for a timeout period (seconds), set this value to greater than "0" (default is "0").
+11. Implicit Deny for banlist Timeout: If you want to block every recorded IP that is listed in the banlist as default and let the human users to view page for a timeout period (seconds),set this value to greater than "0" (default is "0").
 
 Gökhan Muharremoðlu
 Information Security Specialist

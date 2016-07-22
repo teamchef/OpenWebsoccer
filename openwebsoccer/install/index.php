@@ -34,7 +34,7 @@ if (file_exists('../admin/config/config.inc.php')) {
 }
 error_reporting(E_ALL);
 define('BASE_FOLDER', $_SERVER['DOCUMENT_ROOT'].'/openwebsoccer/');
-define("PHP_MIN_VERSION", "5.3.0");
+define("PHP_MIN_VERSION", "7.0.0");
 define("WRITABLE_FOLDERS", "generated/,uploads/club/,uploads/cup/,uploads/player/,uploads/sponsor/,uploads/stadium/,uploads/stadiumbuilder/,uploads/stadiumbuilding/,uploads/users/,cache/,admin/config/adminlog.php,admin/config/entitylog.php,admin/config/config.inc.php,admin/config/imprint.php,admin/config/jobs.xml,admin/config/termsandconditions.xml");
 define("DEFAULT_DB_PREFIX", "");
 define("CONFIGFILE", BASE_FOLDER . "/generated/config.inc.php");
@@ -431,7 +431,7 @@ function printFinalPage($messages)
 <!DOCTYPE html>
 <html lang="de">
 	<head>
-		<title>OpenWebSoccer-Sim Installation</title>
+		<title>OpenWebsoccer Installation</title>
 		<link href="../admin/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico" />
 		<meta charset="UTF-8">
@@ -452,7 +452,7 @@ function printFinalPage($messages)
 			echo '<p>"OpenWebsoocer / Co-Powered by Rolf Joseph / ErdemCan"</p>';
 			exit;
 		}
-		else if (version_compare(PHP_VERSION, '7.0.8', '>')) {
+		else if (version_compare(PHP_VERSION, '7.0.9', '>')) {
 			echo 'Ihre PHP Version ' . PHP_VERSION . ' ist zu hoch, daher funktioniert die Installation eventuell nicht.';
 		}
 		else {

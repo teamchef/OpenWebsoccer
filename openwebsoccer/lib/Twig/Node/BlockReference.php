@@ -6,7 +6,7 @@
  * (c) 2009 Fabien Potencier
  * (c) 2009 Armin Ronacher
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -17,16 +17,16 @@
  */
 class Twig_Node_BlockReference extends Twig_Node implements Twig_NodeOutputInterface
 {
-    public function __construct($name, $lineno, $tag = null)
+    public function __construct($name,$lineno,$tag = null)
     {
-        parent::__construct(array(), array('name' => $name), $lineno, $tag);
+        parent::__construct(array(),array('name' => $name),$lineno,$tag);
     }
 
     public function compile(Twig_Compiler $compiler)
     {
         $compiler
             ->addDebugInfo($this)
-            ->write(sprintf("\$this->displayBlock('%s', \$context, \$blocks);\n", $this->getAttribute('name')))
+            ->write(sprintf("\$this->displayBlock('%s',\$context,\$blocks);\n",$this->getAttribute('name')))
         ;
     }
 }

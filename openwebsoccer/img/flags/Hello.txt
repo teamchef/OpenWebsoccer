@@ -5,17 +5,17 @@ Last Updated: 8th March 2013
 
 Usage:
   You're free to use this set for both personal and commercial projects
-  (MIT License, see LICENSE.txt), and a back-link is not required
+  (MIT License,see LICENSE.txt),and a back-link is not required
   (but certainly appreciated).
 
 
 Inclusion of flags:
-  This icon set includes all flags for recognized sovereign states, plus several other major
-  territories. As a rule, disputed states ARE included without discrimination.
+  This icon set includes all flags for recognized sovereign states,plus several other major
+  territories. As a rule,disputed states ARE included without discrimination.
 
 
 Contacting Us:
-  If you have any suggestions of corrections (incorrectly named, missing, or out-of-date flags etc.),
+  If you have any suggestions of corrections (incorrectly named,missing,or out-of-date flags etc.),
   then don't hesitate to get in touch at support@gosquared.com and we will do our best
   to rectify any mistakes or omissions.
 
@@ -43,7 +43,7 @@ Changelog:
        Frensh Southern Territories
        Tokelau
        Wallis and Futuna
-     Removed Kosovo's ISO code (it doesn't have one, KV was wrong)
+     Removed Kosovo's ISO code (it doesn't have one,KV was wrong)
      Corrected East Timor's ISO code (TP -> TL)
 
  * 2.2: 29th October 2012
@@ -64,7 +64,7 @@ Changelog:
      Fixed incorrect ISO code for Montenegro (CS -> ME)
 
  * 2.0: 18th October 2012
-     Fully revamped with new "shiny" style, updated with changed and new flags
+     Fully revamped with new "shiny" style,updated with changed and new flags
 
  * 1.0: 16th September 2010
      First created. Icon set containing 2400 flag icons

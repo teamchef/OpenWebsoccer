@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,33 +28,33 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-define('DEFAULT_YOUTH_OFFENSIVE', 60);
-define('DEFAULT_PLAYER_AGE', 20);
-define('MIN_NUMBER_OF_PLAYERS', 9);
-define('YOUTH_MATCH_TYPE', 'Youth');
-define('YOUTH_STRENGTH_STAMINA', 100);
-define('YOUTH_STRENGTH_FRESHNESS', 100);
-define('YOUTH_STRENGTH_SATISFACTION', 100);
+define('DEFAULT_YOUTH_OFFENSIVE',60);
+define('DEFAULT_PLAYER_AGE',20);
+define('MIN_NUMBER_OF_PLAYERS',9);
+define('YOUTH_MATCH_TYPE','Youth');
+define('YOUTH_STRENGTH_STAMINA',100);
+define('YOUTH_STRENGTH_FRESHNESS',100);
+define('YOUTH_STRENGTH_SATISFACTION',100);
 class YouthMatchSimulationExecutor
 {
-	public static function simulateOpenYouthMatches(WebSoccer $websoccer, DbConnection $db, $maxMatchesToSimulate)
+	public static function simulateOpenYouthMatches(WebSoccer $websoccer,DbConnection $db,$maxMatchesToSimulate)
 	{
 		// is feature enabled at the moment?
 		if (!$websoccer->getConfig('youth_enabled')) {
 			return;
 		}
-		$simulator = new Simulator($db, $websoccer);
+		$simulator = new Simulator($db,$websoccer);
 		// observer stores results
-		$simulator->attachObserver(new YouthMatchDataUpdateSimulatorObserver($websoccer, $db));
+		$simulator->attachObserver(new YouthMatchDataUpdateSimulatorObserver($websoccer,$db));
 		// ceate match report items on events
-		$simulator->getSimulationStrategy()->attachObserver(new YouthMatchReportSimulationObserver($websoccer, $db));
+		$simulator->getSimulationStrategy()->attachObserver(new YouthMatchReportSimulationObserver($websoccer,$db));
 		// get matches to simulate
-		$result = $db->querySelect('*', $websoccer->getConfig('db_prefix') . '_youthmatch',
-				'simulated != \'1\' AND matchdate <= %d ORDER BY matchdate ASC', $websoccer->getNowAsTimestamp(), $maxMatchesToSimulate);
+		$result = $db->querySelect('*',$websoccer->getConfig('db_prefix') . '_youthmatch',
+				'simulated != \'1\' AND matchdate <= %d ORDER BY matchdate ASC',$websoccer->getNowAsTimestamp(),$maxMatchesToSimulate);
 		while ($matchinfo = $result->fetch_array()) {
-			$match = self::_createMatch($websoccer, $db, $matchinfo);
+			$match = self::_createMatch($websoccer,$db,$matchinfo);
 			if ($match !== null) {
-				$simulator->simulateMatch($match, 100);
+				$simulator->simulateMatch($match,100);
 				// let garbage collector free memory before script execution by removing all references to objects
 				$match->cleanReferences();
 				unset($match);
@@ -62,27 +62,27 @@ class YouthMatchSimulationExecutor
 		}
 		$result->free();
 	}
-	FUNCTION _createMatch(WebSoccer $websoccer, DbConnection $db, $matchinfo)
+	FUNCTION _createMatch(WebSoccer $websoccer,DbConnection $db,$matchinfo)
 	{
-		$homeTeam = new SimulationTeam($matchinfo['home_team_id'], DEFAULT_YOUTH_OFFENSIVE);
-		$guestTeam = new SimulationTeam($matchinfo['guest_team_id'], DEFAULT_YOUTH_OFFENSIVE);
-		$match = new SimulationMatch($matchinfo['id'], $homeTeam, $guestTeam, 0);
+		$homeTeam = new SimulationTeam($matchinfo['home_team_id'],DEFAULT_YOUTH_OFFENSIVE);
+		$guestTeam = new SimulationTeam($matchinfo['guest_team_id'],DEFAULT_YOUTH_OFFENSIVE);
+		$match = new SimulationMatch($matchinfo['id'],$homeTeam,$guestTeam,0);
 		$match->type = YOUTH_MATCH_TYPE;
 		$match->penaltyShootingEnabled = FALSE;
-		self::_addPlayers($websoccer, $db, $match, $homeTeam);
-		self::_addSubstitutions($websoccer, $db, $match, $homeTeam, $matchinfo, 'home');
-		self::_addPlayers($websoccer, $db, $match, $guestTeam);
-		self::_addSubstitutions($websoccer, $db, $match, $guestTeam, $matchinfo, 'guest');
+		self::_addPlayers($websoccer,$db,$match,$homeTeam);
+		self::_addSubstitutions($websoccer,$db,$match,$homeTeam,$matchinfo,'home');
+		self::_addPlayers($websoccer,$db,$match,$guestTeam);
+		self::_addSubstitutions($websoccer,$db,$match,$guestTeam,$matchinfo,'guest');
 		return $match;
 	}
-	FUNCTION _addPlayers(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match, SimulationTeam $team)
+	FUNCTION _addPlayers(WebSoccer $websoccer,DbConnection $db,SimulationMatch $match,SimulationTeam $team)
 	{
 		// query set players
 		$fromTable = $websoccer->getConfig('db_prefix') . '_youthmatch_player AS MP';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_youthplayer AS P ON P.id = MP.player_id';
 		// ensure that player still is in team in WHERE condition.
 		$whereCondition = 'MP.match_id = %d AND MP.team_id = %d AND P.team_id = %d ORDER BY playernumber ASC';
-		$parameters = array($match->id, $team->id, $team->id);
+		$parameters = array($match->id,$team->id,$team->id);
 		$columns = array(
 				'P.id' => 'id',
 				'P.strength' => 'player_strength',
@@ -94,7 +94,7 @@ class YouthMatchSimulationExecutor
 				'MP.grade' => 'grade',
 				'MP.state' => 'state'
 				);
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		$addedFieldPlayers = 0;
 		while ($playerinfo = $result->fetch_array()) {
 			$name = $playerinfo['firstname'] . ' ' . $playerinfo['lastname'];
@@ -103,9 +103,9 @@ class YouthMatchSimulationExecutor
 			$technique = $strength;
 			$position = $playerinfo['player_position'];
 			$mainPosition = $playerinfo['match_position_main'];
-			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition, $playerinfo['grade'],
-					DEFAULT_PLAYER_AGE, $strength, $technique,
-					YOUTH_STRENGTH_STAMINA, YOUTH_STRENGTH_FRESHNESS, YOUTH_STRENGTH_SATISFACTION);
+			$player = new SimulationPlayer($playerinfo['id'],$team,$position,$mainPosition,$playerinfo['grade'],
+					DEFAULT_PLAYER_AGE,$strength,$technique,
+					YOUTH_STRENGTH_STAMINA,YOUTH_STRENGTH_FRESHNESS,YOUTH_STRENGTH_SATISFACTION);
 			$player->name = $name;
 			// bench player
 			if ($playerinfo['state'] === 'Ersatzbank') {
@@ -130,25 +130,25 @@ class YouthMatchSimulationExecutor
 		$result->free();
 		if ($addedFieldPlayers < MIN_NUMBER_OF_PLAYERS) {
 			$team->noFormationSet = TRUE;
-			self::_createRandomFormation($websoccer, $db, $match, $team);
+			self::_createRandomFormation($websoccer,$db,$match,$team);
 		}
 	}
-	FUNCTION _createRandomFormation(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match, SimulationTeam $team)
+	FUNCTION _createRandomFormation(WebSoccer $websoccer,DbConnection $db,SimulationMatch $match,SimulationTeam $team)
 	{
 		// better delete possible previous formation with too few players
-		$db->queryDelete($websoccer->getConfig('db_prefix') . '_youthmatch_player', 'match_id = %d AND team_id = %d', array($match->id, $team->id));
+		$db->queryDelete($websoccer->getConfig('db_prefix') . '_youthmatch_player','match_id = %d AND team_id = %d',array($match->id,$team->id));
 		// define the exact default formation
-		$formationPositions = array('T', 'LV', 'IV', 'IV', 'RV', 'LM', 'ZM', 'ZM', 'RM', 'LS', 'RS');
+		$formationPositions = array('T','LV','IV','IV','RV','LM','ZM','ZM','RM','LS','RS');
 		$positionMapping = SimulationHelper::getPositionsMapping();
 		// set players
-		$players = YouthPlayersDataService::getYouthPlayersOfTeam($websoccer, $db, $team->id);
+		$players = YouthPlayersDataService::getYouthPlayersOfTeam($websoccer,$db,$team->id);
 		$positionIndex = 0;
 		foreach ($players as $playerinfo) {
 			$mainPosition = $formationPositions[$positionIndex];
 			$position = $positionMapping[$mainPosition];
-			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition, 3.0,
-					DEFAULT_PLAYER_AGE, $playerinfo['strength'], $playerinfo['strength'],
-					YOUTH_STRENGTH_STAMINA, YOUTH_STRENGTH_FRESHNESS, YOUTH_STRENGTH_SATISFACTION);
+			$player = new SimulationPlayer($playerinfo['id'],$team,$position,$mainPosition,3.0,
+					DEFAULT_PLAYER_AGE,$playerinfo['strength'],$playerinfo['strength'],
+					YOUTH_STRENGTH_STAMINA,YOUTH_STRENGTH_FRESHNESS,YOUTH_STRENGTH_SATISFACTION);
 			$player->name = $playerinfo['firstname'] . ' ' . $playerinfo['lastname'];
 			// strength adaption required?
 			if ($player->position !== $playerinfo['position']) {
@@ -165,7 +165,7 @@ class YouthMatchSimulationExecutor
 						'position_main' => $player->mainPosition,
 						'name' => $player->name
 						);
-				$db->queryInsert($columns, $websoccer->getConfig('db_prefix') . '_youthmatch_player');
+				$db->queryInsert($columns,$websoccer->getConfig('db_prefix') . '_youthmatch_player');
 				$team->positionsAndPlayers[$player->position][] = $player;
 			} catch (Exception $e) {
 				// could not be stored. Can happen when the youth player moved from the opponent to this team.
@@ -177,7 +177,7 @@ class YouthMatchSimulationExecutor
 			}
 		}
 	}
-	FUNCTION _addSubstitutions(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match, SimulationTeam $team, $matchinfo, $teamPrefix)
+	FUNCTION _addSubstitutions(WebSoccer $websoccer,DbConnection $db,SimulationMatch $match,SimulationTeam $team,$matchinfo,$teamPrefix)
 	{
 		for ($subNo = 1; $subNo <= 3; ++$subNo) {
 			if ($matchinfo[$teamPrefix . '_s' . $subNo . '_out']) {
@@ -188,16 +188,16 @@ class YouthMatchSimulationExecutor
 				$position = $matchinfo[$teamPrefix . '_s' . $subNo . '_position'];
 				if (isset($team->playersOnBench[$in])) {
 					$playerIn = $team->playersOnBench[$in];
-					$playerOut = self::findPlayerOnField($team, $out);
+					$playerOut = self::findPlayerOnField($team,$out);
 					if ($playerIn && $playerOut) {
-						$sub = new SimulationSubstitution($minute, $playerIn, $playerOut, $condition, $position);
+						$sub = new SimulationSubstitution($minute,$playerIn,$playerOut,$condition,$position);
 						$team->substitutions[] = $sub;
 					}
 				}
 			}
 		}
 	}
-	FUNCTION findPlayerOnField(SimulationTeam $team, $playerId)
+	FUNCTION findPlayerOnField(SimulationTeam $team,$playerId)
 	{
 		foreach ($team->positionsAndPlayers as $position => $players) {
 			foreach ($players as $player) {

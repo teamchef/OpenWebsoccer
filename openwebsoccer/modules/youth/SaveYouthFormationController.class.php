@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -31,17 +31,17 @@ SEC;
 class SaveYouthFormationController extends BaseModel
 {
 	private $_addedPlayers;
-	FUNCTION __construct($i18n, $websoccer, $db)
+	FUNCTION __construct($i18n,$websoccer,$db)
 	{
-		parent::__construct($db, $i18n, $websoccer);
+		parent::__construct($db,$i18n,$websoccer);
 		$this->_addedPlayers = array();
 	}
 	FUNCTION executeAction($parameters)
 	{
 		$user = $this->_websoccer->getUser();
-		$teamId = $user->getClubId($this->_websoccer, $this->_db);
+		$teamId = $user->getClubId($this->_websoccer,$this->_db);
 		// next match
-		$matchinfo = YouthMatchesDataService::getYouthMatchinfoById($this->_websoccer, $this->_db, $this->_i18n,
+		$matchinfo = YouthMatchesDataService::getYouthMatchinfoById($this->_websoccer,$this->_db,$this->_i18n,
 				$parameters["matchid"]);
 		// check if home or guest team (or else it is an invalid match)
 		if ($matchinfo["home_team_id"] == $teamId) {
@@ -49,14 +49,14 @@ class SaveYouthFormationController extends BaseModel
 		} elseif ($matchinfo["guest_team_id"] == $teamId) {
 			$teamPrefix = "guest";
 		} else {
-			// ID has been entered manually, hence message not important
+			// ID has been entered manually,hence message not important
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
 		// check if expired
 		if ($matchinfo["matchdate"] < $this->_websoccer->getNowAsTimestamp() || $matchinfo["simulated"]) {
 			throw new Exception($this->_i18n->getMessage("youthformation_err_matchexpired"));
 		}
-		// get team players and check whether provided IDs are valid players (ceck for duplicate players only, for now)
+		// get team players and check whether provided IDs are valid players (ceck for duplicate players only,for now)
 		$this->validatePlayer($parameters["player1"]);
 		$this->validatePlayer($parameters["player2"]);
 		$this->validatePlayer($parameters["player3"]);
@@ -80,12 +80,12 @@ class SaveYouthFormationController extends BaseModel
 			$playerOut = $parameters["sub" . $subNo ."_out"];
 			$playerMinute = $parameters["sub" . $subNo ."_minute"];
 			if ($playerIn != null && $playerIn > 0 && $playerOut != null && $playerOut > 0 && $playerMinute != null && $playerMinute > 0) {
-				$this->validateSubstitution($playerIn, $playerOut, $playerMinute);
+				$this->validateSubstitution($playerIn,$playerOut,$playerMinute);
 				$validSubstitutions[] = $subNo;
 			}
 		}
 		// save formation
-		$this->saveFormation($teamId, $parameters, $validSubstitutions, $matchinfo, $teamPrefix);
+		$this->saveFormation($teamId,$parameters,$validSubstitutions,$matchinfo,$teamPrefix);
 		// create success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
 				$this->_i18n->getMessage("saved_message_title"),
@@ -102,7 +102,7 @@ class SaveYouthFormationController extends BaseModel
 		}
 		$this->_addedPlayers[$playerId] = TRUE;
 	}
-	FUNCTION validateSubstitution($playerIn, $playerOut, $minute)
+	FUNCTION validateSubstitution($playerIn,$playerOut,$minute)
 	{
 		if (!isset($this->_addedPlayers[$playerIn]) || !isset($this->_addedPlayers[$playerOut])) {
 			throw new Exception($this->_i18n->getMessage("formation_err_invalidplayer"));
@@ -111,13 +111,13 @@ class SaveYouthFormationController extends BaseModel
 			throw new Exception($this->_i18n->getMessage("formation_err_invalidsubstitutionminute"));
 		}
 	}
-	FUNCTION saveFormation($teamId, $parameters, $validSubstitutions, $matchinfo, $teamPrefix)
+	FUNCTION saveFormation($teamId,$parameters,$validSubstitutions,$matchinfo,$teamPrefix)
 	{
 		// delete old formation
-		$this->_db->queryDelete($this->_websoccer->getConfig("db_prefix") ."_youthmatch_player", "match_id = %d AND team_id = %d",
-				 array($parameters["matchid"], $teamId));
+		$this->_db->queryDelete($this->_websoccer->getConfig("db_prefix") ."_youthmatch_player","match_id = %d AND team_id = %d",
+				 array($parameters["matchid"],$teamId));
 		// define mapping of player number and actual main position on field
-		$setupParts = explode("-",  $parameters["setup"]);
+		$setupParts = explode("-",$parameters["setup"]);
 		if (count($setupParts) != 5) {
 			throw new Exception("illegal formation setup");
 		}
@@ -204,19 +204,19 @@ class SaveYouthFormationController extends BaseModel
 		for ($playerNo = 1; $playerNo <= 11; $playerNo++) {
 			$mainPosition = $this->_websoccer->getRequestParameter("player" . $playerNo . "_pos");
 			$position = $positionMapping[$mainPosition];
-			$this->savePlayer($parameters["matchid"], $teamId, $parameters["player" . $playerNo], $playerNo, $position, $mainPosition, FALSE);
+			$this->savePlayer($parameters["matchid"],$teamId,$parameters["player" . $playerNo],$playerNo,$position,$mainPosition,FALSE);
 		}
 		// create bench players
 		for ($playerNo = 1; $playerNo <= 5; $playerNo++) {
 			if ($parameters["bench" . $playerNo]) {
-				$this->savePlayer($parameters["matchid"], $teamId, $parameters["bench" . $playerNo], $playerNo, "-", "-", TRUE);
+				$this->savePlayer($parameters["matchid"],$teamId,$parameters["bench" . $playerNo],$playerNo,"-","-",TRUE);
 			}
 		}
 		// save substitutions
 		$fromTable = $this->_websoccer->getConfig("db_prefix") ."_youthmatch";
 		$columns = array();
 		for ($subNo = 1; $subNo <= 3; $subNo++) {
-			if (in_array($subNo, $validSubstitutions)) {
+			if (in_array($subNo,$validSubstitutions)) {
 				$columns[$teamPrefix . "_s". $subNo . "_out"] = $parameters["sub" . $subNo ."_out"];
 				$columns[$teamPrefix . "_s". $subNo . "_in"] = $parameters["sub" . $subNo ."_in"];
 				$columns[$teamPrefix . "_s". $subNo . "_minute"] = $parameters["sub" . $subNo ."_minute"];
@@ -231,9 +231,9 @@ class SaveYouthFormationController extends BaseModel
 			}
 		}
 		// update match table
-		$this->_db->queryUpdate($columns, $fromTable, "id = %d", $parameters["matchid"]);
+		$this->_db->queryUpdate($columns,$fromTable,"id = %d",$parameters["matchid"]);
 	}
-	FUNCTION savePlayer($matchId, $teamId, $playerId, $playerNumber, $position, $mainPosition, $onBench)
+	FUNCTION savePlayer($matchId,$teamId,$playerId,$playerNumber,$position,$mainPosition,$onBench)
 	{
 		$columns = array(
 				"match_id" => $matchId,
@@ -246,6 +246,6 @@ class SaveYouthFormationController extends BaseModel
 				"strength" => 0,
 				"name" => $playerId
 				);
-		$this->_db->queryInsert($columns, $this->_websoccer->getConfig("db_prefix") ."_youthmatch_player");
+		$this->_db->queryInsert($columns,$this->_websoccer->getConfig("db_prefix") ."_youthmatch_player");
 	}
 }

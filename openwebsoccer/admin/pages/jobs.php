@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -51,12 +51,12 @@ if ($action == "execute" && !$admin["r_demo"]) {
 	}
 	$jobClass = (string) $jobConfig[0]->attributes()->class;
 	if (class_exists($jobClass)) {
-		$job = new $jobClass($website, $db, $i18n, $jobId);
+		$job = new $jobClass($website,$db,$i18n,$jobId);
 	} else {
 		throw new Exception("Klasse nicht gefunden: " . $jobClass);
 	}
 	$job->execute();
-		echo createSuccessMessage($i18n->getMessage("jobs_executed"), "");
+		echo createSuccessMessage($i18n->getMessage("jobs_executed"),"");
 	}
 ?>
 <table class="table table-striped">
@@ -101,7 +101,7 @@ if ($action == "execute" && !$admin["r_demo"]) {
 			}
 			echo "<td>" . $name;
 			if (strlen($error)) {
-				echo createErrorMessage($i18n->getMessage("subpage_error_title"), $error);
+				echo createErrorMessage($i18n->getMessage("subpage_error_title"),$error);
 			}
 			echo "</td>";
 			echo "<td>";
@@ -140,10 +140,10 @@ function my_file($url) {
 	// Port ermitteln
 	$port = empty($parsedurl['port']) ? 80 : $port = $parsedurl['port'];
 	// Socket öffnen
-	$fp = fsockopen ($host, $port, $errno, $errstr, 30);
+	$fp = fsockopen ($host,$port,$errno,$errstr,30);
 	if (!$fp) return null;
 	// Request senden
-	fputs ($fp, "GET {$documentpath} HTTP/1.0\r\nHost: {$host}\r\n\r\n");
+	fputs ($fp,"GET {$documentpath} HTTP/1.0\r\nHost: {$host}\r\n\r\n");
 	// Header auslesen
 	$header = '';
 	do {

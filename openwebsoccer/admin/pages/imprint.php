@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -45,9 +45,9 @@ if (!$show) {
 			if (file_exists(IMPRINT_FILE)) {
 				$filecontent = file_get_contents(IMPRINT_FILE);
 			}
-			$formFields['content'] = array('type' => 'html', 'value' => $filecontent, 'required' => 'true');
+			$formFields['content'] = array('type' => 'html','value' => $filecontent,'required' => 'true');
 			foreach ($formFields as $fieldId => $fieldInfo) {
-				echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo['value'], 'imprint_label_');
+				echo FormBuilder::createFormGroup($i18n,$fieldId,$fieldInfo,$fieldInfo['value'],'imprint_label_');
 			}
 			?>
 		</fieldset>
@@ -69,7 +69,7 @@ elseif ($show == 'save') {
 		$fw = new FileWriter(IMPRINT_FILE);
 		$fw->writeLine(stripslashes($_POST['content']));
 		$fw->close();
-		echo createSuccessMessage($i18n->getMessage('alert_save_success'), '');
+		echo createSuccessMessage($i18n->getMessage('alert_save_success'),'');
 		echo '<p>&raquo; <a href=\'?site='. $site .'\'>'. $i18n->getMessage('back_label') . '</a></p>';
 	}
 }

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
@@ -33,21 +33,21 @@
 //		$labelcolumns - the DB column names from whcih the label shall be constructed
 //		$search - an optional search string. All label columns will be searched (case insensitive).
 //		$itemid - ID of a single item. Then only this item will be returned.
-define('ROOT', $_SERVER['DOCUMENT_ROOT']. dirname($_SERVER['PHP_SELF']) . '/..');
-define('MAX_ITEMS', 20);
+define('ROOT',$_SERVER['DOCUMENT_ROOT']. dirname($_SERVER['PHP_SELF']) . '/..');
+define('MAX_ITEMS',20);
 include(ROOT . '/admin/adminglobal.inc.php');
 // validate parameters
 $dbTable = $_GET['dbtable'];
-if(!strlen($dbTable) || preg_match('/^([a-zA-Z1-9_])+$/', $dbTable) == 0) {
+if(!strlen($dbTable) || preg_match('/^([a-zA-Z1-9_])+$/',$dbTable) == 0) {
 	throw new Exception('Illegal parameter: dbtable');
 }
 $labelColumns = $_GET['labelcolumns'];
-if(!strlen($labelColumns) || preg_match('/^([a-zA-Z1-9_, ])+$/', $labelColumns) == 0) {
+if(!strlen($labelColumns) || preg_match('/^([a-zA-Z1-9_,])+$/',$labelColumns) == 0) {
 	throw new Exception('Illegal parameter: labelcolumns');
 }
 $search = (isset($_GET['search'])) ? strtolower($_GET['search']) : '';
 $itemId = (isset($_GET['itemid']) && is_numeric($_GET['itemid'])) ? $_GET['itemid'] : 0;
-$labels = explode(',', $labelColumns);
+$labels = explode(',',$labelColumns);
 // query
 $whereCondition = '';
 if ($itemId > 0) {
@@ -69,7 +69,7 @@ if ($itemId > 0) {
 	}
 }
 $whereCondition .= ' ORDER BY '. $labelColumns . ' ASC';
-$result = $db->querySelect('id, ' . $labelColumns, $website->getConfig('db_prefix') . '_' . $dbTable, $whereCondition, $queryParameters, MAX_ITEMS);
+$result = $db->querySelect('id,' . $labelColumns,$website->getConfig('db_prefix') . '_' . $dbTable,$whereCondition,$queryParameters,MAX_ITEMS);
 $items = array();
 // collect items;
 while($item = $result->fetch_array()) {
@@ -83,7 +83,7 @@ while($item = $result->fetch_array()) {
 		$first = FALSE;
 		$label .= $item[trim($labelColumn)];
 	}
-	$items[] = array('id' => $item['id'], 'text' => $label);
+	$items[] = array('id' => $item['id'],'text' => $label);
 }
 $result->free();
 echo json_encode($items);

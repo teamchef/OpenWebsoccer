@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,40 +30,40 @@
 SEC;
 class MessagesDataService
 {
-	FUNCTION getInboxMessages($websoccer, $db, $startIndex, $entries_per_page)
+	FUNCTION getInboxMessages($websoccer,$db,$startIndex,$entries_per_page)
 	{
 		$whereCondition = "L.empfaenger_id = %d AND L.typ = 'eingang' ORDER BY L.datum DESC";
 		$parameters = $websoccer->getUser()->id;
-		return self::getMessagesByCondition($websoccer, $db, $startIndex, $entries_per_page, $whereCondition, $parameters);
+		return self::getMessagesByCondition($websoccer,$db,$startIndex,$entries_per_page,$whereCondition,$parameters);
 	}
-	FUNCTION getOutboxMessages($websoccer, $db, $startIndex, $entries_per_page)
+	FUNCTION getOutboxMessages($websoccer,$db,$startIndex,$entries_per_page)
 	{
 		$whereCondition = "L.absender_id = %d AND L.typ = 'ausgang' ORDER BY L.datum DESC";
 		$parameters = $websoccer->getUser()->id;
-		return self::getMessagesByCondition($websoccer, $db, $startIndex, $entries_per_page, $whereCondition, $parameters);
+		return self::getMessagesByCondition($websoccer,$db,$startIndex,$entries_per_page,$whereCondition,$parameters);
 	}
-	FUNCTION getMessageById($websoccer, $db, $id)
+	FUNCTION getMessageById($websoccer,$db,$id)
 	{
 		$whereCondition = '(L.empfaenger_id = %d OR L.absender_id = %d) AND L.id = %d';
 		$userId = $websoccer->getUser()->id;
-		$parameters = [$userId, $userId, $id];
-		$messages = self::getMessagesByCondition($websoccer, $db, 0, 1, $whereCondition, $parameters);
+		$parameters = [$userId,$userId,$id];
+		$messages = self::getMessagesByCondition($websoccer,$db,0,1,$whereCondition,$parameters);
 		if (count($messages)) {
 			return $messages[0];
 		}
 		return NULL;
 	}
-	FUNCTION getLastMessageOfUserId($websoccer, $db, $userId)
+	FUNCTION getLastMessageOfUserId($websoccer,$db,$userId)
 	{
 		$whereCondition = 'L.absender_id = %d ORDER BY L.datum DESC';
 		$userId = $websoccer->getUser()->id;
-		$messages = self::getMessagesByCondition($websoccer, $db, 0, 1, $whereCondition, $userId);
+		$messages = self::getMessagesByCondition($websoccer,$db,0,1,$whereCondition,$userId);
 		if (count($messages)) {
 			return $messages[0];
 		}
 		return NULL;
 	}
-	FUNCTION getMessagesByCondition($websoccer, $db, $startIndex, $entries_per_page, $whereCondition, $parameters)
+	FUNCTION getMessagesByCondition($websoccer,$db,$startIndex,$entries_per_page,$whereCondition,$parameters)
 	{
 		$columns['L.id'] = 'message_id';
 		$columns['L.betreff'] = 'subject';
@@ -78,7 +78,7 @@ class MessagesDataService
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_user AS R ON R.id = L.empfaenger_id';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_user AS S ON S.id = L.absender_id';
 		$limit = $startIndex . ',' . $entries_per_page;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters,$limit);
 		$messages = [];
 		while ($message = $result->fetch_array()) {
 			$messages[] = $message;
@@ -86,13 +86,13 @@ class MessagesDataService
 		$result->free();
 		return $messages;
 	}
-	FUNCTION countInboxMessages($websoccer, $db)
+	FUNCTION countInboxMessages($websoccer,$db)
 	{
 		$userId = $websoccer->getUser()->id;
 		$columns = 'COUNT(*) AS hits';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_briefe AS L';
 		$whereCondition = 'L.empfaenger_id = %d AND typ = "eingang"';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $userId);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$userId);
 		$letters = $result->fetch_array();
 		$result->free();
 		if (isset($letters['hits'])) {
@@ -100,13 +100,13 @@ class MessagesDataService
 		}
 		return NULL;
 	}
-	FUNCTION countUnseenInboxMessages($websoccer, $db)
+	FUNCTION countUnseenInboxMessages($websoccer,$db)
 	{
 		$userId = $websoccer->getUser()->id;
 		$columns = 'COUNT(*) AS hits';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_briefe AS L';
 		$whereCondition = 'L.empfaenger_id = %d AND typ = "eingang" AND gelesen = "0"';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $userId);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$userId);
 		$letters = $result->fetch_array();
 		$result->free();
 		if (isset($letters['hits'])) {
@@ -114,13 +114,13 @@ class MessagesDataService
 		}
 		return NULL;
 	}
-	FUNCTION countOutboxMessages($websoccer, $db)
+	FUNCTION countOutboxMessages($websoccer,$db)
 	{
 		$userId = $websoccer->getUser()->id;
 		$columns = 'COUNT(*) AS hits';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_briefe AS L';
 		$whereCondition = 'L.absender_id = %d AND typ = "ausgang"';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $userId);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$userId);
 		$letters = $result->fetch_array();
 		$result->free();
 		if (isset($letters['hits'])) {

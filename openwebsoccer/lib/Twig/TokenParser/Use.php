@@ -5,7 +5,7 @@
  *
  * (c) 2011 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -31,7 +31,7 @@ class Twig_TokenParser_Use extends Twig_TokenParser
         $stream = $this->parser->getStream();
 
         if (!$template instanceof Twig_Node_Expression_Constant) {
-            throw new Twig_Error_Syntax('The template references in a "use" statement must be a string.', $stream->getCurrent()->getLine(), $stream->getFilename());
+            throw new Twig_Error_Syntax('The template references in a "use" statement must be a string.',$stream->getCurrent()->getLine(),$stream->getFilename());
         }
 
         $targets = array();
@@ -44,9 +44,9 @@ class Twig_TokenParser_Use extends Twig_TokenParser
                     $alias = $stream->expect(Twig_Token::NAME_TYPE)->getValue();
                 }
 
-                $targets[$name] = new Twig_Node_Expression_Constant($alias, -1);
+                $targets[$name] = new Twig_Node_Expression_Constant($alias,-1);
 
-                if (!$stream->nextIf(Twig_Token::PUNCTUATION_TYPE, ',')) {
+                if (!$stream->nextIf(Twig_Token::PUNCTUATION_TYPE,',')) {
                     break;
                 }
             } while (true);
@@ -54,7 +54,7 @@ class Twig_TokenParser_Use extends Twig_TokenParser
 
         $stream->expect(Twig_Token::BLOCK_END_TYPE);
 
-        $this->parser->addTrait(new Twig_Node(array('template' => $template, 'targets' => new Twig_Node($targets))));
+        $this->parser->addTrait(new Twig_Node(array('template' => $template,'targets' => new Twig_Node($targets))));
     }
 
     public function getTag()

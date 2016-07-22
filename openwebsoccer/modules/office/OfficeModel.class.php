@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -34,9 +34,9 @@ class OfficeModel extends BaseModel
 	{
 		// trigger random event detection
 		$user = $this->_websoccer->getUser();
-		$clubId = $user->getClubId($this->_websoccer, $this->_db);
+		$clubId = $user->getClubId($this->_websoccer,$this->_db);
 		if ($clubId) {
-			RandomEventsDataService::createEventIfRequired($this->_websoccer, $this->_db, $user->id);
+			RandomEventsDataService::createEventIfRequired($this->_websoccer,$this->_db,$user->id);
 		}
 		return array();
 	}

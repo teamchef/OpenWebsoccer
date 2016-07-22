@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -33,16 +33,16 @@ if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
 }
 echo "<p><a href=\"?site=manage&entity=match\" class=\"btn\">". $i18n->getMessage("back_label") . "</a></p>";
 $matchId = (isset($_REQUEST["match"]) && is_numeric($_REQUEST["match"])) ? $_REQUEST["match"] : 0;
-$teamPrefixes = array("home", "guest");
-$formFields = array("minuten_gespielt", "note", "tore", "assists", "karte_gelb", "karte_rot", "verletzt", "gesperrt", "ballcontacts", "wontackles", "shoots", "passes_successed", "passes_failed");
+$teamPrefixes = array("home","guest");
+$formFields = array("minuten_gespielt","note","tore","assists","karte_gelb","karte_rot","verletzt","gesperrt","ballcontacts","wontackles","shoots","passes_successed","passes_failed");
 // ******** action: delete player from match
 if ($action == "delete") {
 	if ($admin["r_demo"]) {
 		throw new Exception($i18n->getMessage("validationerror_no_changes_as_demo"));
 	}
 	$playerId = (int) $_REQUEST["player"];
-	$db->queryDelete($website->getConfig("db_prefix") . "_spiel_berechnung", "spiel_id = %d AND spieler_id = %d", array($matchId, $playerId));
-	echo createSuccessMessage($i18n->getMessage("manage_success_delete"), "");
+	$db->queryDelete($website->getConfig("db_prefix") . "_spiel_berechnung","spiel_id = %d AND spieler_id = %d",array($matchId,$playerId));
+	echo createSuccessMessage($i18n->getMessage("manage_success_delete"),"");
 }
 // ******** action: update player statistics
 elseif ($action == "update") {
@@ -69,8 +69,8 @@ elseif ($action == "update") {
 			$matchColumns[$columnsPrefix . "_w". $subNo . "_minute"] = $_POST[$teamPrefix . "_sub". $subNo . "_minute"];
 			$matchColumns[$columnsPrefix . "_w". $subNo . "_condition"] = $_POST[$teamPrefix . "_sub". $subNo . "_condition"];
 		}
-		$db->queryUpdate($matchColumns, $matchUpdateTable, "id = %d", array($matchId));
-		$playerIds = explode(";", $_REQUEST[$teamPrefix . "_players"]);
+		$db->queryUpdate($matchColumns,$matchUpdateTable,"id = %d",array($matchId));
+		$playerIds = explode(";",$_REQUEST[$teamPrefix . "_players"]);
 		foreach ($playerIds as $playerId) {
 			$columns = array(
 					"position" => $_POST["pl" . $playerId . "_pos"],
@@ -80,10 +80,10 @@ elseif ($action == "update") {
 				$columns[$formField] = $_POST["pl" . $playerId . "_" . $formField];
 			}
 			// update player record
-			$db->queryUpdate($columns, $updateTable, "spiel_id = %d AND spieler_id = %d", array($matchId, $playerId));
+			$db->queryUpdate($columns,$updateTable,"spiel_id = %d AND spieler_id = %d",array($matchId,$playerId));
 		}
 	}
-	echo createSuccessMessage($i18n->getMessage("alert_save_success"), "");
+	echo createSuccessMessage($i18n->getMessage("alert_save_success"),"");
 }
 // ******** action: create new player statistics record
 elseif ($action == "create") {
@@ -94,7 +94,7 @@ elseif ($action == "create") {
 	$playerId = (int) $_POST["playerid"];
 	$position = $_POST["position"];
 	if ($teamId && $playerId && strlen($position)) {
-		$player = PlayersDataService::getPlayerById($website, $db, $playerId);
+		$player = PlayersDataService::getPlayerById($website,$db,$playerId);
 		$playerName = (strlen($player["player_pseudonym"])) ? $player["player_pseudonym"] : $player["player_firstname"] . " " . $player["player_lastname"];
 		$db->queryInsert(array(
 				"spiel_id" => $matchId,
@@ -103,7 +103,7 @@ elseif ($action == "create") {
 				"position_main" => $position,
 				"note" => 3.0,
 				"name" => $playerName
-				), $website->getConfig("db_prefix") . "_spiel_berechnung");
+				),$website->getConfig("db_prefix") . "_spiel_berechnung");
 	}
 }
 // ******** action: generate player records out of current formation
@@ -111,10 +111,10 @@ elseif ($action == "generate") {
 	if ($admin["r_demo"]) {
 		throw new Exception($i18n->getMessage("validationerror_no_changes_as_demo"));
 	}
-	// init default simulation strategry in order to include dependend constants. Yeah, refactor this once having to much time...
+	// init default simulation strategry in order to include dependend constants. Yeah,refactor this once having to much time...
 	$dummyVar = new DefaultSimulationStrategy($website);
-	$match = MatchesDataService::getMatchById($website, $db, $matchId, FALSE, FALSE);
-	$teamPrefix = (in_array($_GET["team"], array("home", "guest"))) ? $_GET["team"] : "home";
+	$match = MatchesDataService::getMatchById($website,$db,$matchId,FALSE,FALSE);
+	$teamPrefix = (in_array($_GET["team"],array("home","guest"))) ? $_GET["team"] : "home";
 	$team = new SimulationTeam($match["match_". $teamPrefix ."_id"]);
 	$team->isNationalTeam = $match["match_". $teamPrefix ."_nationalteam"];
 	// get formation
@@ -136,7 +136,7 @@ elseif ($action == "generate") {
 		$formationcolumns["w" . $subNo . "_minute"] = $teamPrefix . "_sub" . $subNo . "_minute";
 		$formationcolumns["w" . $subNo . "_condition"] = $teamPrefix . "_sub" . $subNo . "_condition";
 	}
-	$result = $db->querySelect($formationcolumns, $website->getConfig("db_prefix") . "_aufstellung", "verein_id = %d", $team->id, 1);
+	$result = $db->querySelect($formationcolumns,$website->getConfig("db_prefix") . "_aufstellung","verein_id = %d",$team->id,1);
 	$formation = $result->fetch_array();
 	$result->free();
 	if (!$formation) {
@@ -158,15 +158,15 @@ elseif ($action == "generate") {
 		$matchColumns[$columnsPrefix . "_w". $subNo . "_minute"] = $formation[$teamPrefix . "_sub". $subNo . "_minute"];
 		$matchColumns[$columnsPrefix . "_w". $subNo . "_condition"] = $formation[$teamPrefix . "_sub". $subNo . "_condition"];
 	}
-	$db->queryUpdate($matchColumns, $website->getConfig("db_prefix") . "_spiel", "id = %d", array($matchId));
+	$db->queryUpdate($matchColumns,$website->getConfig("db_prefix") . "_spiel","id = %d",array($matchId));
 	// create player records
-	MatchSimulationExecutor::addPlayers($website, $db, $team, $formation, $teamPrefix);
+	MatchSimulationExecutor::addPlayers($website,$db,$team,$formation,$teamPrefix);
 }
-$match = MatchesDataService::getMatchById($website, $db, $matchId, FALSE, FALSE);
+$match = MatchesDataService::getMatchById($website,$db,$matchId,FALSE,FALSE);
 if (!count($match)) {
 	throw new Exception("illegal match id");
 }
-$positions = array('T','LV','IV', 'RV', 'LM', 'DM', 'ZM', 'OM', 'RM', 'LS', 'MS', 'RS');
+$positions = array('T','LV','IV','RV','LM','DM','ZM','OM','RM','LS','MS','RS');
 // ******** form for adding players
 echo "<form action=\"". $_SERVER['PHP_SELF'] . "\" class=\"form-horizontal\" method=\"post\">";
 echo "<input type=\"hidden\" name=\"action\" value=\"create\">";
@@ -182,10 +182,10 @@ echo "<option value=\"". $match["match_guest_id"] . "\">". escapeOutput($match["
 echo "</select>";
 echo "</div>";
 echo "</div>";
-echo FormBuilder::createFormGroup($i18n, "playerid", array("type" => "foreign_key",
+echo FormBuilder::createFormGroup($i18n,"playerid",array("type" => "foreign_key",
 		"jointable" => "spieler",
 		"entity" => "player",
-		"labelcolumns" => "vorname,nachname,kunstname"), "", "match_manage_createplayer_label_");
+		"labelcolumns" => "vorname,nachname,kunstname"),"","match_manage_createplayer_label_");
 echo "<div class=\"control-group\">";
 echo "<label class=\"control-label\" for=\"position\">". $i18n->getMessage("entity_player_position_main") . "</label>";
 echo "<div class=\"controls\">";
@@ -206,26 +206,26 @@ echo "<input type=\"hidden\" name=\"site\" value=\"$site\"/>";
 echo "<input type=\"hidden\" name=\"action\" value=\"update\"/>";
 echo "<input type=\"hidden\" name=\"match\" value=\"$matchId\"/>";
 foreach ($teamPrefixes as $teamPrefix) {
-	echo "<h2><a href=\"". $website->getInternalUrl("team", "id=" . $match["match_". $teamPrefix . "_id"]) . "\" target=\"_blank\">". escapeOutput($match["match_". $teamPrefix . "_name"]) . "</a></h2>";
+	echo "<h2><a href=\"". $website->getInternalUrl("team","id=" . $match["match_". $teamPrefix . "_id"]) . "\" target=\"_blank\">". escapeOutput($match["match_". $teamPrefix . "_name"]) . "</a></h2>";
 	// tactic
 	echo "<div class=\"form-horizontal\">";
-	echo FormBuilder::createFormGroup($i18n, $teamPrefix . "_offensive", array("type" => "number",
-			"value" => $match["match_". $teamPrefix . "_offensive"]), $match["match_". $teamPrefix . "_offensive"], "formation_");
-	echo FormBuilder::createFormGroup($i18n, $teamPrefix . "_longpasses", array("type" => "boolean",
-			"value" => $match["match_". $teamPrefix . "_longpasses"]), $match["match_". $teamPrefix . "_longpasses"], "formation_");
-	echo FormBuilder::createFormGroup($i18n, $teamPrefix . "_counterattacks", array("type" => "boolean",
-			"value" => $match["match_". $teamPrefix . "_counterattacks"]), $match["match_". $teamPrefix . "_counterattacks"], "formation_");
+	echo FormBuilder::createFormGroup($i18n,$teamPrefix . "_offensive",array("type" => "number",
+			"value" => $match["match_". $teamPrefix . "_offensive"]),$match["match_". $teamPrefix . "_offensive"],"formation_");
+	echo FormBuilder::createFormGroup($i18n,$teamPrefix . "_longpasses",array("type" => "boolean",
+			"value" => $match["match_". $teamPrefix . "_longpasses"]),$match["match_". $teamPrefix . "_longpasses"],"formation_");
+	echo FormBuilder::createFormGroup($i18n,$teamPrefix . "_counterattacks",array("type" => "boolean",
+			"value" => $match["match_". $teamPrefix . "_counterattacks"]),$match["match_". $teamPrefix . "_counterattacks"],"formation_");
 	echo "</div>";
 	// get existing players
 	$playerTable = $website->getConfig("db_prefix") . "_spiel_berechnung SB";
 	$playerTable .= " INNER JOIN " . $website->getConfig("db_prefix") . "_spieler S ON S.id = SB.spieler_id";
-	$result = $db->querySelect("SB.*", $playerTable, "spiel_id = %d AND team_id = %d ORDER BY feld ASC, field(SB.position_main, 'T', 'LV', 'IV', 'RV', 'DM', 'LM', 'ZM', 'RM', 'OM', 'LS', 'MS', 'RS')", array($matchId, $match["match_". $teamPrefix . "_id"]));
+	$result = $db->querySelect("SB.*",$playerTable,"spiel_id = %d AND team_id = %d ORDER BY feld ASC,field(SB.position_main,'T','LV','IV','RV','DM','LM','ZM','RM','OM','LS','MS','RS')",array($matchId,$match["match_". $teamPrefix . "_id"]));
 	$playersCount = $result->num_rows;
 	// no player records
 	if (!$playersCount) {
-		echo createInfoMessage("", $i18n->getMessage("match_manage_playerstatistics_noitems"));
+		echo createInfoMessage("",$i18n->getMessage("match_manage_playerstatistics_noitems"));
 		// check if any formation is available
-		$fresult = $db->querySelect("COUNT(*) AS hits", $website->getConfig("db_prefix") . "_aufstellung", "verein_id = %d", $match["match_". $teamPrefix . "_id"]);
+		$fresult = $db->querySelect("COUNT(*) AS hits",$website->getConfig("db_prefix") . "_aufstellung","verein_id = %d",$match["match_". $teamPrefix . "_id"]);
 		$formationCount = $fresult->fetch_array();
 		$fresult->free();
 		if ($formationCount && $formationCount["hits"]) {
@@ -285,7 +285,7 @@ foreach ($teamPrefixes as $teamPrefix) {
 		}
 		echo "</tbody>";
 		echo "</table>";
-		echo "<input type=\"hidden\" name=\"". $teamPrefix . "_players\" value=\"". implode(";", $playerIds) . "\"/>";
+		echo "<input type=\"hidden\" name=\"". $teamPrefix . "_players\" value=\"". implode(";",$playerIds) . "\"/>";
 		// substitutions
 		echo "<h4>". $i18n->getMessage("match_manage_substitutions") . "</h4>";
 		?>

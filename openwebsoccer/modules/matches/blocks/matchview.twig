@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -38,6 +38,7 @@
 					<td><h4>{{ i18n.getMessage("match_details_match_completed") }}</h4></td>
 				</tr>
 			{% endif %}
+			{# <h3>{{ i18n.getMessage("match_report_minute",minutes) }}</h3> #}
 			{% set previousMinute = 0 %}
 			{% for reportmessage in reportmessages %}
 				{# half-time #}
@@ -74,7 +75,7 @@
 					</td>
 					<td>
 						{% set teamMarkerClass = (reportmessage.active_home) ? "report_team_home" : "report_team_guest" %}
-						<div class="report_minute {{ teamMarkerClass }}">{{ i18n.getMessage("match_report_minute", reportmessage.minute) }}
+						<div class="report_minute {{ teamMarkerClass }}">{{ i18n.getMessage("match_report_minute",reportmessage.minute) }}
 							{% if reportmessage.type == "Elfmeter_erfolg" or reportmessage.type == "Elfmeter_verschossen" %} - {{ i18n.getMessage("match_details_commenttitle_penalty") }}
 							{% elseif reportmessage.type == "Tor" or reportmessage.type == "Tor_mit_vorlage" %} - {{ i18n.getMessage("match_details_commenttitle_goal") }}
 							{% endif %}

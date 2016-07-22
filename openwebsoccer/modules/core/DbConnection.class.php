@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -42,9 +42,9 @@ class DbConnection {
 	FUNCTION __construct()
 	{
 	}
-	FUNCTION connect($host, $user, $password, $dbname)
+	FUNCTION connect($host,$user,$password,$dbname)
 	{
-		@$this->connection = new mysqli($host, $user, $password, $dbname);
+		@$this->connection = new mysqli($host,$user,$password,$dbname);
 		@$this->connection->set_charset('utf8');
 		if (mysqli_connect_error()) {
 			throw new Exception('Database Connection Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
@@ -54,14 +54,14 @@ class DbConnection {
 	{
 		$this->connection->close();
 	}
-	FUNCTION querySelect($columns, $fromTable, $whereCondition, $parameters = null, $limit = null)
+	FUNCTION querySelect($columns,$fromTable,$whereCondition,$parameters = null,$limit = null)
 	{
-		$queryStr = $this->buildQueryString($columns, $fromTable, $whereCondition, $parameters, $limit);
+		$queryStr = $this->buildQueryString($columns,$fromTable,$whereCondition,$parameters,$limit);
 		return $this->executeQuery($queryStr);
 	}
-	FUNCTION queryCachedSelect($columns, $fromTable, $whereCondition, $parameters = null, $limit = null)
+	FUNCTION queryCachedSelect($columns,$fromTable,$whereCondition,$parameters = null,$limit = null)
 	{
-		$queryStr = $this->buildQueryString($columns, $fromTable, $whereCondition, $parameters, $limit);
+		$queryStr = $this->buildQueryString($columns,$fromTable,$whereCondition,$parameters,$limit);
 		// get result from cache
 		if (isset($this->_queryCache[$queryStr])) {
 			return $this->_queryCache[$queryStr];
@@ -76,30 +76,30 @@ class DbConnection {
 		$this->_queryCache[$queryStr] = $rows;
 		return $rows;
 	}
-	FUNCTION queryUpdate($columns, $fromTable, $whereCondition, $parameters)
+	FUNCTION queryUpdate($columns,$fromTable,$whereCondition,$parameters)
 	{
 		$queryStr = 'UPDATE ' . $fromTable . ' SET ';
 		$queryStr = $queryStr . self::buildColumnsValueList($columns);
 		// WHERE
 		$queryStr = $queryStr . ' WHERE ';
-		$wherePart = self::buildWherePart($whereCondition, $parameters);
+		$wherePart = self::buildWherePart($whereCondition,$parameters);
 		$queryStr = $queryStr . $wherePart;
 		$this->executeQuery($queryStr);
 		// refresh cache
 		$this->_queryCache = array();
 	}
-	FUNCTION queryDelete($fromTable, $whereCondition, $parameters)
+	FUNCTION queryDelete($fromTable,$whereCondition,$parameters)
 	{
 		$queryStr = 'DELETE FROM ' . $fromTable;
 		// WHERE
 		$queryStr = $queryStr . ' WHERE ';
-		$wherePart = self::buildWherePart($whereCondition, $parameters);
+		$wherePart = self::buildWherePart($whereCondition,$parameters);
 		$queryStr = $queryStr . $wherePart;
 		$this->executeQuery($queryStr);
 		// refresh cache
 		$this->_queryCache = array();
 	}
-	FUNCTION queryInsert($columns, $fromTable)
+	FUNCTION queryInsert($columns,$fromTable)
 	{
 		$queryStr = 'INSERT ' . $fromTable . ' SET ';
 		$queryStr = $queryStr . $this->buildColumnsValueList($columns);
@@ -109,7 +109,7 @@ class DbConnection {
 	{
 		return $this->connection->insert_id;
 	}
-	FUNCTION buildQueryString($columns, $fromTable, $whereCondition, $parameters = null, $limit = null)
+	FUNCTION buildQueryString($columns,$fromTable,$whereCondition,$parameters = null,$limit = null)
 	{
 		$queryStr = 'SELECT ';
 		// columns
@@ -117,7 +117,7 @@ class DbConnection {
 			$firstColumn = TRUE;
 			foreach($columns as $dbName => $aliasName) {
 				if (!$firstColumn) {
-					$queryStr = $queryStr .', ';
+					$queryStr = $queryStr .',';
 				} else {
 					$firstColumn = FALSE;
 				}
@@ -132,7 +132,7 @@ class DbConnection {
 		// FROM
 		$queryStr = $queryStr . ' FROM ' . $fromTable . ' WHERE ';
 		// WHERE
-		$wherePart = self::buildWherePart($whereCondition, $parameters);
+		$wherePart = self::buildWherePart($whereCondition,$parameters);
 		// add limit
 		if (!empty($limit)) {
 			$wherePart = $wherePart . ' LIMIT ' . $limit;
@@ -146,7 +146,7 @@ class DbConnection {
 		$firstColumn = TRUE;
 		foreach($columns as $dbName => $value) {
 			if (!$firstColumn) {
-				$queryStr = $queryStr . ', ';
+				$queryStr = $queryStr . ',';
 			} else {
 				$firstColumn = FALSE;
 			}
@@ -159,10 +159,10 @@ class DbConnection {
 		}
 		return $queryStr;
 	}
-	FUNCTION buildWherePart($whereCondition, $parameters)
+	FUNCTION buildWherePart($whereCondition,$parameters)
 	{
 		$maskedParameters = self::prepareParameters($parameters);
-		return vsprintf($whereCondition, $maskedParameters);
+		return vsprintf($whereCondition,$maskedParameters);
 	}
 	FUNCTION prepareParameters($parameters)
 	{

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -41,16 +41,16 @@ class SimulationHelper
 			}
 			$oldBoundary = $newBounday;
 		}
-		// return last element, since probabilities are not 100 per cent
+		// return last element,since probabilities are not 100 per cent
 		return end($probabilities);
 	}
-	FUNCTION getMagicNumber($min = 1, $max = 100) {
+	FUNCTION getMagicNumber($min = 1,$max = 100) {
 		if ($min == $max) {
 			return $min;
 		}
-		return mt_rand($min, $max);
+		return mt_rand($min,$max);
 	}
-	FUNCTION selectPlayer($team, $position, $excludePlayer = null)
+	FUNCTION selectPlayer($team,$position,$excludePlayer = null)
 	{
 		$players = array();
 		if (isset($team->positionsAndPlayers[$position])) {
@@ -66,16 +66,16 @@ class SimulationHelper
 			}
 		}
 		$noOfPlayers = count($players);
-		// no player at this position, take next best position
+		// no player at this position,take next best position
 		if ($noOfPlayers < 1) {
 			if ($position == PLAYER_POSITION_STRIKER) {
-				return self::selectPlayer($team, PLAYER_POSITION_MIDFIELD, $excludePlayer);
+				return self::selectPlayer($team,PLAYER_POSITION_MIDFIELD,$excludePlayer);
 			} else if ($position == PLAYER_POSITION_MIDFIELD) {
-				return self::selectPlayer($team, PLAYER_POSITION_DEFENCE, $excludePlayer);
+				return self::selectPlayer($team,PLAYER_POSITION_DEFENCE,$excludePlayer);
 			} else if ($position == PLAYER_POSITION_DEFENCE) {
-				return self::selectPlayer($team, PLAYER_POSITION_GOALY, $excludePlayer);
+				return self::selectPlayer($team,PLAYER_POSITION_GOALY,$excludePlayer);
 			}
-			// if no goaly available, get just next available player in order to avoid infinite loop
+			// if no goaly available,get just next available player in order to avoid infinite loop
 			foreach ($team->positionsAndPlayers as $pposition => $pplayers) {
 				foreach ($pplayers as $player) {
 					if ($player->id !== $excludePlayer->id) {
@@ -84,18 +84,18 @@ class SimulationHelper
 				}
 			}
 		}
-		$player = $players[SimulationHelper::getMagicNumber(0, $noOfPlayers - 1)];
+		$player = $players[SimulationHelper::getMagicNumber(0,$noOfPlayers - 1)];
 		return $player;
 	}
-	FUNCTION getOpponentTeam($player, $match)
+	FUNCTION getOpponentTeam($player,$match)
 	{
 		return ($match->homeTeam->id == $player->team->id) ? $match->guestTeam : $match->homeTeam;
 	}
-	FUNCTION getOpponentTeamOfTeam($team, $match)
+	FUNCTION getOpponentTeamOfTeam($team,$match)
 	{
 		return ($match->homeTeam->id == $team->id) ? $match->guestTeam : $match->homeTeam;
 	}
-	FUNCTION checkAndExecuteSubstitutions(SimulationMatch $match, SimulationTeam $team, $observers)
+	FUNCTION checkAndExecuteSubstitutions(SimulationMatch $match,SimulationTeam $team,$observers)
 	{
 		$substitutions = $team->substitutions;
 		if (!count($substitutions)) {
@@ -107,10 +107,10 @@ class SimulationHelper
 					&& isset($team->playersOnBench[$substitution->playerIn->id])) {
 				// check condition
 				if ($substitution->condition == SUB_CONDITION_TIE && $match->homeTeam->getGoals() != $match->guestTeam->getGoals()
-						|| $substitution->condition == SUB_CONDITION_LEADING && $team->getGoals() <= self::getOpponentTeamOfTeam($team, $match)->getGoals()
-						|| $substitution->condition == SUB_CONDITION_DEFICIT && $team->getGoals() >= self::getOpponentTeamOfTeam($team, $match)->getGoals()) {
-					// set minute as unreachable, so that it could be replaced by an unplanned substitution.
-					// do not simply remove it, because it might become out of sync with DB table entry on state saving.
+						|| $substitution->condition == SUB_CONDITION_LEADING && $team->getGoals() <= self::getOpponentTeamOfTeam($team,$match)->getGoals()
+						|| $substitution->condition == SUB_CONDITION_DEFICIT && $team->getGoals() >= self::getOpponentTeamOfTeam($team,$match)->getGoals()) {
+					// set minute as unreachable,so that it could be replaced by an unplanned substitution.
+					// do not simply remove it,because it might become out of sync with DB table entry on state saving.
 					$substitution->minute = 999;
 					continue;
 				}
@@ -118,7 +118,7 @@ class SimulationHelper
 				// determine main position.
 				// first: is it specified at substition config?
 				// second: has the player a main position? Note that youth players have main position "-"
-				// third: add player to his general position, without any main position
+				// third: add player to his general position,without any main position
 				if (strlen($substitution->position)) {
 					$mainPosition = $substitution->position;
 				} else if (strlen($substitution->playerIn->mainPosition) && $substitution->playerIn->mainPosition != "-") {
@@ -149,12 +149,12 @@ class SimulationHelper
 				// remove from bench
 				unset($team->playersOnBench[$substitution->playerIn->id]);
 				foreach ($observers as $observer) {
-					$observer->onSubstitution($match, $substitution);
+					$observer->onSubstitution($match,$substitution);
 				}
 			}
 		}
 	}
-	FUNCTION createUnplannedSubstitutionForPlayer($minute, SimulationPlayer $playerOut)
+	FUNCTION createUnplannedSubstitutionForPlayer($minute,SimulationPlayer $playerOut)
 	{
 		$team = $playerOut->team;
 		// no players on bench
@@ -162,32 +162,32 @@ class SimulationHelper
 			return FALSE;
 		}
 		$position = $playerOut->position;
-		$player = self::selectPlayerFromBench($team->playersOnBench, $position);
-		// no striker on bench, try other positions
+		$player = self::selectPlayerFromBench($team->playersOnBench,$position);
+		// no striker on bench,try other positions
 		if ($player == NULL && $position == PLAYER_POSITION_STRIKER) {
-			$player = self::selectPlayerFromBench($team->playersOnBench, PLAYER_POSITION_MIDFIELD);
+			$player = self::selectPlayerFromBench($team->playersOnBench,PLAYER_POSITION_MIDFIELD);
 			if ($player == NULL) {
-				$player = self::selectPlayerFromBench($team->playersOnBench, PLAYER_POSITION_DEFENCE);
+				$player = self::selectPlayerFromBench($team->playersOnBench,PLAYER_POSITION_DEFENCE);
 			}
 			// no midfielder
 		} else if ($player == NULL && $position == PLAYER_POSITION_MIDFIELD) {
-			$player = self::selectPlayerFromBench($team->playersOnBench, PLAYER_POSITION_DEFENCE);
+			$player = self::selectPlayerFromBench($team->playersOnBench,PLAYER_POSITION_DEFENCE);
 			if ($player == NULL) {
-				$player = self::selectPlayerFromBench($team->playersOnBench, PLAYER_POSITION_STRIKER);
+				$player = self::selectPlayerFromBench($team->playersOnBench,PLAYER_POSITION_STRIKER);
 			}
 			// no defender
 		} else if ($player == NULL && $position == PLAYER_POSITION_DEFENCE) {
-			$player = self::selectPlayerFromBench($team->playersOnBench, PLAYER_POSITION_MIDFIELD);
+			$player = self::selectPlayerFromBench($team->playersOnBench,PLAYER_POSITION_MIDFIELD);
 			if ($player == NULL) {
-				$player = self::selectPlayerFromBench($team->playersOnBench, PLAYER_POSITION_STRIKER);
+				$player = self::selectPlayerFromBench($team->playersOnBench,PLAYER_POSITION_STRIKER);
 			}
 		}
 		// no appropriate player found
 		if ($player == NULL) {
 			return FALSE;
 		}
-		$newsub = new SimulationSubstitution($minute, $player, $playerOut);
-		return self::addUnplannedSubstitution($minute, $newsub);
+		$newsub = new SimulationSubstitution($minute,$player,$playerOut);
+		return self::addUnplannedSubstitution($minute,$newsub);
 	}
 	FUNCTION getPlayersForPenaltyShooting(SimulationTeam $team)
 	{
@@ -198,17 +198,17 @@ class SimulationHelper
 				$goalkeeper = $playersAtPosition[0];
 				continue;
 			}
-			$players = array_merge($players, $playersAtPosition);
+			$players = array_merge($players,$playersAtPosition);
 		}
 		// sort by strength
-		usort($players, array("SimulationHelper", "sortByStrength"));
+		usort($players,array("SimulationHelper","sortByStrength"));
 		// append goalkepper to end
 		if ($goalkeeper != null) {
 			$players[] = $goalkeeper;
 		}
 		return $players;
 	}
-	FUNCTION selectPlayerFromBench(&$players, $position)
+	FUNCTION selectPlayerFromBench(&$players,$position)
 	{
 		foreach ($players as $player) {
 			if ($player->position == $position) {
@@ -217,7 +217,7 @@ class SimulationHelper
 		}
 		return NULL;
 	}
-	FUNCTION addUnplannedSubstitution($minute, SimulationSubstitution $substitution)
+	FUNCTION addUnplannedSubstitution($minute,SimulationSubstitution $substitution)
 	{
 		$team = $substitution->playerIn->team;
 		// check if player is on bench
@@ -230,8 +230,8 @@ class SimulationHelper
 			return TRUE;
 		}
 		// check if player from bench was anyway scheduled for a substitution later.
-		// In this case, this later substitution would not be possible, because the player is already on the field.
-		// Hence, replace this invalid sub.
+		// In this case,this later substitution would not be possible,because the player is already on the field.
+		// Hence,replace this invalid sub.
 		$index = 0;
 		foreach ($team->substitutions as $existingSub) {
 			if ($existingSub->minute > $minute && $existingSub->playerIn->id == $substitution->playerIn->id) {
@@ -251,7 +251,7 @@ class SimulationHelper
 		}
 		return FALSE;
 	}
-	FUNCTION sortByStrength(SimulationPlayer $a, SimulationPlayer $b)
+	FUNCTION sortByStrength(SimulationPlayer $a,SimulationPlayer $b)
 	{
 		return $b->strength - $a->strength;
 	}

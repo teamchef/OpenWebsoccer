@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,7 +30,7 @@
 SEC;
 class FormBuilder
 {
-	FUNCTION createFormGroup($i18n, $fieldId, $fieldInfo, $fieldValue, $labelKeyPrefix)
+	FUNCTION createFormGroup($i18n,$fieldId,$fieldInfo,$fieldValue,$labelKeyPrefix)
 	{
 		$type = $fieldInfo['type'];
 		// convert date
@@ -41,14 +41,14 @@ class FormBuilder
 			if (!strlen($fieldValue)) {
 				$fieldValue = date($dateFormat);
 			} else if (is_numeric($fieldValue)) {
-				$fieldValue = date($dateFormat, $fieldValue);
+				$fieldValue = date($dateFormat,$fieldValue);
 			}
 			$type = 'text';
 		} else if ($type == 'date' && strlen($fieldValue)) {
-			if (StringUtil::startsWith($fieldValue, '0000')) {
+			if (StringUtil::startsWith($fieldValue,'0000')) {
 				$fieldValue = '';
 			} else {
-				$dateObj = DateTime::createFromFormat('Y-m-d', $fieldValue);
+				$dateObj = DateTime::createFromFormat('Y-m-d',$fieldValue);
 				if ($dateObj !== FALSE) {
 					$website = WebSoccer::getInstance();
 					$dateFormat = $website->getConfig('date_format');
@@ -82,7 +82,7 @@ class FormBuilder
 			switch ($type) {
 				// select from foreign DB table
 				case 'foreign_key':
-					self::createForeignKeyField($i18n, $fieldId, $fieldInfo, $fieldValue);
+					self::createForeignKeyField($i18n,$fieldId,$fieldInfo,$fieldValue);
 					break;
 				// textarea
 				case 'html':
@@ -102,18 +102,18 @@ class FormBuilder
 					}
 					// time picker
 					echo '<div class=\'input-append date datepicker\'>';
-					echo '<input type=\'text\' name=\''. $fieldId . '_date\' value=\''. date($dateFormat, $fieldValue) . '\' class=\'input-small\'>';
+					echo '<input type=\'text\' name=\''. $fieldId . '_date\' value=\''. date($dateFormat,$fieldValue) . '\' class=\'input-small\'>';
 					echo '<span class=\'add-on\'><i class=\'icon-calendar\'></i></span>';
 					echo '</div>';
 					echo '<div class=\'input-append bootstrap-timepicker\'>';
-					echo '<input type=\'text\' name=\''. $fieldId . '_time\' value=\''. date('H:i', $fieldValue) . '\' class=\'timepicker input-small\'>';
+					echo '<input type=\'text\' name=\''. $fieldId . '_time\' value=\''. date('H:i',$fieldValue) . '\' class=\'timepicker input-small\'>';
 					echo '<span class=\'add-on\'><i class=\'icon-time\'></i></span>';
         			echo '</div>';
 					break;
 				// single selection from dropdown
 				case 'select':
 					echo '<select id=\''. $fieldId . '\' name=\''. $fieldId . '\'>';
-					$selection = explode(',', $fieldInfo['selection']);
+					$selection = explode(',',$fieldInfo['selection']);
 					$selectValue = $fieldValue;
 					echo '<option></option>';
 					foreach ($selection as $selectItem) {
@@ -179,53 +179,53 @@ class FormBuilder
 		}
 		echo '</div>';
 	}
-	FUNCTION validateField($i18n, $fieldId, $fieldInfo, $fieldValue, $labelKeyPrefix)
+	FUNCTION validateField($i18n,$fieldId,$fieldInfo,$fieldValue,$labelKeyPrefix)
 	{
 		$textLength = strlen(trim($fieldValue));
 		$isEmpty = !$textLength;
 		if ($fieldInfo['type'] != 'boolean' && $fieldInfo['required'] && $isEmpty) {
-			throw new Exception(sprintf($i18n->getMessage('validationerror_required'), $i18n->getMessage($labelKeyPrefix . $fieldId)));
+			throw new Exception(sprintf($i18n->getMessage('validationerror_required'),$i18n->getMessage($labelKeyPrefix . $fieldId)));
 		}
 		if (!$isEmpty) {
 			if ($fieldInfo['type'] == 'text' && $textLength > 255) {
-				throw new Exception(sprintf($i18n->getMessage('validationerror_text_too_long'), $i18n->getMessage($labelKeyPrefix . $fieldId)));
+				throw new Exception(sprintf($i18n->getMessage('validationerror_text_too_long'),$i18n->getMessage($labelKeyPrefix . $fieldId)));
 			}
-			if ($fieldInfo['type'] == 'email' && !filter_var($fieldValue, FILTER_VALIDATE_EMAIL)) {
+			if ($fieldInfo['type'] == 'email' && !filter_var($fieldValue,FILTER_VALIDATE_EMAIL)) {
 				throw new Exception($i18n->getMessage('validationerror_email'));
 			}
-			if ($fieldInfo['type'] == 'url' && !filter_var($fieldValue, FILTER_VALIDATE_URL)) {
-				throw new Exception(sprintf($i18n->getMessage('validationerror_url'), $i18n->getMessage($labelKeyPrefix . $fieldId)));
+			if ($fieldInfo['type'] == 'url' && !filter_var($fieldValue,FILTER_VALIDATE_URL)) {
+				throw new Exception(sprintf($i18n->getMessage('validationerror_url'),$i18n->getMessage($labelKeyPrefix . $fieldId)));
 			}
 			if ($fieldInfo['type'] == 'number' && !is_numeric($fieldValue)) {
-				throw new Exception(sprintf($i18n->getMessage('validationerror_number'), $i18n->getMessage($labelKeyPrefix . $fieldId)));
+				throw new Exception(sprintf($i18n->getMessage('validationerror_number'),$i18n->getMessage($labelKeyPrefix . $fieldId)));
 			}
-			if ($fieldInfo['type'] == 'percent' && filter_var($fieldValue, FILTER_VALIDATE_INT) === FALSE) {
-				throw new Exception(sprintf($i18n->getMessage('validationerror_percent'), $i18n->getMessage($labelKeyPrefix . $fieldId)));
+			if ($fieldInfo['type'] == 'percent' && filter_var($fieldValue,FILTER_VALIDATE_INT) === FALSE) {
+				throw new Exception(sprintf($i18n->getMessage('validationerror_percent'),$i18n->getMessage($labelKeyPrefix . $fieldId)));
 			}
 			if ($fieldInfo['type'] == 'date') {
 				$website = WebSoccer::getInstance();
 				$format = $website->getConfig('date_format');
-				if (!DateTime::createFromFormat($format, $fieldValue)) {
-					throw new Exception(sprintf($i18n->getMessage('validationerror_date'), $i18n->getMessage($labelKeyPrefix . $fieldId), $format));
+				if (!DateTime::createFromFormat($format,$fieldValue)) {
+					throw new Exception(sprintf($i18n->getMessage('validationerror_date'),$i18n->getMessage($labelKeyPrefix . $fieldId),$format));
 				}
 			}
 		}
 		// check with validator
 		if (isset($fieldInfo['validator']) && strlen($fieldInfo['validator'])) {
 			$website = WebSoccer::getInstance();
-			$validator = new $fieldInfo['validator']($i18n, $website, $fieldValue);
+			$validator = new $fieldInfo['validator']($i18n,$website,$fieldValue);
 			if (!$validator->isValid()) {
 				throw new Exception($i18n->getMessage($labelKeyPrefix . $fieldId) . ': ' . $validator->getMessage());
 			}
 		}
 	}
-	FUNCTION createForeignKeyField($i18n, $fieldId, $fieldInfo, $fieldValue)
+	FUNCTION createForeignKeyField($i18n,$fieldId,$fieldInfo,$fieldValue)
 	{
 		$website = WebSoccer::getInstance();
 		$db = DbConnection::getInstance();
 		$fromTable = $website->getConfig('db_prefix') .'_'. $fieldInfo['jointable'];
 		// count total items
-		$result = $db->querySelect('COUNT(*) AS hits', $fromTable, '1=1', '');
+		$result = $db->querySelect('COUNT(*) AS hits',$fromTable,'1=1','');
 		$items = $result->fetch_array();
 		$result->free();
 		// render usual selection box
@@ -233,9 +233,9 @@ class FormBuilder
 			echo '<select id=\''. $fieldId . '\' name=\''. $fieldId . '\'>';
 			echo '<option value=\'\'>' . $i18n->getMessage('manage_select_placeholder') . '</option>';
 			$whereCondition = '1=1 ORDER BY '. $fieldInfo['labelcolumns'] . ' ASC';
-			$result = $db->querySelect('id, ' . $fieldInfo['labelcolumns'], $fromTable, $whereCondition, '', 2000);
+			$result = $db->querySelect('id,' . $fieldInfo['labelcolumns'],$fromTable,$whereCondition,'',2000);
 			while ($row = $result->fetch_array()) {
-				$labels = explode(',', $fieldInfo['labelcolumns']);
+				$labels = explode(',',$fieldInfo['labelcolumns']);
 				$label = '';
 				$first = TRUE;
 				foreach ($labels as $labelColumn) {

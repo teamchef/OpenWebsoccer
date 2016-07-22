@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,18 +28,9 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-define("DUMMY_TEAM_ID", -1);
-/**
- * Generates round robin schedules.
- */
+define("DUMMY_TEAM_ID",-1);
 class ScheduleGenerator
 {
-	/**
-	 * Generates a randomized tournament schedule. Odd number of teams supported.
-	 *
-	 * @param array $teamIds array of team IDs
-	 * @return array Array with key=matchday number (starting with 1), value= array of matches (each match is array with HomeId, GuestId).
-	 */
 	FUNCTION createRoundRobinSchedule($teamIds) {
 		// randomize
 		shuffle($teamIds);
@@ -87,7 +78,7 @@ class ScheduleGenerator
 					$homeTeam = $guestTeam;
 					$guestTeam = $swapTemp;
 				}
-				$match = array($homeTeam, $guestTeam);
+				$match = array($homeTeam,$guestTeam);
 				$matches[] = $match;
 			}
 			$schedule[$matchDayNo] = $matches;

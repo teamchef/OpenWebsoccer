@@ -5,7 +5,7 @@
  *
  * (c) 2012 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -27,7 +27,7 @@ class Twig_Extension_Staging extends Twig_Extension
     protected $globals = array();
     protected $tests = array();
 
-    public function addFunction($name, $function)
+    public function addFunction($name,$function)
     {
         $this->functions[$name] = $function;
     }
@@ -37,7 +37,7 @@ class Twig_Extension_Staging extends Twig_Extension
         return $this->functions;
     }
 
-    public function addFilter($name, $filter)
+    public function addFilter($name,$filter)
     {
         $this->filters[$name] = $filter;
     }
@@ -67,7 +67,7 @@ class Twig_Extension_Staging extends Twig_Extension
         return $this->tokenParsers;
     }
 
-    public function addGlobal($name, $value)
+    public function addGlobal($name,$value)
     {
         $this->globals[$name] = $value;
     }
@@ -77,7 +77,7 @@ class Twig_Extension_Staging extends Twig_Extension
         return $this->globals;
     }
 
-    public function addTest($name, $test)
+    public function addTest($name,$test)
     {
         $this->tests[$name] = $test;
     }

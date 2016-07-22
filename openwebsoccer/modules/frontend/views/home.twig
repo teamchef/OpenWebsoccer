@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,7 +28,7 @@
 #}
 {% extends "base.twig" %}
 {% block browser_title %}
-	{{ i18n.getMessage("home_title", env.getConfig("projectname")) }}
+	{{ i18n.getMessage("home_title",env.getConfig("projectname")) }}
 {% endblock %}
 {% block page_header %}
 	<div style="text-align: center;"><i class="fa-li fa fa-spinner fa-spin"></i></div>
@@ -83,7 +83,7 @@
 	<div id="messages">
 		{% if frontMessages is defined %}
 			{% for message in frontMessages %}
-				{{ macro.box(message.title, message.message, message.type) }}
+				{{ macro.box(message.title,message.message,message.type) }}
 			{% endfor %}
 		{% endif %}
 	</div>
@@ -112,7 +112,7 @@
 				{% for uiBlock in blocks.sidebar %}
 					{% if env.getConfig("login_noshow") == 1 %}
 					{% else %}
-						{{ viewHandler.renderBlock(uiBlock.id, uiBlock)|raw }}
+						{{ viewHandler.renderBlock(uiBlock.id,uiBlock)|raw }}
 					{% endif %}
 				{% endfor %}
 			{% endif %}
@@ -120,7 +120,7 @@
 	</div>
 	{% if blocks.content_bottom is defined %}
 		{% for uiBlock in blocks.content_bottom %}
-			<div id="{{ uiBlock.id }}_block">{{ viewHandler.renderBlock(uiBlock.id, uiBlock)|raw }}</div>
+			<div id="{{ uiBlock.id }}_block">{{ viewHandler.renderBlock(uiBlock.id,uiBlock)|raw }}</div>
 		{% endfor %}
 	{% endif %}
 {% endblock %}

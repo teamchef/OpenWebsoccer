@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -34,7 +34,7 @@
 	{% if badges|length > 0 %}
 		<ul class="inline">
 			{% for badge in badges %}
-				<li>{{ badgesmacros.badge(badge.name, badge.level, badge.date_rewarded) }}</li>
+				<li>{{ badgesmacros.badge(badge.name,badge.level,badge.date_rewarded) }}</li>
 			{% endfor %}
 		</ul>
 	{% endif %}
@@ -63,7 +63,7 @@
 		{% endif %}
 	</div>
 	{% if absence %}
-		{{ macro.box("", i18n.getMessage("absence_profile_info", env.getFormattedDate(absence.to_date)), "warning") }}
+		{{ macro.box("",i18n.getMessage("absence_profile_info",env.getFormattedDate(absence.to_date)),"warning") }}
 	{% endif %}
 	<ul class="nav nav-tabs" id="userTab">
 		<li class="active"><a href="#general" data-toggle="tab">{{ i18n.getMessage("user_tab_profile") }}</a></li>
@@ -93,49 +93,49 @@
 					{% if userteams|length > 1 %}
 						{% set team = "<ul class=\"unstyled\">" %}
 						{% for userteam in userteams %}
-							{% set team = team ~ "<li><a href=\"" ~ env.getInternalUrl("team", "id=" ~ userteam.id) ~ "\">" ~ userteam.name|e ~ "</a></li>" %}
+							{% set team = team ~ "<li><a href=\"" ~ env.getInternalUrl("team","id=" ~ userteam.id) ~ "\">" ~ userteam.name|e ~ "</a></li>" %}
 						{% endfor %}
 						{% set team = team ~ "</ul>" %}
 					{% elseif userteams|length == 1 %}
-						{% set team = "<a href=\"" ~ env.getInternalUrl("team", "id=" ~ userteams[0].id) ~ "\">" ~ userteams[0].name|e ~ "</a>" %}
+						{% set team = "<a href=\"" ~ env.getInternalUrl("team","id=" ~ userteams[0].id) ~ "\">" ~ userteams[0].name|e ~ "</a>" %}
 					{% else %}
 						{% set team = "-" %}
 					{% endif %}
-					{{ profile.infofield(i18n.getMessage("entity_club"), team, true) }}
+					{{ profile.infofield(i18n.getMessage("entity_club"),team,true) }}
 					{% if user.nationalteam is defined %}
-						{% set nationalteam = "<a href=\"" ~ env.getInternalUrl("team", "id=" ~ user.nationalteam.id) ~ "\">" ~ user.nationalteam.name|e ~ "</a>" %}
-						{{ profile.infofield(i18n.getMessage("nationalteams_team_label"), nationalteam, true) }}
+						{% set nationalteam = "<a href=\"" ~ env.getInternalUrl("team","id=" ~ user.nationalteam.id) ~ "\">" ~ user.nationalteam.name|e ~ "</a>" %}
+						{{ profile.infofield(i18n.getMessage("nationalteams_team_label"),nationalteam,true) }}
 					{% endif %}
-					{{ profile.infofield(i18n.getMessage("entity_users_highscore"), user.highscore) }}
-					{{ profile.infofield(i18n.getMessage("entity_users_fanbeliebtheit"), user.popularity ~ "%") }}
-					{{ profile.infofield(i18n.getMessage("entity_users_datum_anmeldung"), env.getFormattedDate(user.registration_date)) }}
-					{{ profile.infofield(i18n.getMessage("entity_users_lastonline"), env.getFormattedDate(user.lastonline)) }}
+					{{ profile.infofield(i18n.getMessage("entity_users_highscore"),user.highscore) }}
+					{{ profile.infofield(i18n.getMessage("entity_users_fanbeliebtheit"),user.popularity ~ "%") }}
+					{{ profile.infofield(i18n.getMessage("entity_users_datum_anmeldung"),env.getFormattedDate(user.registration_date)) }}
+					{{ profile.infofield(i18n.getMessage("entity_users_lastonline"),env.getFormattedDate(user.lastonline)) }}
 				</div>
 				<div class="span6">
 					{% if user.name|length > 0 %}
-						{{ profile.infofield(i18n.getMessage("entity_users_name"), user.name) }}
+						{{ profile.infofield(i18n.getMessage("entity_users_name"),user.name) }}
 					{% endif %}
 					{% if user.place|length > 0 %}
-						{{ profile.infofield(i18n.getMessage("entity_users_wohnort"), user.place) }}
+						{{ profile.infofield(i18n.getMessage("entity_users_wohnort"),user.place) }}
 					{% endif %}
 					{% if user.country|length > 0 %}
-						{{ profile.infofield(i18n.getMessage("entity_users_land"), user.country) }}
+						{{ profile.infofield(i18n.getMessage("entity_users_land"),user.country) }}
 					{% endif %}
 					{% if user.birthday > 0 %}
-						{{ profile.infofield(i18n.getMessage("entity_users_geburtstag"), user.birthday|date(env.getConfig("date_format"))) }}
+						{{ profile.infofield(i18n.getMessage("entity_users_geburtstag"),user.birthday|date(env.getConfig("date_format"))) }}
 					{% endif %}
 					{% if user.occupation|length > 0 %}
-						{{ profile.infofield(i18n.getMessage("entity_users_beruf"), user.occupation) }}
+						{{ profile.infofield(i18n.getMessage("entity_users_beruf"),user.occupation) }}
 					{% endif %}
 					{% if user.interests|length > 0 %}
-						{{ profile.infofield(i18n.getMessage("entity_users_interessen"), user.interests) }}
+						{{ profile.infofield(i18n.getMessage("entity_users_interessen"),user.interests) }}
 					{% endif %}
 					{% if user.favorite_club|length > 0 %}
-						{{ profile.infofield(i18n.getMessage("entity_users_lieblingsverein"), user.favorite_club) }}
+						{{ profile.infofield(i18n.getMessage("entity_users_lieblingsverein"),user.favorite_club) }}
 					{% endif %}
 					{% if user.homepage|length > 0 %}
 					{% set websiteLink = "<a href=\"" ~ user.homepage ~ "\" target=\"_blank\">" ~ i18n.getMessage("user_visit_website") ~ "</a>" %}
-						{{ profile.infofield(i18n.getMessage("entity_users_homepage"), websiteLink, true) }}
+						{{ profile.infofield(i18n.getMessage("entity_users_homepage"),websiteLink,true) }}
 					{% endif %}
 				</div>
 			</div>

@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
@@ -32,7 +32,7 @@
 {% endblock %}
 {% block page_content %}
 	{% if offers|length == 0 %}
-		{{ macro.box(i18n.getMessage("stadium_extend_nobuilders"), "", "info") }}
+		{{ macro.box(i18n.getMessage("stadium_extend_nobuilders"),"","info") }}
 	{% else %}
 		<div class="well">
 			<p>{{ i18n.getMessage("stadium_extend_builders_intro")|raw }}</p>
@@ -53,9 +53,9 @@
 					{% endif %}
 					<dl>
 						<dt>{{ i18n.getMessage("entity_stadiumconstruction_deadline") }}</dt>
-						<dd>{{ env.getFormattedDate(offer.deadline) }}({{ i18n.getMessage("stadium_extend_builders_constructiontime", offer.deadline_days) }})</dd>
+						<dd>{{ env.getFormattedDate(offer.deadline) }}({{ i18n.getMessage("stadium_extend_builders_constructiontime",offer.deadline_days) }})</dd>
 						<dt>{{ i18n.getMessage("stadium_extend_builders_totalcosts") }}</dt>
-						<dd>{{ offer.totalCosts|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+						<dd>{{ offer.totalCosts|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
 						{% if env.getConfig("stadium_hide_builders_reliability") != "1" %}
 							<dt>{{ i18n.getMessage("entity_stadiumbuilder_reliability") }}</dt>
 							<dd>{{ offer.reliability }}%</dd>
@@ -65,20 +65,20 @@
 					<div id="details{{ offer.builder_id }}" class="collapse">
 						<dl>
 							<dt>{{ i18n.getMessage("entity_stadiumbuilder_fixedcosts") }}</dt>
-							<dd>{{ offer.fixedcosts|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+							<dd>{{ offer.fixedcosts|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
 							<dt>{{ i18n.getMessage("entity_stadium_p_steh") }}</dt>
-							<dd>{{ offer.costsSideStanding|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+							<dd>{{ offer.costsSideStanding|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
 							<dt>{{ i18n.getMessage("entity_stadium_p_sitz") }}</dt>
-							<dd>{{ offer.costsSideSeats|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+							<dd>{{ offer.costsSideSeats|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
 							<dt>{{ i18n.getMessage("entity_stadium_p_haupt_steh") }}</dt>
-							<dd>{{ offer.costsGrandStanding|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+							<dd>{{ offer.costsGrandStanding|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
 							<dt>{{ i18n.getMessage("entity_stadium_p_haupt_sitz") }}</dt>
-							<dd>{{ offer.costsGrandSeats|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+							<dd>{{ offer.costsGrandSeats|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
 							<dt>{{ i18n.getMessage("entity_stadium_p_vip") }}</dt>
-							<dd>{{ offer.costsVip|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</dd>
+							<dd>{{ offer.costsVip|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
 						</dl>
 					</div>
-					<p><a href="{{ env.getInternalActionUrl("extend-stadium", "offerid=" ~ offer.builder_id
+					<p><a href="{{ env.getInternalActionUrl("extend-stadium","offerid=" ~ offer.builder_id
 						 ~ "&side_standing=" ~ env.getRequestParameter("side_standing")
 						 ~ "&side_seats=" ~ env.getRequestParameter("side_seats")
 						 ~ "&grand_standing=" ~ env.getRequestParameter("grand_standing")

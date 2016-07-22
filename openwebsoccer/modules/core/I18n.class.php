@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,8 +28,8 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 // SEC;
-define('PAGE_NAV_LABEL_SUFFIX', '_navlabel');
-define('LANG_SESSION_PARAM', 'lang');
+define('PAGE_NAV_LABEL_SUFFIX','_navlabel');
+define('LANG_SESSION_PARAM','lang');
 class I18n
 {
 	private static $_instance;
@@ -50,12 +50,12 @@ class I18n
 				$lang = $_SESSION[LANG_SESSION_PARAM];
 			// from browser
 			}elseif (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-				$lang = strtolower(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2));
+				$lang = strtolower(substr($_SERVER['HTTP_ACCEPT_LANGUAGE'],0,2));
 			} else {
 				// return default language
 				$lang = $this->_supportedLanguages[0];
 			}
-			if (!in_array($lang, $this->_supportedLanguages)) {
+			if (!in_array($lang,$this->_supportedLanguages)) {
 				$lang = $this->_supportedLanguages[0];
 			}
 			$this->_currentLanguage = $lang;
@@ -68,13 +68,13 @@ class I18n
 			return;
 		}
 		$lang = strtolower($language);
-		if (!in_array($lang, $this->_supportedLanguages)) {
+		if (!in_array($lang,$this->_supportedLanguages)) {
 			$lang = $this->getCurrentLanguage();
 		}
 		$_SESSION[LANG_SESSION_PARAM] = $lang;
 		$this->_currentLanguage = $lang;
 	}
-	FUNCTION getMessage($messageKey, $paramaters = null)
+	FUNCTION getMessage($messageKey,$paramaters = null)
 	{
 		global $msg;
 		if (!$this->hasMessage($messageKey)) {
@@ -82,7 +82,7 @@ class I18n
 		}
 		$message = stripslashes($msg[$messageKey]);
 		if ($paramaters != null) {
-			$message = sprintf($message, $paramaters);
+			$message = sprintf($message,$paramaters);
 		}
 		return $message;
 	}
@@ -101,6 +101,6 @@ class I18n
 	}
 	FUNCTION __construct($supportedLanguages)
 	{
-		$this->_supportedLanguages = array_map('trim', explode(',', $supportedLanguages));
+		$this->_supportedLanguages = array_map('trim',explode(',',$supportedLanguages));
 	}
 }

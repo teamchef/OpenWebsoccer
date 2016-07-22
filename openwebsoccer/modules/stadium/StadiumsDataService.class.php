@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
@@ -30,7 +30,7 @@
 SEC;
 class StadiumsDataService {
 
-	FUNCTION getStadiumByTeamId(WebSoccer $websoccer, DbConnection $db, $clubId)
+	FUNCTION getStadiumByTeamId(WebSoccer $websoccer,DbConnection $db,$clubId)
 	{
 		if (!$clubId) {
 			return NULL;
@@ -50,24 +50,24 @@ class StadiumsDataService {
 		$fromTable = $websoccer->getConfig("db_prefix") . "_stadion AS S";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS T ON T.stadion_id = S.id";
 		$whereCondition = "T.id = %d";
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 1);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$clubId,1);
 		$stadium = $result->fetch_array();
 		$result->free();
 		return $stadium;
 	}
-	FUNCTION getBuilderOffersForExtension(WebSoccer $websoccer, DbConnection $db, $clubId, $newSideStanding = 0, $newSideSeats = 0, $newGrandStanding = 0, $newGrandSeats = 0, $newVips = 0)
+	FUNCTION getBuilderOffersForExtension(WebSoccer $websoccer,DbConnection $db,$clubId,$newSideStanding = 0,$newSideSeats = 0,$newGrandStanding = 0,$newGrandSeats = 0,$newVips = 0)
 	{
 		$offers = array();
 		$totalNew = $newSideStanding + $newSideSeats + $newGrandStanding + $newGrandSeats + $newVips;
 		if (!$totalNew) {
 			return $offers;
 		}
-		$stadium = self::getStadiumByTeamId($websoccer, $db, $clubId);
+		$stadium = self::getStadiumByTeamId($websoccer,$db,$clubId);
 		$existingCapacity = $stadium["places_stands"] + $stadium["places_seats"] + $stadium["places_stands_grand"] + $stadium["places_seats_grand"] + $stadium["places_vip"];
 		// query builders and calculate offers
-		$result = $db->querySelect("*", $websoccer->getConfig("db_prefix") . "_stadium_builder",
+		$result = $db->querySelect("*",$websoccer->getConfig("db_prefix") . "_stadium_builder",
 				"min_stadium_size <= %d AND (max_stadium_size = 0 OR max_stadium_size >= %d)",
-				array($existingCapacity, $existingCapacity));
+				array($existingCapacity,$existingCapacity));
 		while ($builder = $result->fetch_array()) {
 			$constructionTime = max($builder["construction_time_days_min"],
 					$builder["construction_time_days"] * ceil($totalNew / 5000));
@@ -98,11 +98,11 @@ class StadiumsDataService {
 		$result->free();
 		return $offers;
 	}
-	FUNCTION getCurrentConstructionOrderOfTeam(WebSoccer $websoccer, DbConnection $db, $clubId)
+	FUNCTION getCurrentConstructionOrderOfTeam(WebSoccer $websoccer,DbConnection $db,$clubId)
 	{
 		$fromTable = $websoccer->getConfig("db_prefix") . "_stadium_construction AS C";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_stadium_builder AS B ON B.id = C.builder_id";
-		$result = $db->querySelect("C.*, B.name AS builder_name, B.reliability AS builder_reliability", $fromTable, "C.team_id = %d", $clubId);
+		$result = $db->querySelect("C.*,B.name AS builder_name,B.reliability AS builder_reliability",$fromTable,"C.team_id = %d",$clubId);
 		$order = $result->fetch_array();
 		$result->free();
 		if ($order) {
@@ -111,12 +111,12 @@ class StadiumsDataService {
 			return NULL;
 		}
 	}
-	FUNCTION getDueConstructionOrders(WebSoccer $websoccer, DbConnection $db)
+	FUNCTION getDueConstructionOrders(WebSoccer $websoccer,DbConnection $db)
 	{
 		$fromTable = $websoccer->getConfig("db_prefix") . "_stadium_construction AS C";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_stadium_builder AS B ON B.id = C.builder_id";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS T ON T.id = C.team_id";
-		$result = $db->querySelect("C.*, T.user_id AS user_id, B.reliability AS builder_reliability", $fromTable, "C.deadline <= %d",
+		$result = $db->querySelect("C.*,T.user_id AS user_id,B.reliability AS builder_reliability",$fromTable,"C.deadline <= %d",
 				$websoccer->getNowAsTimestamp());
 		$orders = array();
 		while ($order = $result->fetch_array()) {
@@ -125,11 +125,11 @@ class StadiumsDataService {
 		$result->free();
 		return $orders;
 	}
-	FUNCTION computeUpgradeCosts(WebSoccer $websoccer, $type, $stadium)
+	FUNCTION computeUpgradeCosts(WebSoccer $websoccer,$type,$stadium)
 	{
 		$existingLevel = $stadium["level_" . $type];
 		if ($existingLevel >= 5) {
-			return 0;
+			return NULL;
 		}
 		$baseCost = $websoccer->getConfig("stadium_". $type . "_price");
 		// costs per seat

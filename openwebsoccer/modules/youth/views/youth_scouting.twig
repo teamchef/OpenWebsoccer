@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -36,11 +36,11 @@
 	{% else %}
 		{% set lastScouting = env.getFormattedDatetime(lastExecutionTimestamp) %}
 	{% endif %}
-	{{ profile.infofield(i18n.getMessage("youthteam_scouting_lastexecution"), lastScouting) }}
+	{{ profile.infofield(i18n.getMessage("youthteam_scouting_lastexecution"),lastScouting) }}
 	{% if not scoutingPossible %}
 		<hr>
 		{{ macro.box(i18n.getMessage("youthteam_scouting_nextpossibleexecution",
-			env.getFormattedDatetime(nextPossibleExecutionTimestamp)), "", "warning") }}
+			env.getFormattedDatetime(nextPossibleExecutionTimestamp)),"","warning") }}
 	{% else %}
 		{% if env.getRequestParameter("scoutid") == null %}
 			<h3>{{ i18n.getMessage("youthteam_scouting_schoosescout") }}</h3>
@@ -62,9 +62,9 @@
 						<tr>
 							<td>{{ scout.name }}</td>
 							<td>{{ macro.progressbar(scout.expertise) }}</td>
-							<td>{{ scout.fee|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td>
+							<td>{{ scout.fee|number_format(0,',',' ')  }} {{ env.getConfig("game_currency") }}</td>
 							<td>{% if scout.speciality|length %}{{ i18n.getMessage("option_" ~ scout.speciality) }}{% else %}-{% endif %}</td>
-							<td><a href="{{ env.getInternalUrl("youth-scouting", "scoutid=" ~ scout.id) }}" class="btn btn-small"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a></td>
+							<td><a href="{{ env.getInternalUrl("youth-scouting","scoutid=" ~ scout.id) }}" class="btn btn-small"><i class="icon-hand-right"></i> {{ i18n.getMessage("button_choose") }}</a></td>
 						</tr>
 					{% endfor %}
 					</tbody>
@@ -79,7 +79,7 @@
 				{% else %}
 					{% set countryLabel = country %}
 				{% endif %}
-				<a href="{{ env.getInternalActionUrl("scout-youthplayer", "scoutid=" ~ env.getRequestParameter("scoutid") ~ "&country=" ~ country) }}" class="btn btn-large btn-block">{% if nationImg %}<img src="{{ nationImg }}" alt="{{ countryLabel }}" /> {% endif %}{{ countryLabel }}</a>
+				<a href="{{ env.getInternalActionUrl("scout-youthplayer","scoutid=" ~ env.getRequestParameter("scoutid") ~ "&country=" ~ country) }}" class="btn btn-large btn-block">{% if nationImg %}<img src="{{ nationImg }}" alt="{{ countryLabel }}" /> {% endif %}{{ countryLabel }}</a>
 			{% endfor %}
 			<p style="margin-top: 10px"><a href="{{ env.getInternalUrl("youth-scouting") }}" class="btn">{{ i18n.getMessage("button_cancel") }}</a></p>
 		{% endif %}

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -27,10 +27,10 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
-define("PARAM_SORTCOLUMN", "sortcolumn");
-define("PARAM_SORTDIRECTION", "sortdir");
-define("PARAM_PAGE", "page");
-define("PARAM_RESETSORT", "resetsort");
+define("PARAM_SORTCOLUMN","sortcolumn");
+define("PARAM_SORTDIRECTION","sortdir");
+define("PARAM_PAGE","page");
+define("PARAM_RESETSORT","resetsort");
 $del_id = (isset($_REQUEST['del_id'])) ? $_REQUEST['del_id'] : array();
 // sort column
 $sortColumn = FALSE;
@@ -71,8 +71,8 @@ $openSearchForm = FALSE;
 foreach ($entitycolumns as $column) {
 	$attrs = $column->attributes();
 	$fieldId = (string) $attrs["id"];
-	$attrs["field"] = str_replace("{tablePrefix}", $conf["db_prefix"], $attrs["field"]);
-	$fields .= ", " . $attrs["field"]." AS ". $fieldId;
+	$attrs["field"] = str_replace("{tablePrefix}",$conf["db_prefix"],$attrs["field"]);
+	$fields .= "," . $attrs["field"]." AS ". $fieldId;
 	$columnInfo = array();
 	if (!$attrs["hidden"]) {
 		$columnInfo["type"] = $attrs["type"];
@@ -115,7 +115,7 @@ if ($deleteEnabled && $action == "delete") {
 	include(__DIR__ . "/manage-delete.inc.php");
 }
 // custom action
-if (strlen($action) && !in_array($action, array("save", "delete"))
+if (strlen($action) && !in_array($action,array("save","delete"))
 		&& file_exists(__DIR__ . "/../actions/" . $action . ".inc.php")) {
 	include(__DIR__ . "/../actions/" . $action . ".inc.php");
 }
@@ -137,11 +137,11 @@ foreach($filterFields as $filterFieldId => $filterFieldInfo) {
 }
 // count records
 $columns = "COUNT(*) AS hits";
-$result = $db->querySelect($columns, $fromTable, $wherePart, $parameters);
+$result = $db->querySelect($columns,$fromTable,$wherePart,$parameters);
 $rows = $result->fetch_array();
 $result->free();
 if (!$rows['hits']) {
-	echo createInfoMessage($i18n->getMessage("manage_no_records_found"), "");
+	echo createInfoMessage($i18n->getMessage("manage_no_records_found"),"");
 } else {
 	// enable pagination
 	$seite = (isset($_REQUEST[PARAM_PAGE])) ? (int) $_REQUEST[PARAM_PAGE] : 1;
@@ -150,8 +150,8 @@ if (!$rows['hits']) {
 	else $seiten = $rows['hits'] / $eps;
 	$start = ($seite - 1) * $eps;
 	$firstNo = $start + 1;
-	$lastNo = min($start + $eps, $rows['hits']);
-	echo "<p>". sprintf($i18n->getMessage("manage_number_of_records"), $rows['hits'], $firstNo, $lastNo) ."</p>";
+	$lastNo = min($start + $eps,$rows['hits']);
+	echo "<p>". sprintf($i18n->getMessage("manage_number_of_records"),$rows['hits'],$firstNo,$lastNo) ."</p>";
 	// ordering
 	if ($sortColumn) {
 		$wherePart .= " ORDER BY ". $db->connection->real_escape_string($sortColumn);
@@ -159,7 +159,7 @@ if (!$rows['hits']) {
 	}
 	// query
 	$limit = $start .",". $eps;
-	$result = $db->querySelect($fields, $fromTable, $wherePart, $parameters, $limit);
+	$result = $db->querySelect($fields,$fromTable,$wherePart,$parameters,$limit);
 	//output
 	echo "<form name=\"frmMain\" action=\"". $_SERVER['PHP_SELF'] ."\" method=\"post\">";
 	echo "<input type=\"hidden\" name=\"site\" value=\"". $site ."\">";
@@ -181,7 +181,7 @@ if (!$rows['hits']) {
 			$header = $i18n->getMessage($fieldId);
 			if ($columnInfo["sort"]) {
 				$sortDir = ($sortAscending) ? 0 : 1;
-				$parameters = array("site" => $site, "entity"=>$entity,
+				$parameters = array("site" => $site,"entity"=>$entity,
 						PARAM_SORTCOLUMN => $fieldId,
 						PARAM_SORTDIRECTION => $sortDir,
 						PARAM_RESETSORT => 0);
@@ -191,7 +191,7 @@ if (!$rows['hits']) {
 					$icon = " <i class=\"icon-circle-arrow-". $iconSuffix ."\"></i>";
 				}
 				$tooltipKey = ($sortAscending) ? "manage_sort_column_desc" : "manage_sort_column_asc";
-				$tooltip = sprintf($i18n->getMessage($tooltipKey), $i18n->getMessage($fieldId));
+				$tooltip = sprintf($i18n->getMessage($tooltipKey),$i18n->getMessage($fieldId));
 				$header = "<a href=\"". UrlUtil::buildCurrentUrlWithParameters($parameters) . "\" title=\"". $tooltip ."\">". $header . $icon . "</a>";
 				if ($sortColumn == $fieldId) {
 					$header .= " <a href=\"". UrlUtil::buildCurrentUrlWithParameters(array(
@@ -235,16 +235,16 @@ if (!$rows['hits']) {
 				$editUrl .= "&page=" . escapeOutput($_REQUEST["page"]);
 			}
 			if (isset($columnInfo["converter"])) {
-				$converter = ConverterFactory::getConverter($website, $i18n, $columnInfo["converter"]);
+				$converter = ConverterFactory::getConverter($website,$i18n,$columnInfo["converter"]);
 				echo $converter->toHtml($row);
 			} elseif ($fieldId == "entity_". $entity ."_status") {
 				if ($columnValue == 1) echo "<i class=\"icon-ok-sign\" title=\"". $i18n->getMessage("manage_status_active") . "\"></i>";
 				else echo "<i class=\"icon-ban-circle\" title=\"". $i18n->getMessage("manage_status_blocked") . "\"></i>";
 			} elseif ($type == "date") {
-				echo date($dateFormat, $columnValue);
+				echo date($dateFormat,$columnValue);
 			} elseif ($type == "timestamp") {
 				if ($columnValue > 0) {
-					echo date($datetimeFormat, $columnValue);
+					echo date($datetimeFormat,$columnValue);
 				} else {
 					echo "-";
 				}
@@ -257,7 +257,7 @@ if (!$rows['hits']) {
 				$iconTooltip = ($columnValue) ? $i18n->getMessage("option_yes") : $i18n->getMessage("option_no");
 				echo "<i class=\"". $iconName ."\" title=\"". $iconTooltip . "\"></i>";
 			} elseif ($type == "number") {
-				echo number_format($columnValue, 0, ",", " ");
+				echo number_format($columnValue,0,","," ");
 			} elseif ($type == "percent") {
 				echo $columnValue . "%";
 			} else {
@@ -300,20 +300,20 @@ if (!$rows['hits']) {
 		//prev
 		if ($seite > 1) {
 			$back = $seite - 1;
-			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site, "entity" => $entity, PARAM_PAGE => $back));
+			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site,"entity" => $entity,PARAM_PAGE => $back));
 			echo "<li><a href=\"". $url ."\">&laquo;</a></li>";
 		}
-		$startIndex = max(1, $seite - 10);
-		$endIndex = min($seiten, $seite + 10);
+		$startIndex = max(1,$seite - 10);
+		$endIndex = min($seiten,$seite + 10);
 		// ...
 		if ($startIndex > 1) {
-			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site, "entity" => $entity, PARAM_PAGE => 1));
+			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site,"entity" => $entity,PARAM_PAGE => 1));
 			echo "<li><a href=\"". $url ."\">1</a></li>";
 			echo "<li class=\"disabled\"><span>...</span></li>";
 		}
 		// pages
 		for ($i = $startIndex; $i <= $endIndex; $i++) {
-			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site, "entity" => $entity, PARAM_PAGE => $i));
+			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site,"entity" => $entity,PARAM_PAGE => $i));
 			echo "<li";
 			if ($i == $seite) echo " class=\"active\"";
 			echo "><a href=\"". $url ."\">". $i ."</a></li>";
@@ -321,13 +321,13 @@ if (!$rows['hits']) {
 		// ...
 		if ($endIndex < $seiten) {
 			echo "<li class=\"disabled\"><span>...</span></li>";
-			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site, "entity" => $entity, PARAM_PAGE => $seiten));
+			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site,"entity" => $entity,PARAM_PAGE => $seiten));
 			echo "<li><a href=\"". $url ."\">$seiten</a></li>";
 		}
 		// next
 		if ($seite < $seiten) {
 			$next = $seite + 1;
-			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site, "entity" => $entity, PARAM_PAGE => $next));
+			$url = UrlUtil::buildCurrentUrlWithParameters(array("site" => $site,"entity" => $entity,PARAM_PAGE => $next));
 			echo "<li><a href=\"". $url ."\">&raquo;</a></li>";
 		}
 		echo "</ul></div>";

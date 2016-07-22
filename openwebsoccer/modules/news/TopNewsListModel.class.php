@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,18 +28,18 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-define('NUMBER_OF_TOP_NEWS', 5);
+define('NUMBER_OF_TOP_NEWS',5);
 class TopNewsListModel extends BaseModel
 {
 	FUNCTION getTemplateParameters()
 	{
 		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_news';
-		$columns = 'id, titel, datum';
+		$columns = 'id,titel,datum';
 		$whereCondition = 'status = 1 ORDER BY datum DESC';
-		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, [], NUMBER_OF_TOP_NEWS);
+		$result = $this->_db->querySelect($columns,$fromTable,$whereCondition,[],NUMBER_OF_TOP_NEWS);
 		$articles = [];
 		while ($article = $result->fetch_array()) {
-			$articles[] = ['id' => $article['id'], 'title' => $article['titel'], 'date' => $this->_websoccer->getFormattedDate($article['datum'])];
+			$articles[] = ['id' => $article['id'],'title' => $article['titel'],'date' => $this->_websoccer->getFormattedDate($article['datum'])];
 		}
 		$result->free();
 		return ['topnews' => $articles];

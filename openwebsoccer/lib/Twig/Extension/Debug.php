@@ -5,7 +5,7 @@
  *
  * (c) 2011 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 class Twig_Extension_Debug extends Twig_Extension
@@ -23,7 +23,7 @@ class Twig_Extension_Debug extends Twig_Extension
         ;
 
         return array(
-            new Twig_SimpleFunction('dump', 'twig_var_dump', array('is_safe' => $isDumpOutputHtmlSafe ? array('html') : array(), 'needs_context' => true, 'needs_environment' => true)),
+            new Twig_SimpleFunction('dump','twig_var_dump',array('is_safe' => $isDumpOutputHtmlSafe ? array('html') : array(),'needs_context' => true,'needs_environment' => true)),
         );
     }
 
@@ -33,7 +33,7 @@ class Twig_Extension_Debug extends Twig_Extension
     }
 }
 
-function twig_var_dump(Twig_Environment $env, $context)
+function twig_var_dump(Twig_Environment $env,$context)
 {
     if (!$env->isDebug()) {
         return;

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,26 +28,23 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-/**
-* Provides data for the match formation form.
-*/
 class FormationModel extends BaseModel
 {
-	FUNCTION __construct($db, $i18n, $websoccer)
+	FUNCTION __construct($db,$i18n,$websoccer)
 	{
-		parent::__construct($db, $i18n, $websoccer);
+		parent::__construct($db,$i18n,$websoccer);
 		$this->_nationalteam = $websoccer->getRequestParameter('nationalteam') ? TRUE : FALSE;
 	}
 	FUNCTION getTemplateParameters()
 	{
 		// get team players
 		if ($this->_nationalteam) {
-			$clubId = NationalteamsDataService::getNationalTeamManagedByCurrentUser($this->_websoccer, $this->_db);
+			$clubId = NationalteamsDataService::getNationalTeamManagedByCurrentUser($this->_websoccer,$this->_db);
 		} else {
-			$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+			$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer,$this->_db);
 		}
 		// next x matches
-		$nextMatches = MatchesDataService::getNextMatches($this->_websoccer, $this->_db, $clubId,
+		$nextMatches = MatchesDataService::getNextMatches($this->_websoccer,$this->_db,$clubId,
 		$this->_websoccer->getConfig('formation_max_next_matches'));
 		if (!count($nextMatches)) {
 			throw new Exception($this->_i18n->getMessage('next_match_block_no_nextmatch'));
@@ -70,17 +67,17 @@ class FormationModel extends BaseModel
 		$players = null;
 		if ($clubId > 0) {
 			if ($this->_nationalteam) {
-				$players = NationalteamsDataService::getNationalPlayersOfTeamByPosition($this->_websoccer, $this->_db, $clubId);
+				$players = NationalteamsDataService::getNationalPlayersOfTeamByPosition($this->_websoccer,$this->_db,$clubId);
 			} else {
-				$players = PlayersDataService::getPlayersOfTeamByPosition($this->_websoccer, $this->_db, $clubId, 'DESC', count($matchinfo) && $matchinfo['match_type'] === 'cup', isset($matchinfo['match_type']) && $matchinfo['match_type'] !== 'friendly');
+				$players = PlayersDataService::getPlayersOfTeamByPosition($this->_websoccer,$this->_db,$clubId,'DESC',count($matchinfo) && $matchinfo['match_type'] === 'cup',isset($matchinfo['match_type']) && $matchinfo['match_type'] !== 'friendly');
 			}
 		}
 		// load template
 		if ($this->_websoccer->getRequestParameter('templateid')) {
-			$formation = FormationDataService::getFormationByTemplateId($this->_websoccer, $this->_db, $clubId, $this->_websoccer->getRequestParameter('templateid'));
+			$formation = FormationDataService::getFormationByTemplateId($this->_websoccer,$this->_db,$clubId,$this->_websoccer->getRequestParameter('templateid'));
 		} else {
 			// get previously saved formation and tactic
-			$formation = FormationDataService::getFormationByTeamId($this->_websoccer, $this->_db, $clubId, $matchinfo['match_id']);
+			$formation = FormationDataService::getFormationByTeamId($this->_websoccer,$this->_db,$clubId,$matchinfo['match_id']);
 		}
 		for ($benchNo = 1; $benchNo <= 5; ++$benchNo) {
 			if ($this->_websoccer->getRequestParameter('bench' . $benchNo)) {
@@ -115,9 +112,9 @@ class FormationModel extends BaseModel
 			} else {
 				$sortColumn = 'w_zufriedenheit';
 			}
-			$proposedPlayers = FormationDataService::getFormationProposalForTeamId($this->_websoccer, $this->_db, $clubId,
-			$setup['defense'], $setup['dm'], $setup['midfield'], $setup['om'], $setup['striker'], $setup['outsideforward'], $sortColumn, 'DESC',
-			$this->_nationalteam, isset($matchinfo['match_type']) && $matchinfo['match_type'] === 'cup');
+			$proposedPlayers = FormationDataService::getFormationProposalForTeamId($this->_websoccer,$this->_db,$clubId,
+			$setup['defense'],$setup['dm'],$setup['midfield'],$setup['om'],$setup['striker'],$setup['outsideforward'],$sortColumn,'DESC',
+			$this->_nationalteam,isset($matchinfo['match_type']) && $matchinfo['match_type'] === 'cup');
 			for ($playerNo = 1; $playerNo <= 11; ++$playerNo) {
 				$playerIndex = $playerNo - 1;
 				if (isset($proposedPlayers[$playerIndex])) {
@@ -168,20 +165,16 @@ class FormationModel extends BaseModel
 		}
 		return ['nextMatches' => $nextMatches,
 			'next_match' => $matchinfo,
-			'previous_matches' => MatchesDataService::getPreviousMatches($matchinfo, $this->_websoccer, $this->_db),
+			'previous_matches' => MatchesDataService::getPreviousMatches($matchinfo,$this->_websoccer,$this->_db),
 			'players' => $players,
 			'formation' => $formation,
 			'setup' => $setup,
-			'captain_id' => TeamsDataService::getTeamCaptainIdOfTeam($this->_websoccer, $this->_db, $clubId)];
+			'captain_id' => TeamsDataService::getTeamCaptainIdOfTeam($this->_websoccer,$this->_db,$clubId)];
 	}
-	/**
-	* @param $formation
-	* @return array
-	*/
 	FUNCTION getFormationSetup($formation)
 	{
 		// default setup
-		$setup = ['defense' => 4, 'dm' => 1, 'midfield' => 3, 'om' => 1, 'striker' => 1, 'outsideforward' => 0];
+		$setup = ['defense' => 4,'dm' => 1,'midfield' => 3,'om' => 1,'striker' => 1,'outsideforward' => 0];
 		// override by user input
 		if ($this->_websoccer->getRequestParameter('formation_defense') !== NULL) {
 			$setup['defense'] = (int)$this->_websoccer->getRequestParameter('formation_defense');
@@ -192,7 +185,7 @@ class FormationModel extends BaseModel
 			$setup['outsideforward'] = (int)$this->_websoccer->getRequestParameter('formation_outsideforward');
 		// override by request when page is re-loaded after submitting the main form
 		} elseif ($this->_websoccer->getRequestParameter('setup') !== NULL) {
-			$setupParts = explode('-', $this->_websoccer->getRequestParameter('setup'));
+			$setupParts = explode('-',$this->_websoccer->getRequestParameter('setup'));
 			$setup['defense'] = (int)$setupParts[0];
 			$setup['dm'] = (int)$setupParts[1];
 			$setup['midfield'] = (int)$setupParts[2];
@@ -201,7 +194,7 @@ class FormationModel extends BaseModel
 			$setup['outsideforward'] = (int)$setupParts[5];
 		// override by previously saved formation
 		} else if (isset($formation['setup']) && strlen($formation['setup'])) {
-			$setupParts = explode('-', $formation['setup']);
+			$setupParts = explode('-',$formation['setup']);
 			$setup['defense'] = (int)$setupParts[0];
 			$setup['dm'] = (int)$setupParts[1];
 			$setup['midfield'] = (int)$setupParts[2];

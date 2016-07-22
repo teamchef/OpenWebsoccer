@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -38,7 +38,7 @@ class Simulator
 	{
 		return $this->_simStrategy;
 	}
-    FUNCTION __construct(DbConnection $db, WebSoccer $websoccer)
+    FUNCTION __construct(DbConnection $db,WebSoccer $websoccer)
     {
     	$strategyClass = $websoccer->getConfig('sim_strategy');
     	if (!class_exists($strategyClass)) {
@@ -53,7 +53,7 @@ class Simulator
     FUNCTION attachObserver(ISimulatorObserver $observer) {
     	$this->_observers[] = $observer;
     }
-    FUNCTION simulateMatch(SimulationMatch $match, $minutes) {
+    FUNCTION simulateMatch(SimulationMatch $match,$minutes) {
     	if ($match->minute == null) {
     		$match->minute = 0;
     	}
@@ -63,7 +63,7 @@ class Simulator
 	    		$observer->onBeforeMatchStarts($match);
 	    	}
     	}
-    	// match might be completed already before simulation, e.g. when there is no formation provided
+    	// match might be completed already before simulation,e.g. when there is no formation provided
     	if ($match->isCompleted) {
     		$this->completeMatch($match);
     		return;
@@ -78,8 +78,8 @@ class Simulator
     		if ($match->minute == 1) {
     			$this->_simStrategy->kickoff($match);
     		} else {
-    			SimulationHelper::checkAndExecuteSubstitutions($match, $match->homeTeam, $this->_observers);
-    			SimulationHelper::checkAndExecuteSubstitutions($match, $match->guestTeam, $this->_observers);
+    			SimulationHelper::checkAndExecuteSubstitutions($match,$match->homeTeam,$this->_observers);
+    			SimulationHelper::checkAndExecuteSubstitutions($match,$match->guestTeam,$this->_observers);
     		}
     		// execute next action
     		$actionName = $this->_simStrategy->nextAction($match);
@@ -90,30 +90,30 @@ class Simulator
     		// match ended?
     		// two possibilities:
     		// a. Normal matches end after regular time
-    		// b. if penalty shooting is enabled, play extension if there is no result after 90 minutes
-    		$lastMinute = 90 + SimulationHelper::getMagicNumber(1, 5);
+    		// b. if penalty shooting is enabled,play extension if there is no result after 90 minutes
+    		$lastMinute = 90 + SimulationHelper::getMagicNumber(1,5);
     		if ($match->penaltyShootingEnabled || $match->type == 'Pokalspiel') {
     			// match ended after regular or extension time with a winner
     			if (($match->minute == 91 || $match->minute == 121)
     				&& ($match->type != 'Pokalspiel' && $match->homeTeam->getGoals() != $match->guestTeam->getGoals()
-    						|| $match->type == 'Pokalspiel' && !SimulationCupMatchHelper::checkIfExtensionIsRequired($this->_websoccer, $this->_db, $match))) {
+    						|| $match->type == 'Pokalspiel' && !SimulationCupMatchHelper::checkIfExtensionIsRequired($this->_websoccer,$this->_db,$match))) {
     				$this->completeMatch($match);
     				break;
     				// no winner after extension time -> penalty shooting
     			} elseif ($match->minute == 121
     					&& ($match->type != 'Pokalspiel' && $match->homeTeam->getGoals() == $match->guestTeam->getGoals()
-    							|| $match->type == 'Pokalspiel' && SimulationCupMatchHelper::checkIfExtensionIsRequired($this->_websoccer, $this->_db, $match))) {
+    							|| $match->type == 'Pokalspiel' && SimulationCupMatchHelper::checkIfExtensionIsRequired($this->_websoccer,$this->_db,$match))) {
     				$this->_simStrategy->penaltyShooting($match);
     				// we have a winner now
     				if ($match->type == 'Pokalspiel') {
     					// home team won
     					if ($match->homeTeam->getGoals() > $match->guestTeam->getGoals()) {
-    						SimulationCupMatchHelper::createNextRoundMatchAndPayAwards($this->_websoccer, $this->_db,
-    							$match->homeTeam->id, $match->guestTeam->id, $match->cupName, $match->cupRoundName);
+    						SimulationCupMatchHelper::createNextRoundMatchAndPayAwards($this->_websoccer,$this->_db,
+    							$match->homeTeam->id,$match->guestTeam->id,$match->cupName,$match->cupRoundName);
     					// guest team won
     					} else {
-    						SimulationCupMatchHelper::createNextRoundMatchAndPayAwards($this->_websoccer, $this->_db,
-    							$match->guestTeam->id, $match->homeTeam->id, $match->cupName, $match->cupRoundName);
+    						SimulationCupMatchHelper::createNextRoundMatchAndPayAwards($this->_websoccer,$this->_db,
+    							$match->guestTeam->id,$match->homeTeam->id,$match->cupName,$match->cupRoundName);
     					}
     				}
     				$this->completeMatch($match);
@@ -132,7 +132,7 @@ class Simulator
     		$observer->onMatchCompleted($match);
     	}
     	// trigger plug-ins
-    	$event = new MatchCompletedEvent($this->_websoccer, $this->_db, I18n::getInstance($this->_websoccer->getConfig('supported_languages')),
+    	$event = new MatchCompletedEvent($this->_websoccer,$this->_db,I18n::getInstance($this->_websoccer->getConfig('supported_languages')),
     			$match);
     	PluginMediator::dispatchEvent($event);
     }

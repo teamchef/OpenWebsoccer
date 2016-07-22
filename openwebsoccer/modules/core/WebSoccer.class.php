@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -84,9 +84,9 @@ class WebSoccer
 	FUNCTION setPageId($pageId){
 		$this->_pageId = $pageId;
 	}
-	FUNCTION getTemplateEngine($i18n, ViewHandler $viewHandler = null){
+	FUNCTION getTemplateEngine($i18n,ViewHandler $viewHandler = null){
 		if ($this->_templateEngine === NULL) {
-			$this->_templateEngine = new TemplateEngine($this, $i18n, $viewHandler);
+			$this->_templateEngine = new TemplateEngine($this,$i18n,$viewHandler);
 		}
 		return $this->_templateEngine;
 	}
@@ -99,7 +99,7 @@ class WebSoccer
 		}
 		return NULL;
 	}
-	FUNCTION getInternalUrl($pageId = null, $queryString = '', $fullUrl = FALSE){
+	FUNCTION getInternalUrl($pageId = null,$queryString = '',$fullUrl = FALSE){
 		if ($pageId === null) {
 			$pageId = $this->getPageId();
 		}
@@ -108,7 +108,7 @@ class WebSoccer
 		}
 		if ($fullUrl) {
 			$url = $this->getConfig('homepage') . $this->getConfig('context_root');
-			// do not provide full path to home page until required, in order to improve SEO.
+			// do not provide full path to home page until required,in order to improve SEO.
 			if ($pageId !== 'home' || $queryString) {
 				$url .= '/?page=' . $pageId . $queryString;
 			}
@@ -117,7 +117,7 @@ class WebSoccer
 		}
 		return $url;
 	}
-	FUNCTION getInternalActionUrl($actionId, $queryString = '', $pageId = null, $fullUrl = FALSE){
+	FUNCTION getInternalActionUrl($actionId,$queryString = '',$pageId = null,$fullUrl = FALSE){
 		if ($pageId === null) {
 			$pageId = $this->getRequestParameter('page');
 		}
@@ -134,25 +134,25 @@ class WebSoccer
 		if ($timestamp === null) {
 			$timestamp = $this->getNowAsTimestamp();
 		}
-		return date($this->getConfig('date_format'), $timestamp);
+		return date($this->getConfig('date_format'),$timestamp);
 	}
-	FUNCTION getFormattedDatetime($timestamp, I18n $i18n = null){
+	FUNCTION getFormattedDatetime($timestamp,I18n $i18n = null){
 		if ($timestamp === null) {
 			$timestamp = $this->getNowAsTimestamp();
 		}
 		if ($i18n !== null) {
-			$dateWord = StringUtil::convertTimestampToWord($timestamp, $this->getNowAsTimestamp(), $i18n);
+			$dateWord = StringUtil::convertTimestampToWord($timestamp,$this->getNowAsTimestamp(),$i18n);
 			if ($dateWord) {
-				return $dateWord . ', ' . date($this->getConfig('time_format'), $timestamp);
+				return $dateWord . ',' . date($this->getConfig('time_format'),$timestamp);
 			}
 		}
-		return date($this->getConfig('datetime_format'), $timestamp);
+		return date($this->getConfig('datetime_format'),$timestamp);
 	}
 	FUNCTION getNowAsTimestamp(){
 		return time() + $this->getConfig('time_offset');
 	}
 	FUNCTION resetConfigCache(){
-		mkdir('/cache', 0700);
+		mkdir('/cache',0700);
 		$i18n = I18n::getInstance($this->getConfig('supported_languages'));
 		$cacheBuilder = new ConfigCacheFileWriter($i18n->getSupportedLanguages());
 		$cacheBuilder->buildConfigCache();
@@ -178,7 +178,7 @@ class WebSoccer
 		}
 		return $this->_contextParameters;
 	}
-	FUNCTION addContextParameter($name, $value){
+	FUNCTION addContextParameter($name,$value){
 		if ($this->_contextParameters === null) {
 			$this->_contextParameters = [];
 		}

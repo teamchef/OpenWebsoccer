@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -35,7 +35,7 @@ if (!$admin["r_admin"] && !$admin["r_demo"] && !$admin["r_spiele"]) {
 $roundid = (isset($_REQUEST["round"]) && is_numeric($_REQUEST["round"])) ? $_REQUEST["round"] : 0;
 $result = $db->querySelect("R.id AS round_id,R.name AS round_name,firstround_date,secondround_date,C.id AS cup_id,C.name as cup_name",
 		$website->getConfig("db_prefix") . "_cup_round AS R INNER JOIN " . $website->getConfig("db_prefix") . "_cup AS C ON C.id = R.cup_id",
-		"R.id = %d", $roundid);
+		"R.id = %d",$roundid);
 $round = $result->fetch_array();
 $result->free();
 if (!isset($round["round_name"])) {
@@ -62,7 +62,7 @@ if ($action == "generate" && isset($_POST["teams"]) && is_array($_POST["teams"])
 				"datum" => $round["firstround_date"],
 				"home_verein" => $homeTeamId,
 				"gast_verein" => $guestTeamId
-				), $insertTable);
+				),$insertTable);
 		// create second round
 		if ($round["secondround_date"]) {
 			$db->queryInsert(array(
@@ -72,10 +72,10 @@ if ($action == "generate" && isset($_POST["teams"]) && is_array($_POST["teams"])
 					"datum" => $round["secondround_date"],
 					"home_verein" => $guestTeamId,
 					"gast_verein" => $homeTeamId
-			), $insertTable);
+			),$insertTable);
 		}
 	}
-	echo createSuccessMessage($i18n->getMessage("managecuprounds_generate_success"), "");
+	echo createSuccessMessage($i18n->getMessage("managecuprounds_generate_success"),"");
 	echo "<p><a href=\"?site=managecuprounds&cup=". $round["cup_id"] . "\" class=\"btn btn-primary\">" . $i18n->getMessage("managecuprounds_generate_success_overviewlink") ."</a></p>";
 }
 // ****** Display selection form ***********

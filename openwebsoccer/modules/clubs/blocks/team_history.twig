@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,7 +28,7 @@
 #}
 {% import "macro.twig" as macro %}
 {% if leagues|length == 0 and cups|length == 0 %}
-	{{ macro.box("", i18n.getMessage("team_details_noleaguevictories"), "info") }}
+	{{ macro.box("",i18n.getMessage("team_details_noleaguevictories"),"info") }}
 {% else %}
 	{% for leagueName,seasons in leagues %}
 		<h4>{{ leagueName }}</h4>
@@ -44,7 +44,7 @@
 				{% for season in seasons %}
 					<tr>
 						<td>{{ season.season_name }}</td>
-						<td><a href="{{ env.getInternalUrl("user", "id=" ~ season.user_id) }}">{{ season.user_name }}</a></td>
+						<td><a href="{{ env.getInternalUrl("user","id=" ~ season.user_id) }}">{{ season.user_name }}</a></td>
 						<td>{{ season.season_rank }}</td>
 					</tr>
 				{% endfor %}
@@ -65,7 +65,7 @@
 				{% for cup in cups %}
 					<tr>
 						<td>{{ cup.cup_name }}</td>
-						<td><a href="{{ env.getInternalUrl("user", "id=" ~ cup.user_id) }}">{{ cup.user_name }}</a></td>
+						<td><a href="{{ env.getInternalUrl("user","id=" ~ cup.user_id) }}">{{ cup.user_name }}</a></td>
 						<td>{{ cup.cup_round_name }}<br>{{ env.getFormattedDate(cup.achievement_date) }}</td>
 					</tr>
 				{% endfor %}

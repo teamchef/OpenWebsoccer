@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,21 +28,21 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-define('DOUBLE_SUBMIT_CHECK_SECONDS', 3);
-define('DOUBLE_SUBMIT_CHECK_SESSIONKEY_TIME', 'laction_time');
-define('DOUBLE_SUBMIT_CHECK_SESSIONKEY_ACTIONID', 'laction_id');
+define('DOUBLE_SUBMIT_CHECK_SECONDS',3);
+define('DOUBLE_SUBMIT_CHECK_SESSIONKEY_TIME','laction_time');
+define('DOUBLE_SUBMIT_CHECK_SESSIONKEY_ACTIONID','laction_id');
 /**
-* Aktionsverarbeitung: Eine Aktion steuert jede Art der Ausführungs-Logik, um den Benutzer umzuleiten, nachdem die
+* Aktionsverarbeitung: Eine Aktion steuert jede Art der Ausführungs-Logik,um den Benutzer umzuleiten,nachdem die
 * Aktion bearbeitet wurde. Es bestätigt auch Anfrage-Parameter entsprechend der Moduleinstellungen. *
 */
 class ActionHandler
 {
 	/**
-	* Sicherer Aktionsaufruft: Vor dem eigentlichen Aufruf, validiert dieser Handler alle in der module.xml definierten
+	* Sicherer Aktionsaufruft: Vor dem eigentlichen Aufruf,validiert dieser Handler alle in der module.xml definierten
 	* Parameter und überprüft die Benutzerberechtigungen.
-	* @return string|NULL ID der Seite die nach der Aktionsausführung angezeigt werden soll. Ist die ID = NULL, so wird die aufgerufene Seite angezeigt.
-	* @throws Exception ( Fehleranzeige ) wenn die Aktion nicht gefunden, eine doppelte Ausführung ermittelt,
-	* der Zugriff verweigert, oder der Controller nicht gefunden wird bzw. der Controller selbst ein Exception bewirkt.
+	* @return string|NULL ID der Seite die nach der Aktionsausführung angezeigt werden soll. Ist die ID = NULL,so wird die aufgerufene Seite angezeigt.
+	* @throws Exception ( Fehleranzeige ) wenn die Aktion nicht gefunden,eine doppelte Ausführung ermittelt,
+	* der Zugriff verweigert,oder der Controller nicht gefunden wird bzw. der Controller selbst ein Exception bewirkt.
 	*/
 	FUNCTION handleAction($website,$db,$i18n,$actionId)
 	{
@@ -56,19 +56,19 @@ class ActionHandler
 			&& ($_SESSION[DOUBLE_SUBMIT_CHECK_SESSIONKEY_TIME] + DOUBLE_SUBMIT_CHECK_SECONDS) > $website->getNowAsTimestamp()) {
 			throw new Exception($i18n->getMessage('error_double_submit'));
 		}
-		$actionConfig = json_decode($website->getAction($actionId), true);
+		$actionConfig = json_decode($website->getAction($actionId),true);
 		$actionXml = ModuleConfigHelper::findModuleConfigAsXmlObject($actionConfig['module']);
 		/** Überprüfung auf $user Berechtigung */
 		$user = $website->getUser();
 		/** Überprüfung auf admin Berechtigung */
-		if (strpos($actionConfig['role'], 'admin') !== false) {
+		if (strpos($actionConfig['role'],'admin') !== false) {
 			if (!$user->isAdmin()) {
 				throw new AccessDeniedException($i18n->getMessage('error_access_denied'));
 			}
 		} else {
 			/** Überprüfung auf sonstige Aktionen */
-			$requiredRoles = explode(',', $actionConfig['role']);
-			if (!in_array($user->getRole(), $requiredRoles)) {
+			$requiredRoles = explode(',',$actionConfig['role']);
+			if (!in_array($user->getRole(),$requiredRoles)) {
 				throw new AccessDeniedException($i18n->getMessage('error_access_denied'));
 			}
 		}
@@ -76,17 +76,17 @@ class ActionHandler
 		$params = $actionXml->xpath('//action[@id = "' . $actionId . '"]/param');
 		$validatedParams = [];
 		if ($params) {
-			$validatedParams = self::_validateParameters($params, $website, $i18n);
+			$validatedParams = self::_validateParameters($params,$website,$i18n);
 		}
 		$controllerName = $actionConfig['controller'];
 		/** Premium Aktionen erkennen */
 		if (isset($actionConfig['premiumBalanceMin']) && $actionConfig['premiumBalanceMin']) {
-			return self::_handlePremiumAction($website, $db, $i18n, $actionId, $actionConfig['premiumBalanceMin'], $validatedParams, $controllerName);
+			return self::_handlePremiumAction($website,$db,$i18n,$actionId,$actionConfig['premiumBalanceMin'],$validatedParams,$controllerName);
 		}
-		$actionReturn = self::_executeAction($website, $db, $i18n, $actionId, $controllerName, $validatedParams);
+		$actionReturn = self::_executeAction($website,$db,$i18n,$actionId,$controllerName,$validatedParams);
 		/** Logeintrag vornehmen */
 		if (isset($actionConfig['log']) && $actionConfig['log'] && $website->getUser()->id) {
-			ActionLogDataService::createOrUpdateActionLog($website, $db, $website->getUser()->id, $actionId);
+			ActionLogDataService::createOrUpdateActionLog($website,$db,$website->getUser()->id,$actionId);
 		}
 		return $actionReturn;
 	}
@@ -112,29 +112,29 @@ class ActionHandler
 			if ($paramValue !== null) {
 				/** Textgröße über minimum / maximum begrenzen */
 				if ($type === 'text' && $min > 0 && strlen($paramValue) < $min) {
-					$errorMessages[$paramId] = sprintf($i18n->getMessage('validation_error_min_length'), $min);
+					$errorMessages[$paramId] = sprintf($i18n->getMessage('validation_error_min_length'),$min);
 				} else if ($type === 'text' && $max > 0 && strlen($paramValue) > $max) {
-					$errorMessages[$paramId] = sprintf($i18n->getMessage('validation_error_max_length'), $max);
+					$errorMessages[$paramId] = sprintf($i18n->getMessage('validation_error_max_length'),$max);
 					/** Überprüfung der Nummereingabe */
 				} else if ($type === 'number' && !is_numeric($paramValue)) {
 					$errorMessages[$paramId] = $i18n->getMessage('validation_error_not_a_number');
 				} else if ($type === 'number' && $paramValue < $min) {
-					$errorMessages[$paramId] = $i18n->getMessage('validation_error_min_number', $min);
+					$errorMessages[$paramId] = $i18n->getMessage('validation_error_min_number',$min);
 				} else if ($type === 'number' && $max > 0 && $paramValue > $max) {
-					$errorMessages[$paramId] = $i18n->getMessage('validation_error_max_number', $max);
-				} else if ($type === 'url' && !filter_var($paramValue, FILTER_VALIDATE_URL)) {
+					$errorMessages[$paramId] = $i18n->getMessage('validation_error_max_number',$max);
+				} else if ($type === 'url' && !filter_var($paramValue,FILTER_VALIDATE_URL)) {
 					$errorMessages[$paramId] = $i18n->getMessage('validation_error_not_a_url');
 				} else if ($type === 'date') {
 					$format = $website->getConfig('date_format');
-					if (!DateTime::createFromFormat($format, $paramValue)) {
-						$errorMessages[$paramId] = $i18n->getMessage('validation_error_invaliddate', $format);
+					if (!DateTime::createFromFormat($format,$paramValue)) {
+						$errorMessages[$paramId] = $i18n->getMessage('validation_error_invaliddate',$format);
 					}
 				}
 				if ($validatorName) {
 					if (!class_exists($validatorName)) {
 						throw new Exception('Validator not found: ' . $validatorName);
 					}
-					$validator = new $validatorName($i18n, $website, $paramValue);
+					$validator = new $validatorName($i18n,$website,$paramValue);
 					if (!$validator->isValid()) {
 						$errorMessages[$paramId] = $validator->getMessage();
 					}
@@ -157,34 +157,34 @@ class ActionHandler
 		/** Überprüfung auf doppelter Aktion */
 		$_SESSION[DOUBLE_SUBMIT_CHECK_SESSIONKEY_ACTIONID] = $actionId;
 		$_SESSION[DOUBLE_SUBMIT_CHECK_SESSIONKEY_TIME] = $website->getNowAsTimestamp();
-		$controller = new $controllerName($i18n, $website, $db);
+		$controller = new $controllerName($i18n,$website,$db);
 		return $controller->executeAction($validatedParams);
 	}
 	FUNCTION _handlePremiumAction($website,$db,$i18n,$actionId,$creditsRequired,$validatedParams,$controllerName)
 	{
-		/** Überprüfung, ob der User genug Geld hat */
+		/** Überprüfung,ob der User genug Geld hat */
 		if ($creditsRequired > $website->getUser()->premiumBalance) {
 			$targetPage = $website->getConfig('premium_infopage');
 			/** Redirect zur externen Infoseite */
-			if (filter_var($targetPage, FILTER_VALIDATE_URL)) {
+			if (filter_var($targetPage,FILTER_VALIDATE_URL)) {
 				header('location: ' . $targetPage);
 				exit;
 				/** Infoseite ausgeben */
 			} else {
-				$website->addContextParameter('premium_balance_required', $creditsRequired);
+				$website->addContextParameter('premium_balance_required',$creditsRequired);
 				return $targetPage;
 			}
 		}
 		/** Premiumkosten abziehen und die Aktion ausführen */
 		if ($website->getRequestParameter('premiumconfirmed')) {
-			PremiumDataService::debitAmount($website, $db, $website->getUser()->id, $creditsRequired, $actionId);
-			return self::_executeAction($website, $db, $i18n, $actionId, $controllerName, $validatedParams);
+			PremiumDataService::debitAmount($website,$db,$website->getUser()->id,$creditsRequired,$actionId);
+			return self::_executeAction($website,$db,$i18n,$actionId,$controllerName,$validatedParams);
 		}
 		/** Redirect zur bezahlten Seite */
-		$website->addContextParameter('premium_balance_required', $creditsRequired);
-		$website->addContextParameter('actionparameters', $validatedParams);
-		$website->addContextParameter('actionid', $actionId);
-		$website->addContextParameter('srcpage', $website->getPageId());
+		$website->addContextParameter('premium_balance_required',$creditsRequired);
+		$website->addContextParameter('actionparameters',$validatedParams);
+		$website->addContextParameter('actionid',$actionId);
+		$website->addContextParameter('srcpage',$website->getPageId());
 		return 'premium-confirm-action';
 	}
 }

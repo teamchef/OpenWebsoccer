@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,7 +30,7 @@
 SEC;
 class TeamsDataService
 {
-	FUNCTION getTeamById(WebSoccer $websoccer, DbConnection $db, $teamId)
+	FUNCTION getTeamById(WebSoccer $websoccer,DbConnection $db,$teamId)
 	{
 		$fromTable = self::_getFromPart($websoccer);
 		// where
@@ -76,17 +76,17 @@ class TeamsDataService
 		$columns['C.st_niederlagen'] = 'team_total_losses';
 		$columns['C.st_unentschieden'] = 'team_total_draws';
 		$columns['C.st_punkte'] = 'team_total_score';
-		$teaminfos = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters, 1);
+		$teaminfos = $db->queryCachedSelect($columns,$fromTable,$whereCondition,$parameters,1);
 		$team = (isset($teaminfos[0])) ? $teaminfos[0] : array();
 		if (isset($team['team_user_email'])) {
-			$team['user_picture'] = UsersDataService::getUserProfilePicture($websoccer, $team['team_user_picture'], $team['team_user_email'], 20);
+			$team['user_picture'] = UsersDataService::getUserProfilePicture($websoccer,$team['team_user_picture'],$team['team_user_email'],20);
 		}
 		if (isset($team['team_deputyuser_email'])) {
-			$team['deputyuser_picture'] = UsersDataService::getUserProfilePicture($websoccer, $team['team_deputyuser_picture'], $team['team_deputyuser_email'], 20);
+			$team['deputyuser_picture'] = UsersDataService::getUserProfilePicture($websoccer,$team['team_deputyuser_picture'],$team['team_deputyuser_email'],20);
 		}
 		return $team;
 	}
-	FUNCTION getTeamSummaryById(WebSoccer $websoccer, DbConnection $db, $teamId)
+	FUNCTION getTeamSummaryById(WebSoccer $websoccer,DbConnection $db,$teamId)
 	{
 		if (!$teamId) {
 			return NULL;
@@ -103,15 +103,15 @@ class TeamsDataService
 		$columns['C.user_id'] = 'user_id';
 		$columns['L.name'] = 'team_league_name';
 		$columns['L.id'] = 'team_league_id';
-		$teaminfos = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $parameters, 1);
+		$teaminfos = $db->queryCachedSelect($columns,$fromTable,$whereCondition,$parameters,1);
 		$team = (isset($teaminfos[0])) ? $teaminfos[0] : array();
 		return $team;
 	}
-	FUNCTION getTeamsOfLeagueOrderedByTableCriteria(WebSoccer $websoccer, DbConnection $db, $leagueId)
+	FUNCTION getTeamsOfLeagueOrderedByTableCriteria(WebSoccer $websoccer,DbConnection $db,$leagueId)
 	{
 		// get current season
-		$result = $db->querySelect('id', $websoccer->getConfig('db_prefix') .'_saison',
-				'liga_id = %d AND beendet = \'0\' ORDER BY name DESC', $leagueId, 1);
+		$result = $db->querySelect('id',$websoccer->getConfig('db_prefix') .'_saison',
+				'liga_id = %d AND beendet = \'0\' ORDER BY name DESC',$leagueId,1);
 		$season = $result->fetch_array();
 		$result->free();
 		$fromTable = $websoccer->getConfig('db_prefix') . '_verein AS C';
@@ -139,7 +139,7 @@ class TeamsDataService
 		$columns['U.picture'] = 'user_picture';
 		$columns['PREVDAY.rank'] = 'previous_rank';
 		// order by
-		$whereCondition = 'C.liga_id = %d AND C.status = \'1\' ORDER BY score DESC, goals_diff DESC, wins DESC, draws DESC, goals DESC, name ASC';
+		$whereCondition = 'C.liga_id = %d AND C.status = \'1\' ORDER BY score DESC,goals_diff DESC,wins DESC,draws DESC,goals DESC,name ASC';
 		$parameters = $leagueId;
 		$teams = array();
 		// shall update league history? DO this only every 10 minutes
@@ -149,26 +149,26 @@ class TeamsDataService
 			$_SESSION['leaguehist'] = $now;
 			$updateHistory = TRUE;
 			$queryTemplate = 'REPLACE INTO ' . $websoccer->getConfig('db_prefix') . '_leaguehistory ';
-			$queryTemplate .= '(team_id, season_id, user_id, matchday, rank) ';
-			$queryTemplate .= 'VALUES (%d, ' . $season['id'] . ', %s, %d, %d);';
+			$queryTemplate .= '(team_id,season_id,user_id,matchday,rank) ';
+			$queryTemplate .= 'VALUES (%d,' . $season['id'] . ',%s,%d,%d);';
 		}
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		$rank = 0;
 		while ($team = $result->fetch_array()) {
 			$rank++;
-			$team['user_picture'] = UsersDataService::getUserProfilePicture($websoccer, $team['user_picture'], $team['user_email'], 20);
+			$team['user_picture'] = UsersDataService::getUserProfilePicture($websoccer,$team['user_picture'],$team['user_email'],20);
 			$teams[] = $team;
 			// update history
 			if ($updateHistory && $team['matches']) {
 				$userId = ($team['user_id']) ? $team['user_id'] : 'DEFAULT';
-				$query = sprintf($queryTemplate, $team['id'], $userId, $team['matches'], $rank);
+				$query = sprintf($queryTemplate,$team['id'],$userId,$team['matches'],$rank);
 				$db->executeQuery($query);
 			}
 		}
 		$result->free();
 		return $teams;
 	}
-	FUNCTION getTeamsOfSeasonOrderedByTableCriteria(WebSoccer $websoccer, DbConnection $db, $seasonId, $type)
+	FUNCTION getTeamsOfSeasonOrderedByTableCriteria(WebSoccer $websoccer,DbConnection $db,$seasonId,$type)
 	{
 		$fromTable = $websoccer->getConfig('db_prefix') . '_team_league_statistics AS S';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = S.team_id';
@@ -197,16 +197,16 @@ class TeamsDataService
 		$columns['U.email'] = 'user_email';
 		$columns['U.picture'] = 'user_picture';
 		$teams = array();
-		$whereCondition .= ' ORDER BY score DESC, goals_diff DESC, wins DESC, draws DESC, goals DESC, name ASC';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$whereCondition .= ' ORDER BY score DESC,goals_diff DESC,wins DESC,draws DESC,goals DESC,name ASC';
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		while ($team = $result->fetch_array()) {
-			$team['user_picture'] = UsersDataService::getUserProfilePicture($websoccer, $team['user_picture'], $team['user_email'], 20);
+			$team['user_picture'] = UsersDataService::getUserProfilePicture($websoccer,$team['user_picture'],$team['user_email'],20);
 			$teams[] = $team;
 		}
 		$result->free();
 		return $teams;
 	}
-	FUNCTION getTeamsOfLeagueOrderedByAlltimeTableCriteria(WebSoccer $websoccer, DbConnection $db, $leagueId, $type = null)
+	FUNCTION getTeamsOfLeagueOrderedByAlltimeTableCriteria(WebSoccer $websoccer,DbConnection $db,$leagueId,$type = null)
 	{
 		$fromTable = $websoccer->getConfig('db_prefix') . '_team_league_statistics AS S';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = S.team_id';
@@ -236,16 +236,16 @@ class TeamsDataService
 		$columns['U.email'] = 'user_email';
 		$columns['U.picture'] = 'user_picture';
 		$teams = array();
-		$whereCondition .= ' GROUP BY C.id ORDER BY score DESC, goals_diff DESC, wins DESC, draws DESC, goals DESC, name ASC';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$whereCondition .= ' GROUP BY C.id ORDER BY score DESC,goals_diff DESC,wins DESC,draws DESC,goals DESC,name ASC';
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		while ($team = $result->fetch_array()) {
-			$team['user_picture'] = UsersDataService::getUserProfilePicture($websoccer, $team['user_picture'], $team['user_email'], 20);
+			$team['user_picture'] = UsersDataService::getUserProfilePicture($websoccer,$team['user_picture'],$team['user_email'],20);
 			$teams[] = $team;
 		}
 		$result->free();
 		return $teams;
 	}
-	FUNCTION getTableRankOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId)
+	FUNCTION getTableRankOfTeam(WebSoccer $websoccer,DbConnection $db,$teamId)
 	{
 		$subQuery = '(SELECT COUNT(*) FROM ' . $websoccer->getConfig('db_prefix') . '_verein AS T2 WHERE' . ' T2.liga_id = T1.liga_id'
 				. ' AND (T2.sa_punkte > T1.sa_punkte'
@@ -255,7 +255,7 @@ class TeamsDataService
 		$columns = $subQuery . ' + 1 AS RNK';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_verein AS T1';
 		$whereCondition = 'T1.id = %d';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $teamId);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$teamId);
 		$teamRank = $result->fetch_array();
 		$result->free();
 		if ($teamRank) {
@@ -263,7 +263,7 @@ class TeamsDataService
 		}
 		return NULL;
 	}
-	FUNCTION getTeamsWithoutUser(WebSoccer $websoccer, DbConnection $db)
+	FUNCTION getTeamsWithoutUser(WebSoccer $websoccer,DbConnection $db)
 	{
 		$fromTable = $websoccer->getConfig('db_prefix') . '_verein AS C';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_liga AS L ON C.liga_id = L.id';
@@ -283,30 +283,30 @@ class TeamsDataService
 		$columns['S.p_haupt_sitz'] = 'stadium_p_haupt_sitz';
 		$columns['S.p_vip'] = 'stadium_p_vip';
 		// order by
-		$whereCondition .= ' ORDER BY league_country ASC, league_name ASC, team_name ASC';
+		$whereCondition .= ' ORDER BY league_country ASC,league_name ASC,team_name ASC';
 		$teams = array();
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, array(), 300);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,array(),300);
 		while ($team = $result->fetch_array()) {
 			$teams[$team['league_country']][] = $team;
 		}
 		$result->free();
 		return $teams;
 	}
-	FUNCTION countTeamsWithoutManager(WebSoccer $websoccer, DbConnection $db)
+	FUNCTION countTeamsWithoutManager(WebSoccer $websoccer,DbConnection $db)
 	{
-		$result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_verein', '(user_id = 0 OR user_id IS NULL) AND status = 1');
+		$result = $db->querySelect('COUNT(*) AS hits',$websoccer->getConfig('db_prefix') . '_verein','(user_id = 0 OR user_id IS NULL) AND status = 1');
 		$teams = $result->fetch_array();
 		$result->free();
 		if (isset($teams['hits'])) {
 			return $teams['hits'];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION findTeamNames(WebSoccer $websoccer, DbConnection $db, $query) {
+	FUNCTION findTeamNames(WebSoccer $websoccer,DbConnection $db,$query) {
 		$columns = 'name';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_verein';
 		$whereCondition = 'UPPER(name) LIKE \'%%%s%%\' AND status = 1';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, strtoupper($query), 10);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,strtoupper($query),10);
 		$teams = array();
 		while($team = $result->fetch_array()) {
 			$teams[] = $team['name'];
@@ -314,44 +314,44 @@ class TeamsDataService
 		$result->free();
 		return $teams;
 	}
-	FUNCTION getTeamSize(WebSoccer $websoccer, DbConnection $db, $clubId)
+	FUNCTION getTeamSize(WebSoccer $websoccer,DbConnection $db,$clubId)
 	{
 		$columns = 'COUNT(*) AS number';
 		$fromTable = $websoccer->getConfig('db_prefix') .'_spieler';
 		$whereCondition = 'verein_id = %d AND status = \'1\' AND transfermarkt != \'1\' AND lending_fee = 0';
 		$parameters = $clubId;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		$players = $result->fetch_array();
 		$result->free();
 		return ($players['number']) ? $players['number'] : 0;
 	}
-	FUNCTION getTotalPlayersSalariesOfTeam(WebSoccer $websoccer, DbConnection $db, $clubId)
+	FUNCTION getTotalPlayersSalariesOfTeam(WebSoccer $websoccer,DbConnection $db,$clubId)
 	{
 		$columns = 'SUM(vertrag_gehalt) AS salary';
 		$fromTable = $websoccer->getConfig('db_prefix') .'_spieler';
 		$whereCondition = 'verein_id = %d AND status = \'1\'';
 		$parameters = $clubId;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		$players = $result->fetch_array();
 		$result->free();
 		return ($players['salary']) ? $players['salary'] : 0;
 	}
-	FUNCTION getTeamCaptainIdOfTeam(WebSoccer $websoccer, DbConnection $db, $clubId)
+	FUNCTION getTeamCaptainIdOfTeam(WebSoccer $websoccer,DbConnection $db,$clubId)
 	{
-		$result = $db->querySelect('captain_id', $websoccer->getConfig('db_prefix') .'_verein', 'id = %d', $clubId);
+		$result = $db->querySelect('captain_id',$websoccer->getConfig('db_prefix') .'_verein','id = %d',$clubId);
 		$team = $result->fetch_array();
 		$result->free();
 		return (isset($team['captain_id'])) ? $team['captain_id'] : 0;
 	}
-	FUNCTION validateWhetherTeamHasEnoughBudgetForSalaryBid(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $clubId, $salary)
+	FUNCTION validateWhetherTeamHasEnoughBudgetForSalaryBid(WebSoccer $websoccer,DbConnection $db,I18n $i18n,$clubId,$salary)
 	{
 		// get salary sum of all players
-		$result = $db->querySelect('SUM(vertrag_gehalt) AS salary_sum', $websoccer->getConfig('db_prefix') .'_spieler', 'verein_id = %d', $clubId);
+		$result = $db->querySelect('SUM(vertrag_gehalt) AS salary_sum',$websoccer->getConfig('db_prefix') .'_spieler','verein_id = %d',$clubId);
 		$players = $result->fetch_array();
 		$result->free();
 		// check if team can afford at least X matches
 		$minBudget = ($players['salary_sum'] + $salary) * 2;
-		$team = self::getTeamSummaryById($websoccer, $db, $clubId);
+		$team = self::getTeamSummaryById($websoccer,$db,$clubId);
 		if ($team['team_budget'] < $minBudget) {
 			throw new Exception($i18n->getMessage("extend-contract_cannot_afford_offer"));
 		}
@@ -366,31 +366,31 @@ class TeamsDataService
 		$fromTable .= ' LEFT JOIN ' . $tablePrefix . '_user AS DEPUTY ON C.user_id_actual = DEPUTY.id';
 		return $fromTable;
 	}
-	FUNCTION countPlayersOfTeamById($websoccer, $db, $teamId)
+	FUNCTION countPlayersOfTeamById($websoccer,$db,$teamId)
 	{
-		$columns = "COUNT(*) AS size, SUM(marktwert) AS market_value";
+		$columns = "COUNT(*) AS size,SUM(marktwert) AS market_value";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_spieler";
 		$whereCondition = "verein_id = %d and status = 1";
-		$result = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $teamId);
+		$result = $db->queryCachedSelect($columns,$fromTable,$whereCondition,$teamId);
 		$teamsize = (isset($result[0])) ? $result[0] : array();
 		return $teamsize;
 	}
-	FUNCTION countOutOfLeagueNationPlayersOfTeamById($websoccer, $db, $teamId, $country)
+	FUNCTION countOutOfLeagueNationPlayersOfTeamById($websoccer,$db,$teamId,$country)
 	{
 		$columns = "COUNT(*) AS size";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_spieler";
 		$whereCondition = "verein_id = %d AND status = 1 AND nation != '".$country."'";
-		$result = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $teamId);
+		$result = $db->queryCachedSelect($columns,$fromTable,$whereCondition,$teamId);
 		$teamoutsize = (isset($result[0])) ? $result[0] : array();
 		return $teamoutsize;
 	}
-	FUNCTION getTeamSizeContract($websoccer, $db, $clubId)
+	FUNCTION getTeamSizeContract($websoccer,$db,$clubId)
 	{
 		$columns = 'COUNT(*) AS number';
 		$fromTable = $websoccer->getConfig('db_prefix') .'_spieler';
 		$whereCondition = 'verein_id = %d AND status = \'1\' AND vertrag_spiele >= 33' ;
 		$parameters = $clubId;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		$players = $result->fetch_array();
 		$result->free();
 		return ($players['number']) ? $players['number'] : 0;

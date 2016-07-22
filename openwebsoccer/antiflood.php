@@ -2,7 +2,7 @@
 	/*
 	*	Antiflood - Generic antiflood protection
 	*	------------------------------------------------------------------------
-	*	Copyright (C) 2004-2006, J. Carlos Nieto <xiam@users.sourceforge.net>
+	*	Copyright (C) 2004-2006,J. Carlos Nieto <xiam@users.sourceforge.net>
 	*	This program is Free Software.
 	*
 	*	@license	http://www.gnu.org/copyleft/gpl.html GNU/GPL License 2.0
@@ -12,27 +12,27 @@
 	*/
 	/*
 		How to use?
-		Create a "tmp" directory, it must be writable for http server
+		Create a "tmp" directory,it must be writable for http server
 		include this script on the page that you want to protect:
 		<?php
 			include "antiflood.php";
 		?>
 	*/
 	// if (!defined("SAFE_INCLUDE")) die("Get a Life!");
-	define("SCRIPT_ROOT", dirname(__FILE__));
+	define("SCRIPT_ROOT",dirname(__FILE__));
 	// number of allowed page requests for the user
-	define("CONTROL_MAX_REQUESTS", 1);
+	define("CONTROL_MAX_REQUESTS",1);
 	// time interval to start counting page requests (seconds)
-	define("CONTROL_REQ_TIMEOUT", 60*60);
+	define("CONTROL_REQ_TIMEOUT",60*60);
 	// seconds to punish the user who has exceeded in doing requests
-	define("CONTROL_BAN_TIME", 10*60);
+	define("CONTROL_BAN_TIME",10*60);
 	// writable directory to keep script data
-	define("SCRIPT_TMP_DIR", SCRIPT_ROOT."/../data/control");
+	define("SCRIPT_TMP_DIR",SCRIPT_ROOT."/../data/control");
 	// you don't need to edit below this line
-	define("USER_IP", $_SERVER["REMOTE_ADDR"]);
-	define("CONTROL_DB", SCRIPT_TMP_DIR."/ctrl");
-	define("CONTROL_LOCK_DIR", SCRIPT_TMP_DIR."/lock");
-	define("CONTROL_LOCK_FILE", CONTROL_LOCK_DIR."/".md5(USER_IP));
+	define("USER_IP",$_SERVER["REMOTE_ADDR"]);
+	define("CONTROL_DB",SCRIPT_TMP_DIR."/ctrl");
+	define("CONTROL_LOCK_DIR",SCRIPT_TMP_DIR."/lock");
+	define("CONTROL_LOCK_FILE",CONTROL_LOCK_DIR."/".md5(USER_IP));
 	@mkdir(CONTROL_LOCK_DIR);
 	@mkdir(SCRIPT_TMP_DIR);
 	if (file_exists(CONTROL_LOCK_FILE)) {
@@ -52,8 +52,8 @@
 		// counting requests and last access time
 		$control = Array();
 		if (file_exists(CONTROL_DB)) {
-			$fh = fopen(CONTROL_DB, "r");
-			$control = array_merge($control, unserialize(fread($fh, filesize(CONTROL_DB))));
+			$fh = fopen(CONTROL_DB,"r");
+			$control = array_merge($control,unserialize(fread($fh,filesize(CONTROL_DB))));
 			fclose($fh);
 		}
 		if (isset($control[USER_IP])) {
@@ -68,12 +68,12 @@
 		$control[USER_IP]["t"] = time();
 		if ($control[USER_IP]["c"] >= CONTROL_MAX_REQUESTS) {
 			// this user did too many requests within a very short period of time
-			$fh = fopen(CONTROL_LOCK_FILE, "w");
-			fwrite($fh, USER_IP);
+			$fh = fopen(CONTROL_LOCK_FILE,"w");
+			fwrite($fh,USER_IP);
 			fclose($fh);
 		}
 		// writing updated control table
-		$fh = fopen(CONTROL_DB, "w");
-		fwrite($fh, serialize($control));
+		$fh = fopen(CONTROL_DB,"w");
+		fwrite($fh,serialize($control));
 		fclose($fh);
 	}

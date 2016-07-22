@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -32,16 +32,16 @@ class YouthMatchFormationModel extends BaseModel
 {
 	FUNCTION getTemplateParameters()
 	{
-		$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer,$this->_db);
 		// next match
-		$matchinfo = YouthMatchesDataService::getYouthMatchinfoById($this->_websoccer, $this->_db, $this->_i18n, $this->_websoccer->getRequestParameter("matchid"));
+		$matchinfo = YouthMatchesDataService::getYouthMatchinfoById($this->_websoccer,$this->_db,$this->_i18n,$this->_websoccer->getRequestParameter("matchid"));
 		// check if home or guest team (or else it is an invalid match)
 		if ($matchinfo["home_team_id"] == $clubId) {
 			$teamPrefix = "home";
 		} elseif ($matchinfo["guest_team_id"] == $clubId) {
 			$teamPrefix = "guest";
 		} else {
-			// ID has been entered manually, hence message not important
+			// ID has been entered manually,hence message not important
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
 		// check if expired
@@ -51,10 +51,10 @@ class YouthMatchFormationModel extends BaseModel
 		// get team players
 		$players = null;
 		if ($clubId > 0) {
-			$players = YouthPlayersDataService::getYouthPlayersOfTeamByPosition($this->_websoccer, $this->_db, $clubId, "DESC");
+			$players = YouthPlayersDataService::getYouthPlayersOfTeamByPosition($this->_websoccer,$this->_db,$clubId,"DESC");
 		}
 		// get previously saved formation and tactic
-		$formation = $this->_getFormation($teamPrefix, $matchinfo);
+		$formation = $this->_getFormation($teamPrefix,$matchinfo);
 		// override by request parameters
 		for ($benchNo = 1; $benchNo <= 5; $benchNo++) {
 			if ($this->_websoccer->getRequestParameter("bench" . $benchNo)) {
@@ -75,8 +75,8 @@ class YouthMatchFormationModel extends BaseModel
 				$formation["player" . $playerNo . "_pos"] = "";
 			}
 		}
-		return array("matchinfo" => $matchinfo, "players" => $players,
-				"formation" => $formation, "setup" => $setup, "youthFormation" => TRUE);
+		return array("matchinfo" => $matchinfo,"players" => $players,
+				"formation" => $formation,"setup" => $setup,"youthFormation" => TRUE);
 	}
 	FUNCTION getFormationSetup($formation)
 	{
@@ -95,7 +95,7 @@ class YouthMatchFormationModel extends BaseModel
 			$setup["striker"] = (int) $this->_websoccer->getRequestParameter("formation_forward");
 			// override by request when page is re-loaded after submitting the main form
 		} elseif ($this->_websoccer->getRequestParameter("setup") !== NULL) {
-			$setupParts = explode("-", $this->_websoccer->getRequestParameter("setup"));
+			$setupParts = explode("-",$this->_websoccer->getRequestParameter("setup"));
 			$setup["defense"] = (int) $setupParts[0];
 			$setup["dm"] = (int) $setupParts[1];
 			$setup["midfield"] = (int) $setupParts[2];
@@ -103,7 +103,7 @@ class YouthMatchFormationModel extends BaseModel
 			$setup["striker"] = (int) $setupParts[4];
 			// override by previously saved formation
 		} else if (isset($formation["setup"]) && strlen($formation["setup"])) {
-			$setupParts = explode("-", $formation["setup"]);
+			$setupParts = explode("-",$formation["setup"]);
 			$setup["defense"] = (int) $setupParts[0];
 			$setup["dm"] = (int) $setupParts[1];
 			$setup["midfield"] = (int) $setupParts[2];
@@ -149,7 +149,7 @@ class YouthMatchFormationModel extends BaseModel
 		}
 		return $setup;
 	}
-	FUNCTION _getFormation($teamPrefix, $matchinfo)
+	FUNCTION _getFormation($teamPrefix,$matchinfo)
 	{
 		$formation = array();
 		// substitutions
@@ -174,8 +174,8 @@ class YouthMatchFormationModel extends BaseModel
 				"midfield" => 0,
 				"om" => 0,
 				"striker" => 0);
-		$result = $this->_db->querySelect("*", $this->_websoccer->getConfig("db_prefix") . "_youthmatch_player",
-				"match_id = %d AND team_id = %d", array($matchinfo["id"], $matchinfo[$teamPrefix . "_team_id"]));
+		$result = $this->_db->querySelect("*",$this->_websoccer->getConfig("db_prefix") . "_youthmatch_player",
+				"match_id = %d AND team_id = %d",array($matchinfo["id"],$matchinfo[$teamPrefix . "_team_id"]));
 		while ($player = $result->fetch_array()) {
 			if ($player["state"] == "Ersatzbank") {
 				$formation["bench" . $player["playernumber"]] = $player["player_id"];

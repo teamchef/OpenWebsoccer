@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -31,7 +31,7 @@
 	{{ variables.var | default('Variableninhalt nicht ermittelbar !') }}
 {% endmacro %}
 
-{% macro textfield(fieldId, label, value, required = false, errormsg = null, type = 'text', helptext = null, disabled = false) %}
+{% macro textfield(fieldId,label,value,required = false,errormsg = null,type = 'text',helptext = null,disabled = false) %}
 	{% if errormsg[fieldId] is defined %}
 		{% set error = errormsg[fieldId] %}
 	{% else %}
@@ -53,7 +53,7 @@
 	</div>
 {% endmacro %}
 
-{% macro autocomplete(fieldId, label, value, required = false, errormsg = null, ajaxblock, helptext = null) %}
+{% macro autocomplete(fieldId,label,value,required = false,errormsg = null,ajaxblock,helptext = null) %}
 	{% if errormsg[fieldId] is defined %}
 		{% set error = errormsg[fieldId] %}
 	{% else %}
@@ -75,7 +75,7 @@
 	</div>
 {% endmacro %}
 
-{% macro checkbox(fieldId, label, value, colspan=false, errormsg = null) %}
+{% macro checkbox(fieldId,label,value,colspan=false,errormsg = null) %}
 	<div class="control-group{% if errormsg|length > 0 %} error{% endif %}"">
 		{% if colspan == false %}<div class="controls">{% endif %}
 		<label class="checkbox">
@@ -85,7 +85,7 @@
 	</div>
 {% endmacro %}
 
-{% macro textarea(fieldId, label, value, required = false, errormsg = null, helptext = null, rows = 10) %}
+{% macro textarea(fieldId,label,value,required = false,errormsg = null,helptext = null,rows = 10) %}
 	{% if errormsg[fieldId] is defined %}
 		{% set error = errormsg[fieldId] %}
 	{% else %}
@@ -105,7 +105,7 @@
 	</div>
 {% endmacro %}
 
-{% macro readonly(label, value) %}
+{% macro readonly(label,value) %}
 	<div class="control-group">
 		<label class="control-label">
 			{{ label }}
@@ -116,7 +116,7 @@
 	</div>
 {% endmacro %}
 
-{% macro slider(fieldId, value) %}
+{% macro slider(fieldId,value) %}
 	<input type="text" id="{{ fieldId }}" name="{{ fieldId }}" class="span6 slider" value="{{ value }}"
 		data-slider-min="1" data-slider-max="100"
 		data-slider-step="1"
@@ -126,7 +126,7 @@
 	<span>{{ i18n.getMessage("unit_percent") }}</span>
 {% endmacro %}
 
-{% macro teamPlayerSelection(fieldId, label, selectedPlayer = null, positionsAndPlayers) %}
+{% macro teamPlayerSelection(fieldId,label,selectedPlayer = null,positionsAndPlayers) %}
 	<div class="control-group">
 		<label class="control-label" for="{{ fieldId }}">
 			{{ label }}
@@ -146,14 +146,14 @@
 	</div>
 {% endmacro %}
 
-{% macro box(title, message, type) %}
+{% macro box(title,message,type) %}
 	<div class="alert alert-block alert-{{ type|default('error') }}">
 		<h4>{{ title }}</h4>
 		{{ message }}
 	</div>
 {% endmacro %}
 
-{% macro paginator(paginatorModel, ajaxTarget = "pagecontent") %}
+{% macro paginator(paginatorModel,ajaxTarget = "pagecontent") %}
 	{% if paginatorModel.pages > 1 %}
 		<div class="pagination">
 			<ul>
@@ -179,7 +179,7 @@
 	{% endif %}
 {% endmacro %}
 
-{% macro progressbar(percentvalue = 0, cssClass = "") %}
+{% macro progressbar(percentvalue = 0,cssClass = "") %}
 	{% if percentvalue > 80 %}
 		{% set progress_status = 'success' %}
 	{% elseif percentvalue > 50 %}
@@ -194,13 +194,13 @@
 	</div>
 {% endmacro %}
 
-{% macro piechart(label1, percentvalue1, label2, percentvalue2) %}
-	<div class="pieChart" style="width:250px;height:250px" data-series='[{"label": "{{ label2|trim }}",  "data": "{{ percentvalue2 }}", "color": "#FF6600"}, { "label": "{{ label1|trim }}",  "data": "{{ percentvalue1 }}", "color": "#006699"}]'>
+{% macro piechart(label1,percentvalue1,label2,percentvalue2) %}
+	<div class="pieChart" style="width:250px;height:250px" data-series='[{"label": "{{ label2|trim }}","data": "{{ percentvalue2 }}","color": "#FF6600"},{ "label": "{{ label1|trim }}","data": "{{ percentvalue1 }}","color": "#006699"}]'>
 	</div>
 	<div class="pieChartLabel"></div>
 {% endmacro %}
 
-{% macro infofield(label, value, doNotEscape = false) %}
+{% macro infofield(label,value,doNotEscape = false) %}
 	{% block stylesheets %}
 		<style type="text/css">
 			.inforow {
@@ -216,7 +216,7 @@
 				padding: 8px;
 			}
 			.alert-info {
-				background-color: rgb(255, 0, 0);
+				background-color: rgb(255,0,0);
 				border-color: #ff0000;
 				color: #ffffff;
 			}
@@ -242,7 +242,7 @@
 					{% if player.position_main|length > 0 %}<abbr title="{{ i18n.getMessage("option_" ~ player.position_main) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}</abbr>{% endif %}
 					{% if player.position_second|length > 0 %}/ <abbr title="{{ i18n.getMessage("option_" ~ player.position_second) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_second) }}</abbr>{% endif %}
 				</td>
-				<td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a>
+				<td><a href="{{ env.getInternalUrl("player","id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a>
 					{% if env.getRequestParameter("captain") == player.id %}
 						<i class="icon-group wstooltip" title="{{ i18n.getMessage("myteam_captain_tooltip") }}"></i>
 					{% endif %}
@@ -285,7 +285,7 @@
 			</tr>
 {% endmacro %}
 
-{% macro matchResultPlayers(match, players) %}
+{% macro matchResultPlayers(match,players) %}
 	{% if players is defined and players|length > 0 %}
 		{% set ageSum = 0 %}
 		{% set strengthSum = 0 %}
@@ -310,9 +310,9 @@
 					{% if player.position_main is not empty %}
 					<td title="{{ i18n.getMessage("option_" ~ player.position_main) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}</td>
 					{% else %}
-					<td title="{{ i18n.getMessage("option_" ~ player.position) }}">{{ i18n.getMessage("option_" ~ player.position)|slice(0, 2)|upper }}</td>
+					<td title="{{ i18n.getMessage("option_" ~ player.position) }}">{{ i18n.getMessage("option_" ~ player.position)|slice(0,2)|upper }}</td>
 					{% endif %}
-					<td><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{% if player.pseudonym|length > 0 %}{{ player.pseudonym }}{% else %}{{ player.firstName }} {{ player.lastName }}{% endif %}</a>
+					<td><a href="{{ env.getInternalUrl("player","id=" ~ player.id) }}">{% if player.pseudonym|length > 0 %}{{ player.pseudonym }}{% else %}{{ player.firstName }} {{ player.lastName }}{% endif %}</a>
 					{% if player.yellowCards > 0 %}
 						{% if env.getConfig("cdn_root_set") %}
 								<img src="{{env.getConfig("cdn_root")}}./img/card_yellow.png" style="width:=16px height:16px" alt="{{ i18n.getMessage("player_yellowcard") }}" title="{{ i18n.getMessage("player_yellowcard") }}" />
@@ -359,7 +359,7 @@
 					<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_in") }}"><i class="icon-arrow-up"></i>{{ match.match_minutes - player.minutesPlayed + 1 }}'</span>
 					{% endif %}
 					{% if player.is_best_player_of_day is defined and player.is_best_player_of_day %}
-						<a href="{{ env.getInternalUrl("teamoftheday", "leagueid=" ~ match.match_league_id ~ "&seasonid=" ~ match.match_season_id ~ "&matchday=" ~ match.match_matchday) }}" title="{{ i18n.getMessage("teamoftheday_matchreport_tooltip") }}"><i class="icon-heart-empty darkIcon"></i></a>
+						<a href="{{ env.getInternalUrl("teamoftheday","leagueid=" ~ match.match_league_id ~ "&seasonid=" ~ match.match_season_id ~ "&matchday=" ~ match.match_matchday) }}" title="{{ i18n.getMessage("teamoftheday_matchreport_tooltip") }}"><i class="icon-heart-empty darkIcon"></i></a>
 					{% endif %}
 					<div id="playerstatistics{{ player.id }}" class="collapse">
 						<dl>
@@ -402,7 +402,7 @@
  class="strength_{{ strength_status }}"
 {% endmacro %}
 
-{% macro badge(label, level, date = null) %}
+{% macro badge(label,level,date = null) %}
 	{% if i18n.hasMessage(label) %}
 		{% set label = i18n.getMessage(label) %}
 	{% endif %}
@@ -413,7 +413,7 @@
 	{% else %}
 		{% set color = '#FFD700' %}
 	{% endif %}
-	<a href="{{ env.getInternalUrl("badges") }}"><span class="badge wstooltip" title="{{ i18n.getMessage("badge_level_" ~ level) }}{% if date != null %} ({{ env.getFormattedDate(date, i18n) }}){% endif %}" style="background-color: {{ color }};">{{ label }}</span></a>
+	<a href="{{ env.getInternalUrl("badges") }}"><span class="badge wstooltip" title="{{ i18n.getMessage("badge_level_" ~ level) }}{% if date != null %} ({{ env.getFormattedDate(date,i18n) }}){% endif %}" style="background-color: {{ color }};">{{ label }}</span></a>
 {% endmacro %}
 
 {% macro premiumbadge(fee) %}

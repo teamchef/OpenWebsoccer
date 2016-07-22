@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,7 +30,7 @@
 SEC;
 class PlayersDataService
 {
-	FUNCTION getPlayersOfTeamByPosition(WebSoccer $websoccer, DbConnection $db, $clubId, $positionSort = 'ASC', $considerBlocksForCups = FALSE, $considerBlocks = TRUE)
+	FUNCTION getPlayersOfTeamByPosition(WebSoccer $websoccer,DbConnection $db,$clubId,$positionSort = 'ASC',$considerBlocksForCups = FALSE,$considerBlocks = TRUE)
 	{
 		$columns = array(
 				'id' => 'id',
@@ -68,19 +68,19 @@ class PlayersDataService
 			$columns['gesperrt'] = 'matches_blocked';
 		}
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
-		$whereCondition = 'status = 1 AND verein_id = %d ORDER BY position '. $positionSort . ', position_main ASC, nachname ASC, vorname ASC';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 50);
+		$whereCondition = 'status = 1 AND verein_id = %d ORDER BY position '. $positionSort . ',position_main ASC,nachname ASC,vorname ASC';
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$clubId,50);
 		$players = array();
 		while ($player = $result->fetch_array()) {
 			$player['position'] = self::_convertPosition($player['position']);
 			$player['player_nationality_filename'] = self::getFlagFilename($player['player_nationality']);
-			$player['marketvalue'] = self::getMarketValue($websoccer, $player, '');
+			$player['marketvalue'] = self::getMarketValue($websoccer,$player,'');
 			$players[$player['position']][] = $player;
 		}
 		$result->free();
 		return $players;
 	}
-	FUNCTION getPlayersOfTeamById(WebSoccer $websoccer, DbConnection $db, $clubId, $nationalteam = FALSE, $considerBlocksForCups = FALSE, $considerBlocks = TRUE)
+	FUNCTION getPlayersOfTeamById(WebSoccer $websoccer,DbConnection $db,$clubId,$nationalteam = FALSE,$considerBlocksForCups = FALSE,$considerBlocks = TRUE)
 	{
 		$columns = array(
 				'id' => 'id',
@@ -135,8 +135,8 @@ class PlayersDataService
 			$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_nationalplayer AS NP ON NP.player_id = P.id';
 			$whereCondition = 'status = 1 AND NP.team_id = %d';
 		}
-		$whereCondition .= ' ORDER BY position ASC, position_main ASC, nachname ASC, vorname ASC';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $clubId, 50);
+		$whereCondition .= ' ORDER BY position ASC,position_main ASC,nachname ASC,vorname ASC';
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$clubId,50);
 		$players = array();
 		while ($player = $result->fetch_array()) {
 			$player['position'] = self::_convertPosition($player['position']);
@@ -145,7 +145,7 @@ class PlayersDataService
 		$result->free();
 		return $players;
 	}
-	FUNCTION getPlayersOnTransferList(WebSoccer $websoccer, DbConnection $db, $startIndex, $entries_per_page, $positionFilter = null)
+	FUNCTION getPlayersOnTransferList(WebSoccer $websoccer,DbConnection $db,$startIndex,$entries_per_page,$positionFilter = null)
 	{
 		$columns['P.id'] = 'id';
 		$columns['P.vorname'] = 'firstname';
@@ -175,19 +175,19 @@ class PlayersDataService
 			$whereCondition .= ' AND P.position = \'%s\'';
 			$parameters[] = $positionFilter;
 		}
-		$whereCondition .= ' ORDER BY P.transfer_ende ASC, P.nachname ASC, P.vorname ASC';
+		$whereCondition .= ' ORDER BY P.transfer_ende ASC,P.nachname ASC,P.vorname ASC';
 		$limit = $startIndex .','. $entries_per_page;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters,$limit);
 		$players = array();
 		while ($player = $result->fetch_array()) {
 			$player['position'] = self::_convertPosition($player['position']);
-			$player['highestbid'] = TransfermarketDataService::getHighestBidForPlayer($websoccer, $db, $player['id'], $player['transfer_start'], $player['transfer_deadline']);
+			$player['highestbid'] = TransfermarketDataService::getHighestBidForPlayer($websoccer,$db,$player['id'],$player['transfer_start'],$player['transfer_deadline']);
 			$players[] = $player;
 		}
 		$result->free();
 		return $players;
 	}
-	FUNCTION countPlayersOnTransferList(WebSoccer $websoccer, DbConnection $db, $positionFilter = null)
+	FUNCTION countPlayersOnTransferList(WebSoccer $websoccer,DbConnection $db,$positionFilter = null)
 	{
 		$columns = 'COUNT(*) AS hits';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
@@ -197,15 +197,15 @@ class PlayersDataService
 			$whereCondition .= ' AND P.position = \'%s\'';
 			$parameters[] = $positionFilter;
 		}
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		$players = $result->fetch_array();
 		$result->free();
 		if (isset($players['hits'])) {
 			return $players['hits'];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION getPlayerById(WebSoccer $websoccer, DbConnection $db, $playerId)
+	FUNCTION getPlayerById(WebSoccer $websoccer,DbConnection $db,$playerId)
 	{
 		$columns['P.id'] = 'player_id';
 		$columns['P.vorname'] = 'player_firstname';
@@ -262,19 +262,19 @@ class PlayersDataService
 		$columns['C.name'] = 'team_name';
 		$columns['C.finanz_budget'] = 'team_budget';
 		$columns['C.user_id'] = 'team_user_id';
-		$columns['(SELECT CONCAT(AVG(S.note), \';\', SUM(S.assists)) FROM ' . $websoccer->getConfig('db_prefix') . '_spiel_berechnung AS S WHERE S.spieler_id = P.id AND S.minuten_gespielt > 0 AND S.note > 0)'] = 'matches_info';
+		$columns['(SELECT CONCAT(AVG(S.note),\';\',SUM(S.assists)) FROM ' . $websoccer->getConfig('db_prefix') . '_spiel_berechnung AS S WHERE S.spieler_id = P.id AND S.minuten_gespielt > 0 AND S.note > 0)'] = 'matches_info';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS L ON L.id = P.lending_owner_id';
 		$whereCondition = 'P.status = 1 AND P.id = %d';
-		$players = $db->queryCachedSelect($columns, $fromTable, $whereCondition, $playerId, 1);
+		$players = $db->queryCachedSelect($columns,$fromTable,$whereCondition,$playerId,1);
 		if (count($players)) {
 			$player = $players[0];
 			$player['player_position'] = self::_convertPosition($player['player_position']);
-			$player['player_marketvalue'] = self::getMarketValue($websoccer, $player);
+			$player['player_marketvalue'] = self::getMarketValue($websoccer,$player);
 			$player['player_nationality_filename'] = self::getFlagFilename($player['player_nationality']);
-			$matchesInfo = explode(';', $player['matches_info']);
-			$player['player_avg_grade'] = round($matchesInfo[0], 2);
+			$matchesInfo = explode(';',$player['matches_info']);
+			$player['player_avg_grade'] = round($matchesInfo[0],2);
 			if (isset($matchesInfo[1])) {
 				$player['player_assists'] = $matchesInfo[1];
 			} else {
@@ -285,7 +285,7 @@ class PlayersDataService
 		}
 		return $player;
 	}
-	FUNCTION getTopStrikers(WebSoccer $websoccer, DbConnection $db, $limit = 20, $leagueId = null)
+	FUNCTION getTopStrikers(WebSoccer $websoccer,DbConnection $db,$limit = 20,$leagueId = null)
 	{
 		$parameters = array();
 		$columns['P.id'] = 'id';
@@ -304,8 +304,8 @@ class PlayersDataService
 			$whereCondition .= ' AND liga_id = %d';
 			$parameters[] = (int) $leagueId;
 		}
-		$whereCondition .= ' ORDER BY P.sa_tore DESC, P.sa_spiele ASC';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		$whereCondition .= ' ORDER BY P.sa_tore DESC,P.sa_spiele ASC';
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters,$limit);
 		$players = array();
 		while ($player = $result->fetch_array()) {
 			$players[] = $player;
@@ -313,7 +313,7 @@ class PlayersDataService
 		$result->free();
 		return $players;
 	}
-	FUNCTION getTopScorers(WebSoccer $websoccer, DbConnection $db, $limit = 20, $leagueId = null)
+	FUNCTION getTopScorers(WebSoccer $websoccer,DbConnection $db,$limit = 20,$leagueId = null)
 	{
 		$parameters = array();
 		$columns['P.id'] = 'id';
@@ -334,8 +334,8 @@ class PlayersDataService
 			$whereCondition .= ' AND liga_id = %d';
 			$parameters[] = (int) $leagueId;
 		}
-		$whereCondition .= ' ORDER BY score DESC, P.sa_assists DESC, P.sa_tore DESC, P.sa_spiele ASC, P.id ASC';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		$whereCondition .= ' ORDER BY score DESC,P.sa_assists DESC,P.sa_tore DESC,P.sa_spiele ASC,P.id ASC';
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters,$limit);
 		$players = array();
 		while ($player = $result->fetch_array()) {
 			$players[] = $player;
@@ -343,7 +343,7 @@ class PlayersDataService
 		$result->free();
 		return $players;
 	}
-	FUNCTION findPlayers(WebSoccer $websoccer, DbConnection $db, $firstName, $lastName, $clubName, $position, $strengthMax, $lendableOnly, $startIndex, $entries_per_page)
+	FUNCTION findPlayers(WebSoccer $websoccer,DbConnection $db,$firstName,$lastName,$clubName,$position,$strengthMax,$lendableOnly,$startIndex,$entries_per_page)
 	{
 		$columns['P.id'] = 'id';
 		$columns['P.vorname'] = 'firstname';
@@ -367,7 +367,7 @@ class PlayersDataService
 		$columns['C.id'] = 'team_id';
 		$columns['C.name'] = 'team_name';
 		$limit = $startIndex .','. $entries_per_page;
-		$result = self::executeFindQuery($websoccer, $db, $columns, $limit, $firstName, $lastName, $clubName, $position, $strengthMax, $lendableOnly);
+		$result = self::executeFindQuery($websoccer,$db,$columns,$limit,$firstName,$lastName,$clubName,$position,$strengthMax,$lendableOnly);
 		$players = array();
 		while ($player = $result->fetch_array()) {
 			$player['position'] = self::_convertPosition($player['position']);
@@ -376,18 +376,18 @@ class PlayersDataService
 		$result->free();
 		return $players;
 	}
-	FUNCTION findPlayersCount(WebSoccer $websoccer, DbConnection $db, $firstName, $lastName, $clubName, $position, $strengthMax, $lendableOnly)
+	FUNCTION findPlayersCount(WebSoccer $websoccer,DbConnection $db,$firstName,$lastName,$clubName,$position,$strengthMax,$lendableOnly)
 	{
 		$columns = 'COUNT(*) AS hits';
-		$result = self::executeFindQuery($websoccer, $db, $columns, 1, $firstName, $lastName, $clubName, $position, $strengthMax, $lendableOnly);
+		$result = self::executeFindQuery($websoccer,$db,$columns,1,$firstName,$lastName,$clubName,$position,$strengthMax,$lendableOnly);
 		$players = $result->fetch_array();
 		$result->free();
 		if (isset($players['hits'])) {
 			return $players['hits'];
 		}
-		return 0;
+		return NULL;
 	}
-	private static function executeFindQuery(WebSoccer $websoccer, DbConnection $db, $columns, $limit, $firstName, $lastName, $clubName, $position, $strengthMax, $lendableOnly)
+	private static function executeFindQuery(WebSoccer $websoccer,DbConnection $db,$columns,$limit,$firstName,$lastName,$clubName,$position,$strengthMax,$lendableOnly)
 	{
 		$whereCondition = 'P.status = 1';
 		$parameters = array();
@@ -422,7 +422,7 @@ class PlayersDataService
 		}
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spieler AS P';
 		$fromTable .= ' LEFT JOIN ' . $websoccer->getConfig('db_prefix') . '_verein AS C ON C.id = P.verein_id';
-		return $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		return $db->querySelect($columns,$fromTable,$whereCondition,$parameters,$limit);
 	}
 	FUNCTION _convertPosition($dbPosition)
 	{
@@ -437,7 +437,7 @@ class PlayersDataService
 				return 'striker';
 		}
 	}
-	FUNCTION getMarketValue(WebSoccer $websoccer, $player, $columnPrefix = 'player_')
+	FUNCTION getMarketValue(WebSoccer $websoccer,$player,$columnPrefix = 'player_')
 	{
 		if (!$websoccer->getConfig('transfermarket_computed_marketvalue')) {
 			return $player[$columnPrefix . 'marketvalue'];
@@ -462,15 +462,15 @@ class PlayersDataService
 			return $nationality;
 		}
 		// remove umlauts
-		$filename = str_replace('??', 'Ae', $nationality);
-		$filename = str_replace('??', 'Oe', $filename);
-		$filename = str_replace('??', 'Ue', $filename);
-		$filename = str_replace('??', 'ae', $filename);
-		$filename = str_replace('??', 'oe', $filename);
-		$filename = str_replace('??', 'ue', $filename);
+		$filename = str_replace('??','Ae',$nationality);
+		$filename = str_replace('??','Oe',$filename);
+		$filename = str_replace('??','Ue',$filename);
+		$filename = str_replace('??','ae',$filename);
+		$filename = str_replace('??','oe',$filename);
+		$filename = str_replace('??','ue',$filename);
 		return $filename;
 	}
-	FUNCTION getTopAssist(WebSoccer $websoccer, DbConnection $db, $limit = 20, $leagueId = null)
+	FUNCTION getTopAssist(WebSoccer $websoccer,DbConnection $db,$limit = 20,$leagueId = null)
 	{
 		$parameters = array();
 		$columns['P.id'] = 'id';
@@ -490,8 +490,8 @@ class PlayersDataService
 			$whereCondition .= ' AND liga_id = %d';
 			$parameters[] = (int) $leagueId;
 		}
-		$whereCondition .= ' ORDER BY P.sa_assists DESC, P.sa_tore DESC, P.sa_spiele ASC, P.id ASC';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		$whereCondition .= ' ORDER BY P.sa_assists DESC,P.sa_tore DESC,P.sa_spiele ASC,P.id ASC';
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters,$limit);
 		$players = array();
 		while ($player = $result->fetch_array()) {
 			$players[] = $player;

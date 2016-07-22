@@ -5,7 +5,7 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -13,19 +13,19 @@
  * Twig base exception.
  *
  * This exception class and its children must only be used when
- * an error occurs during the loading of a template, when a syntax error
- * is detected in a template, or when rendering a template. Other
+ * an error occurs during the loading of a template,when a syntax error
+ * is detected in a template,or when rendering a template. Other
  * errors must use regular PHP exception classes (like when the template
  * cache directory is not writable for instance).
  *
- * To help debugging template issues, this class tracks the original template
+ * To help debugging template issues,this class tracks the original template
  * name and line where the error occurred.
  *
- * Whenever possible, you must set these information (original template name
+ * Whenever possible,you must set these information (original template name
  * and line number) yourself by passing them to the constructor. If some or all
- * these information are not available from where you throw the exception, then
+ * these information are not available from where you throw the exception,then
  * this class will guess them automatically (when the line number is set to -1
- * and/or the filename is set to null). As this is a costly operation, this
+ * and/or the filename is set to null). As this is a costly operation,this
  * can be disabled by passing false for both the filename and the line number
  * when creating a new instance of this class.
  *
@@ -48,20 +48,20 @@ class Twig_Error extends Exception
      * Set the line number to -1 to enable its automatic guessing.
      * Set the filename to null to enable its automatic guessing.
      *
-     * By default, automatic guessing is enabled.
+     * By default,automatic guessing is enabled.
      *
      * @param string    $message  The error message
      * @param int       $lineno   The template line where the error occurred
      * @param string    $filename The template file name where the error occurred
      * @param Exception $previous The previous exception
      */
-    public function __construct($message, $lineno = -1, $filename = null, Exception $previous = null)
+    public function __construct($message,$lineno = -1,$filename = null,Exception $previous = null)
     {
         if (PHP_VERSION_ID < 50300) {
             $this->previous = $previous;
             parent::__construct('');
         } else {
-            parent::__construct('', 0, $previous);
+            parent::__construct('',0,$previous);
         }
 
         $this->lineno = $lineno;
@@ -137,7 +137,7 @@ class Twig_Error extends Exception
     }
 
     /**
-     * For PHP < 5.3.0, provides access to the getPrevious() method.
+     * For PHP < 5.3.0,provides access to the getPrevious() method.
      *
      * @param string $method    The method name
      * @param array  $arguments The parameters to be passed to the method
@@ -146,13 +146,13 @@ class Twig_Error extends Exception
      *
      * @throws BadMethodCallException
      */
-    public function __call($method, $arguments)
+    public function __call($method,$arguments)
     {
         if ('getprevious' == strtolower($method)) {
             return $this->previous;
         }
 
-        throw new BadMethodCallException(sprintf('Method "Twig_Error::%s()" does not exist.', $method));
+        throw new BadMethodCallException(sprintf('Method "Twig_Error::%s()" does not exist.',$method));
     }
 
     public function appendMessage($rawMessage)
@@ -169,28 +169,28 @@ class Twig_Error extends Exception
         $this->message = $this->rawMessage;
 
         $dot = false;
-        if ('.' === substr($this->message, -1)) {
-            $this->message = substr($this->message, 0, -1);
+        if ('.' === substr($this->message,-1)) {
+            $this->message = substr($this->message,0,-1);
             $dot = true;
         }
 
         $questionMark = false;
-        if ('?' === substr($this->message, -1)) {
-            $this->message = substr($this->message, 0, -1);
+        if ('?' === substr($this->message,-1)) {
+            $this->message = substr($this->message,0,-1);
             $questionMark = true;
         }
 
         if ($this->filename) {
-            if (is_string($this->filename) || (is_object($this->filename) && method_exists($this->filename, '__toString'))) {
-                $filename = sprintf('"%s"', $this->filename);
+            if (is_string($this->filename) || (is_object($this->filename) && method_exists($this->filename,'__toString'))) {
+                $filename = sprintf('"%s"',$this->filename);
             } else {
                 $filename = json_encode($this->filename);
             }
-            $this->message .= sprintf(' in %s', $filename);
+            $this->message .= sprintf(' in %s',$filename);
         }
 
         if ($this->lineno && $this->lineno >= 0) {
-            $this->message .= sprintf(' at line %d', $this->lineno);
+            $this->message .= sprintf(' at line %d',$this->lineno);
         }
 
         if ($dot) {
@@ -219,7 +219,7 @@ class Twig_Error extends Exception
         foreach ($backtrace as $trace) {
             if (isset($trace['object']) && $trace['object'] instanceof Twig_Template && 'Twig_Template' !== get_class($trace['object'])) {
                 $currentClass = get_class($trace['object']);
-                $isEmbedContainer = 0 === strpos($templateClass, $currentClass);
+                $isEmbedContainer = 0 === strpos($templateClass,$currentClass);
                 if (null === $this->filename || ($this->filename == $trace['object']->getTemplateName() && !$isEmbedContainer)) {
                     $template = $trace['object'];
                     $templateClass = get_class($trace['object']);
@@ -245,13 +245,13 @@ class Twig_Error extends Exception
         }
 
         $exceptions = array($e = $this);
-        while (($e instanceof self || method_exists($e, 'getPrevious')) && $e = $e->getPrevious()) {
+        while (($e instanceof self || method_exists($e,'getPrevious')) && $e = $e->getPrevious()) {
             $exceptions[] = $e;
         }
 
         while ($e = array_pop($exceptions)) {
             $traces = $e->getTrace();
-            array_unshift($traces, array('file' => $e->getFile(), 'line' => $e->getLine()));
+            array_unshift($traces,array('file' => $e->getFile(),'line' => $e->getLine()));
 
             while ($trace = array_shift($traces)) {
                 if (!isset($trace['file']) || !isset($trace['line']) || $file != $trace['file']) {

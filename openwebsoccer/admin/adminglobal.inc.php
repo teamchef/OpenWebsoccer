@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
@@ -27,10 +27,10 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
-define('OVERVIEW_SITE_SUFFIX', '_overview');
-define('JOBS_CONFIG_FILE', ROOT . '/admin/config/jobs.xml');
-define('LOG_TYPE_EDIT', 'edit');
-define('LOG_TYPE_DELETE', 'delete');
+define('OVERVIEW_SITE_SUFFIX','_overview');
+define('JOBS_CONFIG_FILE',ROOT . '/admin/config/jobs.xml');
+define('LOG_TYPE_EDIT','edit');
+define('LOG_TYPE_DELETE','delete');
 include(ROOT . '/admin/config/global.inc.php');
 include(ROOT . '/admin/functions.inc.php');
 include(CONFIGCACHE_FILE_ADMIN);
@@ -44,7 +44,7 @@ if (SecurityUtil::isAdminLoggedIn()) {
 	$fromTable = $conf['db_prefix'] .'_admin';
 	$whereCondition = 'id = %d';
 	$parameters = $_SESSION['userid'];
-	$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+	$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 	$admin = $result->fetch_array();
 	$result->free();
 } else {
@@ -60,6 +60,6 @@ if ($admin['lang']) {
 		// ignore and use default language
 	}
 }
-include(sprintf(CONFIGCACHE_ADMINMESSAGES, $i18n->getCurrentLanguage()));
-include(sprintf(CONFIGCACHE_ENTITYMESSAGES, $i18n->getCurrentLanguage()));
+include(sprintf(CONFIGCACHE_ADMINMESSAGES,$i18n->getCurrentLanguage()));
+include(sprintf(CONFIGCACHE_ENTITYMESSAGES,$i18n->getCurrentLanguage()));
 header('Content-type: text/html; charset=utf-8');

@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,7 +28,7 @@
 #}
 {% import "macro.twig" as macro %}
 {% if players is defined and players|length > 0 %}
-	<h4>{{ i18n.getMessage("playerssearch_hits", playersCount) }}</h4>
+	<h4>{{ i18n.getMessage("playerssearch_hits",playersCount) }}</h4>
 	<table class="table table-striped">
 		<thead>
 			<tr>
@@ -50,7 +50,7 @@
 					{% if player.position_main|length > 0 %}<abbr title="{{ i18n.getMessage("option_" ~ player.position_main) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}</abbr>{% endif %}
 					{% if player.position_second|length > 0 %}/ <abbr title="{{ i18n.getMessage("option_" ~ player.position_second) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_second) }}</abbr>{% endif %}
 				</td>
-				<td><p><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a>
+				<td><p><a href="{{ env.getInternalUrl("player","id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a>
 				{% if player.unsellable %}
 					<i class="icon-eye-close" title="{{ i18n.getMessage("entity_player_unsellable") }}"></i>
 				{% elseif player.lending_owner_id == 0 and player.lending_fee > 0 and env.getConfig("lending_enabled") %}
@@ -58,7 +58,7 @@
 				{% endif %}</p></td>
 				<td>
 				{% if player.team_id > 0 %}
-				<a href="{{ env.getInternalUrl("team", "id=" ~ player.team_id) }}">{{ player.team_name }}</a>
+				<a href="{{ env.getInternalUrl("team","id=" ~ player.team_id) }}">{{ player.team_name }}</a>
 					{% if player.lending_owner_id > 0 %}
 						<i class="icon-star-empty" title="{{ i18n.getMessage("lending_player_marker_tooltip") }}"></i></em>
 					{% endif %}
@@ -82,13 +82,13 @@
 						</ul>
 					</td>
 				{% endif %}
-				<td>{{ player.contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}<br>
+				<td>{{ player.contract_salary|number_format(0,',',' ')  }} {{ env.getConfig("game_currency") }}<br>
 				{{ player.contract_matches }} {{ i18n.getMessage("contract_unit_matches") }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
 	</table>
-	{{ pagination.paginator(paginator, "playerssearch-results_block") }}
+	{{ pagination.paginator(paginator,"playerssearch-results_block") }}
 {% else %}
-	{{ macro.box(i18n.getMessage("no_players_found"), "", "info") }}
+	{{ macro.box(i18n.getMessage("no_players_found"),"","info") }}
 {% endif %}

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -32,15 +32,15 @@ class DemoUserLoginMethod
 {
 	private $_websoccer;
 	private $_db;
-	FUNCTION __construct($website, $db)
+	FUNCTION __construct($website,$db)
 	{
 		$this->_websoccer = $website;
 		$this->_db = $db;
 	}
-	FUNCTION authenticateWithEmail($email, $password)
+	FUNCTION authenticateWithEmail($email,$password)
 	{
 		// connect to a data base
-		// Note: If your source application shares the same data base, you can simply use $this->_db, rather than open another connection.
+		// Note: If your source application shares the same data base,you can simply use $this->_db,rather than open another connection.
 		$mysqli = new mysqli($this->_websoccer->getConfig('db_host'),
 							 $this->_websoccer->getConfig('db_user'),
 							 $this->_websoccer->getConfig('db_passwort'),
@@ -63,12 +63,12 @@ class DemoUserLoginMethod
  			return FALSE;
 		}
 		// user is valid user according to custom authentication check. Now test if user already exists in local DB and return its ID.
-		$existingUserId = UsersDataService::getUserIdByEmail($this->_websoccer, $this->_db, strtolower($email));
+		$existingUserId = UsersDataService::getUserIdByEmail($this->_websoccer,$this->_db,strtolower($email));
 		if ($existingUserId > 0) {
 			return $existingUserId;
 		}
-		// if user does not exist, create a new one. Nick name can be entered by user later.
-		return UsersDataService::createLocalUser($this->_websoccer, $this->_db, null, $email);
+		// if user does not exist,create a new one. Nick name can be entered by user later.
+		return UsersDataService::createLocalUser($this->_websoccer,$this->_db,null,$email);
 	}
 	FUNCTION authenticateWithUsername()
 	{

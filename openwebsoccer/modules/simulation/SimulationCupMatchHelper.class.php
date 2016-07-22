@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,7 +30,7 @@
 SEC;
 class SimulationCupMatchHelper
 {
-	FUNCTION checkIfExtensionIsRequired(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match)
+	FUNCTION checkIfExtensionIsRequired(WebSoccer $websoccer,DbConnection $db,SimulationMatch $match)
 	{
 		// do no play extension if it is a group match
 		if (strlen($match->cupRoundGroup)) {
@@ -41,8 +41,8 @@ class SimulationCupMatchHelper
 		$columns['gast_tore'] = 'guest_goals';
 		$columns['berechnet'] = 'is_simulated';
 		$whereCondition = 'home_verein = %d AND gast_verein = %d AND pokalname = \'%s\' AND pokalrunde = \'%s\'';
-		$result = $db->querySelect($columns, $websoccer->getConfig('db_prefix') . '_spiel', $whereCondition,
-				array($match->guestTeam->id, $match->homeTeam->id, $match->cupName, $match->cupRoundName), 1);
+		$result = $db->querySelect($columns,$websoccer->getConfig('db_prefix') . '_spiel',$whereCondition,
+				array($match->guestTeam->id,$match->homeTeam->id,$match->cupName,$match->cupRoundName),1);
 		$otherRound = $result->fetch_array();
 		$result->free();
 		// case: this is the first round (of two). So no need to play extension time
@@ -56,13 +56,13 @@ class SimulationCupMatchHelper
 				return TRUE;
 				// home team won
 			} elseif ($match->homeTeam->getGoals() > $match->guestTeam->getGoals()) {
-				self::createNextRoundMatchAndPayAwards($websoccer, $db,
-						$match->homeTeam->id, $match->guestTeam->id, $match->cupName, $match->cupRoundName);
+				self::createNextRoundMatchAndPayAwards($websoccer,$db,
+						$match->homeTeam->id,$match->guestTeam->id,$match->cupName,$match->cupRoundName);
 				return FALSE;
 				// guest team won
 			} else {
-				self::createNextRoundMatchAndPayAwards($websoccer, $db,
-						$match->guestTeam->id, $match->homeTeam->id, $match->cupName, $match->cupRoundName);
+				self::createNextRoundMatchAndPayAwards($websoccer,$db,
+						$match->guestTeam->id,$match->homeTeam->id,$match->cupName,$match->cupRoundName);
 				return FALSE;
 			}
 		}
@@ -81,7 +81,7 @@ class SimulationCupMatchHelper
 		} elseif ($totalHomeGoals < $totalGuestGoals) {
 			$winnerTeam =  $match->guestTeam;
 			$loserTeam =  $match->homeTeam;
-		// same amount of goals, so check guest goals ('Auswärtstorregelung')
+		// same amount of goals,so check guest goals ('Auswärtstorregelung')
 		} else {
 			if ($otherRound['guest_goals'] > $match->guestTeam->getGoals()) {
 				$winnerTeam =  $match->homeTeam;
@@ -95,11 +95,11 @@ class SimulationCupMatchHelper
 			}
 		}
 		// we have a winner
-		self::createNextRoundMatchAndPayAwards($websoccer, $db,
-				$winnerTeam->id, $loserTeam->id, $match->cupName, $match->cupRoundName);
+		self::createNextRoundMatchAndPayAwards($websoccer,$db,
+				$winnerTeam->id,$loserTeam->id,$match->cupName,$match->cupRoundName);
 		return FALSE;
 	}
-	FUNCTION createNextRoundMatchAndPayAwards(WebSoccer $websoccer, DbConnection $db, $winnerTeamId, $loserTeamId, $cupName, $cupRound)
+	FUNCTION createNextRoundMatchAndPayAwards(WebSoccer $websoccer,DbConnection $db,$winnerTeamId,$loserTeamId,$cupName,$cupRound)
 	{
 		// rounds and cup info
 		$columns['C.id'] = 'cup_id';
@@ -110,8 +110,8 @@ class SimulationCupMatchHelper
 		$columns['R.finalround'] = 'is_finalround';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_cup_round AS R';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_cup AS C ON C.id = R.cup_id';
-		$result = $db->querySelect($columns, $fromTable,
-				'C.name = \'%s\' AND R.name = \'%s\'', array($cupName, $cupRound), 1);
+		$result = $db->querySelect($columns,$fromTable,
+				'C.name = \'%s\' AND R.name = \'%s\'',array($cupName,$cupRound),1);
 		$round = $result->fetch_array();
 		$result->free();
 		// do nothing if no round is configured
@@ -120,15 +120,15 @@ class SimulationCupMatchHelper
 		}
 		// credit per round award
 		if ($round['cup_perround_award']) {
-			BankAccountDataService::creditAmount($websoccer, $db, $winnerTeamId, $round['cup_perround_award'],
-				'cup_cuproundaward_perround_subject', $cupName);
-			BankAccountDataService::creditAmount($websoccer, $db, $loserTeamId, $round['cup_perround_award'],
-				'cup_cuproundaward_perround_subject', $cupName);
+			BankAccountDataService::creditAmount($websoccer,$db,$winnerTeamId,$round['cup_perround_award'],
+				'cup_cuproundaward_perround_subject',$cupName);
+			BankAccountDataService::creditAmount($websoccer,$db,$loserTeamId,$round['cup_perround_award'],
+				'cup_cuproundaward_perround_subject',$cupName);
 		}
-		$result = $db->querySelect('user_id', $websoccer->getConfig('db_prefix') . '_verein', 'id = %d', $winnerTeamId);
+		$result = $db->querySelect('user_id',$websoccer->getConfig('db_prefix') . '_verein','id = %d',$winnerTeamId);
 		$winnerclub = $result->fetch_array();
 		$result->free();
-		$result = $db->querySelect('user_id', $websoccer->getConfig('db_prefix') . '_verein', 'id = %d', $loserTeamId);
+		$result = $db->querySelect('user_id',$websoccer->getConfig('db_prefix') . '_verein','id = %d',$loserTeamId);
 		$loserclub = $result->fetch_array();
 		$result->free();
 		// create achievement log
@@ -139,7 +139,7 @@ class SimulationCupMatchHelper
 					'team_id' => $winnerTeamId,
 					'cup_round_id' => $round['round_id'],
 					'date_recorded' => $now
-			), $websoccer->getConfig('db_prefix') .'_achievement');
+			),$websoccer->getConfig('db_prefix') .'_achievement');
 		}
 		if ($loserclub['user_id']) {
 			$db->queryInsert(array(
@@ -147,60 +147,60 @@ class SimulationCupMatchHelper
 					'team_id' => $loserTeamId,
 					'cup_round_id' => $round['round_id'],
 					'date_recorded' => $now
-			), $websoccer->getConfig('db_prefix') .'_achievement');
+			),$websoccer->getConfig('db_prefix') .'_achievement');
 		}
 		// was final round?
 		if ($round['is_finalround']) {
 			// credit awards
 			if ($round['cup_winner_award']) {
-				BankAccountDataService::creditAmount($websoccer, $db, $winnerTeamId, $round['cup_winner_award'],
-					'cup_cuproundaward_winner_subject', $cupName);
+				BankAccountDataService::creditAmount($websoccer,$db,$winnerTeamId,$round['cup_winner_award'],
+					'cup_cuproundaward_winner_subject',$cupName);
 			}
 			if ($round['cup_second_award']) {
-				BankAccountDataService::creditAmount($websoccer, $db, $loserTeamId, $round['cup_second_award'],
-					'cup_cuproundaward_second_subject', $cupName);
+				BankAccountDataService::creditAmount($websoccer,$db,$loserTeamId,$round['cup_second_award'],
+					'cup_cuproundaward_second_subject',$cupName);
 			}
 			// update 'winner flag' of cup
-			$db->queryUpdate(array('winner_id' => $winnerTeamId), $websoccer->getConfig('db_prefix') . '_cup',
-					'id = %d', $round['cup_id']);
+			$db->queryUpdate(array('winner_id' => $winnerTeamId),$websoccer->getConfig('db_prefix') . '_cup',
+					'id = %d',$round['cup_id']);
 			// award badge
 			if ($winnerclub['user_id']) {
-				BadgesDataService::awardBadgeIfApplicable($websoccer, $db, $winnerclub['user_id'], 'cupwinner');
+				BadgesDataService::awardBadgeIfApplicable($websoccer,$db,$winnerclub['user_id'],'cupwinner');
 			}
 		// create matches for next round
 		} else {
 			$columns = 'id,firstround_date,secondround_date,name';
 			$fromTable = $websoccer->getConfig('db_prefix') . '_cup_round';
 			// get next round for winner
-			$result = $db->querySelect($columns, $fromTable, 'from_winners_round_id = %d', $round['round_id'], 1);
+			$result = $db->querySelect($columns,$fromTable,'from_winners_round_id = %d',$round['round_id'],1);
 			$winnerRound = $result->fetch_array();
 			$result->free();
 			if (isset($winnerRound['id'])) {
-				self::createMatchForTeamAndRound($websoccer, $db, $winnerTeamId, $winnerRound['id'],
-						$winnerRound['firstround_date'], $winnerRound['secondround_date'], $cupName, $winnerRound['name']);
+				self::createMatchForTeamAndRound($websoccer,$db,$winnerTeamId,$winnerRound['id'],
+						$winnerRound['firstround_date'],$winnerRound['secondround_date'],$cupName,$winnerRound['name']);
 			}
 			// get next round for loser
-			$result = $db->querySelect($columns, $fromTable, 'from_loosers_round_id = %d', $round['round_id'], 1);
+			$result = $db->querySelect($columns,$fromTable,'from_loosers_round_id = %d',$round['round_id'],1);
 			$loserRound = $result->fetch_array();
 			$result->free();
 			if (isset($loserRound['id'])) {
-				self::createMatchForTeamAndRound($websoccer, $db, $loserTeamId, $loserRound['id'],
-						$loserRound['firstround_date'], $loserRound['secondround_date'], $cupName, $loserRound['name']);
+				self::createMatchForTeamAndRound($websoccer,$db,$loserTeamId,$loserRound['id'],
+						$loserRound['firstround_date'],$loserRound['secondround_date'],$cupName,$loserRound['name']);
 			}
 		}
 	}
-	FUNCTION checkIfMatchIsLastMatchOfGroupRoundAndCreateFollowingMatches(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match)
+	FUNCTION checkIfMatchIsLastMatchOfGroupRoundAndCreateFollowingMatches(WebSoccer $websoccer,DbConnection $db,SimulationMatch $match)
 	{
 		if (!strlen($match->cupRoundGroup)) {
 			return;
 		}
 		// check if there are any open matches in this round
-		$result = $db->querySelect('COUNT(*) AS hits', $websoccer->getConfig('db_prefix') . '_spiel',
+		$result = $db->querySelect('COUNT(*) AS hits',$websoccer->getConfig('db_prefix') . '_spiel',
 				'berechnet = \'0\' AND pokalname = \'%s\' AND pokalrunde = \'%s\' AND id != %d',
-				array($match->cupName, $match->cupRoundName, $match->id));
+				array($match->cupName,$match->cupRoundName,$match->id));
 		$openMatches = $result->fetch_array();
 		$result->free();
-		// there are still matches to simulate, so wait until all potential opponents are available
+		// there are still matches to simulate,so wait until all potential opponents are available
 		if (isset($openMatches['hits']) && $openMatches['hits']) {
 			return;
 		}
@@ -213,8 +213,8 @@ class SimulationCupMatchHelper
 		$fromTable = $websoccer->getConfig('db_prefix') . '_cup_round_group_next AS N';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_cup_round AS R ON N.cup_round_id = R.id';
 		$fromTable .= ' INNER JOIN ' . $websoccer->getConfig('db_prefix') . '_cup AS C ON R.cup_id = C.id';
-		$result = $db->querySelect($columns, $fromTable, 'C.name = \'%s\' AND R.name = \'%s\'',
-				array($match->cupName, $match->cupRoundName));
+		$result = $db->querySelect($columns,$fromTable,'C.name = \'%s\' AND R.name = \'%s\'',
+				array($match->cupName,$match->cupRoundName));
 		$nextConfigs = array();
 		while ($nextConfig = $result->fetch_array()) {
 			$nextConfigs[$nextConfig['groupname']]['' . $nextConfig['rank']] = $nextConfig['target_cup_round_id'];
@@ -224,7 +224,7 @@ class SimulationCupMatchHelper
 		// get teams of each group for next rounds
 		$nextRoundTeams = array();
 		foreach ($nextConfigs as $groupName => $rankings) {
-			$teamsInGroup = CupsDataService::getTeamsOfCupGroupInRankingOrder($websoccer, $db, $roundId, $groupName);
+			$teamsInGroup = CupsDataService::getTeamsOfCupGroupInRankingOrder($websoccer,$db,$roundId,$groupName);
 			for ($teamRank = 1; $teamRank <= count($teamsInGroup); $teamRank++) {
 				$configIndex = '' . $teamRank;
 				if (isset($rankings[$configIndex])) {
@@ -239,8 +239,8 @@ class SimulationCupMatchHelper
 		$type = 'Pokalspiel';
 		foreach ($nextRoundTeams as $nextRoundId => $teamIds) {
 			// get round info
-			$result = $db->querySelect('name,firstround_date,secondround_date', $websoccer->getConfig('db_prefix') . '_cup_round',
-					'id = %d', $nextRoundId);
+			$result = $db->querySelect('name,firstround_date,secondround_date',$websoccer->getConfig('db_prefix') . '_cup_round',
+					'id = %d',$nextRoundId);
 			$roundInfo = $result->fetch_array();
 			$result->free();
 			if (!$roundInfo) {
@@ -259,7 +259,7 @@ class SimulationCupMatchHelper
 						'home_verein' => $homeTeam,
 						'gast_verein' => $guestTeam,
 						'datum' => $roundInfo['firstround_date']
-				), $matchTable);
+				),$matchTable);
 				// create second round
 				if ($roundInfo['secondround_date']) {
 					$db->queryInsert(array(
@@ -269,26 +269,26 @@ class SimulationCupMatchHelper
 							'home_verein' => $guestTeam,
 							'gast_verein' => $homeTeam,
 							'datum' => $roundInfo['secondround_date']
-					), $matchTable);
+					),$matchTable);
 				}
 			}
 		}
 	}
-	FUNCTION createMatchForTeamAndRound(WebSoccer $websoccer, DbConnection $db, $teamId, $roundId, $firstRoundDate, $secondRoundDate, $cupName, $cupRound)
+	FUNCTION createMatchForTeamAndRound(WebSoccer $websoccer,DbConnection $db,$teamId,$roundId,$firstRoundDate,$secondRoundDate,$cupName,$cupRound)
 	{
 		// get opponent team from pending list
 		$pendingTable = $websoccer->getConfig('db_prefix') . '_cup_round_pending';
-		$result = $db->querySelect('team_id', $pendingTable, 'cup_round_id = %d', $roundId, 1);
+		$result = $db->querySelect('team_id',$pendingTable,'cup_round_id = %d',$roundId,1);
 		$opponent = $result->fetch_array();
 		$result->free();
 		// no opponent -> add to pending list
 		if (!$opponent) {
-			$db->queryInsert(array('team_id' => $teamId, 'cup_round_id' => $roundId), $pendingTable);
+			$db->queryInsert(array('team_id' => $teamId,'cup_round_id' => $roundId),$pendingTable);
 		} else {
 			$matchTable = $websoccer->getConfig('db_prefix') . '_spiel';
 			$type = 'Pokalspiel';
 			// determine home team of first round (choose randomly)
-			if (SimulationHelper::selectItemFromProbabilities(array(1 => 50, 0 => 50))) {
+			if (SimulationHelper::selectItemFromProbabilities(array(1 => 50,0 => 50))) {
 				$homeTeam = $teamId;
 				$guestTeam = $opponent['team_id'];
 			} else {
@@ -303,7 +303,7 @@ class SimulationCupMatchHelper
 					'home_verein' => $homeTeam,
 					'gast_verein' => $guestTeam,
 					'datum' => $firstRoundDate
-				), $matchTable);
+				),$matchTable);
 			// create second round
 			if ($secondRoundDate) {
 				$db->queryInsert(array(
@@ -313,10 +313,10 @@ class SimulationCupMatchHelper
 						'home_verein' => $guestTeam,
 						'gast_verein' => $homeTeam,
 						'datum' => $secondRoundDate
-				), $matchTable);
+				),$matchTable);
 			}
 			// remove opponent team from pending list
-			$db->queryDelete($pendingTable, 'team_id = %d AND cup_round_id = %d', array($opponent['team_id'], $roundId));
+			$db->queryDelete($pendingTable,'team_id = %d AND cup_round_id = %d',array($opponent['team_id'],$roundId));
 		}
 	}
 }

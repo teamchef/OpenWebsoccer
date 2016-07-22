@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -33,19 +33,19 @@ SEC;
 */
 class FormationDataService
 {
-	FUNCTION getFormationByTeamId($websoccer, $db, $teamId, $matchId)
+	FUNCTION getFormationByTeamId($websoccer,$db,$teamId,$matchId)
 	{
 		$whereCondition = 'verein_id = %d AND match_id = %d';
-		$parameters = [$teamId, $matchId];
-		return self::_getFormationByCondition($websoccer, $db, $whereCondition, $parameters);
+		$parameters = [$teamId,$matchId];
+		return self::_getFormationByCondition($websoccer,$db,$whereCondition,$parameters);
 	}
-	FUNCTION getFormationByTemplateId($websoccer, $db, $teamId, $templateId)
+	FUNCTION getFormationByTemplateId($websoccer,$db,$teamId,$templateId)
 	{
 		$whereCondition = 'id = %d AND verein_id = %d';
-		$parameters = [$templateId, $teamId];
-		return self::_getFormationByCondition($websoccer, $db, $whereCondition, $parameters);
+		$parameters = [$templateId,$teamId];
+		return self::_getFormationByCondition($websoccer,$db,$whereCondition,$parameters);
 	}
-	FUNCTION _getFormationByCondition($websoccer, $db, $whereCondition, $parameters)
+	FUNCTION _getFormationByCondition($websoccer,$db,$whereCondition,$parameters)
 	{
 		$fromTable = $websoccer->getConfig('db_prefix') . '_aufstellung';
 		// select
@@ -69,7 +69,7 @@ class FormationDataService
 			$columns['w' . $subNo . '_condition'] = 'sub' . $subNo . '_condition';
 			$columns['w' . $subNo . '_position'] = 'sub' . $subNo . '_position';
 		}
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, 1);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters,1);
 		$formation = $result->fetch_array();
 		if (!$formation) {
 			$formation = [];
@@ -77,7 +77,7 @@ class FormationDataService
 		$result->free();
 		return $formation;
 	}
-	FUNCTION getFormationProposalForTeamId($websoccer, $db, $teamId, $setupDefense, $setupDM, $setupMidfield, $setupOM, $setupStriker, $setupOutsideforward, $sortColumn, $sortDirection = 'DESC', $isNationalteam = FALSE, $isCupMatch = FALSE)
+	FUNCTION getFormationProposalForTeamId($websoccer,$db,$teamId,$setupDefense,$setupDM,$setupMidfield,$setupOM,$setupStriker,$setupOutsideforward,$sortColumn,$sortDirection = 'DESC',$isNationalteam = FALSE,$isCupMatch = FALSE)
 	{
 		$columns = 'id,position,position_main,position_second';
 		if (!$isNationalteam) {
@@ -93,7 +93,7 @@ class FormationDataService
 			$whereCondition = 'NP.team_id = %d AND gesperrt_nationalteam = 0 AND verletzt = 0 AND status = 1';
 		}
 		$whereCondition .= ' ORDER BY ' . $sortColumn . ' ' . $sortDirection;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $teamId);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$teamId);
 		// determine open positions
 		$openPositions['T'] = 1;
 		// defense positions
@@ -147,16 +147,16 @@ class FormationDataService
 				if ($player['position'] === 'Torwart') {
 					$possiblePositions = ['T'];
 				} elseif ($player['position'] === 'Abwehr') {
-					$possiblePositions = ['LV', 'IV', 'RV'];
+					$possiblePositions = ['LV','IV','RV'];
 				} elseif ($player['position'] === 'Mittelfeld') {
-					$possiblePositions = ['RM', 'ZM', 'LM', 'RM', 'DM', 'OM'];
+					$possiblePositions = ['RM','ZM','LM','RM','DM','OM'];
 				} else {
-					$possiblePositions = ['LS', 'MS', 'RS'];
+					$possiblePositions = ['LS','MS','RS'];
 				}
 				foreach ($possiblePositions as $possiblePosition) {
 				if ($openPositions[$possiblePosition]) {
 					--$openPositions[$possiblePosition];
-					$players[] = ['id' => $player['id'], 'position' => $possiblePosition];
+					$players[] = ['id' => $player['id'],'position' => $possiblePosition];
 					$added = TRUE;
 					break;
 				}
@@ -164,21 +164,21 @@ class FormationDataService
 			// add at main position
 			} elseif (strlen($player['position_main']) && isset($openPositions[$player['position_main']]) && $openPositions[$player['position_main']]) {
 				$openPositions[$player['position_main']] -= 1;
-				$players[] = ['id' => $player['id'], 'position' => $player['position_main']];
+				$players[] = ['id' => $player['id'],'position' => $player['position_main']];
 				$added = TRUE;
 			}
-			// remember player for later if no space on his main position. Might be used with his Bondary position, if he has any.
+			// remember player for later if no space on his main position. Might be used with his Bondary position,if he has any.
 			if (!$added && strlen($player['position_second'])) {
 				$unusedPlayers[] = $player;
 			}
 		}
 		$result->free();
-		// there might not be enough players with matching main positions, hence use players with secondary position
+		// there might not be enough players with matching main positions,hence use players with secondary position
 		foreach ($openPositions as $position => $requiredPlayers) {
 			for ($i = 0; $i < $requiredPlayers; ++$i) {
 				for ($playerIndex = 0; $playerIndex < count($unusedPlayers); ++$playerIndex) {
 					if ($unusedPlayer[$playerIndex]['position_second'] === $position) {
-						$players[] = ['id' => $unusedPlayer[$playerIndex]['id'], 'position' => $unusedPlayer[$playerIndex]['position_second']];
+						$players[] = ['id' => $unusedPlayer[$playerIndex]['id'],'position' => $unusedPlayer[$playerIndex]['position_second']];
 						unset($unusedPlayer[$playerIndex]);
 						break;
 					}

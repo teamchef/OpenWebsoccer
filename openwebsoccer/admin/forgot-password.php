@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
@@ -27,7 +27,7 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
-define('ROOT', $_SERVER['DOCUMENT_ROOT']. dirname($_SERVER['PHP_SELF']) . '/..');
+define('ROOT',$_SERVER['DOCUMENT_ROOT']. dirname($_SERVER['PHP_SELF']) . '/..');
 require_once('config/global.inc.php');
 require_once('functions.inc.php');
 // include messages
@@ -35,7 +35,7 @@ $i18n = I18n::getInstance($website->getConfig('supported_languages'));
 if (isset($_GET['lang'])) {
 	$i18n->setCurrentLanguage($_GET['lang']);
 }
-include(sprintf(CONFIGCACHE_ADMINMESSAGES, $i18n->getCurrentLanguage()));
+include(sprintf(CONFIGCACHE_ADMINMESSAGES,$i18n->getCurrentLanguage()));
 $errors = array();
 $inputEmail = (isset($_POST['inputEmail'])) ? trim($_POST['inputEmail']) : FALSE;
 // process form
@@ -43,11 +43,11 @@ if ($inputEmail) {
 	$now = $website->getNowAsTimestamp();
 	if (count($errors) == 0) {
 		// correct Pwd?
-		$columns = array('id', 'passwort_neu_angefordert', 'name', 'passwort_salt');
+		$columns = array('id','passwort_neu_angefordert','name','passwort_salt');
 		$fromTable = $conf['db_prefix'] .'_admin';
 		$whereCondition = 'email = \'%s\'';
 		$parameters = $inputEmail;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		$admin = $result->fetch_array();
 		if($result->num_rows < 1) {
 			$errors['inputEmail'] = $i18n->getMessage('sendpassword_admin_usernotfound');
@@ -55,16 +55,16 @@ if ($inputEmail) {
 			$errors['inputEmail'] = $i18n->getMessage('sendpassword_admin_alreadysent');
 		} else {
 			$newPassword = SecurityUtil::generatePassword();
-			$hashedPw = SecurityUtil::hashPassword($newPassword, $admin['passwort_salt']);
+			$hashedPw = SecurityUtil::hashPassword($newPassword,$admin['passwort_salt']);
 			// store new PW
 			$columns = array('passwort_neu' => $hashedPw,
 							'passwort_neu_angefordert' => $now);
 			$fromTable = $conf['db_prefix'] .'_admin';
 			$whereCondition = 'id = %d';
 			$parameter = $admin['id'];
-			$db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);
+			$db->queryUpdate($columns,$fromTable,$whereCondition,$parameter);
 			try {
-				_sendEmail($inputEmail, $newPassword, $website, $i18n);
+				_sendEmail($inputEmail,$newPassword,$website,$i18n);
 				header('location: login.php?newpwd=1');
 				die();
 			} catch(Exception $e) {
@@ -74,9 +74,9 @@ if ($inputEmail) {
 		$result->free();
 	}
 }
-function _sendEmail($email, $password, $website, $i18n) {
+function _sendEmail($email,$password,$website,$i18n) {
 	$tplparameters['newpassword'] = $password;
-	EmailHelper::sendSystemEmailFromTemplate($website, $i18n,
+	EmailHelper::sendSystemEmailFromTemplate($website,$i18n,
 		$email,
 		$i18n->getMessage('sendpassword_admin_email_subject'),
 		'sendpassword_admin',
@@ -103,7 +103,7 @@ function _sendEmail($email, $password, $website, $i18n) {
 			<?php
 				if (count($errors) > 0) {
 					foreach($errors as $key => $message) {
-						echo createErrorMessage($i18n->getMessage('subpage_error_title'), $message);
+						echo createErrorMessage($i18n->getMessage('subpage_error_title'),$message);
 					}
 				}
 			?>

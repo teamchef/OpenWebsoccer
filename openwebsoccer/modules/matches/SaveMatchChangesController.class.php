@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -31,18 +31,19 @@ SEC;
 class SaveMatchChangesController extends BaseModel
 {
 	private $_addedPlayers;
-	FUNCTION __construct($i18n, $websoccer, $db) {
-		parent::__construct($db, $i18n, $websoccer);
+	FUNCTION __construct($i18n,$websoccer,$db)
+	{
+		parent::__construct($db,$i18n,$websoccer);
 		$this->_addedPlayers = array();
 	}
 	FUNCTION executeAction($parameters)
 	{
 		$user = $this->_websoccer->getUser();
-		$teamId = $user->getClubId($this->_websoccer, $this->_db);
-		$nationalTeamId = NationalteamsDataService::getNationalTeamManagedByCurrentUser($this->_websoccer, $this->_db);
+		$teamId = $user->getClubId($this->_websoccer,$this->_db);
+		$nationalTeamId = NationalteamsDataService::getNationalTeamManagedByCurrentUser($this->_websoccer,$this->_db);
 		$matchId = $parameters['id'];
 		// check and get match data
-		$matchinfo = MatchesDataService::getMatchSubstitutionsById($this->_websoccer, $this->_db, $matchId);
+		$matchinfo = MatchesDataService::getMatchSubstitutionsById($this->_websoccer,$this->_db,$matchId);
 		if (!isset($matchinfo['match_id'])) {
 			throw new Exception($this->_i18n->getMessage('formation_err_nonextmatch'));
 		}
@@ -78,7 +79,7 @@ class SaveMatchChangesController extends BaseModel
 		}
 		// save subs
 		if (count($occupiedSubPos) < 3) {
-			// a substitution must be announced at least number of minutes of interval, otherwise no chance of execution
+			// a substitution must be announced at least number of minutes of interval,otherwise no chance of execution
 			$nextPossibleMinute = $matchinfo['match_minutes'] + $this->_websoccer->getConfig('sim_interval') + 1;
 			for ($subNo = 1; $subNo <= 3; $subNo++) {
 				$newOut = (int) $parameters['sub'. $subNo . '_out'];
@@ -107,7 +108,7 @@ class SaveMatchChangesController extends BaseModel
 						$newMinute = $nextPossibleMinute;
 						$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_WARNING,
 								'',
-								$this->_i18n->getMessage('match_details_changes_too_late_altered', $subNo)));
+								$this->_i18n->getMessage('match_details_changes_too_late_altered',$subNo)));
 					}
 					$columns[$teamPrefixDb . '_w'. $slot. '_raus'] = $newOut;
 					$columns[$teamPrefixDb . '_w'. $slot. '_rein'] = $newIn;
@@ -140,7 +141,7 @@ class SaveMatchChangesController extends BaseModel
 			$columns[$teamPrefixDb .'_longpasses'] = $parameters['longpasses'];
 			$columns[$teamPrefixDb .'_counterattacks'] = $parameters['counterattacks'];
 			$columns[$teamPrefixDb .'_offensive_changed'] = $alreadyChanged + 1;
-			$this->_createMatchReportMessage($user, $matchId, $matchinfo['match_minutes'], ($teamPrefix == 'home'));
+			$this->_createMatchReportMessage($user,$matchId,$matchinfo['match_minutes'],($teamPrefix == 'home'));
 		}
 		// free kick taker
 		$prevFreekickPlayer = $matchinfo['match_'. $teamPrefix .'_freekickplayer'];
@@ -151,18 +152,18 @@ class SaveMatchChangesController extends BaseModel
 		if (count($columns)) {
 			$fromTable = $this->_websoccer->getConfig('db_prefix') . '_spiel';
 			$whereCondition = 'id = %d';
-			$this->_db->queryUpdate($columns, $fromTable, $whereCondition, $matchId);
+			$this->_db->queryUpdate($columns,$fromTable,$whereCondition,$matchId);
 		}
-		$this->_updatePlayerPosition($parameters, $matchId, $teamId);
+		$this->_updatePlayerPosition($parameters,$matchId,$teamId);
 		// create success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
 				$this->_i18n->getMessage('saved_message_title'),
 				''));
 		return "match";
 	}
-	FUNCTION _updatePlayerPosition($parameters, $matchId, $teamId)
+	FUNCTION _updatePlayerPosition($parameters,$matchId,$teamId)
 	{
-		$players = MatchesDataService::getMatchPlayerRecordsByField($this->_websoccer, $this->_db, $matchId, $teamId);
+		$players = MatchesDataService::getMatchPlayerRecordsByField($this->_websoccer,$this->_db,$matchId,$teamId);
 		$playersOnField = $players['field'];
 		// read submitted player positions
 		$submittedPositions = array();
@@ -206,16 +207,16 @@ class SaveMatchChangesController extends BaseModel
 							($player['position'] == $position || $player['position_second'] == $newPos)) {
 						$strength = round($strength * (1 - $this->_websoccer->getConfig('sim_strength_reduction_secondary') / 100));
 					}
-					$this->_db->queryUpdate(array('position_main' => $newPos, 'position' => $position, 'w_staerke' => $strength),
-							$updateTable, $whereCondition, $player['match_record_id']);
+					$this->_db->queryUpdate(array('position_main' => $newPos,'position' => $position,'w_staerke' => $strength),
+							$updateTable,$whereCondition,$player['match_record_id']);
 				}
 			}
 		}
 	}
-	FUNCTION _createMatchReportMessage(User $user, $matchId, $minute, $isHomeTeam)
+	FUNCTION _createMatchReportMessage(User $user,$matchId,$minute,$isHomeTeam)
 	{
 		// get available messages
-		$result = $this->_db->querySelect('id', $this->_websoccer->getConfig('db_prefix') . '_spiel_text', 'aktion = \'Taktikaenderung\'');
+		$result = $this->_db->querySelect('id',$this->_websoccer->getConfig('db_prefix') . '_spiel_text','aktion = \'Taktikaenderung\'');
 		$messages = array();
 		while ($message = $result->fetch_array()) {
 			$messages[] = $message['id'];

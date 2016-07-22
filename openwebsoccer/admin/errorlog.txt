@@ -1,0 +1,1 @@
+Website Configuration Error: Could not create or open file C:/_/12_4_2/www/openwebsoccer/admin/../cache/wsconfigfront.inc.php! Verify that the file or its folder is writable.

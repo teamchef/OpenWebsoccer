@@ -19,23 +19,23 @@ $(function() {
         ajax: { 
             url: "itemsprovider.php",
             dataType: 'json',
-            data: function (term, page) {
+            data: function (term,page) {
                 return {
-                    search: term, // search term
+                    search: term,// search term
                     dbtable: $(this).data("dbtable"),
                     labelcolumns: $(this).data("labelcolumns")
                 };
             },
-            results: function (data, page) {
+            results: function (data,page) {
                 return {results: data};
             }
         },
-        initSelection: function(element, callback) {
+        initSelection: function(element,callback) {
         	var id = $(element).val();
             if (id !== "" && id !== "0") {
-                $.ajax("itemsprovider.php", {
+                $.ajax("itemsprovider.php",{
                     data: {
-                    	itemid: id, // search term
+                    	itemid: id,// search term
                         dbtable: $(element).data("dbtable"),
                         labelcolumns: $(element).data("labelcolumns")
                     },
@@ -55,7 +55,7 @@ $(function() {
 	$(".htmleditor").markItUp(mySettings);
 	
 	// start (cron) job
-	$(document).on("click", ".startStopJobLink", function(e) {
+	$(document).on("click",".startStopJobLink",function(e) {
 		e.preventDefault();
 		
 		var requestUrl = $(this).attr("href");

@@ -5,7 +5,7 @@
  *
  * (c) 2013 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 class Twig_Node_Expression_Binary_Matches extends Twig_Node_Expression_Binary
@@ -15,7 +15,7 @@ class Twig_Node_Expression_Binary_Matches extends Twig_Node_Expression_Binary
         $compiler
             ->raw('preg_match(')
             ->subcompile($this->getNode('right'))
-            ->raw(', ')
+            ->raw(',')
             ->subcompile($this->getNode('left'))
             ->raw(')')
         ;

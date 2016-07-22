@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -29,7 +29,7 @@
 ******************************************************************/
 SEC;
 /**
-* Überprüfung der User-Aktivität, um Inaktivitäten zu erkennen.
+* Überprüfung der User-Aktivität,um Inaktivitäten zu erkennen.
 * Die Anzeige ist im Admincenter.
 */
 class UserInactivityCheckJob extends AbstractJob
@@ -37,9 +37,9 @@ class UserInactivityCheckJob extends AbstractJob
 	FUNCTION execute()
 	{
 		// only consider highscore users since we assume that they are actually playing and not waiting for a team assignment or something.
-		$users = UsersDataService::getActiveUsersWithHighscore($this->_websoccer, $this->_db, 0, 1000);
+		$users = UsersDataService::getActiveUsersWithHighscore($this->_websoccer,$this->_db,0,1000);
 		foreach ($users as $user) {
-			UserInactivityDataService::computeUserInactivity($this->_websoccer, $this->_db, $user['id']);
+			UserInactivityDataService::computeUserInactivity($this->_websoccer,$this->_db,$user['id']);
 		}
 	}
 }

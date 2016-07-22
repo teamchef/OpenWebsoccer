@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -74,9 +74,9 @@
 														<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ club.team_picture }}" style="max-width: 40px;"/>
 													{% endif %}
 												{% endif %}
-												<a href="{{ env.getInternalUrl("team", "id=" ~ club.team_id ) }}">{{ club.team_name }}</a>
+												<a href="{{ env.getInternalUrl("team","id=" ~ club.team_id ) }}">{{ club.team_name }}</a>
 											</td>
-											<td><a href="{{ env.getInternalUrl("league", "id=" ~ club.league_id ) }}">{{ club.league_name }}</a></td>
+											<td><a href="{{ env.getInternalUrl("league","id=" ~ club.league_id ) }}">{{ club.league_name }}</a></td>
 											<td>
 												<small>
 													<p><strong>{{ i18n.getMessage("entity_player_w_staerke") }}</strong><br>
@@ -85,19 +85,19 @@
 													{% endfor %}</p>
 													<p>
 														<strong>{{ i18n.getMessage("entity_club_finanz_budget") }}</strong><br>
-														{{ club.team_budget|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}
+														{{ club.team_budget|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}
 													</p>
 													<p><strong>{{ i18n.getMessage("entity_stadium") }}</strong><br>
-														{{ (club.stadium_p_steh + club.stadium_p_sitz + club.stadium_p_haupt_steh + club.stadium_p_haupt_sitz + club.stadium_p_vip)|number_format(0, ',', ' ') }}
+														{{ (club.stadium_p_steh + club.stadium_p_sitz + club.stadium_p_haupt_steh + club.stadium_p_haupt_sitz + club.stadium_p_vip)|number_format(0,',',' ') }}
 													</p>
 												</small>
 											</td>
 											{% if env.getConfig("assign_team_automatically") %}
 												<td>
 													{% if env.user.clubId < 1 %}
-														<a href="{{ env.getInternalActionUrl("choose-team", "teamId=" ~ club.team_id) }}" class="btn btn-small"><i class="icon-file-text-alt"></i> {{ i18n.getMessage("freeclubs_button_choose") }}</a>
+														<a href="{{ env.getInternalActionUrl("choose-team","teamId=" ~ club.team_id) }}" class="btn btn-small"><i class="icon-file-text-alt"></i> {{ i18n.getMessage("freeclubs_button_choose") }}</a>
 													{% elseif env.getConfig("max_number_teams_per_user") > 1 %}
-														<a href="{{ env.getInternalActionUrl("choose-additional-team", "teamId=" ~ club.team_id) }}" class="btn btn-small"><i class="icon-file-text-alt"></i> {{ i18n.getMessage("freeclubs_button_choose_another") }}</a>
+														<a href="{{ env.getInternalActionUrl("choose-additional-team","teamId=" ~ club.team_id) }}" class="btn btn-small"><i class="icon-file-text-alt"></i> {{ i18n.getMessage("freeclubs_button_choose_another") }}</a>
 													{% endif %}
 												</td>
 											{% endif %}

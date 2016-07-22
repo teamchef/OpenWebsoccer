@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,13 +30,13 @@
 SEC;
 class YouthMatchesDataService
 {
-	FUNCTION getYouthMatchinfoById(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $matchId)
+	FUNCTION getYouthMatchinfoById(WebSoccer $websoccer,DbConnection $db,I18n $i18n,$matchId)
 	{
-		$columns = "M.*, HOME.name AS home_team_name, GUEST.name AS guest_team_name";
+		$columns = "M.*,HOME.name AS home_team_name,GUEST.name AS guest_team_name";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthmatch AS M";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS HOME ON HOME.id = M.home_team_id";
 		$fromTable .= " INNER JOIN " . $websoccer->getConfig("db_prefix") . "_verein AS GUEST ON GUEST.id = M.guest_team_id";
-		$result = $db->querySelect($columns, $fromTable, "M.id = %d", $matchId);
+		$result = $db->querySelect($columns,$fromTable,"M.id = %d",$matchId);
 		$match = $result->fetch_array();
 		$result->free();
 		if (!$match) {
@@ -44,39 +44,39 @@ class YouthMatchesDataService
 		}
 		return $match;
 	}
-	FUNCTION countMatchesOfTeamOnSameDay(WebSoccer $websoccer, DbConnection $db, $teamId, $timestamp)
+	FUNCTION countMatchesOfTeamOnSameDay(WebSoccer $websoccer,DbConnection $db,$teamId,$timestamp)
 	{
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthmatch";
 		$dateObj = new DateTime();
 		$dateObj->setTimestamp($timestamp);
-		$dateObj->setTime(0, 0, 0);
+		$dateObj->setTime(0,0,0);
 		$minTimeBoundary = $dateObj->getTimestamp();
-		$dateObj->setTime(23, 59, 59);
+		$dateObj->setTime(23,59,59);
 		$maxTimeBoundary = $dateObj->getTimestamp();
-		$result = $db->querySelect("COUNT(*) AS hits", $fromTable,
+		$result = $db->querySelect("COUNT(*) AS hits",$fromTable,
 				"(home_team_id = %d OR guest_team_id = %d) AND matchdate BETWEEN %d AND %d",
-				array($teamId, $teamId, $minTimeBoundary, $maxTimeBoundary));
+				array($teamId,$teamId,$minTimeBoundary,$maxTimeBoundary));
 		$rows = $result->fetch_array();
 		$result->free();
 		if ($rows) {
 			return $rows["hits"];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION countMatchesOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId)
+	FUNCTION countMatchesOfTeam(WebSoccer $websoccer,DbConnection $db,$teamId)
 	{
 		$fromTable = $websoccer->getConfig("db_prefix") . "_youthmatch";
-		$result = $db->querySelect("COUNT(*) AS hits", $fromTable,
+		$result = $db->querySelect("COUNT(*) AS hits",$fromTable,
 				"(home_team_id = %d OR guest_team_id = %d)",
-				array($teamId, $teamId));
+				array($teamId,$teamId));
 		$rows = $result->fetch_array();
 		$result->free();
 		if ($rows) {
 			return $rows["hits"];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION getMatchesOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId, $startIndex, $entries_per_page)
+	FUNCTION getMatchesOfTeam(WebSoccer $websoccer,DbConnection $db,$teamId,$startIndex,$entries_per_page)
 	{
 		$tablePrefix = $websoccer->getConfig("db_prefix");
 		$fromTable = $tablePrefix . "_youthmatch AS M";
@@ -106,17 +106,17 @@ class YouthMatchesDataService
 		$columns["M.matchdate"] = "date";
 		$matches = array();
 		$limit = $startIndex . "," . $entries_per_page;
-		$result = $db->querySelect($columns, $fromTable, "(home_team_id = %d OR guest_team_id = %d) ORDER BY M.matchdate DESC",
-				array($teamId, $teamId), $limit);
+		$result = $db->querySelect($columns,$fromTable,"(home_team_id = %d OR guest_team_id = %d) ORDER BY M.matchdate DESC",
+				array($teamId,$teamId),$limit);
 		while ($matchinfo = $result->fetch_array()) {
-			$matchinfo["home_user_picture"] = UsersDataService::getUserProfilePicture($websoccer, $matchinfo["home_user_picture"], $matchinfo["home_user_email"]);
-			$matchinfo["guest_user_picture"] = UsersDataService::getUserProfilePicture($websoccer, $matchinfo["guest_user_picture"], $matchinfo["guest_user_email"]);
+			$matchinfo["home_user_picture"] = UsersDataService::getUserProfilePicture($websoccer,$matchinfo["home_user_picture"],$matchinfo["home_user_email"]);
+			$matchinfo["guest_user_picture"] = UsersDataService::getUserProfilePicture($websoccer,$matchinfo["guest_user_picture"],$matchinfo["guest_user_email"]);
 			$matches[] = $matchinfo;
 		}
 		$result->free();
 		return $matches;
 	}
-	FUNCTION createMatchReportItem(WebSoccer $websoccer, DbConnection $db, $matchId, $minute, $messageKey, $messageData = null, $isHomeTeamWithBall = FALSE)
+	FUNCTION createMatchReportItem(WebSoccer $websoccer,DbConnection $db,$matchId,$minute,$messageKey,$messageData = null,$isHomeTeamWithBall = FALSE)
 	{
 		$messageDataStr = "";
 		if (is_array($messageData)) {
@@ -129,22 +129,22 @@ class YouthMatchesDataService
 				"message_data" => $messageDataStr,
 				"home_on_ball" => ($isHomeTeamWithBall) ? "1" : "0"
 				);
-		$db->queryInsert($columns, $websoccer->getConfig("db_prefix") . "_youthmatch_reportitem");
+		$db->queryInsert($columns,$websoccer->getConfig("db_prefix") . "_youthmatch_reportitem");
 	}
-	FUNCTION getMatchReportItems(WebSoccer $websoccer, DbConnection $db, I18n $i18n, $matchId)
+	FUNCTION getMatchReportItems(WebSoccer $websoccer,DbConnection $db,I18n $i18n,$matchId)
 	{
-		$result = $db->querySelect("*", $websoccer->getConfig("db_prefix") . "_youthmatch_reportitem", "match_id = %d ORDER BY minute ASC", $matchId);
+		$result = $db->querySelect("*",$websoccer->getConfig("db_prefix") . "_youthmatch_reportitem","match_id = %d ORDER BY minute ASC",$matchId);
 		// create formatted items
 		$items = array();
 		while ($item = $result->fetch_array()) {
 			$message = $i18n->getMessage($item["message_key"]);
 			// replace place holders
 			if (strlen($item["message_data"])) {
-				$messageData = json_decode($item["message_data"], true);
+				$messageData = json_decode($item["message_data"],true);
 				if ($messageData) {
 					foreach ($messageData as $placeholderName => $placeholderValue) {
 						$message = str_replace("{" . $placeholderName . "}",
-								htmlspecialchars($placeholderValue, ENT_COMPAT, "UTF-8"), $message);
+								htmlspecialchars($placeholderValue,ENT_COMPAT,"UTF-8"),$message);
 					}
 				}
 			}

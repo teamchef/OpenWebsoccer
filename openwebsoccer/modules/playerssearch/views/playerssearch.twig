@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -32,9 +32,9 @@
 {% endblock %}
 {% block page_content %}
 <form class="form-horizontal" method="post">
-	{{ macro.textfield('fname', i18n.getMessage('entity_player_vorname'), env.getRequestParameter('fname'), false, validationMsg, 'text') }}
-	{{ macro.textfield('lname', i18n.getMessage('entity_player_nachname'), env.getRequestParameter('lname'), false, validationMsg, 'text') }}
-	{{ macro.autocomplete("club", i18n.getMessage("entity_player_verein_id"), env.getRequestParameter('club'), false, validationMsg, "clubsearch") }}
+	{{ macro.textfield('fname',i18n.getMessage('entity_player_vorname'),env.getRequestParameter('fname'),false,validationMsg,'text') }}
+	{{ macro.textfield('lname',i18n.getMessage('entity_player_nachname'),env.getRequestParameter('lname'),false,validationMsg,'text') }}
+	{{ macro.autocomplete("club",i18n.getMessage("entity_player_verein_id"),env.getRequestParameter('club'),false,validationMsg,"clubsearch") }}
 	<div class="control-group">
 		<label class="control-label" for="position">
 			{{ i18n.getMessage("entity_player_position") }}
@@ -67,7 +67,7 @@
 	</div>
 	{% endif %}
 	{% if env.getConfig("lending_enabled") %}
-		{{ macro.checkbox('lendable', i18n.getMessage('lending_player_marker_lendable'), env.getRequestParameter('lendable')) }}
+		{{ macro.checkbox('lendable',i18n.getMessage('lending_player_marker_lendable'),env.getRequestParameter('lendable')) }}
 	{% endif %}
 	<div class="form-actions">
 		<button type="submit" class="btn btn-primary ajaxSubmit"

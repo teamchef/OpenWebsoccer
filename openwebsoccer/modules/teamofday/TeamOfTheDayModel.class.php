@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -34,14 +34,14 @@ class TeamOfTheDayModel extends BaseModel {
 		$players = array();
 		$positions;
 		// leagues
-		$leagues = LeagueDataService::getLeaguesSortedByCountry($this->_websoccer, $this->_db);
+		$leagues = LeagueDataService::getLeaguesSortedByCountry($this->_websoccer,$this->_db);
 		$leagueId = $this->_websoccer->getRequestParameter("leagueid");
 		// pre-select user's league in case no other league selected
 		if (!$leagueId) {
-			$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+			$clubId = $this->_websoccer->getUser()->getClubId($this->_websoccer,$this->_db);
 			if ($clubId > 0) {
-				$result = $this->_db->querySelect("liga_id", $this->_websoccer->getConfig("db_prefix") . "_verein",
-						"id = %d", $clubId, 1);
+				$result = $this->_db->querySelect("liga_id",$this->_websoccer->getConfig("db_prefix") . "_verein",
+						"id = %d",$clubId,1);
 				$club = $result->fetch_array();
 				$result->free();
 				$leagueId = $club["liga_id"];
@@ -53,7 +53,7 @@ class TeamOfTheDayModel extends BaseModel {
 		if ($leagueId) {
 			$fromTable = $this->_websoccer->getConfig("db_prefix") ."_saison";
 			$whereCondition = "liga_id = %d ORDER BY name ASC";
-			$result = $this->_db->querySelect("id, name, beendet", $fromTable, $whereCondition, $leagueId);
+			$result = $this->_db->querySelect("id,name,beendet",$fromTable,$whereCondition,$leagueId);
 			while ($season = $result->fetch_array()) {
 				$seasons[] = $season;
 				if (!$seasonId && !$season["beendet"]) {
@@ -68,7 +68,7 @@ class TeamOfTheDayModel extends BaseModel {
 		$openMatchesExist = FALSE;
 		if ($seasonId) {
 			$result = $this->_db->querySelect("MAX(spieltag) AS max_matchday",
-					$this->_websoccer->getConfig("db_prefix") . "_spiel", "saison_id = %d AND berechnet = '1'", $seasonId);
+					$this->_websoccer->getConfig("db_prefix") . "_spiel","saison_id = %d AND berechnet = '1'",$seasonId);
 			$matches = $result->fetch_array();
 			$result->free();
 			if ($matches) {
@@ -78,14 +78,14 @@ class TeamOfTheDayModel extends BaseModel {
 				}
 				// check if there are still open matches
 				$result = $this->_db->querySelect("COUNT(*) AS hits",
-						$this->_websoccer->getConfig("db_prefix") . "_spiel", "saison_id = %d AND spieltag = %d AND berechnet != '1'",
-						array($seasonId, $matchday));
+						$this->_websoccer->getConfig("db_prefix") . "_spiel","saison_id = %d AND spieltag = %d AND berechnet != '1'",
+						array($seasonId,$matchday));
 				$openmatches = $result->fetch_array();
 				$result->free();
 				if ($openmatches && $openmatches["hits"]) {
 					$openMatchesExist = TRUE;
 				} else {
-					$this->getTeamOfTheDay($seasonId, $matchday, $players);
+					$this->getTeamOfTheDay($seasonId,$matchday,$players);
 				}
 			}
 		}
@@ -98,20 +98,20 @@ class TeamOfTheDayModel extends BaseModel {
 				"openMatchesExist" => $openMatchesExist,
 				"players" => $players);
 	}
-	FUNCTION getTeamOfTheDay($seasonId, $matchday, &$players)
+	FUNCTION getTeamOfTheDay($seasonId,$matchday,&$players)
 	{
-		// make sure that parameters are actually integers, since we use them directly in the query below, without escaping
+		// make sure that parameters are actually integers,since we use them directly in the query below,without escaping
 		$seasonId = (int) $seasonId;
 		// get team of the season
 		if ($matchday == -1) {
-			$this->findPlayersForTeamOfSeason($seasonId, array("T"), 1, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("LV"), 1, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("IV"), 2, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("RV"), 1, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("LM"), 1, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("DM", "ZM", "OM"), 2, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("RM"), 1, $players);
-			$this->findPlayersForTeamOfSeason($seasonId, array("LS", "MS", "RS"), 2, $players);
+			$this->findPlayersForTeamOfSeason($seasonId,array("T"),1,$players);
+			$this->findPlayersForTeamOfSeason($seasonId,array("LV"),1,$players);
+			$this->findPlayersForTeamOfSeason($seasonId,array("IV"),2,$players);
+			$this->findPlayersForTeamOfSeason($seasonId,array("RV"),1,$players);
+			$this->findPlayersForTeamOfSeason($seasonId,array("LM"),1,$players);
+			$this->findPlayersForTeamOfSeason($seasonId,array("DM","ZM","OM"),2,$players);
+			$this->findPlayersForTeamOfSeason($seasonId,array("RM"),1,$players);
+			$this->findPlayersForTeamOfSeason($seasonId,array("LS","MS","RS"),2,$players);
 			return;
 		}
 		$columns = array(
@@ -134,33 +134,33 @@ class TeamOfTheDayModel extends BaseModel {
 		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spiel AS M ON M.id = S.spiel_id";
 		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_verein AS T ON T.id = S.team_id";
 		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spieler AS P ON P.id = S.spieler_id";
-		$result = $this->_db->querySelect($columns, $fromTable, "C.season_id = %d AND C.matchday = %d", array($seasonId, $matchday));
+		$result = $this->_db->querySelect($columns,$fromTable,"C.season_id = %d AND C.matchday = %d",array($seasonId,$matchday));
 		while ($player = $result->fetch_array()) {
 			$players[] = $player;
 		}
 		$result->free();
 		// find from DB
 		if (!count($players)) {
-			$this->findPlayers($columns, $seasonId, $matchday, array("T"), 1, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("LV"), 1, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("IV"), 2, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("RV"), 1, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("LM"), 1, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("DM", "ZM", "OM"), 2, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("RM"), 1, $players);
-			$this->findPlayers($columns, $seasonId, $matchday, array("LS", "MS", "RS"), 2, $players);
+			$this->findPlayers($columns,$seasonId,$matchday,array("T"),1,$players);
+			$this->findPlayers($columns,$seasonId,$matchday,array("LV"),1,$players);
+			$this->findPlayers($columns,$seasonId,$matchday,array("IV"),2,$players);
+			$this->findPlayers($columns,$seasonId,$matchday,array("RV"),1,$players);
+			$this->findPlayers($columns,$seasonId,$matchday,array("LM"),1,$players);
+			$this->findPlayers($columns,$seasonId,$matchday,array("DM","ZM","OM"),2,$players);
+			$this->findPlayers($columns,$seasonId,$matchday,array("RM"),1,$players);
+			$this->findPlayers($columns,$seasonId,$matchday,array("LS","MS","RS"),2,$players);
 		}
 	}
-	FUNCTION findPlayers($columns, $seasonId, $matchday, $mainPositions, $limit, &$players)
+	FUNCTION findPlayers($columns,$seasonId,$matchday,$mainPositions,$limit,&$players)
 	{
 		$fromTable = $this->_websoccer->getConfig("db_prefix") . "_spiel_berechnung AS S";
 		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spiel AS M ON M.id = S.spiel_id";
 		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_verein AS T ON T.id = S.team_id";
 		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spieler AS P ON P.id = S.spieler_id";
 		$whereCondition = "M.saison_id = %d AND M.spieltag = %d AND (S.position_main = '";
-		$whereCondition .= implode("' OR S.position_main = '", $mainPositions);
-		$whereCondition .= "') ORDER BY S.note ASC, S.tore DESC, S.assists DESC, S.wontackles DESC";
-		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, array($seasonId, $matchday), $limit);
+		$whereCondition .= implode("' OR S.position_main = '",$mainPositions);
+		$whereCondition .= "') ORDER BY S.note ASC,S.tore DESC,S.assists DESC,S.wontackles DESC";
+		$result = $this->_db->querySelect($columns,$fromTable,$whereCondition,array($seasonId,$matchday),$limit);
 		while ($player = $result->fetch_array()) {
 			$players[] = $player;
 			// save in cache
@@ -170,11 +170,11 @@ class TeamOfTheDayModel extends BaseModel {
 					"position_main" => $player["position_main"],
 					"statistic_id" => $player["statistic_id"],
 					"player_id" => $player["player_id"]
-					), $this->_websoccer->getConfig("db_prefix") . "_teamoftheday");
+					),$this->_websoccer->getConfig("db_prefix") . "_teamoftheday");
 		}
 		$result->free();
 	}
-	FUNCTION findPlayersForTeamOfSeason($seasonId, $mainPositions, $limit, &$players)
+	FUNCTION findPlayersForTeamOfSeason($seasonId,$mainPositions,$limit,&$players)
 	{
 		$columns = array(
 				"P.id" => "player_id",
@@ -192,14 +192,14 @@ class TeamOfTheDayModel extends BaseModel {
 		$fromTable .= " INNER JOIN " . $this->_websoccer->getConfig("db_prefix") . "_spieler AS P ON P.id = C.player_id";
 		$fromTable .= " LEFT JOIN " . $this->_websoccer->getConfig("db_prefix") . "_verein AS T ON T.id = P.verein_id";
 		$whereCondition = "C.season_id = %d AND (C.position_main = '";
-		$whereCondition .= implode("' OR C.position_main = '", $mainPositions);
+		$whereCondition .= implode("' OR C.position_main = '",$mainPositions);
 		$whereCondition .= "') ";
 		// do not consider already found players
 		foreach ($players as $foundPlayer) {
 			$whereCondition .= " AND  P.id != " . $foundPlayer['player_id'];
 		}
 		$whereCondition .= " GROUP BY P.id ORDER BY memberoftopteam DESC";
-		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $seasonId, $limit);
+		$result = $this->_db->querySelect($columns,$fromTable,$whereCondition,$seasonId,$limit);
 		while ($player = $result->fetch_array()) {
 			$player["player_name"] = strlen($player["pseudonym"]) ? $player["pseudonym"] : $player["firstname"] . " " . $player["lastname"];
 			$players[] = $player;

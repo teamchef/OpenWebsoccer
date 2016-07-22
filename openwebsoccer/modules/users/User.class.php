@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,10 +28,10 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-define('ROLE_GUEST', 'guest');
-define('ROLE_USER', 'user');
-define('USER_STATUS_ENABLED', 1);
-define('USER_STATUS_UNCONFIRMED', 2);
+define('ROLE_GUEST','guest');
+define('ROLE_USER','user');
+define('USER_STATUS_ENABLED',1);
+define('USER_STATUS_UNCONFIRMED',2);
 class User
 {
 	FUNCTION __construct()
@@ -47,7 +47,7 @@ class User
 			return ROLE_USER;
 		}
 	}
-	FUNCTION getClubId($websoccer = null, $db = null)
+	FUNCTION getClubId($websoccer = null,$db = null)
 	{
 		if ($this->id !== null && $this->_clubId === null) {
 			// get from session
@@ -58,7 +58,7 @@ class User
 				$fromTable = $websoccer->getConfig('db_prefix') . '_verein';
 				$whereCondition = 'status = 1 AND user_id = %d AND nationalteam != \'1\' ORDER BY interimmanager DESC';
 				$columns = 'id';
-				$result = $db->querySelect($columns, $fromTable, $whereCondition, $this->id, 1);
+				$result = $db->querySelect($columns,$fromTable,$whereCondition,$this->id,1);
 				$club = $result->fetch_array();
 				$result->free();
 				if ($club) {
@@ -77,17 +77,17 @@ class User
 	{
 		if ($this->_profilePicture === null) {
 			if (strlen($this->email)) {
-				$this->_profilePicture = UsersDataService::getUserProfilePicture(WebSoccer::getInstance(), null, $this->email);
+				$this->_profilePicture = UsersDataService::getUserProfilePicture(WebSoccer::getInstance(),null,$this->email);
 			} else {
 				$this->_profilePicture = '';
 			}
 		}
 		return $this->_profilePicture;
 	}
-	FUNCTION setProfilePicture($websoccer, $fileName)
+	FUNCTION setProfilePicture($websoccer,$fileName)
 	{
 		if (strlen($fileName)) {
-			$this->_profilePicture = UsersDataService::getUserProfilePicture($websoccer, $fileName, null);
+			$this->_profilePicture = UsersDataService::getUserProfilePicture($websoccer,$fileName,null);
 		}
 	}
 	FUNCTION isAdmin()
@@ -95,7 +95,7 @@ class User
 		if ($this->_isAdmin === NULL) {
 			$websoccer = WebSoccer::getInstance();
 			$db = DbConnection::getInstance();
-			$result = $db->querySelect('id', $websoccer->getConfig('db_prefix') . '_admin', 'email = \'%s\' AND r_admin = \'1\'', $this->email);
+			$result = $db->querySelect('id',$websoccer->getConfig('db_prefix') . '_admin','email = \'%s\' AND r_admin = \'1\'',$this->email);
 			if ($result->num_rows) {
 				$this->_isAdmin = TRUE;
 			} else {

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -36,7 +36,7 @@ class ViewHandler
 	private $_pages;
 	private $_blocks;
 	private $_validationMessages;
-	FUNCTION __construct($website, $db, $i18n, &$pages, &$blocks, $validationMessages = null)
+	FUNCTION __construct($website,$db,$i18n,&$pages,&$blocks,$validationMessages = null)
 	{
 		$this->_website = $website;
 		$this->_db = $db;
@@ -45,7 +45,7 @@ class ViewHandler
 		$this->_blocks = $blocks;
 		$this->_validationMessages = $validationMessages;
 	}
-	FUNCTION handlePage($pageId, $parameters)
+	FUNCTION handlePage($pageId,$parameters)
 	{
 		if ($pageId == NULL) {
 			return;
@@ -53,10 +53,10 @@ class ViewHandler
 		if (!isset($this->_pages[$pageId])) {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
-		$pageConfig = json_decode($this->_pages[$pageId], TRUE);
+		$pageConfig = json_decode($this->_pages[$pageId],TRUE);
 		// check permissions
-		$requiredRoles = explode(',', $pageConfig['role']);
-		if (!in_array($this->_website->getUser()->getRole(), $requiredRoles)) {
+		$requiredRoles = explode(',',$pageConfig['role']);
+		if (!in_array($this->_website->getUser()->getRole(),$requiredRoles)) {
 			throw new AccessDeniedException($this->_i18n->getMessage('error_access_denied'));
 		}
 		// check if premium page
@@ -65,27 +65,27 @@ class ViewHandler
 			if ($minPremiumBalanceRequired > $this->_website->getUser()->premiumBalance) {
 				$targetPage = $this->_website->getConfig('premium_infopage');
 				// redirect to external info page
-				if (filter_var($targetPage, FILTER_VALIDATE_URL)) {
+				if (filter_var($targetPage,FILTER_VALIDATE_URL)) {
 					header('location: ' . $targetPage);
 					exit;
 					// render info page
 				} else {
-					$this->_website->addContextParameter('premium_balance_required', $minPremiumBalanceRequired);
-					return $this->handlePage($targetPage, $parameters);
+					$this->_website->addContextParameter('premium_balance_required',$minPremiumBalanceRequired);
+					return $this->handlePage($targetPage,$parameters);
 				}
 			}
 		}
-		$template = $this->_website->getTemplateEngine($this->_i18n, $this)->loadTemplate('views/' . $pageConfig['template']);
+		$template = $this->_website->getTemplateEngine($this->_i18n,$this)->loadTemplate('views/' . $pageConfig['template']);
 		if (isset($pageConfig['model'])) {
 			$class = $pageConfig['model'];
 			if (!class_exists($class)) {
 				throw new Exception('The model class \''. $class . '\' does not exist.');
 			}
-			$model = new $class($this->_db, $this->_i18n, $this->_website);
+			$model = new $class($this->_db,$this->_i18n,$this->_website);
 			if (!$model->renderView()) {
 				return '';
 			}
-			$parameters = array_merge($parameters, $model->getTemplateParameters());
+			$parameters = array_merge($parameters,$model->getTemplateParameters());
 		}
 		// validation error messages
 		$parameters['validationMsg'] = $this->_validationMessages;
@@ -117,13 +117,13 @@ class ViewHandler
 		$parameters['cssReferences'] = $cssReferences;
 		return $template->render($parameters);
 	}
-	FUNCTION renderBlock($blockId, $viewConfig = null, $parameters = null)
+	FUNCTION renderBlock($blockId,$viewConfig = null,$parameters = null)
 	{
 		if ($viewConfig == null) {
 			if (!isset($this->_blocks[$blockId])) {
 				return '';
 			}
-			$viewConfig = json_decode($this->_blocks[$blockId], true);
+			$viewConfig = json_decode($this->_blocks[$blockId],true);
 		}
 		if ($parameters == null) {
 			$parameters = array();
@@ -133,16 +133,16 @@ class ViewHandler
 			if (!class_exists($class)) {
 				throw new Exception('The model class \''. $class . '\' does not exist.');
 			}
-			$model = new $class($this->_db, $this->_i18n, $this->_website);
+			$model = new $class($this->_db,$this->_i18n,$this->_website);
 			if (!$model->renderView()) {
 				return '';
 			}
-			$parameters = array_merge($parameters, $model->getTemplateParameters());
+			$parameters = array_merge($parameters,$model->getTemplateParameters());
 		}
 		// check permissions
 		$userRole = $this->_website->getUser()->getRole();
-		$roles = explode(',', $viewConfig['role']);
-		if (!in_array($userRole, $roles)) {
+		$roles = explode(',',$viewConfig['role']);
+		if (!in_array($userRole,$roles)) {
 			return '';
 		}
 		// check premium balance
@@ -153,7 +153,7 @@ class ViewHandler
 		// validation error messages
 		$parameters['validationMsg'] = $this->_validationMessages;
 		$parameters['frontMessages'] = $this->_website->getFrontMessages();
-		$template = $this->_website->getTemplateEngine($this->_i18n, $this)->loadTemplate('blocks/' . $viewConfig['template']);
+		$template = $this->_website->getTemplateEngine($this->_i18n,$this)->loadTemplate('blocks/' . $viewConfig['template']);
 		$parameters['blockId'] = $blockId;
 		$output =$template->render($parameters);
 		return $output;
@@ -163,25 +163,25 @@ class ViewHandler
 		$blocks = array();
 		$userRole = $this->_website->getUser()->getRole();
 		foreach($this->_blocks as $blockId => $blockData) {
-			$blockConfig = json_decode($blockData, TRUE);
-			$includepages = explode(',', $blockConfig['includepages']);
-			$excludepages = (isset($blockConfig['excludepages'])) ? explode(',', $blockConfig['excludepages']) : array();
-			$roles = explode(',', $blockConfig['role']);
+			$blockConfig = json_decode($blockData,TRUE);
+			$includepages = explode(',',$blockConfig['includepages']);
+			$excludepages = (isset($blockConfig['excludepages'])) ? explode(',',$blockConfig['excludepages']) : array();
+			$roles = explode(',',$blockConfig['role']);
 			$minPremiumBalanceRequired = (isset($blockConfig['premiumBalanceMin'])) ? $blockConfig['premiumBalanceMin'] : 0;
-			if (in_array($userRole, $roles) && ($includepages[0] == 'all' && !in_array($pageId, $excludepages)
-					|| in_array($pageId, $includepages))
+			if (in_array($userRole,$roles) && ($includepages[0] == 'all' && !in_array($pageId,$excludepages)
+					|| in_array($pageId,$includepages))
 					&& $minPremiumBalanceRequired <= $this->_website->getUser()->premiumBalance) {
 				$blocks[$blockConfig['area']][] = $blockConfig;
 			}
 		}
 		foreach($blocks as $uiblock => $blockdata) {
 			if ($uiblock != 'custom') {
-				usort($blocks[$uiblock], array('ViewHandler', 'sortByWeight'));
+				usort($blocks[$uiblock],array('ViewHandler','sortByWeight'));
 			}
 		}
 		return $blocks;
 	}
-	FUNCTION sortByWeight(&$a, &$b)
+	FUNCTION sortByWeight(&$a,&$b)
 	{
 		if (!isset($a['weight']) || !isset($b['weight'])) {
 			return NULL;

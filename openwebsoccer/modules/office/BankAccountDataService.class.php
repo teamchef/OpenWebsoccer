@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,21 +30,21 @@
 SEC;
 class BankAccountDataService
 {
-	FUNCTION countAccountStatementsOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId)
+	FUNCTION countAccountStatementsOfTeam($websoccer,$db,$teamId)
 	{
 		$columns = "COUNT(*) AS hits";
 		$fromTable = $websoccer->getConfig("db_prefix") . "_konto";
 		$whereCondition = "verein_id = %d";
 		$parameters = $teamId;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		$statements = $result->fetch_array();
 		$result->free();
 		if (isset($statements["hits"])) {
 			return $statements["hits"];
 		}
-		return 0;
+		return NULL;
 	}
-	FUNCTION getAccountStatementsOfTeam(WebSoccer $websoccer, DbConnection $db, $teamId, $startIndex, $entries_per_page)
+	FUNCTION getAccountStatementsOfTeam($websoccer,$db,$teamId,$startIndex,$entries_per_page)
 	{
 		$columns["absender"] = "sender";
 		$columns["betrag"] = "amount";
@@ -54,7 +54,7 @@ class BankAccountDataService
 		$fromTable = $websoccer->getConfig("db_prefix") . "_konto";
 		$whereCondition = "verein_id = %d ORDER BY datum DESC";
 		$parameters = $teamId;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters, $limit);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters,$limit);
 		$statements = array();
 		while ($statement = $result->fetch_array()) {
 			$statements[] = $statement;
@@ -62,27 +62,27 @@ class BankAccountDataService
 		$result->free();
 		return $statements;
 	}
-	FUNCTION creditAmount(WebSoccer $websoccer, DbConnection $db, $teamId, $amount, $subject, $sender)
+	FUNCTION creditAmount(WebSoccer $websoccer,DbConnection $db,$teamId,$amount,$subject,$sender)
 	{
 		if ($amount == 0) {
 			return;
 		}
-		$team = TeamsDataService::getTeamSummaryById($websoccer, $db, $teamId);
+		$team = TeamsDataService::getTeamSummaryById($websoccer,$db,$teamId);
 		if (!isset($team["team_id"])) {
 			throw new Exception("team not found: " . $teamId);
 		}
 		if ($amount < 0) {
 			throw new Exception("amount illegal: " . $amount);
 		} else {
-			self::createTransaction($websoccer, $db, $team, $teamId, $amount, $subject, $sender);
+			self::createTransaction($websoccer,$db,$team,$teamId,$amount,$subject,$sender);
 		}
 	}
-	FUNCTION debitAmount(WebSoccer $websoccer, DbConnection $db, $teamId, $amount, $subject, $sender)
+	FUNCTION debitAmount(WebSoccer $websoccer,DbConnection $db,$teamId,$amount,$subject,$sender)
 	{
 		if ($amount == 0) {
 			return;
 		}
-		$team = TeamsDataService::getTeamSummaryById($websoccer, $db, $teamId);
+		$team = TeamsDataService::getTeamSummaryById($websoccer,$db,$teamId);
 		if (!isset($team["team_id"])) {
 			throw new Exception("team not found: " . $teamId);
 		}
@@ -90,9 +90,9 @@ class BankAccountDataService
 			throw new Exception("amount illegal: " . $amount);
 		}
 		$amount = 0 - $amount;
-		self::createTransaction($websoccer, $db, $team, $teamId, $amount, $subject, $sender);
+		self::createTransaction($websoccer,$db,$team,$teamId,$amount,$subject,$sender);
 	}
-	FUNCTION createTransaction(WebSoccer $websoccer, DbConnection $db, $team, $teamId, $amount, $subject, $sender)
+	FUNCTION createTransaction(WebSoccer $websoccer,DbConnection $db,$team,$teamId,$amount,$subject,$sender)
 	{
 		// ignore transaction if team is without user and option is enabled
 		if (!$team["user_id"] && $websoccer->getConfig("no_transactions_for_teams_without_user")) {
@@ -105,13 +105,13 @@ class BankAccountDataService
 		$columns["betrag"] = $amount;
 		$columns["datum"] = $websoccer->getNowAsTimestamp();
 		$columns["verwendung"] = $subject;
-		$db->queryInsert($columns, $fromTable);
+		$db->queryInsert($columns,$fromTable);
 		// update team budget
 		$newBudget = $team["team_budget"] + $amount;
 		$updateColumns["finanz_budget"] = $newBudget;
 		$fromTable = $websoccer->getConfig("db_prefix") ."_verein";
 		$whereCondition = "id = %d";
 		$parameters = $teamId;
-		$db->queryUpdate($updateColumns, $fromTable, $whereCondition, $parameters);
+		$db->queryUpdate($updateColumns,$fromTable,$whereCondition,$parameters);
 	}
 }

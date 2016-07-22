@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -88,25 +88,25 @@
 						{% if nationImg %}<img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel}}" />{% else %}({{ countryLabel }}){% endif %}
 					{% endif %}
 					{% if player.transfer_fee > 0 %}
-						<a href="{{ env.getInternalActionUrl("remove-youthplayer-from-market", "id=" ~ player.id) }}"
+						<a href="{{ env.getInternalActionUrl("remove-youthplayer-from-market","id=" ~ player.id) }}"
 							title="{{ i18n.getMessage("youthteam_action_removefrommarket") }}"><i class="icon-share darkIcon"></i></a>
 					{% endif %}</p>
 					<div class="btn-group">
 						<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">{{ i18n.getMessage("myteam_action_button") }} <span class="caret"></span></a>
 						<ul class="dropdown-menu">
 							{% if player.age >= env.getConfig("youth_min_age_professional") %}
-							<li><a href="{{ env.getInternalUrl("youthplayer-makeprofessional", "id=" ~ player.id) }}"><i class="icon-briefcase"></i> {{ i18n.getMessage("youthteam_action_make_professional") }}</a></li>
+							<li><a href="{{ env.getInternalUrl("youthplayer-makeprofessional","id=" ~ player.id) }}"><i class="icon-briefcase"></i> {{ i18n.getMessage("youthteam_action_make_professional") }}</a></li>
 							<li class="divider"></li>
 							{% endif %}
 							{% if player.transfer_fee == 0 %}
-								<li><a href="{{ env.getInternalUrl("youthplayer-sell", "id=" ~ player.id) }}"><i class="icon-share"></i> {{ i18n.getMessage("youthteam_action_sell") }}</a></li>
+								<li><a href="{{ env.getInternalUrl("youthplayer-sell","id=" ~ player.id) }}"><i class="icon-share"></i> {{ i18n.getMessage("youthteam_action_sell") }}</a></li>
 							{% endif %}
-							<li><a href="{{ env.getInternalUrl("youthplayer-fire", "id=" ~ player.id) }}"><i class="icon-remove-circle"></i> {{ i18n.getMessage("youthteam_action_fire") }}</a></li>
+							<li><a href="{{ env.getInternalUrl("youthplayer-fire","id=" ~ player.id) }}"><i class="icon-remove-circle"></i> {{ i18n.getMessage("youthteam_action_fire") }}</a></li>
 						</ul>
 					</div>
 				</td>
 				<td>{{ player.age }}{% if player.age < env.getConfig("youth_min_age_professional") %} *{% endif %}</td>
-				<td>{{ macro.progressbar(player.strength, "noBottomMargin") }}
+				<td>{{ macro.progressbar(player.strength,"noBottomMargin") }}
 					{% set changeLabel = player.strength_last_change %}
 					{% if player.strength_last_change > 0 %}
 						{% set changeCssClass = "badge-success" %}
@@ -118,7 +118,7 @@
 					{% endif %}
 					<span class="badge {{ changeCssClass }}" title="{{ i18n.getMessage("entity_youthplayer_strength_last_change") }}">{{ changeLabel }}</span>
 				</td>
-				<td>{{ (player.strength * env.getConfig("youth_salary_per_strength"))|number_format(0, ',', ' ') }} {{ env.getConfig("game_currency") }}</td>
+				<td>{{ (player.strength * env.getConfig("youth_salary_per_strength"))|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</td>
 				<td>{{ player.st_matches }} <a href="#statistics{{ player.id }}" data-toggle="collapse" title="{{ i18n.getMessage("youthteam_showstatistics_tooltip") }}"><i class="icon-zoom-in darkIcon"></i></a>
 					<div id="statistics{{ player.id }}" class="collapse">
 					<dl>
@@ -139,8 +139,8 @@
 		{% endfor %}
 		</tbody>
 	</table>
-	<p>* <em>{{ i18n.getMessage("youthteam_min_age_info", env.getConfig("youth_min_age_professional")) }}</em></p>
+	<p>* <em>{{ i18n.getMessage("youthteam_min_age_info",env.getConfig("youth_min_age_professional")) }}</em></p>
 {% else %}
-	{{ macro.box(i18n.getMessage("youthteam_no_players"), "", "info") }}
+	{{ macro.box(i18n.getMessage("youthteam_no_players"),"","info") }}
 {% endif %}
 {% endblock %}

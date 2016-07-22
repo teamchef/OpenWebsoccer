@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,9 +30,9 @@
 SEC;
 class MoveYouthPlayerToProfessionalController extends BaseModel
 {
-	FUNCTION __construct($i18n, $websoccer, $db)
+	FUNCTION __construct($i18n,$websoccer,$db)
 	{
-		parent::__construct($db, $i18n, $websoccer);
+		parent::__construct($db,$i18n,$websoccer);
 	}
 	FUNCTION executeAction($parameters) {
 		// check if feature is enabled
@@ -40,9 +40,9 @@ class MoveYouthPlayerToProfessionalController extends BaseModel
 			return NULL;
 		}
 		$user = $this->_websoccer->getUser();
-		$clubId = $user->getClubId($this->_websoccer, $this->_db);
+		$clubId = $user->getClubId($this->_websoccer,$this->_db);
 		// check if it is own player
-		$player = YouthPlayersDataService::getYouthPlayerById($this->_websoccer, $this->_db, $this->_i18n, $parameters["id"]);
+		$player = YouthPlayersDataService::getYouthPlayerById($this->_websoccer,$this->_db,$this->_i18n,$parameters["id"]);
 		if ($clubId != $player["team_id"]) {
 			throw new Exception($this->_i18n->getMessage("youthteam_err_notownplayer"));
 		}
@@ -55,32 +55,32 @@ class MoveYouthPlayerToProfessionalController extends BaseModel
 		if ($player["position"] == "Torwart") {
 			$validPositions = array("T");
 		} elseif ($player["position"] == "Abwehr") {
-			$validPositions = array("LV", "IV", "RV");
+			$validPositions = array("LV","IV","RV");
 		} elseif ($player["position"] == "Mittelfeld") {
-			$validPositions = array("LM", "RM", "DM", "OM", "ZM");
+			$validPositions = array("LM","RM","DM","OM","ZM");
 		} else {
-			$validPositions = array("LS", "RS", "MS");
+			$validPositions = array("LS","RS","MS");
 		}
-		if (!in_array($parameters["mainposition"], $validPositions)) {
+		if (!in_array($parameters["mainposition"],$validPositions)) {
 			throw new Exception($this->_i18n->getMessage("youthteam_makeprofessional_err_invalidmainposition"));
 		}
 		// check if team can afford salary
-		$team = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $clubId);
-		if ($team["team_budget"] <= TeamsDataService::getTotalPlayersSalariesOfTeam($this->_websoccer, $this->_db, $clubId)) {
+		$team = TeamsDataService::getTeamSummaryById($this->_websoccer,$this->_db,$clubId);
+		if ($team["team_budget"] <= TeamsDataService::getTotalPlayersSalariesOfTeam($this->_websoccer,$this->_db,$clubId)) {
 			throw new Exception($this->_i18n->getMessage("youthteam_makeprofessional_err_budgettooless"));
 		}
-		$this->createPlayer($player, $parameters["mainposition"]);
+		$this->createPlayer($player,$parameters["mainposition"]);
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
 				$this->_i18n->getMessage("youthteam_makeprofessional_success"),
 				""));
 		return "myteam";
 	}
-	FUNCTION createPlayer($player, $mainPosition)
+	FUNCTION createPlayer($player,$mainPosition)
 	{
 		// birthday
-		$time = strtotime("-". $player["age"] . " years", $this->_websoccer->getNowAsTimestamp());
-		$birthday = date("Y-m-d", $time);
+		$time = strtotime("-". $player["age"] . " years",$this->_websoccer->getNowAsTimestamp());
+		$birthday = date("Y-m-d",$time);
 		$columns = array(
 				"verein_id" => $player["team_id"],
 				"vorname" => $player["firstname"],
@@ -100,8 +100,8 @@ class MoveYouthPlayerToProfessionalController extends BaseModel
 				"vertrag_torpraemie" => 0,
 				"status" => "1"
 				);
-		$this->_db->queryInsert($columns, $this->_websoccer->getConfig("db_prefix") ."_spieler");
+		$this->_db->queryInsert($columns,$this->_websoccer->getConfig("db_prefix") ."_spieler");
 		// delete youth player
-		$this->_db->queryDelete($this->_websoccer->getConfig("db_prefix") ."_youthplayer", "id = %d", $player["id"]);
+		$this->_db->queryDelete($this->_websoccer->getConfig("db_prefix") ."_youthplayer","id = %d",$player["id"]);
 	}
 }

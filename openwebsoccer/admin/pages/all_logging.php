@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -38,22 +38,22 @@ if (!$show) {
 	<p><?php echo $i18n->getMessage('all_logging_intro'); ?></p>
 	<?php
 	$datei = '../generated/adminlog.php';
-	if (!file_exists($datei)) echo createErrorMessage($i18n->getMessage('alert_error_title'), $i18n->getMessage('all_logging_filenotfound'));
-	elseif ($admin['r_demo']) echo createErrorMessage($i18n->getMessage('error_access_denied'), '');
+	if (!file_exists($datei)) echo createErrorMessage($i18n->getMessage('alert_error_title'),$i18n->getMessage('all_logging_filenotfound'));
+	elseif ($admin['r_demo']) echo createErrorMessage($i18n->getMessage('error_access_denied'),'');
 	else {
 	if ($action == 'leeren') {
-		$fp = fopen($datei, 'w+');
+		$fp = fopen($datei,'w+');
 		$ip = getenv('REMOTE_ADDR');
-		$content = 'Truncated by '. $admin['name'] .' (id: '. $admin['id'] . '), '. $ip .', '. date('d.m.y - H:i:s');
-		fwrite($fp, $content);
+		$content = 'Truncated by '. $admin['name'] .' (id: '. $admin['id'] . '),'. $ip .','. date('d.m.y - H:i:s');
+		fwrite($fp,$content);
 		fclose($fp);
-		if ($fp) echo createSuccessMessage($i18n->getMessage('all_logging_alert_logfile_truncated'), '');
-		else echo createErrorMessage($i18n->getMessage('alert_error_title'), $i18n->getMessage('all_logging_error_not_truncated'));
+		if ($fp) echo createSuccessMessage($i18n->getMessage('all_logging_alert_logfile_truncated'),'');
+		else echo createErrorMessage($i18n->getMessage('alert_error_title'),$i18n->getMessage('all_logging_error_not_truncated'));
 	}
 	$datei_gr = filesize($datei);
 	$gr_kb = round($datei_gr / 1024);
 	if ($datei_gr && !$gr_kb) $gr_kb = 1;
-	echo '<div class=\'well\'>'. sprintf($i18n->getMessage('all_logging_filesize'), number_format($gr_kb, 0, ' ', ',')) .'</div>';
+	echo '<div class=\'well\'>'. sprintf($i18n->getMessage('all_logging_filesize'),number_format($gr_kb,0,' ',',')) .'</div>';
 	if (!$datei_gr) echo '<p>'. $i18n->getMessage('empty_list') . '</p>';
 	else {
 	?>
@@ -78,7 +78,7 @@ if (!$show) {
 		if ($min < 0) $min = 0;
 				for ($i = $lines-1; $i >= $min; $i--) {
 					$line = $file[$i];
-					$row = explode(', ', $line);
+					$row = explode(',',$line);
 					$n = $i + 1;
 					echo '<tr>
 							<td><b>'. $n .'</b></td>

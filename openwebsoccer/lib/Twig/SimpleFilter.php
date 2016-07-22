@@ -5,7 +5,7 @@
  *
  * (c) 2009-2012 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -21,7 +21,7 @@ class Twig_SimpleFilter
     protected $options;
     protected $arguments = array();
 
-    public function __construct($name, $callable, array $options = array())
+    public function __construct($name,$callable,array $options = array())
     {
         $this->name = $name;
         $this->callable = $callable;
@@ -36,7 +36,7 @@ class Twig_SimpleFilter
             'node_class' => 'Twig_Node_Expression_Filter',
             'deprecated' => false,
             'alternative' => null,
-        ), $options);
+        ),$options);
     }
 
     public function getName()
@@ -81,7 +81,7 @@ class Twig_SimpleFilter
         }
 
         if (null !== $this->options['is_safe_callback']) {
-            return call_user_func($this->options['is_safe_callback'], $filterArgs);
+            return call_user_func($this->options['is_safe_callback'],$filterArgs);
         }
     }
 

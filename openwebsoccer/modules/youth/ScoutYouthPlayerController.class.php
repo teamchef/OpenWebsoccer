@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,12 +28,12 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-define("NAMES_DIRECTORY", ROOT . "/admin/config/names");
+define("NAMES_DIRECTORY",ROOT . "/admin/config/names");
 class ScoutYouthPlayerController extends BaseModel
 {
-	FUNCTION __construct($i18n, $websoccer, $db)
+	FUNCTION __construct($i18n,$websoccer,$db)
 	{
-		parent::__construct($db, $i18n, $websoccer);
+		parent::__construct($db,$i18n,$websoccer);
 	}
 	FUNCTION executeAction($parameters)
 	{
@@ -42,14 +42,14 @@ class ScoutYouthPlayerController extends BaseModel
 			return NULL;
 		}
 		$user = $this->_websoccer->getUser();
-		$clubId = $user->getClubId($this->_websoccer, $this->_db);
+		$clubId = $user->getClubId($this->_websoccer,$this->_db);
 		// check if user has a club
 		if ($clubId < 1) {
 			throw new Exception($this->_i18n->getMessage("error_action_required_team"));
 		}
 		// check if break is violated
-		$lastExecutionTimestamp = YouthPlayersDataService::getLastScoutingExecutionTime($this->_websoccer, $this->_db,
-				$this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db));
+		$lastExecutionTimestamp = YouthPlayersDataService::getLastScoutingExecutionTime($this->_websoccer,$this->_db,
+				$this->_websoccer->getUser()->getClubId($this->_websoccer,$this->_db));
 		$nextPossibleExecutionTimestamp = $lastExecutionTimestamp + $this->_websoccer->getConfig("youth_scouting_break_hours") * 3600;
 		$now = $this->_websoccer->getNowAsTimestamp();
 		if ($now < $nextPossibleExecutionTimestamp) {
@@ -62,15 +62,15 @@ class ScoutYouthPlayerController extends BaseModel
 			throw new Exception($this->_i18n->getMessage("youthteam_scouting_err_invalidcountry"));
 		}
 		// check if valid scout
-		$scout = YouthPlayersDataService::getScoutById($this->_websoccer, $this->_db, $this->_i18n, $parameters["scoutid"]);
+		$scout = YouthPlayersDataService::getScoutById($this->_websoccer,$this->_db,$this->_i18n,$parameters["scoutid"]);
 		// check if team can afford it.
-		$team = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $clubId);
+		$team = TeamsDataService::getTeamSummaryById($this->_websoccer,$this->_db,$clubId);
 		if ($team["team_budget"] <= $scout["fee"]) {
 			throw new Exception($this->_i18n->getMessage("youthteam_scouting_err_notenoughbudget"));
 		}
 		// deduct fee
-		BankAccountDataService::debitAmount($this->_websoccer, $this->_db, $clubId, $scout["fee"],
-			"youthteam_scouting_fee_subject", $scout["name"]);
+		BankAccountDataService::debitAmount($this->_websoccer,$this->_db,$clubId,$scout["fee"],
+			"youthteam_scouting_fee_subject",$scout["name"]);
 		// has scout found someone?
 		$found = TRUE;
 		$succesProbability = (int) $this->_websoccer->getConfig("youth_scouting_success_probability");
@@ -80,9 +80,9 @@ class ScoutYouthPlayerController extends BaseModel
 						FALSE => 100 - $succesProbability
 					));
 		}
-		// he found someone, so create youth player
+		// he found someone,so create youth player
 		if ($found) {
-			$this->createYouthPlayer($clubId, $scout, $parameters["country"]);
+			$this->createYouthPlayer($clubId,$scout,$parameters["country"]);
 			// create failure message
 		} else {
 			$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_WARNING,
@@ -91,10 +91,10 @@ class ScoutYouthPlayerController extends BaseModel
 		}
 		// update last execution time
 		$this->_db->queryUpdate(array("scouting_last_execution" => $now),
-				$this->_websoccer->getConfig("db_prefix") . "_verein", "id = %d", $clubId);
+				$this->_websoccer->getConfig("db_prefix") . "_verein","id = %d",$clubId);
 		return ($found) ? "youth-team" : "youth-scouting";
 	}
-	FUNCTION createYouthPlayer($clubId, $scout, $country)
+	FUNCTION createYouthPlayer($clubId,$scout,$country)
 	{
 		$firstName = $this->getItemFromFile(NAMES_DIRECTORY . "/" . $country . "/firstnames.txt");
 		$lastName = $this->getItemFromFile(NAMES_DIRECTORY . "/" . $country . "/lastnames.txt");
@@ -105,8 +105,8 @@ class ScoutYouthPlayerController extends BaseModel
 		$strength = $minStrength + round(($maxStrength - $minStrength) * $scoutFactor);
 		// consider random deviation
 		$deviation = (int) $this->_websoccer->getConfig("youth_scouting_standard_deviation");
-		$strength = $strength + SimulationHelper::getMagicNumber(0 - $deviation, $deviation);
-		$strength = max($minStrength, min($maxStrength, $strength)); // make sure that condigured boundaries are not violated
+		$strength = $strength + SimulationHelper::getMagicNumber(0 - $deviation,$deviation);
+		$strength = max($minStrength,min($maxStrength,$strength)); // make sure that condigured boundaries are not violated
 		// determine position
 		if ($scout["speciality"] == "Torwart") {
 			$positionProbabilities = array(
@@ -142,7 +142,7 @@ class ScoutYouthPlayerController extends BaseModel
 		$position = SimulationHelper::selectItemFromProbabilities($positionProbabilities);
 		$minAge = $this->_websoccer->getConfig("youth_scouting_min_age");
 		$maxAge = $this->_websoccer->getConfig("youth_min_age_professional");
-		$age = $minAge + SimulationHelper::getMagicNumber(0, abs($maxAge - $minAge));
+		$age = $minAge + SimulationHelper::getMagicNumber(0,abs($maxAge - $minAge));
 		// create player
 		$this->_db->queryInsert(array(
 				"team_id" => $clubId,
@@ -152,23 +152,23 @@ class ScoutYouthPlayerController extends BaseModel
 				"position" => $position,
 				"nation" => $country,
 				"strength" => $strength
-				), $this->_websoccer->getConfig("db_prefix") . "_youthplayer");
+				),$this->_websoccer->getConfig("db_prefix") . "_youthplayer");
 		// trigger event for plug-ins
-		$event = new YouthPlayerScoutedEvent($this->_websoccer, $this->_db, $this->_i18n,
-				$clubId, $scout["id"], $this->_db->getLastInsertedId());
+		$event = new YouthPlayerScoutedEvent($this->_websoccer,$this->_db,$this->_i18n,
+				$clubId,$scout["id"],$this->_db->getLastInsertedId());
 		PluginMediator::dispatchEvent($event);
 		// create success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
 				$this->_i18n->getMessage("youthteam_scouting_success"),
-				$this->_i18n->getMessage("youthteam_scouting_success_details", $firstName . " " . $lastName)));
+				$this->_i18n->getMessage("youthteam_scouting_success_details",$firstName . " " . $lastName)));
 	}
 	FUNCTION getItemFromFile($fileName)
 	{
-		$items = file($fileName, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+		$items = file($fileName,FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 		$itemsCount = count($items);
 		if (!$itemsCount) {
 			throw new Exception($this->_i18n->getMessage("youthteam_scouting_err_invalidcountry"));
 		}
-		return $items[mt_rand(0, $itemsCount - 1)];
+		return $items[mt_rand(0,$itemsCount - 1)];
 	}
 }

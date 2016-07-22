@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -33,9 +33,9 @@ SEC;
 */
 class RenameClubController extends BaseModel
 {
-	FUNCTION __construct($i18n, $websoccer, $db)
+	FUNCTION __construct($i18n,$websoccer,$db)
 	{
-		parent::__construct($db, $i18n, $websoccer);
+		parent::__construct($db,$i18n,$websoccer);
 	}
 	FUNCTION executeAction($parameters)
 	{
@@ -43,21 +43,21 @@ class RenameClubController extends BaseModel
 			throw new Exception('feature is disabled');
 		}
 		$user = $this->_websoccer->getUser();
-		$clubId = $user->getClubId($this->_websoccer, $this->_db);
-		$team = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $clubId);
+		$clubId = $user->getClubId($this->_websoccer,$this->_db);
+		$team = TeamsDataService::getTeamSummaryById($this->_websoccer,$this->_db,$clubId);
 		if (!$team) {
 			return NULL;
 		}
 		// rename club
 		$short = strtoupper($parameters['kurz']);
-		$this->_db->queryUpdate(['name' => $parameters['name'], 'kurz' => $short],
-		$this->_websoccer->getConfig('db_prefix') . '_verein', 'id = %d', $clubId);
+		$this->_db->queryUpdate(['name' => $parameters['name'],'kurz' => $short],
+		$this->_websoccer->getConfig('db_prefix') . '_verein','id = %d',$clubId);
 		// rename stadium
 		$this->_db->queryUpdate(['S.name' => $parameters['stadium']],
-		$this->_websoccer->getConfig('db_prefix') . '_verein AS C INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_stadion AS S ON S.id = C.stadion_id', 'C.id = %d', $clubId);
+		$this->_websoccer->getConfig('db_prefix') . '_verein AS C INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_stadion AS S ON S.id = C.stadion_id','C.id = %d',$clubId);
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
-		$this->_i18n->getMessage('rename-club_success'), ''));
+		$this->_i18n->getMessage('rename-club_success'),''));
 		return 'league';
 	}
 }

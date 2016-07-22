@@ -7,17 +7,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -31,9 +31,9 @@
 SEC;
 class TransferBidController extends BaseModel
 {
-	FUNCTION __construct($i18n, $websoccer, $db)
+	FUNCTION __construct($i18n,$websoccer,$db)
 	{
-		parent::__construct($db, $i18n, $websoccer);
+		parent::__construct($db,$i18n,$websoccer);
 	}
 	FUNCTION executeAction($parameters)
 	{
@@ -42,14 +42,14 @@ class TransferBidController extends BaseModel
 			return;
 		}
 		$user = $this->_websoccer->getUser();
-		$clubId = $user->getClubId($this->_websoccer, $this->_db);
+		$clubId = $user->getClubId($this->_websoccer,$this->_db);
 		$playerId = $parameters['id'];
 		// check if user has a club
 		if ($clubId < 1) {
 			throw new Exception($this->_i18n->getMessage('error_action_required_team'));
 		}
 		// check if it is not own player
-		$player = PlayersDataService::getPlayerById($this->_websoccer, $this->_db, $playerId);
+		$player = PlayersDataService::getPlayerById($this->_websoccer,$this->_db,$playerId);
 		if ($user->id === $player['team_user_id']) {
 			throw new Exception($this->_i18n->getMessage('transfer_bid_on_own_player'));
 		}
@@ -74,14 +74,14 @@ class TransferBidController extends BaseModel
 		}
 		// check if user has been already traded too often with the other user
 		if ($player['team_id'] > 0) {
-			$noOfTransactions = TransfermarketDataService::getTransactionsBetweenUsers($this->_websoccer, $this->_db, $player['team_user_id'], $user->id);
+			$noOfTransactions = TransfermarketDataService::getTransactionsBetweenUsers($this->_websoccer,$this->_db,$player['team_user_id'],$user->id);
 			$maxTransactions = $this->_websoccer->getConfig('transfermarket_max_transactions_between_users');
 			if ($noOfTransactions >= $maxTransactions) {
-				throw new Exception($this->_i18n->getMessage('transfer_bid_too_many_transactions_with_user', $noOfTransactions));
+				throw new Exception($this->_i18n->getMessage('transfer_bid_too_many_transactions_with_user',$noOfTransactions));
 			}
 		}
 		// get existing highest bid
-		$highestBid = TransfermarketDataService::getHighestBidForPlayer($this->_websoccer, $this->_db, $parameters['id'], $player['transfer_start'], $player['transfer_end']);
+		$highestBid = TransfermarketDataService::getHighestBidForPlayer($this->_websoccer,$this->_db,$parameters['id'],$player['transfer_start'],$player['transfer_end']);
 		// with transfer-fee: check if own bid amount is higher than existing bid
 		if ($player['team_id'] > 0) {
 			$minBid = $player['transfer_min_bid'] - 1;
@@ -89,14 +89,14 @@ class TransferBidController extends BaseModel
 				$minBid = $highestBid['amount'];
 			}
 			if ($parameters['amount'] <= $minBid) {
-				throw new Exception($this->_i18n->getMessage('transfer_bid_amount_must_be_higher', $minBid));
+				throw new Exception($this->_i18n->getMessage('transfer_bid_amount_must_be_higher',$minBid));
 			}
 			// without transfer fee: compare contract conditions
 		} else if (isset($highestBid['contract_matches'])) {
 		  	// we compare the total income of the whole offered contract duraction
 			$ownBidValue = $parameters['handmoney'] + $parameters['contract_matches'] * $parameters['contract_salary'];
 			$opponentSalary = $highestBid['hand_money'] + $highestBid['contract_matches'] * $highestBid['contract_salary'];
-			// consider goal bonus only for midfield and striker, assuming player scores 10 goals
+			// consider goal bonus only for midfield and striker,assuming player scores 10 goals
 			if ($player['player_position'] === 'midfield' || $player['player_position'] === 'striker') {
 				$ownBidValue += 10 * $parameters['contract_goal_bonus'];
 				$opponentSalary += 10 * $highestBid['contract_goalbonus'];
@@ -105,33 +105,33 @@ class TransferBidController extends BaseModel
 				throw new Exception($this->_i18n->getMessage('transfer_bid_contract_conditions_too_low'));
 			}
 		}
-		// check if budget is enough (hand money/fee + assume that the team consists of 20 players with same salary, then it should survive for 2 matches)
-		TeamsDataService::validateWhetherTeamHasEnoughBudgetForSalaryBid($this->_websoccer, $this->_db, $this->_i18n, $clubId, $parameters['contract_salary']);
+		// check if budget is enough (hand money/fee + assume that the team consists of 20 players with same salary,then it should survive for 2 matches)
+		TeamsDataService::validateWhetherTeamHasEnoughBudgetForSalaryBid($this->_websoccer,$this->_db,$this->_i18n,$clubId,$parameters['contract_salary']);
 		// check if budget is enough for all current highest bids of user.
-		$team = TeamsDataService::getTeamSummaryById($this->_websoccer, $this->_db, $clubId);
-		$result = $this->_db->querySelect('SUM(abloese) + SUM(handgeld) AS bidsamount', $this->_websoccer->getConfig('db_prefix') . '_transfer_angebot', 'user_id = %d AND ishighest = \'1\'', $user->id);
+		$team = TeamsDataService::getTeamSummaryById($this->_websoccer,$this->_db,$clubId);
+		$result = $this->_db->querySelect('SUM(abloese) + SUM(handgeld) AS bidsamount',$this->_websoccer->getConfig('db_prefix') . '_transfer_angebot','user_id = %d AND ishighest = \'1\'',$user->id);
 		$bids = $result->fetch_array();
 		$result->free();
 		if (isset($bids['bidsamount']) && ($parameters['handmoney'] + $parameters['amount'] + $bids['bidsamount']) >= $team['team_budget']) {
 			throw new Exception($this->_i18n->getMessage('transfer_bid_budget_for_all_bids_too_less'));
 		}
 		// save bid
-		$this->saveBid($playerId, $user->id, $clubId, $parameters);
+		$this->saveBid($playerId,$user->id,$clubId,$parameters);
 		// mark previous highest bid as outbidden
 		if (isset($highestBid['bid_id'])) {
-			$this->_db->queryUpdate(['ishighest' => '0'], $this->_websoccer->getConfig('db_prefix') . '_transfer_angebot', 'id = %d', $highestBid['bid_id']);
+			$this->_db->queryUpdate(['ishighest' => '0'],$this->_websoccer->getConfig('db_prefix') . '_transfer_angebot','id = %d',$highestBid['bid_id']);
 		}
 		// notify outbidden user
 		if (isset($highestBid['user_id']) && $highestBid['user_id']) {
 			$playerName = strlen($player['player_pseudonym']) ? $player['player_pseudonym'] : $player['player_firstname'] . ' ' . $player['player_lastname'];
-			NotificationsDataService::createNotification($this->_websoccer, $this->_db, $highestBid['user_id'], 'transfer_bid_notification_outbidden', ['player' => $playerName], 'transfermarket', 'transfer-bid', 'id=' . $playerId);
+			NotificationsDataService::createNotification($this->_websoccer,$this->_db,$highestBid['user_id'],'transfer_bid_notification_outbidden',['player' => $playerName],'transfermarket','transfer-bid','id=' . $playerId);
 		}
 		// success message
 		$this->_websoccer->addFrontMessage(new FrontMessage(MESSAGE_TYPE_SUCCESS,
-		$this->_i18n->getMessage('transfer_bid_success'), ''));
+		$this->_i18n->getMessage('transfer_bid_success'),''));
 		return NULL;
 	}
-	FUNCTION saveBid($playerId, $userId, $clubId, $parameters)
+	FUNCTION saveBid($playerId,$userId,$clubId,$parameters)
 	{
 		$columns['spieler_id'] = $playerId;
 		$columns['user_id'] = $userId;
@@ -144,6 +144,6 @@ class TransferBidController extends BaseModel
 		$columns['verein_id'] = $clubId;
 		$columns['ishighest'] = '1';
 		$fromTable = $this->_websoccer->getConfig('db_prefix') . '_transfer_angebot';
-		$this->_db->queryInsert($columns, $fromTable);
+		$this->_db->queryInsert($columns,$fromTable);
 	}
 }

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -57,9 +57,9 @@ class PlayerStatisticsModel extends BaseModel
 		$fromTable .= ' INNER JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_spiel AS M ON M.id = S.spiel_id';
 		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_saison AS SEAS ON SEAS.id = M.saison_id';
 		$fromTable .= ' LEFT JOIN ' . $this->_websoccer->getConfig('db_prefix') . '_liga AS L ON SEAS.liga_id = L.id';
-		$whereCondition = 'S.spieler_id = %d AND S.minuten_gespielt > 0 AND ((M.spieltyp = \'Pokalspiel\' AND M.pokalname IS NOT NULL AND M.pokalname != \'\') OR (M.spieltyp = \'Ligaspiel\' AND SEAS.id IS NOT NULL)) GROUP BY IFNULL(M.pokalname,\'\'), SEAS.id ORDER BY L.name ASC, SEAS.id ASC, M.pokalname ASC';
+		$whereCondition = 'S.spieler_id = %d AND S.minuten_gespielt > 0 AND ((M.spieltyp = \'Pokalspiel\' AND M.pokalname IS NOT NULL AND M.pokalname != \'\') OR (M.spieltyp = \'Ligaspiel\' AND SEAS.id IS NOT NULL)) GROUP BY IFNULL(M.pokalname,\'\'),SEAS.id ORDER BY L.name ASC,SEAS.id ASC,M.pokalname ASC';
 		// execute
-		$result = $this->_db->querySelect($columns, $fromTable, $whereCondition, $playerId);
+		$result = $this->_db->querySelect($columns,$fromTable,$whereCondition,$playerId);
 		while ($statistic = $result->fetch_array()) {
 			if (strlen($statistic['league_name'])) {
 				$leagueStatistics[] = $statistic;
@@ -68,6 +68,6 @@ class PlayerStatisticsModel extends BaseModel
 			}
 		}
 		$result->free();
-		return array('leagueStatistics' => $leagueStatistics, 'cupStatistics' => $cupStatistics);
+		return array('leagueStatistics' => $leagueStatistics,'cupStatistics' => $cupStatistics);
 	}
 }

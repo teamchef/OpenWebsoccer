@@ -11,9 +11,9 @@
         3: function() { return "tri"; },
         4: function() { return "štyri"; }
     }
-    $.extend($.fn.select2.defaults, {
+    $.extend($.fn.select2.defaults,{
         formatNoMatches: function () { return "Nenašli sa žiadne položky"; },
-        formatInputTooShort: function (input, min) {
+        formatInputTooShort: function (input,min) {
             var n = min - input.length;
             if (n == 1) {
                 return "Prosím zadajte ešte jeden znak";
@@ -23,7 +23,7 @@
                 return "Prosím zadajte ešte ďalších "+n+" znakov";
             }
         },
-        formatInputTooLong: function (input, max) {
+        formatInputTooLong: function (input,max) {
             var n = input.length - max;
             if (n == 1) {
                 return "Prosím zadajte o jeden znak menej";

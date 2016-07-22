@@ -5,7 +5,7 @@
  *
  * (c) 2011 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -16,9 +16,9 @@
  */
 class Twig_Node_ForLoop extends Twig_Node
 {
-    public function __construct($lineno, $tag = null)
+    public function __construct($lineno,$tag = null)
     {
-        parent::__construct(array(), array('with_loop' => false, 'ifexpr' => false, 'else' => false), $lineno, $tag);
+        parent::__construct(array(),array('with_loop' => false,'ifexpr' => false,'else' => false),$lineno,$tag);
     }
 
     public function compile(Twig_Compiler $compiler)

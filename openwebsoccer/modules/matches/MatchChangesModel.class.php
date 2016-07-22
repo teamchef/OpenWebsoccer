@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -36,19 +36,19 @@ class MatchChangesModel extends FormationModel
 		if ($matchId < 1) {
 			throw new Exception($this->_i18n->getMessage(MSG_KEY_ERROR_PAGENOTFOUND));
 		}
-		$match = MatchesDataService::getMatchSubstitutionsById($this->_websoccer, $this->_db, $matchId);
+		$match = MatchesDataService::getMatchSubstitutionsById($this->_websoccer,$this->_db,$matchId);
 		if ($match['match_simulated']) {
 			throw new Exception($this->_i18n->getMessage('match_details_match_completed'));
 		}
-		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer, $this->_db);
+		$teamId = $this->_websoccer->getUser()->getClubId($this->_websoccer,$this->_db);
 		if ($match['match_home_id'] !== $teamId && $match['match_guest_id'] !== $teamId) {
-			$teamId = NationalteamsDataService::getNationalTeamManagedByCurrentUser($this->_websoccer, $this->_db);
+			$teamId = NationalteamsDataService::getNationalTeamManagedByCurrentUser($this->_websoccer,$this->_db);
 		}
 		if ($teamId !== $match['match_home_id']  && $match['match_guest_id'] !== $teamId) {
 			throw new Exception('illegal match');
 		}
 		$teamPrefix = ($teamId == $match['match_home_id']) ? 'home' : 'guest';
-		$players = MatchesDataService::getMatchPlayerRecordsByField($this->_websoccer, $this->_db, $matchId, $teamId);
+		$players = MatchesDataService::getMatchPlayerRecordsByField($this->_websoccer,$this->_db,$matchId,$teamId);
 		$playersOnField = $players['field'];
 		$playersOnBench = (isset($players['bench'])) ? $players['bench'] : array();
 		$formation = array();
@@ -142,6 +142,6 @@ class MatchChangesModel extends FormationModel
 				$formation['sub' . $subNo .'_position'] = '';
 			}
 		}
-		return array('setup' => $setup, 'players' => $players, 'formation' => $formation, 'minute' => $match['match_minutes']);
+		return array('setup' => $setup,'players' => $players,'formation' => $formation,'minute' => $match['match_minutes']);
 	}
 }

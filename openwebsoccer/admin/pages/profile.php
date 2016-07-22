@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -38,12 +38,12 @@ if (!$show) {
 			<legend><?php echo escapeOutput($admin['name']); ?></legend>
 			<?php
 			$formFields = array();
-			$formFields["email"] = array("type" => "email", "value" => $admin['email'], "required" => "true");
-			$formFields["newpassword"] = array("type" => "password", "value" => "");
-			$formFields["repeatpassword"] = array("type" => "password", "value" => "");
-			$formFields["language"] = array("type" => "select", "value" => $admin["lang"], "selection" => $website->getConfig("supported_languages"));
+			$formFields["email"] = array("type" => "email","value" => $admin['email'],"required" => "true");
+			$formFields["newpassword"] = array("type" => "password","value" => "");
+			$formFields["repeatpassword"] = array("type" => "password","value" => "");
+			$formFields["language"] = array("type" => "select","value" => $admin["lang"],"selection" => $website->getConfig("supported_languages"));
 			foreach ($formFields as $fieldId => $fieldInfo) {
-				echo FormBuilder::createFormGroup($i18n, $fieldId, $fieldInfo, $fieldInfo["value"], "profile_label_");
+				echo FormBuilder::createFormGroup($i18n,$fieldId,$fieldInfo,$fieldInfo["value"],"profile_label_");
 			}
 			?>
 		</fieldset>
@@ -71,17 +71,17 @@ elseif ($show == "save") {
 		// create new salt
 		if (!strlen($admin["passwort_salt"])) {
 			$salt = SecurityUtil::generatePasswordSalt();
-			$db->queryUpdate(array("passwort_salt" => $salt), $fromTable, $whereCondition, $parameter);
+			$db->queryUpdate(array("passwort_salt" => $salt),$fromTable,$whereCondition,$parameter);
 		} else {
 			$salt = $admin["passwort_salt"];
 		}
-			$passwort = SecurityUtil::hashPassword(trim($_POST['newpassword']), $salt);
+			$passwort = SecurityUtil::hashPassword(trim($_POST['newpassword']),$salt);
 		} else {
 			$passwort = $admin['passwort'];
 		}
-		$columns = array("passwort" => $passwort, "email" => $_POST['email'], "lang" => $_POST['language']);
-		$db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);
-		echo createSuccessMessage($i18n->getMessage("alert_save_success"), "");
+		$columns = array("passwort" => $passwort,"email" => $_POST['email'],"lang" => $_POST['language']);
+		$db->queryUpdate($columns,$fromTable,$whereCondition,$parameter);
+		echo createSuccessMessage($i18n->getMessage("alert_save_success"),"");
 		echo "<p>&raquo; <a href=\"?site=". $site ."\">". $i18n->getMessage("back_label") . "</a></p>\n";
 	}
 }

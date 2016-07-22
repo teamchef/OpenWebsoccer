@@ -6,11 +6,11 @@
 (function ($) {
     "use strict";
 
-    $.extend($.fn.select2.defaults, {
+    $.extend($.fn.select2.defaults,{
         formatNoMatches: function () {
             return "Non se atoparon resultados";
         },
-        formatInputTooShort: function (input, min) {
+        formatInputTooShort: function (input,min) {
             var n = min - input.length;
             if (n === 1) {
                 return "Engada un carácter";
@@ -18,7 +18,7 @@
                 return "Engada " + n + " caracteres";
             }
         },
-        formatInputTooLong: function (input, max) {
+        formatInputTooLong: function (input,max) {
             var n = input.length - max;
             if (n === 1) {
                 return "Elimine un carácter";

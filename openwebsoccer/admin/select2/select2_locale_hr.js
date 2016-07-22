@@ -13,9 +13,9 @@
         4: function(n) { return (n % 100 != 14 ? "znaka" : "znakova"); }
     };
 
-    $.extend($.fn.select2.defaults, {
+    $.extend($.fn.select2.defaults,{
         formatNoMatches: function () { return "Nema rezultata"; },
-        formatInputTooShort: function (input, min) {
+        formatInputTooShort: function (input,min) {
             var n = min - input.length;
             var nMod10 = n % 10;
 
@@ -25,7 +25,7 @@
 
             return "Unesite još " + n + " znakova";
         },
-        formatInputTooLong: function (input, max) {
+        formatInputTooLong: function (input,max) {
             var n = input.length - max;
             var nMod10 = n % 10;
 

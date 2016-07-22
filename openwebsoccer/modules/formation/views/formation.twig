@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -49,9 +49,9 @@
             <p><em>{{ env.getFormattedDatetime(next_match.match_date) }}
                     | {{ i18n.getMessage("matchtype_" ~ next_match.match_type) }}</em></p>
             <p>
-                <strong><a href="{{ env.getInternalUrl("team", "id=" ~ next_match.match_home_id) }}">{{ next_match.match_home_name }}</a>
+                <strong><a href="{{ env.getInternalUrl("team","id=" ~ next_match.match_home_id) }}">{{ next_match.match_home_name }}</a>
                     -
-                    <a href="{{ env.getInternalUrl("team", "id=" ~ next_match.match_guest_id) }}">{{ next_match.match_guest_name }}</a></strong>
+                    <a href="{{ env.getInternalUrl("team","id=" ~ next_match.match_guest_id) }}">{{ next_match.match_guest_name }}</a></strong>
             </p>
         </div>
         <div class="span3">
@@ -62,7 +62,7 @@
                         <tr>
                             <td>{{ previousMatch.home_team }} - {{ previousMatch.guest_team }}</td>
                             <td>
-                                <a href="{{ env.getInternalUrl("match", "id=" ~ previousMatch.id) }}">{{ previousMatch.home_goals }}
+                                <a href="{{ env.getInternalUrl("match","id=" ~ previousMatch.id) }}">{{ previousMatch.home_goals }}
                                     - {{ previousMatch.guest_goals }}</a></td>
                         </tr>
                     {% endfor %}

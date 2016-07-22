@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -73,7 +73,7 @@
 	</li>
 </ul>
 {% if openMatchesExist %}
-	{{ macro.box("", i18n.getMessage("teamoftheday_openmatchesexist"), "info") }}
+	{{ macro.box("",i18n.getMessage("teamoftheday_openmatchesexist"),"info") }}
 {% else %}
 	{% if players|length > 0 %}
 		<div id="pitch">
@@ -119,9 +119,9 @@
 				{% endif %}
 				<div class="position {{ frontPosition }} text-center">
 					{% if player.memberoftopteam > 1 %}
-						<span class="badge positionPlayerIcons wstooltip" title="{{ i18n.getMessage("teamoftheday_known_member_tooltip", player.memberoftopteam) }}" data-container="body"><small>{{ player.memberoftopteam }}</small></span>
+						<span class="badge positionPlayerIcons wstooltip" title="{{ i18n.getMessage("teamoftheday_known_member_tooltip",player.memberoftopteam) }}" data-container="body"><small>{{ player.memberoftopteam }}</small></span>
 					{% endif %}
-					<a href="{{ env.getInternalUrl("player", "id=" ~ player.player_id) }}" title="{{ i18n.getMessage("player_navlabel") }}">
+					<a href="{{ env.getInternalUrl("player","id=" ~ player.player_id) }}" title="{{ i18n.getMessage("player_navlabel") }}">
 						{% if player.picture|length > 0 %}
 							{% if env.getConfig("cdn_root_set") %}
 								<img src="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.picture }}" style="max-width: 90px; max-height: 60px;">
@@ -139,7 +139,7 @@
 						{% endif %}
 					</a>
 					{% if player.grade is defined %}
-						<div class="positionPlayer wstooltip" title="{{ i18n.getMessage("match_details_players_grade") }}: {{ player.grade }}, {{ i18n.getMessage("player_details_statistic_goals") }}: {{ player.goals }}, {{ i18n.getMessage("player_details_statistic_assists") }}: {{ player.assists }}">
+						<div class="positionPlayer wstooltip" title="{{ i18n.getMessage("match_details_players_grade") }}: {{ player.grade }},{{ i18n.getMessage("player_details_statistic_goals") }}: {{ player.goals }},{{ i18n.getMessage("player_details_statistic_assists") }}: {{ player.assists }}">
 					{% else %}
 						<div class="positionPlayer">
 					{% endif %}
@@ -152,7 +152,7 @@
 				{% endif %}
 			{% endif %}
 		{% elseif seasonId > 0 %}
-			{{ macro.box("", i18n.getMessage("teamoftheday_no_matches_in_season"), "info") }}
+			{{ macro.box("",i18n.getMessage("teamoftheday_no_matches_in_season"),"info") }}
 		{% endif %}
 	{% endif %}
 {% endblock %}

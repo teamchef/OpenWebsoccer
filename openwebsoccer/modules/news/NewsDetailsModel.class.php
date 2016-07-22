@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -37,7 +37,7 @@ class NewsDetailsModel extends BaseModel
 		$fromTable .= ' LEFT JOIN ' . $tablePrefix . 'admin AS AdminTab ON NewsTab.autor_id = AdminTab.id';
 		$whereCondition = 'NewsTab.id = %d AND status = 1';
 		$parameters = (int)$this->_websoccer->getRequestParameter('id');
-		$result = $this->_db->querySelect('NewsTab.*, AdminTab.name AS author_name', $fromTable, $whereCondition, $parameters);
+		$result = $this->_db->querySelect('NewsTab.*,AdminTab.name AS author_name',$fromTable,$whereCondition,$parameters);
 		$item = $result->fetch_array();
 		$result->free();
 		if (!$item) {
@@ -67,14 +67,14 @@ class NewsDetailsModel extends BaseModel
 			'date' => $this->_websoccer->getFormattedDate($item['datum']),
 			'message' => $message,
 			'author_name' => $item['author_name']];
-		return ['article' => $article, 'relatedLinks' => $relatedLinks];
+		return ['article' => $article,'relatedLinks' => $relatedLinks];
 	}
 	FUNCTION _strToLink($str)
 	{
 		//URL
-		$str = preg_replace('#([\t\r\n ])([a-z0-9]+?)1://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \'\n\r\t<]*)?)#i', '\1<a href="\2://\3" target="_blank">\2://\3</a>', $str);
+		$str = preg_replace('#([\t\r\n ])([a-z0-9]+?)1://([\w\-]+\.([\w\-]+\.)*[\w]+(:[0-9]+)?(/[^ \'\n\r\t<]*)?)#i','\1<a href="\2://\3" target="_blank">\2://\3</a>',$str);
 		//EMail
-		$str = preg_replace('#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i', '\\1<a href=\'mailto:\\2@\\3\'>\\2@\\3</a>', $str);
+		$str = preg_replace('#([\n ])([a-z0-9\-_.]+?)@([\w\-]+\.([\w\-\.]+\.)*[\w]+)#i','\\1<a href=\'mailto:\\2@\\3\'>\\2@\\3</a>',$str);
 		return $str;
 	}
 }

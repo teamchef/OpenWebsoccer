@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,7 +30,7 @@
 SEC;
 class SimulationFormationHelper
 {
-	FUNCTION generateNewFormationForTeam(WebSoccer $websoccer, DbConnection $db, SimulationTeam $team, $matchId)
+	FUNCTION generateNewFormationForTeam(WebSoccer $websoccer,DbConnection $db,SimulationTeam $team,$matchId)
 	{
 		// get all players (prefer the freshest players)
 		$columns['id'] = 'id';
@@ -55,14 +55,14 @@ class SimulationFormationHelper
 			$fromTable = $websoccer->getConfig('db_prefix') . '_spieler';
 			$whereCondition = 'verein_id = %d AND verletzt = 0 AND gesperrt = 0 AND status = 1 ORDER BY w_frische DESC';
 			$parameters = $team->id;
-			$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+			$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		} else {
 			// national team: take best players of nation
 			$columnsStr = '';
 			$firstColumn = TRUE;
 			foreach($columns as $dbName => $aliasName) {
 				if (!$firstColumn) {
-					$columnsStr = $columnsStr .', ';
+					$columnsStr = $columnsStr .',';
 				} else {
 					$firstColumn = FALSE;
 				}
@@ -70,10 +70,10 @@ class SimulationFormationHelper
 			}
 			$nation = $db->connection->escape_string($team->name);
 			$dbPrefix = $websoccer->getConfig('db_prefix');
-			$queryStr = '(SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Torwart\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 1)';
-			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Abwehr\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 4)';
-			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Mittelfeld\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 4)';
-			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Sturm\' ORDER BY w_staerke DESC, w_frische DESC LIMIT 2)';
+			$queryStr = '(SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Torwart\' ORDER BY w_staerke DESC,w_frische DESC LIMIT 1)';
+			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Abwehr\' ORDER BY w_staerke DESC,w_frische DESC LIMIT 4)';
+			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Mittelfeld\' ORDER BY w_staerke DESC,w_frische DESC LIMIT 4)';
+			$queryStr .= ' UNION ALL (SELECT ' . $columnsStr . ' FROM ' . $dbPrefix . '_spieler WHERE nation = \''. $nation . '\' AND position = \'Sturm\' ORDER BY w_staerke DESC,w_frische DESC LIMIT 2)';
 			$result = $db->executeQuery($queryStr);
 		}
 		$lvExists = FALSE;
@@ -156,16 +156,16 @@ class SimulationFormationHelper
 					$mainPosition = 'DM';
 				}
 			}
-			$player = new SimulationPlayer($playerinfo['id'], $team, $position, $mainPosition,
-					3.0, $playerinfo['age'], $playerinfo['strength'], $playerinfo['technique'], $playerinfo['stamina'],
-					$playerinfo['freshness'], $playerinfo['satisfaction']);
+			$player = new SimulationPlayer($playerinfo['id'],$team,$position,$mainPosition,
+					3.0,$playerinfo['age'],$playerinfo['strength'],$playerinfo['technique'],$playerinfo['stamina'],
+					$playerinfo['freshness'],$playerinfo['satisfaction']);
 			if (strlen($playerinfo['pseudonym'])) {
 				$player->name = $playerinfo['pseudonym'];
 			} else {
 				$player->name = $playerinfo['firstName'] . ' ' . $playerinfo['lastName'];
 			}
 			$team->positionsAndPlayers[$player->position][] = $player;
-			SimulationStateHelper::createSimulationRecord($websoccer, $db, $matchId, $player);
+			SimulationStateHelper::createSimulationRecord($websoccer,$db,$matchId,$player);
 		}
 		$result->free();
 	}

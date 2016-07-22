@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -71,7 +71,7 @@
 			{% endif %}
 				<th>{{ i18n.getMessage("entity_player_verein_id") }}</th>
 				{% if player.team_id > 0 %}
-					<td><a href="{{ env.getInternalUrl("team", "id=" ~ player.team_id) }}">{{ player.team_name }}</a></td>
+					<td><a href="{{ env.getInternalUrl("team","id=" ~ player.team_id) }}">{{ player.team_name }}</a></td>
 					<th>{{ i18n.getMessage("player_details_statistic_goals") }}</th>
 					<td>{{ player.player_season_goals }}</td>
 					<td>{{ player.player_total_goals }}</td>
@@ -81,7 +81,7 @@
 						{% if player.lending_owner_id > 0 %}
 							<tr>
 								<th>{{ i18n.getMessage("entity_player_lending_owner_id") }}</th>
-								<td><a href="{{ env.getInternalUrl("team", "id=" ~ player.lending_owner_id) }}">{{ player.lending_owner_name }}</a></td>
+								<td><a href="{{ env.getInternalUrl("team","id=" ~ player.lending_owner_id) }}">{{ player.lending_owner_name }}</a></td>
 								<th>{{ i18n.getMessage("player_details_statistic_assists") }}</th>
 							</tr>
 						{% else %}
@@ -140,19 +140,19 @@
 					<tr><th>{{ i18n.getMessage("entity_player_gesperrt") }}</th><td>{{ player.player_matches_blocked  }} {{ i18n.getMessage("player_details_unit_matches") }}</td></tr>
 					<tr><th>{{ i18n.getMessage("entity_player_gesperrt_cups") }}</th><td>{{ player.player_matches_blocked_cups  }} {{ i18n.getMessage("player_details_unit_matches") }}</td></tr>
 					<tr><th>{{ i18n.getMessage("entity_player_gesperrt_nationalteam") }}</th><td>{{ player.player_matches_blocked_nationalteam  }} {{ i18n.getMessage("player_details_unit_matches") }}</td></tr>
-					<tr><th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th><td>{{ player.player_contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td></tr>
-					<tr><th>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</th><td>{{ player.player_contract_goalbonus|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td></tr>
+					<tr><th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th><td>{{ player.player_contract_salary|number_format(0,',',' ')  }} {{ env.getConfig("game_currency") }}</td></tr>
+					<tr><th>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</th><td>{{ player.player_contract_goalbonus|number_format(0,',',' ')  }} {{ env.getConfig("game_currency") }}</td></tr>
 					<tr><th>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</th><td>{{ player.player_contract_matches  }} {{ i18n.getMessage("player_details_unit_matches") }}</td></tr>
 					{% if player.lending_matches > 0 %}
 						<tr><th>{{ i18n.getMessage("entity_player_lending_matches") }}</th><td>{{ player.lending_matches }} {{ i18n.getMessage("player_details_unit_matches") }}</td></tr>
 					{% endif %}
-					<tr><th>{{ i18n.getMessage("entity_player_marktwert") }}</th><td>{{ player.player_marketvalue|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td></tr>
+					<tr><th>{{ i18n.getMessage("entity_player_marktwert") }}</th><td>{{ player.player_marketvalue|number_format(0,',',' ')  }} {{ env.getConfig("game_currency") }}</td></tr>
 					<tr><th></th><td></td></tr>
 					{% if env.getConfig("transfermarket_enabled") and player.player_transfermarket > 0 %}
 						<div class="alert alert-info">
 							<p>{{ i18n.getMessage("player_details_avaiable_on_transfermarket") }}</p>
 							{% if env.getUser().getClubId() != player.team_id %}
-								<p><a class="btn btn-mini" href="{{ env.getInternalUrl("transfer-bid", "id=" ~ player.player_id) }}"><i class="icon-hand-up"></i> {{ i18n.getMessage("transfermarket_bid") }}</a></p>
+								<p><a class="btn btn-mini" href="{{ env.getInternalUrl("transfer-bid","id=" ~ player.player_id) }}"><i class="icon-hand-up"></i> {{ i18n.getMessage("transfermarket_bid") }}</a></p>
 							{% endif %}
 						</div>
 					{% elseif player.player_unsellable > 0 %}
@@ -161,9 +161,9 @@
 						</div>
 					{% elseif player.lending_owner_id == 0 and player.lending_fee > 0 and env.getConfig("lending_enabled") %}
 						<div class="alert alert-info">
-							<p>{{ i18n.getMessage("lending_player_lendable_info", player.lending_fee|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"))|raw }}</p>
+							<p>{{ i18n.getMessage("lending_player_lendable_info",player.lending_fee|number_format(0,',',' ') ~ " " ~ env.getConfig("game_currency"))|raw }}</p>
 							{% if env.getUser().getClubId() != player.team_id %}
-								<p><a class="btn btn-mini" href="{{ env.getInternalUrl("borrow-player", "id=" ~ player.player_id) }}"><i class="icon-share-alt"></i> {{ i18n.getMessage("lending_player_hire_button") }}</a></p>
+								<p><a class="btn btn-mini" href="{{ env.getInternalUrl("borrow-player","id=" ~ player.player_id) }}"><i class="icon-share-alt"></i> {{ i18n.getMessage("lending_player_hire_button") }}</a></p>
 							{% endif %}
 						</div>
 					{% endif %}
@@ -198,7 +198,7 @@
  			{% if grades|length == 1 %}
  				<p><strong>{{ i18n.getMessage("player_details_grade_last_match") }}:</strong> {{ grades[0] }}</p>
  			{% else %}
- 				<div id="grades" style="width: 600px; height: 300px; margin-left: 30px; margin-bottom: 30px" data-series="[{% for grade in grades %}{% if loop.index > 1 %}, {% endif %}[{{ loop.index }}, {{ grade }}]{% endfor %}]">
+ 				<div id="grades" style="width: 600px; height: 300px; margin-left: 30px; margin-bottom: 30px" data-series="[{% for grade in grades %}{% if loop.index > 1 %},{% endif %}[{{ loop.index }},{{ grade }}]{% endfor %}]">
  				</div>
  			{% endif %}
  			<p><strong>{{ i18n.getMessage("player_details_grade_average") }}:</strong> {{ player.player_avg_grade }}</p>

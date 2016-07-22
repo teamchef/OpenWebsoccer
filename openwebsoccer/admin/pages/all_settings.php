@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -29,7 +29,7 @@
 ******************************************************************/
 function prepareFielfValueForSaving($fieldValue) {
 	$preparedValue = trim($fieldValue);
-	// remove automatically added slashes, since config file writer will anyway add slashes.
+	// remove automatically added slashes,since config file writer will anyway add slashes.
 	if (get_magic_quotes_gpc()) {
 		$preparedValue = stripslashes($fieldValue);
 	}
@@ -45,7 +45,7 @@ if (!$show) {
 	// get tabs
 	$tabs = array();
 	foreach ($setting as $settingId => $settingData) {
-		$settingInfo = json_decode($settingData, true);
+		$settingInfo = json_decode($settingData,true);
 		$tabs[$settingInfo['category']][$settingId] = $settingInfo;
 	}
 	?>
@@ -74,7 +74,7 @@ if (!$show) {
 			if ($firstTab) echo ' active';
 			echo '\' id=\''. $tabId . '\'>';
 			foreach ($settings as $settingId => $settingInfo) {
-				echo FormBuilder::createFormGroup($i18n, $settingId, $settingInfo, $website->getConfig($settingId), 'settings_label_');
+				echo FormBuilder::createFormGroup($i18n,$settingId,$settingInfo,$website->getConfig($settingId),'settings_label_');
 			}
 			echo '</div>';
 			$firstTab = FALSE;
@@ -102,6 +102,6 @@ elseif ($show == 'speichern') {
 	$cf = ConfigFileWriter::getInstance($conf);
 	$cf->saveSettings($newSettings);
 	include('success.inc.php');
-	echo createWarningMessage($i18n->getMessage('settings_saved_note_restartjobs'), $i18n->getMessage('settings_saved_note_restartjobs_details'));
+	echo createWarningMessage($i18n->getMessage('settings_saved_note_restartjobs'),$i18n->getMessage('settings_saved_note_restartjobs_details'));
 	}
 }

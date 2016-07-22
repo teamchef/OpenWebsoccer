@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -93,16 +93,16 @@
 		<table>
 			<tr>
 			{% if team.team_league_id > 0 %}
-				{% set league = "<a href=\"" ~ env.getInternalUrl("league", "id=" ~ team.team_league_id) ~ "\">" ~ team.team_league_name|e ~ "</a>" %}
+				{% set league = "<a href=\"" ~ env.getInternalUrl("league","id=" ~ team.team_league_id) ~ "\">" ~ team.team_league_name|e ~ "</a>" %}
 			{% else %}
 				{% set league = "-" %}
 			{% endif %}
 			</tr>
 			<tr>
 			{% if team.team_user_id > 0 %}
-				{% set manager = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_user_id) ~ "\">" ~ team.team_user_name|e ~ "</a>" %}
+				{% set manager = "<a href=\"" ~ env.getInternalUrl("user","id=" ~ team.team_user_id) ~ "\">" ~ team.team_user_name|e ~ "</a>" %}
 				{% if team.user_picture|length > 0 %}
-					{% set manager = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_user_id) ~ "\"><img src=\"" ~ team.user_picture ~ "\" style=\"width: 20px; height: 20px\"/></a> " ~ manager %}
+					{% set manager = "<a href=\"" ~ env.getInternalUrl("user","id=" ~ team.team_user_id) ~ "\"><img src=\"" ~ team.user_picture ~ "\" style=\"width: 20px; height: 20px\"/></a> " ~ manager %}
 				{% endif %}
 				{% if team.interimmanager %}
 					{% set manager = manager ~ "<br/><em>" ~ i18n.getMessage("entity_club_interimmanager") ~ "</em>" %}
@@ -113,16 +113,16 @@
 			</tr>
 			<tr>
 			{% if team.team_deputyuser_id > 0 %}
-				{% set deputy = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_deputyuser_id) ~ "\">" ~ team.team_deputyuser_name|e ~ "</a>" %}
+				{% set deputy = "<a href=\"" ~ env.getInternalUrl("user","id=" ~ team.team_deputyuser_id) ~ "\">" ~ team.team_deputyuser_name|e ~ "</a>" %}
 				{% if team.user_picture|length > 0 %}
-					{% set deputy = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ team.team_deputyuser_id) ~ "\"><img src=\"" ~ team.deputyuser_picture ~ "\" style=\"width: 20px; height: 20px\"/></a> " ~ deputy %}
+					{% set deputy = "<a href=\"" ~ env.getInternalUrl("user","id=" ~ team.team_deputyuser_id) ~ "\"><img src=\"" ~ team.deputyuser_picture ~ "\" style=\"width: 20px; height: 20px\"/></a> " ~ deputy %}
 				{% endif %}
 			{% endif %}
 			</tr>
 			<tr>
 			{% if stadium.stadium_id is defined and stadium.stadium_id > 0 %}
 				{% set capacity = stadium.places_stands + stadium.places_seats + stadium.places_stands_grand + stadium.places_seats_grand + stadium.places_vip %}
-				{% set stadiumLabel = stadium.name ~ " (" ~ capacity|number_format(0, ',', ' ') ~ ")" %}
+				{% set stadiumLabel = stadium.name ~ " (" ~ capacity|number_format(0,',',' ') ~ ")" %}
 			{% else %}
 				{% set stadiumLabel = "-" %}
 			{% endif %}
@@ -144,7 +144,7 @@
 			</tr>
 			<tr>
 				<th>{{ i18n.getMessage("entity_club_liga_id")  }}</th>
-				<td>{{ macro.infofield('', league, true) }}</td>
+				<td>{{ macro.infofield('',league,true) }}</td>
 				<td></td>
 				<th>{{ i18n.getMessage("team_details_statistic_matches") }}</th>
 				<td><center>{{ team.team_season_matches }}</center></td>
@@ -152,7 +152,7 @@
 			</tr>
 			<tr>
 				<th>{{ i18n.getMessage("team_details_manager") }}</th>
-				<td>{{ macro.infofield('', manager, true) }}</td>
+				<td>{{ macro.infofield('',manager,true) }}</td>
 				<td></td>
 				<th>{{ i18n.getMessage("team_details_statistic_goals") }}</th>
 				<td><center>{{ team.team_season_goals }}</center></td>
@@ -160,17 +160,17 @@
 			</tr>
 			<tr>
 				{% if deputy is defined %}
-					<th>{{ i18n.getMessage("entity_club_user_id_actual") }}</th><td>{{ macro.infofield('', deputy, true) }}</td></tr>
+					<th>{{ i18n.getMessage("entity_club_user_id_actual") }}</th><td>{{ macro.infofield('',deputy,true) }}</td></tr>
 				{% endif %}
 			</tr>
 			{% if not team.is_nationalteam %}
 				<tr>
 				{% if team.team_min_target_rank > 0 %}
-					{{ macro.infofield(i18n.getMessage("entity_club_min_target_rank"), i18n.getMessage("team_details_season_place", team.team_min_target_rank)) }}
+					{{ macro.infofield(i18n.getMessage("entity_club_min_target_rank"),i18n.getMessage("team_details_season_place",team.team_min_target_rank)) }}
 				{% endif %}
 				</tr>
 				<tr>
-				<th>{{ i18n.getMessage("entity_club_stadion_id")}}</th><td>{{macro.infofield('', stadiumLabel, true) }}</td>
+				<th>{{ i18n.getMessage("entity_club_stadion_id")}}</th><td>{{macro.infofield('',stadiumLabel,true) }}</td>
 				<td></td>
 				<th>{{ i18n.getMessage("team_details_statistic_againsts") }}</th>
 				<td><center>{{ team.team_season_againsts }}</center></td>
@@ -178,7 +178,7 @@
 				</tr>
 				<tr>
 				{% if team.team_sponsor_name|length > 0 %}
-					{{ macro.infofield(i18n.getMessage("entity_club_sponsor_id"), team.team_sponsor_name) }}
+					{{ macro.infofield(i18n.getMessage("entity_club_sponsor_id"),team.team_sponsor_name) }}
 					{% if team.team_sponsor_picture|length > 0 %}
 						<div style="text-align: center; margin: 10px;">
 							{% if env.getConfig("cdn_root_set") %}
@@ -192,7 +192,7 @@
 				<t/tr>
 				<tr>
 					<th>{{ i18n.getMessage("entity_player")          }}</th>
-					<td>{{macro.infofield('', playerfacts.numberOfPlayers) }}</td>
+					<td>{{macro.infofield('',playerfacts.numberOfPlayers) }}</td>
 					<td></td>
 					<th>{{ i18n.getMessage("team_details_statistic_wins") }}</th>
 					<td><center>{{ team.team_season_wins }}</center></td>
@@ -200,7 +200,7 @@
 				</tr>
 				<tr>
 					<th>{{ i18n.getMessage("entity_player_age")      }}</th>
-					<td>{{macro.infofield('&empty; ', playerfacts.avgAge|round(2), true) }}</td>
+					<td>{{macro.infofield('&empty; ',playerfacts.avgAge|round(2),true) }}</td>
 					<td></td>
 					<th>{{ i18n.getMessage("team_details_statistic_losses") }}</th>
 					<td><center>{{ team.team_season_losses }}</center></td>
@@ -208,7 +208,7 @@
 				</tr>
 				<tr>
 					<th>{{ i18n.getMessage("entity_player_marktwert")}}</th>
-					<td>{{macro.infofield('&sum; '  , playerfacts.sumMarketValue|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"), true) }}</td>
+					<td>{{macro.infofield('&sum; '  ,playerfacts.sumMarketValue|number_format(0,',',' ') ~ " " ~ env.getConfig("game_currency"),true) }}</td>
 					<td></td>
 					<th>{{ i18n.getMessage("team_details_statistic_draws") }}</th>
 					<td><center>{{ team.team_season_draws }}</center></td>
@@ -216,7 +216,7 @@
 				</tr>
 				<tr>
 					<th>{{ i18n.getMessage("entity_player_marktwert")}}</th>
-					<td>{{macro.infofield('&empty; ', playerfacts.avgMarketValue|number_format(0, ',', ' ') ~ " " ~ env.getConfig("game_currency"), true) }}</td>
+					<td>{{macro.infofield('&empty; ',playerfacts.avgMarketValue|number_format(0,',',' ') ~ " " ~ env.getConfig("game_currency"),true) }}</td>
 					<td></td>
 					<th>{{ i18n.getMessage("team_details_statistic_score") }}</th>
 					<td><center>{{ team.team_season_score }}</center></td>
@@ -230,7 +230,7 @@
 			{% if team.victories is defined and team.victories|length > 0 %}
 				<ul>
 					{% for victory in team.victories %}
-						<li><strong>{{ i18n.getMessage("entity_season") }} {{ victory.season_name }} , {{ victory.league_name }}:</strong> {{ i18n.getMessage("team_details_season_place", victory.season_place) }}</li>
+						<li><strong>{{ i18n.getMessage("entity_season") }} {{ victory.season_name }} ,{{ victory.league_name }}:</strong> {{ i18n.getMessage("team_details_season_place",victory.season_place) }}</li>
 					{% endfor %}
 				</ul>
 			{% endif %}

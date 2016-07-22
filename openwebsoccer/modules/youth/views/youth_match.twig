@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -98,7 +98,7 @@
 			border-bottom: 1px solid black;
 			text-align: center;
 		}
-		#report_goals_home, #report_goals_separator, #report_goals_guest {
+		#report_goals_home,#report_goals_separator,#report_goals_guest {
 			padding: 30px;
 			display: inline-block;
 			font-size: 36px;
@@ -117,9 +117,9 @@
 			-webkit-border-radius: 4px;
 			-moz-border-radius: 4px;
 			border-radius: 4px;
-			-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-			-moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
-			box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.05);
+			-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+			-moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
+			box-shadow: inset 0 1px 1px rgba(0,0,0,0.05);
 		}
 		.report_minute {
 			font-weight: bold;
@@ -142,7 +142,7 @@
 {{ match.home_team_name }} - {{ match.guest_team_name }}
 {% endblock %}
 {% block page_content %}
-	{{ profile.infofield(i18n.getMessage("entity_youthmatch_matchdate"), env.getFormattedDatetime(match.matchdate)) }}
+	{{ profile.infofield(i18n.getMessage("entity_youthmatch_matchdate"),env.getFormattedDatetime(match.matchdate)) }}
 	{% if match.simulated %}
 		<h3>{{ i18n.getMessage("match_details_report_title") }}</h3>
 		<div id="report_result">
@@ -152,15 +152,15 @@
 		</div>
 		<div style="margin-top: 10px">
 		{% if match.home_noformation %}
-		{{ macro.box("", i18n.getMessage("match_details_noformation", match.home_team_name), "warning") }}
+		{{ macro.box("",i18n.getMessage("match_details_noformation",match.home_team_name),"warning") }}
 		{% endif %}
 		{% if match.guest_noformation %}
-		{{ macro.box("", i18n.getMessage("match_details_noformation", match.guest_team_name), "warning") }}
+		{{ macro.box("",i18n.getMessage("match_details_noformation",match.guest_team_name),"warning") }}
 		{% endif %}
 		</div>
 		{% if reportMessages|length > 0 %}
-			<span class="report_team_home">{{ match.home_team_name }} <a href="{{ env.getInternalUrl("team", "id=" ~ match.home_team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}"><i class="icon-info-sign darkIcon"></i></a></span>
-		  	<span style="margin-left: 20px" class="report_team_guest">{{ match.guest_team_name }} <a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}"><i class="icon-info-sign darkIcon"></i></a></span>
+			<span class="report_team_home">{{ match.home_team_name }} <a href="{{ env.getInternalUrl("team","id=" ~ match.home_team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}"><i class="icon-info-sign darkIcon"></i></a></span>
+		  	<span style="margin-left: 20px" class="report_team_guest">{{ match.guest_team_name }} <a href="{{ env.getInternalUrl("team","id=" ~ match.guest_team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}"><i class="icon-info-sign darkIcon"></i></a></span>
 			<div id="reportarea">
 				<ul class="unstyled" style="margin: 1px 10px">
 					{% for reportMessage in reportMessages %}
@@ -177,7 +177,7 @@
 						{% elseif reportMessage.message_key == "ymreport_injury" %}
 							<i class="websoccericon-injury pull-right" style="margin-right: 10px;"></i>
 						{% endif %}
-						<span class="report_minute {{ teamMarkerClass }}">{{ i18n.getMessage("match_report_minute", reportMessage.minute) }}</span>
+						<span class="report_minute {{ teamMarkerClass }}">{{ i18n.getMessage("match_report_minute",reportMessage.minute) }}</span>
 						<br>
 						{{ reportMessage.message|raw }}</li>
 					{% endfor %}
@@ -188,7 +188,7 @@
 		<div class="row-fluid">
 			{% for teamPrefix,teamPlayers in players %}
 			<div class="span6">
-				<h5><a href="{{ env.getInternalUrl("team", "id=" ~ match[teamPrefix ~ "_team_id"]) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ match[teamPrefix ~ "_team_name"] }}</a></h5>
+				<h5><a href="{{ env.getInternalUrl("team","id=" ~ match[teamPrefix ~ "_team_id"]) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ match[teamPrefix ~ "_team_name"] }}</a></h5>
 				{% if teamPlayers|length > 0 %}
 					<table class="table table-striped table-condensed">
 						<colgroup>
@@ -207,7 +207,7 @@
 								{% if player.position_main is not empty %}
 								<td title="{{ i18n.getMessage("option_" ~ player.position_main) }}">{{ i18n.getMessage("player_mainposition_" ~ player.position_main) }}</td>
 								{% else %}
-								<td title="{{ i18n.getMessage("option_" ~ player.position) }}">{{ i18n.getMessage("option_" ~ player.position)|slice(0, 2)|upper }}</td>
+								<td title="{{ i18n.getMessage("option_" ~ player.position) }}">{{ i18n.getMessage("option_" ~ player.position)|slice(0,2)|upper }}</td>
 								{% endif %}
 								<td>{{ player.name }}
 {% if player.card_yellow > 0 %}
@@ -281,7 +281,7 @@
 		<div class="row-fluid">
 			{% for teamPrefix,teamStatistics in statistics %}
 			<div class="span6">
-				<h5><a href="{{ env.getInternalUrl("team", "id=" ~ match[teamPrefix ~ "_team_id"]) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ match[teamPrefix ~ "_team_name"] }}</a></h5>
+				<h5><a href="{{ env.getInternalUrl("team","id=" ~ match[teamPrefix ~ "_team_id"]) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ match[teamPrefix ~ "_team_name"] }}</a></h5>
 				{% if teamStatistics|length > 0 %}
 					<p><em>{{ i18n.getMessage("match_details_statistic_shoots") }}:</em> {{ teamStatistics.shoots }}</p>
 					<p><em>{{ i18n.getMessage("youthmatch_statistic_avg_strength") }}</em></p>

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -30,12 +30,12 @@
 SEC;
 class PremiumDataService
 {
-	FUNCTION countAccountStatementsOfUser($websoccer, $db, $userId)
+	FUNCTION countAccountStatementsOfUser($websoccer,$db,$userId)
 	{
 		$columns = 'COUNT(*) AS hits';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_premiumstatement';
 		$whereCondition = 'user_id = %d';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $userId);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$userId);
 		$statements = $result->fetch_array();
 		$result->free();
 		if (isset($statements['hits'])) {
@@ -43,12 +43,12 @@ class PremiumDataService
 		}
 		return NULL;
 	}
-	FUNCTION getAccountStatementsOfUser($websoccer, $db, $userId, $startIndex, $entries_per_page)
+	FUNCTION getAccountStatementsOfUser($websoccer,$db,$userId,$startIndex,$entries_per_page)
 	{
 		$limit = $startIndex . ',' . $entries_per_page;
 		$fromTable = $websoccer->getConfig('db_prefix') . '_premiumstatement';
 		$whereCondition = 'user_id = %d ORDER BY created_date DESC';
-		$result = $db->querySelect('*', $fromTable, $whereCondition, $userId, $limit);
+		$result = $db->querySelect('*',$fromTable,$whereCondition,$userId,$limit);
 		$statements = [];
 		while ($statement = $result->fetch_array()) {
 			$statements[] = $statement;
@@ -56,27 +56,27 @@ class PremiumDataService
 		$result->free();
 		return $statements;
 	}
-	FUNCTION creditAmount($websoccer, $db, $userId, $amount, $subject, $data = null)
+	FUNCTION creditAmount($websoccer,$db,$userId,$amount,$subject,$data = null)
 	{
 		if ($amount === 0) {
 			return;
 		}
-		$user = UsersDataService::getUserById($websoccer, $db, $userId);
+		$user = UsersDataService::getUserById($websoccer,$db,$userId);
 		if (!isset($user['premium_balance'])) {
 			throw new Exception('user not found: ' . $userId);
 		}
 		if ($amount < 0) {
 			throw new Exception('amount illegal: ' . $amount);
 		} else {
-			self::createTransaction($websoccer, $db, $user, $userId, $amount, $subject, $data);
+			self::createTransaction($websoccer,$db,$user,$userId,$amount,$subject,$data);
 		}
 	}
-	FUNCTION debitAmount($websoccer, $db, $userId, $amount, $subject, $data = null)
+	FUNCTION debitAmount($websoccer,$db,$userId,$amount,$subject,$data = null)
 	{
 		if ($amount === 0) {
 			return;
 		}
-		$user = UsersDataService::getUserById($websoccer, $db, $userId);
+		$user = UsersDataService::getUserById($websoccer,$db,$userId);
 		if (!isset($user['premium_balance'])) {
 			throw new Exception('user not found: ' . $userId);
 		}
@@ -89,9 +89,9 @@ class PremiumDataService
 			throw new Exception($i18n->getMessage('premium_balance_notenough'));
 		}
 		$amount = 0 - $amount;
-		self::createTransaction($websoccer, $db, $user, $userId, $amount, $subject, $data);
+		self::createTransaction($websoccer,$db,$user,$userId,$amount,$subject,$data);
 	}
-	private static function createTransaction($websoccer, $db, $user, $userId, $amount, $subject, $data)
+	private static function createTransaction($websoccer,$db,$user,$userId,$amount,$subject,$data)
 	{
 		// create transaction
 		$fromTable = $websoccer->getConfig('db_prefix') . '_premiumstatement';
@@ -102,20 +102,20 @@ class PremiumDataService
 			'created_date' => $websoccer->getNowAsTimestamp(),
 			'subject_data' => json_encode($data)
 		];
-		$db->queryInsert($columns, $fromTable);
+		$db->queryInsert($columns,$fromTable);
 		// update user budget
 		$newBudget = $user['premium_balance'] + $amount;
 		$updateColumns = ['premium_balance' => $newBudget];
 		$fromTable = $websoccer->getConfig('db_prefix') . '_user';
 		$whereCondition = 'id = %d';
 		$parameters = $userId;
-		$db->queryUpdate($updateColumns, $fromTable, $whereCondition, $parameters);
-		// also update user profile, if executed by user.
+		$db->queryUpdate($updateColumns,$fromTable,$whereCondition,$parameters);
+		// also update user profile,if executed by user.
 		if ($userId === $websoccer->getUser()->id) {
 			$websoccer->getUser()->premiumBalance = $newBudget;
 		}
 	}
-	FUNCTION createPaymentAndCreditPremium($websoccer, $db, $userId, $amount, $subject)
+	FUNCTION createPaymentAndCreditPremium($websoccer,$db,$userId,$amount,$subject)
 	{
 		if ($amount <= 0) {
 			throw new Exception('Illegal amount: ' . $amount);
@@ -126,30 +126,30 @@ class PremiumDataService
 			'user_id' => $userId,
 			'amount' => $realAmount,
 			'created_date' => $websoccer->getNowAsTimestamp()
-		], $websoccer->getConfig('db_prefix') . '_premiumpayment');
+		],$websoccer->getConfig('db_prefix') . '_premiumpayment');
 		// get premium amount to credit
-		$priceOptions = explode(',', $websoccer->getConfig('premium_price_options'));
+		$priceOptions = explode(',',$websoccer->getConfig('premium_price_options'));
 		if (count($priceOptions)) {
 			foreach ($priceOptions as $priceOption) {
-				$optionParts = explode(':', $priceOption);
+				$optionParts = explode(':',$priceOption);
 				$realMoney = trim($optionParts[0]);
 				$realMoneyAmount = $realMoney * 100;
 				$premiumMoney = trim($optionParts[1]);
 				// credit amount and end here
 				if ($realAmount === $realMoneyAmount) {
-					self::creditAmount($websoccer, $db, $userId, $premiumMoney, $subject);
+					self::creditAmount($websoccer,$db,$userId,$premiumMoney,$subject);
 					return;
 				}
 			}
 		}
-		// if reached here, no price option has been found for this amount
+		// if reached here,no price option has been found for this amount
 		throw new Exception('No price option found for amount: ' . $amount);
 	}
-	FUNCTION getPaymentsOfUser($websoccer, $db, $userId, $limit)
+	FUNCTION getPaymentsOfUser($websoccer,$db,$userId,$limit)
 	{
 		$fromTable = $websoccer->getConfig('db_prefix') . '_premiumpayment';
 		$whereCondition = 'user_id = %d ORDER BY created_date DESC';
-		$result = $db->querySelect('*', $fromTable, $whereCondition, $userId, $limit);
+		$result = $db->querySelect('*',$fromTable,$whereCondition,$userId,$limit);
 		$statements = [];
 		while ($statement = $result->fetch_array()) {
 			$statement['amount'] /= 100;

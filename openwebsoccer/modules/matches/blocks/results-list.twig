@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -46,9 +46,9 @@
 						{% elseif match.type == "Freundschaft" %}
 							<i class="icon-smile wstooltip" title="{{ i18n.getMessage("option_Freundschaft") }}"></i>
 						{% else %}
-							<i class="icon-trophy wstooltip" title="{{ i18n.getMessage("option_Pokalspiel") }} ({{ match.cup_name }}, {{ match.cup_round }})"></i>
+							<i class="icon-trophy wstooltip" title="{{ i18n.getMessage("option_Pokalspiel") }} ({{ match.cup_name }},{{ match.cup_round }})"></i>
 						{% endif %}
-						{{ env.getFormattedDatetime(match.date, i18n) }}
+						{{ env.getFormattedDatetime(match.date,i18n) }}
 					</td>
 					<td>
 						{% if match.home_team_picture|length %}
@@ -58,16 +58,16 @@
 								<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.home_team_picture }}" style="max-width: 20px;"/>
 							{% endif %}
 						{% endif %}
-						<a href="{{ env.getInternalUrl("team", "id=" ~ match.home_id) }}">{{ match.home_team }}</a>
+						<a href="{{ env.getInternalUrl("team","id=" ~ match.home_id) }}">{{ match.home_team }}</a>
 						{% if match.home_noformation %}
-							<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.home_team) }}"></i>
+							<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation",match.home_team) }}"></i>
 						{% endif %}
 						{% if match.home_user_id > 0 %}
 							<br>
 							{% if match.home_user_picture|length > 0 %}
-								<a href="{{ env.getInternalUrl("user", "id=" ~ match.home_user_id) }}"><img src="{{ match.home_user_picture }}" style="width: 20px; height: 20px;"/></a>
+								<a href="{{ env.getInternalUrl("user","id=" ~ match.home_user_id) }}"><img src="{{ match.home_user_picture }}" style="width: 20px; height: 20px;"/></a>
 							{% endif %}
-							<small><a href="{{ env.getInternalUrl("user", "id=" ~ match.home_user_id) }}">{{ match.home_user_nick }}</a></small>
+							<small><a href="{{ env.getInternalUrl("user","id=" ~ match.home_user_id) }}">{{ match.home_user_nick }}</a></small>
 						{% endif %}
 					</td>
 					<td>
@@ -78,20 +78,20 @@
 								<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.guest_team_picture }}" style="max-width: 20px;"/>
 							{% endif %}
 						{% endif %}
-						<a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_id) }}">{{ match.guest_team }}</a>
+						<a href="{{ env.getInternalUrl("team","id=" ~ match.guest_id) }}">{{ match.guest_team }}</a>
 						{% if match.guest_noformation %}
-							<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation", match.guest_team) }}"></i>
+							<i class="icon-bolt wstooltip" title="{{ i18n.getMessage("match_details_noformation",match.guest_team) }}"></i>
 						{% endif %}
 						{% if match.guest_user_id > 0 %}
 							<br>
 							{% if match.guest_user_picture|length > 0 %}
-								<a href="{{ env.getInternalUrl("user", "id=" ~ match.guest_user_id) }}"><img src="{{ match.guest_user_picture }}" style="width: 20px; height: 20px;"/></a>
+								<a href="{{ env.getInternalUrl("user","id=" ~ match.guest_user_id) }}"><img src="{{ match.guest_user_picture }}" style="width: 20px; height: 20px;"/></a>
 							{% endif %}
-							<small><a href="{{ env.getInternalUrl("user", "id=" ~ match.guest_user_id) }}">{{ match.guest_user_nick }}</a></small>
+							<small><a href="{{ env.getInternalUrl("user","id=" ~ match.guest_user_id) }}">{{ match.guest_user_nick }}</a></small>
 						{% endif %}
 					</td>
 					<td>
-						<a href="{{ env.getInternalUrl("match", "id=" ~ match.id) }}" title="{{ i18n.getMessage("match_navlabel") }}">
+						<a href="{{ env.getInternalUrl("match","id=" ~ match.id) }}" title="{{ i18n.getMessage("match_navlabel") }}">
 						{% if match.simulated == 1 %}
 							{{ match.home_goals }} - {{ match.guest_goals }}
 						{% elseif match.minutes > 0 %}

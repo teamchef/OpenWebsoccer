@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
@@ -27,11 +27,11 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
-if (version_compare(PHP_VERSION, '5.4.0') <= 0) {
+if (version_compare(PHP_VERSION,'5.4.0') <= 0) {
 	echo 'Ihre PHP Version ist ' . PHP_VERSION . ' und daher nicht für den OpenWebsoccer geeignet.';
 	stop();
 }
-define('ROOT', $_SERVER['DOCUMENT_ROOT']. dirname($_SERVER['PHP_SELF']) . '/..');
+define('ROOT',$_SERVER['DOCUMENT_ROOT']. dirname($_SERVER['PHP_SELF']) . '/..');
 if (!file_exists('../cache')){ mkdir  (ROOT . '/cache'); }
 include(ROOT . '/admin/config/global.inc.php');
 include(ROOT . '/admin/functions.inc.php');
@@ -40,7 +40,7 @@ $i18n = I18n::getInstance($website->getConfig('supported_languages'));
 if (isset($_GET['lang'])) {
 	$i18n->setCurrentLanguage($_GET['lang']);
 }
-include(sprintf(CONFIGCACHE_ADMINMESSAGES, $i18n->getCurrentLanguage()));
+include(sprintf(CONFIGCACHE_ADMINMESSAGES,$i18n->getCurrentLanguage()));
 $errors = array();
 $inputUser = (isset($_POST['inputUser'])) ? $_POST['inputUser'] : FALSE;
 $inputPassword = (isset($_POST['inputPassword'])) ? $_POST['inputPassword'] : FALSE;
@@ -59,46 +59,50 @@ if ($inputUser or $inputPassword) {
 		$fromTable = $conf['db_prefix'] .'_admin';
 		$whereCondition = 'name = \'%s\'';
 		$parameters = $inputUser;
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		if($result->num_rows < 1) {
 			$errors['inputUser'] = $i18n->getMessage('login_error_unknownusername');
 		} else {
 			$admin = $result->fetch_array();
-			$hashedPw = SecurityUtil::hashPassword($inputPassword, $admin['passwort_salt']);
-			if ($admin['passwort'] == $hashedPw || $admin['passwort_neu'] == $hashedPw) {
-				if (version_compare(PHP_VERSION, '6.0.0') >= 0) {
-					// Start: Anpassung für PHP 7, da session_regenerate_id(); so nicht mehr funktioniert
+			$hashedPw = SecurityUtil::hashPassword($inputPassword,$admin['passwort_salt']);
+			$hashed = SecurityUtil::create_hash($inputPassword);
+			if ($hashed){ echo 'OK'; }
+			echo $hashed;
+			if ($hashedPw == $admin['passwort'] || $hashedPw == $admin['passwort_neu'] || $hashed) {
+			// if ($admin['passwort'] == $hashedPw || $admin['passwort_neu'] == $hashedPw) {
+				if (version_compare(PHP_VERSION,'6.0.0') >= 0) {
+					// Start: Anpassung für PHP 7,da session_regenerate_id(); so nicht mehr funktioniert
 					session_destroy();
 					session_start();
-					// Ende: Anpassung für PHP 7, da session_regenerate_id(); so nicht mehr funktioniert
+					// Ende: Anpassung für PHP 7,da session_regenerate_id(); so nicht mehr funktioniert
 				}
-				else if (version_compare(PHP_VERSION, '5.4.0') >= 0) {
+				else if (version_compare(PHP_VERSION,'5.4.0') >= 0) {
 					session_regenerate_id();
 				}
 				$_SESSION['valid'] = 1;
 				$_SESSION['userid'] = $admin['id'];
 				// update new PW
 				if ($admin['passwort_neu'] == $hashedPw) {
-					$columns = array('passwort' => $hashedPw, 'passwort_neu_angefordert' => 0, 'passwort_neu' => '');
+					$columns = array('passwort' => $hashedPw,'passwort_neu_angefordert' => 0,'passwort_neu' => '');
 					$fromTable = $conf['db_prefix'] .'_admin';
 					$whereCondition = 'id = %d';
 					$parameter = $admin['id'];
-					$db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);
+					$db->queryUpdate($columns,$fromTable,$whereCondition,$parameter);
 				}
 				// write log
 				  if ($admin['name']) {
 					$ip = getenv('REMOTE_ADDR');
-					$content = $admin['name'] .', '. $ip .', '. date('d.m.y - H:i:s');
+					$content = $admin['name'] .','. $ip .','. date('d.m.y - H:i:s');
 					$content .= "\n";
 					$datei = '../generated/adminlog.php';
-					$fp = fopen($datei, 'a+');
+					$fp = fopen($datei,'a+');
 					if (filesize($datei)) {
-						$inhalt = fread($fp, filesize($datei));
+						$inhalt = fread($fp,filesize($datei));
 					} else {
 						$inhalt = '';
 					}
 					$inhalt .= $content;
-					fwrite($fp, $content);
+					fwrite($fp,$content);
 					fclose($fp);
 				  }
 				header('location: index.php');
@@ -128,13 +132,13 @@ header('Content-type: text/html; charset=utf-8');
 			<h1><?php echo $i18n->getMessage('login_title');?></h1>
 			<?php
 				if ($forwarded) {
-					echo createWarningMessage($i18n->getMessage('login_alert_accessdenied_title'), $i18n->getMessage('login_alert_accessdenied_content'));
+					echo createWarningMessage($i18n->getMessage('login_alert_accessdenied_title'),$i18n->getMessage('login_alert_accessdenied_content'));
 				} else if ($loggedout) {
-					echo createSuccessMessage($i18n->getMessage('login_alert_logoutsuccess_title'), $i18n->getMessage('login_alert_logoutsuccess_content'));
+					echo createSuccessMessage($i18n->getMessage('login_alert_logoutsuccess_title'),$i18n->getMessage('login_alert_logoutsuccess_content'));
 				} else if ($newpwd) {
-					echo createSuccessMessage($i18n->getMessage('login_alert_sentpassword_title'), $i18n->getMessage('login_alert_sentpassword_content'));
+					echo createSuccessMessage($i18n->getMessage('login_alert_sentpassword_title'),$i18n->getMessage('login_alert_sentpassword_content'));
 				} else if (count($errors) > 0) {
-					echo createErrorMessage($i18n->getMessage('login_alert_error_title'), $i18n->getMessage('login_alert_error_content'));
+					echo createErrorMessage($i18n->getMessage('login_alert_error_title'),$i18n->getMessage('login_alert_error_content'));
 				}
 			?>
 			<p><a href='?lang=de'>Deutsch</a></p>

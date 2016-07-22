@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -36,12 +36,12 @@ class YouthMatchReportModel extends BaseModel
 	}
 	FUNCTION getTemplateParameters()
 	{
-		$match = YouthMatchesDataService::getYouthMatchinfoById($this->_websoccer, $this->_db, $this->_i18n, $this->_websoccer->getRequestParameter("id"));
+		$match = YouthMatchesDataService::getYouthMatchinfoById($this->_websoccer,$this->_db,$this->_i18n,$this->_websoccer->getRequestParameter("id"));
 		// get players and their statistics
 		$players = array();
 		$statistics = array();
-		$result = $this->_db->querySelect("*", $this->_websoccer->getConfig("db_prefix") . "_youthmatch_player",
-				"match_id = %d AND minutes_played > 0 ORDER BY playernumber ASC", $match["id"]);
+		$result = $this->_db->querySelect("*",$this->_websoccer->getConfig("db_prefix") . "_youthmatch_player",
+				"match_id = %d AND minutes_played > 0 ORDER BY playernumber ASC",$match["id"]);
 		while ($playerinfo = $result->fetch_array()) {
 			if ($playerinfo["team_id"] == $match["home_team_id"]) {
 				$teamPrefix = "home";
@@ -80,7 +80,7 @@ class YouthMatchReportModel extends BaseModel
 			$statistics["home"]["ballpossession"] = round($statistics["home"]["ballcontacts"] * 100 / ($statistics["home"]["ballcontacts"] + $statistics["guest"]["ballcontacts"]));
 			$statistics["guest"]["ballpossession"] = round($statistics["guest"]["ballcontacts"] * 100 / ($statistics["home"]["ballcontacts"] + $statistics["guest"]["ballcontacts"]));
 		}
-		$reportMessages = YouthMatchesDataService::getMatchReportItems($this->_websoccer, $this->_db, $this->_i18n, $match["id"]);
-		return array("match" => $match, "players" => $players, "statistics" => $statistics, "reportMessages" => $reportMessages);
+		$reportMessages = YouthMatchesDataService::getMatchReportItems($this->_websoccer,$this->_db,$this->_i18n,$match["id"]);
+		return array("match" => $match,"players" => $players,"statistics" => $statistics,"reportMessages" => $reportMessages);
 	}
 }

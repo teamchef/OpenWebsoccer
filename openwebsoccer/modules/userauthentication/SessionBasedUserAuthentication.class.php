@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -28,7 +28,7 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-define('SESSION_PARAM_USERID', 'frontuserid');
+define('SESSION_PARAM_USERID','frontuserid');
 class SessionBasedUserAuthentication
 {
 	private $_website;
@@ -44,15 +44,15 @@ class SessionBasedUserAuthentication
 			// 'remember me' token
 			$rememberMe = CookieHelper::getCookieValue('user');
 			if ($rememberMe !== null) {
-				$columns = 'id, passwort_salt, nick, email, lang';
+				$columns = 'id,passwort_salt,nick,email,lang';
 				$whereCondition = 'status = 1 AND tokenid = \'%s\'';
-				$result = $db->querySelect($columns, $fromTable, $whereCondition, $rememberMe);
+				$result = $db->querySelect($columns,$fromTable,$whereCondition,$rememberMe);
 				$rememberedUser = $result->fetch_array();
 				$result->free();
 				if (isset($rememberedUser['id'])) {
-					$currentToken = SecurityUtil::generateSessionToken($rememberedUser['id'], $rememberedUser['passwort_salt']);
+					$currentToken = SecurityUtil::generateSessionToken($rememberedUser['id'],$rememberedUser['passwort_salt']);
 					if ($currentToken === $rememberMe) {
-						$this->_login($rememberedUser, $db, $fromTable, $currentUser);
+						$this->_login($rememberedUser,$db,$fromTable,$currentUser);
 						return;
 					} else {
 						CookieHelper::destroyCookie('user');
@@ -60,7 +60,7 @@ class SessionBasedUserAuthentication
 						$columns = ['tokenid' => ''];
 						$whereCondition = 'id = %d';
 						$parameter = $rememberedUser['id'];
-						$db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);
+						$db->queryUpdate($columns,$fromTable,$whereCondition,$parameter);
 					}
 				} else {
 					CookieHelper::destroyCookie('user');
@@ -75,12 +75,12 @@ class SessionBasedUserAuthentication
 		if (!$userid) {
 			return;
 		}
-		$columns = 'id, nick, email, lang, premium_balance, picture';
+		$columns = 'id,nick,email,lang,premium_balance,picture';
 		$whereCondition = 'status = 1 AND id = %d';
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $userid);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$userid);
 		if ($result->num_rows) {
 			$userdata = $result->fetch_array();
-			$this->_login($userdata, $db, $fromTable, $currentUser);
+			$this->_login($userdata,$db,$fromTable,$currentUser);
 		} else {
 			// user might got disabled in the meanwhile
 			$this->logoutUser($currentUser);
@@ -93,9 +93,9 @@ class SessionBasedUserAuthentication
 		$fromTable = $this->_website->getConfig('db_prefix') . '_user';
 		$userid = isset($_SESSION[SESSION_PARAM_USERID]) ? $_SESSION[SESSION_PARAM_USERID] : 0;
 		// bisher ungenutzte Datenbank-Spalte ip_time wird als Logout-Kennzeichnung genutzt
-		$columns = ['ip_time' => '0', 'lastonline' => $this->_website->getNowAsTimestamp(), 'lastaction' => $this->_website->getRequestParameter('page')];
+		$columns = ['ip_time' => '0','lastonline' => $this->_website->getNowAsTimestamp(),'lastaction' => $this->_website->getRequestParameter('page')];
 		$whereCondition = 'id = %d';
-		$db->queryUpdate($columns, $fromTable, $whereCondition, $userid);
+		$db->queryUpdate($columns,$fromTable,$whereCondition,$userid);
 		if ($currentUser->getRole() === ROLE_USER) {
 			$currentUser->id = null;
 			$currentUser->ip_time = null;
@@ -106,7 +106,7 @@ class SessionBasedUserAuthentication
 			CookieHelper::destroyCookie('user');
 		}
 	}
-	FUNCTION _login($userdata, $db, $fromTable, $currentUser)
+	FUNCTION _login($userdata,$db,$fromTable,$currentUser)
 	{
 		$_SESSION[SESSION_PARAM_USERID] = $userdata['id'];
 		$currentUser->id = $userdata['id'];
@@ -115,15 +115,15 @@ class SessionBasedUserAuthentication
 		$currentUser->email = $userdata['email'];
 		$currentUser->lang = $userdata['lang'];
 		$currentUser->premiumBalance = $userdata['premium_balance'];
-		$currentUser->setProfilePicture($this->_website, $userdata['picture']);
+		$currentUser->setProfilePicture($this->_website,$userdata['picture']);
 		// update language
 		$i18n = I18n::getInstance($this->_website->getConfig('supported_languages'));
 		$i18n->setCurrentLanguage($userdata['lang']);
 		// update timestamp of last action
 		// bisher ungenutzte Datenbank-Spalte ip_time wird als Login-Kennzeichnung genutzt
-		$columns = ['ip_time' => '1', 'lastonline' => $this->_website->getNowAsTimestamp(), 'lastaction' => $this->_website->getRequestParameter('page')];
+		$columns = ['ip_time' => '1','lastonline' => $this->_website->getNowAsTimestamp(),'lastaction' => $this->_website->getRequestParameter('page')];
 		$whereCondition = 'id = %d';
 		$parameter = $userdata['id'];
-		$db->queryUpdate($columns, $fromTable, $whereCondition, $parameter);
+		$db->queryUpdate($columns,$fromTable,$whereCondition,$parameter);
 	}
 }

@@ -6,17 +6,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -29,21 +29,21 @@
 ******************************************************************/
 SEC;
 class SimulationStateHelper{
-	private static $_addedPlayers; // players cache with key=ID, value=player instance
-	public static function createSimulationRecord(WebSoccer $websoccer, DbConnection $db, $matchId, SimulationPlayer $player, $onBench = FALSE) {
+	private static $_addedPlayers; // players cache with key=ID,value=player instance
+	public static function createSimulationRecord(WebSoccer $websoccer,DbConnection $db,$matchId,SimulationPlayer $player,$onBench = FALSE) {
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_berechnung';
-		$db->queryInsert(self::getPlayerColumns($matchId, $player, $onBench ? 'Ersatzbank' : '1'), $fromTable);
+		$db->queryInsert(self::getPlayerColumns($matchId,$player,$onBench ? 'Ersatzbank' : '1'),$fromTable);
 	}
-	public static function updateState(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match) {
-		self::updateMatch($websoccer, $db, $match);
-		self::updateTeamState($websoccer, $db, $match, $match->homeTeam);
-		self::updateTeamState($websoccer, $db, $match, $match->guestTeam);
+	public static function updateState(WebSoccer $websoccer,DbConnection $db,SimulationMatch $match) {
+		self::updateMatch($websoccer,$db,$match);
+		self::updateTeamState($websoccer,$db,$match,$match->homeTeam);
+		self::updateTeamState($websoccer,$db,$match,$match->guestTeam);
 	}
-	public static function loadMatchState(WebSoccer $websoccer, DbConnection $db, $matchinfo) {
+	public static function loadMatchState(WebSoccer $websoccer,DbConnection $db,$matchinfo) {
 		$homeTeam  = new SimulationTeam($matchinfo['home_id']);
 		$guestTeam = new SimulationTeam($matchinfo['guest_id']);
-		self::loadTeam($websoccer, $db, $matchinfo['match_id'], $homeTeam);
-		self::loadTeam($websoccer, $db, $matchinfo['match_id'], $guestTeam);
+		self::loadTeam($websoccer,$db,$matchinfo['match_id'],$homeTeam);
+		self::loadTeam($websoccer,$db,$matchinfo['match_id'],$guestTeam);
 		$homeTeam->setGoals($matchinfo['home_goals']);
 		$homeTeam->offensive                  = $matchinfo['home_offensive'];
 		$homeTeam->isNationalTeam             = $matchinfo['home_nationalteam'];
@@ -64,7 +64,7 @@ class SimulationStateHelper{
 		$guestTeam->longPasses                = $matchinfo['guest_longpasses'];
 		$guestTeam->counterattacks            = $matchinfo['guest_counterattacks'];
 		$guestTeam->morale                    = $matchinfo['guest_morale'];
-		$match = new SimulationMatch($matchinfo['match_id'], $homeTeam, $guestTeam, $matchinfo['minutes']);
+		$match = new SimulationMatch($matchinfo['match_id'],$homeTeam,$guestTeam,$matchinfo['minutes']);
 		$match->type                          = $matchinfo['type'];
 		$match->penaltyShootingEnabled        = $matchinfo['penaltyshooting'];
 		$match->isSoldOut                     = $matchinfo['soldout'];
@@ -113,7 +113,7 @@ class SimulationStateHelper{
 		self::$_addedPlayers = null;
 		return $match;
 	}
-	private static function updateMatch(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match) {
+	private static function updateMatch(WebSoccer $websoccer,DbConnection $db,SimulationMatch $match) {
 		if ($match->isCompleted) {
 			$columns['berechnet'] = 1;
 		}
@@ -171,38 +171,38 @@ class SimulationStateHelper{
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel';
 		$whereCondition = 'id = %d';
 		$parameters = $match->id;
-		$db->queryUpdate($columns, $fromTable, $whereCondition, $parameters);
+		$db->queryUpdate($columns,$fromTable,$whereCondition,$parameters);
 	}
-	private static function updateTeamState(WebSoccer $websoccer, DbConnection $db, SimulationMatch $match, SimulationTeam $team) {
+	private static function updateTeamState(WebSoccer $websoccer,DbConnection $db,SimulationMatch $match,SimulationTeam $team) {
 		// Feldspieler
 		if (is_array($team->positionsAndPlayers)) {
 			foreach ($team->positionsAndPlayers as $positions => $players) {
 				foreach ($players as $player) {
-					self::updatePlayerState($websoccer, $db, $match->id, $player, '1');
+					self::updatePlayerState($websoccer,$db,$match->id,$player,'1');
 				}
 			}
 		}
 		// Ersatzbank
 		if (is_array($team->playersOnBench)) {
 			foreach ($team->playersOnBench as $player) {
-				self::updatePlayerState($websoccer, $db, $match->id, $player, 'Ersatzbank');
+				self::updatePlayerState($websoccer,$db,$match->id,$player,'Ersatzbank');
 			}
 		}
 		// ausgewechselte Spieler
 		if (is_array($team->removedPlayers)) {
 			foreach ($team->removedPlayers as $player) {
-				self::updatePlayerState($websoccer, $db, $match->id, $player, 'Ausgewechselt');
+				self::updatePlayerState($websoccer,$db,$match->id,$player,'Ausgewechselt');
 			}
 		}
 	}
-	private static function updatePlayerState(WebSoccer $websoccer, DbConnection $db, $matchId, $player, $fieldArea) {
+	private static function updatePlayerState(WebSoccer $websoccer,DbConnection $db,$matchId,$player,$fieldArea) {
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_berechnung';
 		$whereCondition = 'spieler_id = %d AND spiel_id = %d';
-		$parameters = array($player->id, $matchId);
-		$columns = self::getPlayerColumns($matchId, $player, $fieldArea);
-		$db->queryUpdate($columns, $fromTable, $whereCondition, $parameters);
+		$parameters = array($player->id,$matchId);
+		$columns = self::getPlayerColumns($matchId,$player,$fieldArea);
+		$db->queryUpdate($columns,$fromTable,$whereCondition,$parameters);
 	}
-	private static function getPlayerColumns($matchId, SimulationPlayer $player, $fieldArea) {
+	private static function getPlayerColumns($matchId,SimulationPlayer $player,$fieldArea) {
 		$columns['spiel_id']         = $matchId;
 		$columns['spieler_id']       = $player->id;
 		$columns['team_id']          = $player->team->id;
@@ -232,7 +232,7 @@ class SimulationStateHelper{
 		$columns['assists']          = $player->getAssists();
 		return $columns;
 	}
-	private static function loadTeam(WebSoccer $websoccer, DbConnection $db, $matchId, SimulationTeam $team) {
+	private static function loadTeam(WebSoccer $websoccer,DbConnection $db,$matchId,SimulationTeam $team) {
 		// get players
 		$columns['spieler_id']       = 'player_id';
 		$columns['name']             = 'name';
@@ -261,12 +261,12 @@ class SimulationStateHelper{
 		$columns['assists']          = 'assists';
 		$fromTable = $websoccer->getConfig('db_prefix') . '_spiel_berechnung';
 		$whereCondition = 'spiel_id = %d AND team_id = %d ORDER BY id ASC';
-		$parameters = array($matchId, $team->id);
-		$result = $db->querySelect($columns, $fromTable, $whereCondition, $parameters);
+		$parameters = array($matchId,$team->id);
+		$result = $db->querySelect($columns,$fromTable,$whereCondition,$parameters);
 		while ($playerinfo = $result->fetch_array()) {
-			$player = new SimulationPlayer($playerinfo['player_id'], $team, $playerinfo['position'], $playerinfo['main_position'],
-					$playerinfo['mark'], $playerinfo['age'], $playerinfo['strength'], $playerinfo['strength_tech'],
-					$playerinfo['strength_stamina'], $playerinfo['strength_freshness'], $playerinfo['strength_satisfaction']);
+			$player = new SimulationPlayer($playerinfo['player_id'],$team,$playerinfo['position'],$playerinfo['main_position'],
+					$playerinfo['mark'],$playerinfo['age'],$playerinfo['strength'],$playerinfo['strength_tech'],
+					$playerinfo['strength_stamina'],$playerinfo['strength_freshness'],$playerinfo['strength_satisfaction']);
 			$player->name = $playerinfo['name'];
 			$player->setBallContacts($playerinfo['ballcontacts']);
 			$player->setWonTackles($playerinfo['wontackles']);
@@ -276,7 +276,7 @@ class SimulationStateHelper{
 			$player->setPassesSuccessed($playerinfo['passes_successed']);
 			$player->setPassesFailed($playerinfo['passes_failed']);
 			$player->setAssists($playerinfo['assists']);
-			$player->setMinutesPlayed($playerinfo['minutes_played'], FALSE);
+			$player->setMinutesPlayed($playerinfo['minutes_played'],FALSE);
 			$player->yellowCards = $playerinfo['yellow_cards'];
 			$player->redCard = $playerinfo['red_cards'];
 			$player->injured = $playerinfo['injured'];

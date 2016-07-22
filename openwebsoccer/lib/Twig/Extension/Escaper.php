@@ -5,7 +5,7 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 class Twig_Extension_Escaper extends Twig_Extension
@@ -37,7 +37,7 @@ class Twig_Extension_Escaper extends Twig_Extension
     public function getFilters()
     {
         return array(
-            new Twig_SimpleFilter('raw', 'twig_raw_filter', array('is_safe' => array('all'))),
+            new Twig_SimpleFilter('raw','twig_raw_filter',array('is_safe' => array('all'))),
         );
     }
 
@@ -53,13 +53,13 @@ class Twig_Extension_Escaper extends Twig_Extension
     {
         // for BC
         if (true === $defaultStrategy) {
-            @trigger_error('Using "true" as the default strategy is deprecated since version 1.21. Use "html" instead.', E_USER_DEPRECATED);
+            @trigger_error('Using "true" as the default strategy is deprecated since version 1.21. Use "html" instead.',E_USER_DEPRECATED);
 
             $defaultStrategy = 'html';
         }
 
         if ('filename' === $defaultStrategy) {
-            $defaultStrategy = array('Twig_FileExtensionEscapingStrategy', 'guess');
+            $defaultStrategy = array('Twig_FileExtensionEscapingStrategy','guess');
         }
 
         $this->defaultStrategy = $defaultStrategy;
@@ -77,7 +77,7 @@ class Twig_Extension_Escaper extends Twig_Extension
         // disable string callables to avoid calling a function named html or js,
         // or any other upcoming escaping strategy
         if (!is_string($this->defaultStrategy) && false !== $this->defaultStrategy) {
-            return call_user_func($this->defaultStrategy, $filename);
+            return call_user_func($this->defaultStrategy,$filename);
         }
 
         return $this->defaultStrategy;

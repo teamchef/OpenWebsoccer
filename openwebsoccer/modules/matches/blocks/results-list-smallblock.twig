@@ -5,17 +5,17 @@
 * OpenWebSoccer-Sim is free software: you can redistribute it
 * and/or modify it under the terms of the
 * GNU Lesser General Public License
-* as published by the Free Software Foundation, either version 3 of
-* the License, or any later version.
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
 *
 * OpenWebSoccer-Sim is distributed in the hope that it will be
-* useful, but WITHOUT ANY WARRANTY; without even the implied
+* useful,but WITHOUT ANY WARRANTY; without even the implied
 * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 * See the GNU Lesser General Public License for more details.
 *
 * You should have received a copy of the GNU Lesser General Public
 * License along with OpenWebSoccer-Sim.
-* If not, see <http://www.gnu.org/licenses/>.
+* If not,see <http://www.gnu.org/licenses/>.
 *
 * Author: Ingo Hofmann
 * Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
@@ -35,8 +35,8 @@
 		<table class="table table-borderless table-striped">
 			{% for match in matches %}
 				<tr>
-					<td><a href="{{ env.getInternalUrl("team", "id=" ~ match.home_id) }}">{{ match.home_team }}</a> - <a href="{{ env.getInternalUrl("team", "id=" ~ match.guest_id) }}">{{ match.guest_team }}</a></td>
-					<td><a href="{{ env.getInternalUrl("match", "id=" ~ match.id) }}" title="{{ i18n.getMessage("match_navlabel") }}">{{ match.home_goals }} :{{ match.guest_goals }}</a></td>
+					<td><a href="{{ env.getInternalUrl("team","id=" ~ match.home_id) }}">{{ match.home_team }}</a> - <a href="{{ env.getInternalUrl("team","id=" ~ match.guest_id) }}">{{ match.guest_team }}</a></td>
+					<td><a href="{{ env.getInternalUrl("match","id=" ~ match.id) }}" title="{{ i18n.getMessage("match_navlabel") }}">{{ match.home_goals }} :{{ match.guest_goals }}</a></td>
 				</tr>
 			{% endfor %}
 		</table>
