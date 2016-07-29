@@ -26,10 +26,14 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("myschedule_navlabel") }}
+{% embed "page.twig" %}
+{% block myschedule %}
+	{% block page_title %}
+		{{ i18n.getMessage("myschedule_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/myschedule.png' %}{% if file_exists('img/myschedule.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		{% include 'blocks/results-list.twig' %}
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-	{% include 'blocks/results-list.twig' %}
-{% endblock %}
+{% endembed %}

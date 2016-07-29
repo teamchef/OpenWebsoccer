@@ -28,5 +28,3 @@
 #}
 {% extends ajaxRequest is defined and ajaxRequest ? "ajax.twig" : "layout.twig" %}
 {% import "macro.twig" as macro %}
-{% set cdn = '{{ env.getConfig("cdn_root") }}' %}
-{% set root = '{{ env.getConfig("context_root") }}' %}

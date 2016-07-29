@@ -648,7 +648,7 @@
 	<message id='settings_label_sim_auto_deblock'>Automatisches entblocken von Spielen: Der Admin muss die,nach Berechnungsfehlern vorsichtshalber geblockten Spiele,nicht mehr selbst entblocken.</message>
 	<message id='settings_label_nextgames_set'>Die nästen x Spiele anzeigen.</message>
 	<message id='settings_label_player_delete_from_db'>Spieler beim entlassen aus der Datenbank entfernen.</message>
-	<message id='settings_label_cdn_root_set'>cookie-free Domain aktivieren</message>
+	<message id='settings_label_cdn_root_set'>cookie-free Domain aktivieren ( cdn = content delivery network)</message>
 	<message id='settings_label_cdn_root'>Verzeichnis für cookie-free Domain</message>
 	<message id='settings_label_transferoffersbetweenownteams_enabled'>Direkttransfers auch zwischen den eigenen Teams erlauben.</message>
 	<message id='settings_label_externlink1'>externer Link 1 URL</message>
@@ -713,7 +713,7 @@
 	<message id='settings_label_frontend_si_code_sidebar'>HTML-Code für Alle sichtbar: Seitenleiste</message>
 	<message id='settings_label_frontend_si_code_top'>HTML-Code für Alle sichtbar: Oberer Seitenbereich</message>
 	<message id='settings_label_frontend_si_code_bottom'>HTML-Code für Alle sichtbar: Unterer Seitenbereich</message>
-	<message id='settings_label_frontend_sif_code_sidebar'>HTML-Code für Alle im Frotend sichtbar: Seitenleiste</message>
+	<message id='settings_label_frontend_sif_code_sidebar'>HTML-Code für Alle im Frontend sichtbar: Seitenleiste</message>
 	<message id='settings_label_frontend_sif_code_top'>HTML-Code für Alle im Frotend sichtbar: Oberer Seitenbereich</message>
 	<message id='settings_label_frontend_sif_code_bottom'>HTML-Code für Alle im Frotend sichtbar: Unterer Seitenbereich</message>
 	<message id='settings_label_training_min_hours_between_execution'>Ruhepause zwischen Trainingseinheiten</message>

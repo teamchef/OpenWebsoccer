@@ -26,23 +26,31 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("premium-exchange-confirm_navlabel") }}
-{% endblock %}
-{% block page_content %}
-	<div class="well">
-		<p>{{ i18n.getMessage("premium-exchange-confirm_question") }}</p>
-		<p><strong>{{ env.getRequestParameter("amount") }} {{ env.getConfig("premium_credit_unit") }} = {{ (env.getRequestParameter("amount") * env.getConfig("premium_exchangerate_gamecurrency"))|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</strong></p>
-	</div>
-	<form class="form-horizontal" method="post">
-		<div class="form-actions">
-			<button type="submit" class="btn btn-success">{{ i18n.getMessage('button_confirm') }}</button>
-			<a href="{{ env.getInternalUrl("premium-exchange","amount=" ~ env.getRequestParameter("amount")) }}" class="btn btn-danger">{{ i18n.getMessage('button_cancel') }}</a>
+{% embed "page.twig" %}
+{% block premium_exchange_confirm %}
+	{% block page_title %}
+		{{ i18n.getMessage("premium-exchange-confirm_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/premiumexchangeconfirm.png' %}{% if file_exists('img/premiumexchangeconfirm.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<div class="well">
+			<p>{{ i18n.getMessage("premium-exchange-confirm_question") }}</p>
+			<p>
+				<strong>{{ env.getRequestParameter("amount") }} {{ env.getConfig("premium_credit_unit") }} = 
+					{{ (env.getRequestParameter("amount") * env.getConfig("premium_exchangerate_gamecurrency"))|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}
+				</strong>
+			</p>
 		</div>
-		<input type="hidden" name="page" value="premium-exchange-confirm"/>
-		<input type="hidden" name="validateonly" value="0"/>
-		<input type="hidden" name="action" value="exchange-premium"/>
-		<input type="hidden" name="amount" value="{{ env.getRequestParameter("amount") }}"/>
-	</form>
+		<form class="form-horizontal" method="post">
+			<div class="form-actions">
+				<button type="submit" class="btn btn-success">{{ i18n.getMessage('button_confirm') }}</button>
+				<a href="{{ env.getInternalUrl("premium-exchange","amount=" ~ env.getRequestParameter("amount")) }}" class="btn btn-danger">{{ i18n.getMessage('button_cancel') }}</a>
+			</div>
+			<input type="hidden" name="page" value="premium-exchange-confirm"/>
+			<input type="hidden" name="validateonly" value="0"/>
+			<input type="hidden" name="action" value="exchange-premium"/>
+			<input type="hidden" name="amount" value="{{ env.getRequestParameter("amount") }}"/>
+		</form>
+	{% endblock %}
 {% endblock %}
+{% endembed %}

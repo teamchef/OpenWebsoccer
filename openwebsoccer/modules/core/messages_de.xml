@@ -54,6 +54,7 @@
 	<message id='activitylog_create-youthmatch-request'>%s hat eine Spielanfrage für die Jugendmannschaft veröffentlicht.</message>
 	<message id='activitylog_sell-youthplayer'>%s bietet einen Jugendspieler zum Verkauf an.</message>
 	<message id='activitylog_directtransfer-offer'>%s hat ein Spielerkaufangebot eingereicht.</message>
+	<message id='activitylog_directtransfer-accept'>%s hat ein Spielerkaufangebot akzeptiert.</message>
 	<message id='activitylog_report-absence'>%s hat sich als abwesend gemeldet.</message>
 	<message id='activitylog_return-from-absence'>%s ist wieder zurück.</message>
 	<message id='activitylog_upload-profile-picture'>%s hat ein neues Profilbild hochgeladen.</message>
@@ -64,11 +65,14 @@
 	<message id='activitylog_directtransfer-reject'>%s hat einen Direkt-Transfer abgelehnt.</message>
 	<message id='activitylog_scout-youthplayer'>%s hat den Scout für die Jugendspieler eingesetzt.</message>
 	<message id='activitylog_delete-shoutbox-message'>%s hat Shoutboxnachrichten gelöscht.</message>
-	<message id='activitylog_save-live-formation'>%s seine Live-Formation verändert.</message>
+	<message id='activitylog_save-live-formation'>%s hat seine Live-Formation verändert.</message>
 	<message id='activitylog_select-team'>%s die Teamauswahl betätigt.</message>
 	<message id='activitylog_remove-formation-template'>%s hat ein Formations-Template gelöscht.</message>
 	<message id='activitylog_postnews'>%s hat einen News-Beitrag veröffentlicht.</message>
 	<message id='activitylog_choose-trainer'>%s hat Trainingseinheiten gebucht.</message>
+	<message id='activitylog_fire-youthplayer'>%s hat einen Jugendspieler entlassen.</message>
+	<message id='activitylog_move-youthplayer-to-professional'>%s hat einen Jugendspieler in den Profikader aufgenommen.</message>
+	<message id='activitylog_directtransfer-cancel'>%s hat ein Direkttransfer-Angebot zurückgezogen.</message>
 	<message id='allaktivities_navlabel'>Alle User Aktivitäten</message>
 	<message id='admin'>Zugriff nur für den Admin !</message>
 	<message id='alltimetable_navlabel'>Ewige Tabelle</message>
@@ -808,7 +812,7 @@
 	<message id='termsandconditions_navlabel'>Teilnahmebedingungen</message>
 	<message id='termsandconditions_err_notavilable'>Die Teilnahmebedingungen sind in Ihrer Sprache nicht verfügbar.</message>
 	<message id='termsandconditions_accept'>Ich habe die <a href='%s' target='_blank'>Teilnahmebedingungen</a> gelesen und akzeptiere sie.</message>
-	<message id='activities_noshow'>Keine Einsicht fremder Aktivitäten,wenn diese nicht freigegeben sind !</message>
+	<message id='activities_noshow'>Keine Einsicht fremder Aktivitäten, wenn diese nicht freigegeben sind !</message>
 	<message id='statistiken_navlabel'>Statistik</message>
 	<message id='training_navlabel'>Training</message>
 	<message id='training_no_trainers_available'>Derzeit stehen keine Trainer zur Verfügung.</message>

@@ -27,22 +27,24 @@
 * https://github.com/ihofmann/open-websoccer
 #}
 {% import "macro.twig" as macro %}
-<p><h5>{{ i18n.getMessage('entity_player_w_zufriedenheit') }} ({{ player.player_strength_satisfaction }}%)</h5>
-{{ macro.progressbar(player.player_strength_satisfaction) }}
-{% if frontMessages is defined and frontMessages|length == 1 and frontMessages[0].type == "success" %}
-	<a href="{{ env.getInternalUrl("myteam") }}" class="btn">{{ i18n.getMessage('myteam_navlabel') }}</a>
-{% else %}
-	<h3>{{ i18n.getMessage("extend-contract_offer_title") }}</h3>
-	<form class="form-horizontal" method="post">
-		{{ macro.textfield('salary',i18n.getMessage('entity_player_vertrag_gehalt'),env.getRequestParameter('salary'),true,validationMsg,'number') }}
-		{{ macro.textfield('goal_bonus',i18n.getMessage('entity_player_vertrag_torpraemie'),env.getRequestParameter('goal_bonus'),false,validationMsg,'number') }}
-		{{ macro.textfield('matches',i18n.getMessage('entity_player_vertrag_spiele'),env.getRequestParameter('matches'),true,validationMsg,'number') }}
-		<div class="form-actions">
-			<button type="submit" class="btn btn-primary ajaxSubmit" data-ajaxtarget="pagecontent">{{ i18n.getMessage('button_submit') }}</button>
-			<a href="{{ env.getInternalUrl("myteam") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
-		</div>
-		<input type="hidden" name="page" value="extend-contract"/>
-		<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
-		<input type="hidden" name="action" value="extend-contract"/>
-	</form>
-{% endif %}
+{% block extend_contract_form %}
+	<p><h5>{{ i18n.getMessage('entity_player_w_zufriedenheit') }} ({{ player.player_strength_satisfaction }}%)</h5>
+	{{ macro.progressbar(player.player_strength_satisfaction) }}
+	{% if frontMessages is defined and frontMessages|length == 1 and frontMessages[0].type == "success" %}
+		<a href="{{ env.getInternalUrl("myteam") }}" class="btn">{{ i18n.getMessage('myteam_navlabel') }}</a>
+	{% else %}
+		<h3>{{ i18n.getMessage("extend-contract_offer_title") }}</h3>
+		<form class="form-horizontal" method="post">
+			{{ macro.textfield('salary',i18n.getMessage('entity_player_vertrag_gehalt'),env.getRequestParameter('salary'),true,validationMsg,'number') }}
+			{{ macro.textfield('goal_bonus',i18n.getMessage('entity_player_vertrag_torpraemie'),env.getRequestParameter('goal_bonus'),false,validationMsg,'number') }}
+			{{ macro.textfield('matches',i18n.getMessage('entity_player_vertrag_spiele'),env.getRequestParameter('matches'),true,validationMsg,'number') }}
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary ajaxSubmit" data-ajaxtarget="pagecontent">{{ i18n.getMessage('button_submit') }}</button>
+				<a href="{{ env.getInternalUrl("myteam") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+			</div>
+			<input type="hidden" name="page" value="extend-contract"/>
+			<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
+			<input type="hidden" name="action" value="extend-contract"/>
+		</form>
+	{% endif %}
+{% endblock %}

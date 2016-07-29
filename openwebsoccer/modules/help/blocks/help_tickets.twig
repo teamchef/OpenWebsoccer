@@ -27,6 +27,8 @@
 * https://github.com/ihofmann/open-websoccer
 #}
 {% extends "help.twig" %}
-{% block help_content %}
-	{{ i18n.getMessage("help_tickets")|raw }}
+{% block help_tickets %}
+	{% block help_content %}
+		{{ i18n.getMessage("help_tickets")|raw }}
+	{% endblock %}
 {% endblock %}

@@ -26,6 +26,8 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% for team in userteams %}
-	<li><a href="{{ env.getInternalActionUrl("select-team","id=" ~ team.id,"office") }}">{{ team.name }}</a></li>
-{% endfor %}
+{% block user_club_selection %}
+	{% for team in userteams %}
+		<li><a href="{{ env.getInternalActionUrl("select-team","id=" ~ team.id,"office") }}">{{ team.name }}</a></li>
+	{% endfor %}
+{% endblock %}

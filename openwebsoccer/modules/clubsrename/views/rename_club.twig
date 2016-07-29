@@ -26,20 +26,24 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("rename-club_navlabel") }}
+{% embed "page.twig" %}
+{% block rename_club %}
+	{% block page_title %}
+		{{ i18n.getMessage("rename-club_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/clubsrename.png' %}{% if file_exists('img/clubsrename.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<form class="form-horizontal" method="post">
+			{{ macro.textfield('name',i18n.getMessage('entity_club_name'),env.getRequestParameter('name'),true,validationMsg,'text') }}
+			{{ macro.textfield('kurz',i18n.getMessage('entity_club_kurz'),env.getRequestParameter('kurz'),true,validationMsg,'text') }}
+			{{ macro.textfield('stadium',i18n.getMessage('entity_stadium'),env.getRequestParameter('stadium'),true,validationMsg,'text') }}
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
+				<a href="{{ env.getInternalUrl("team","id=" ~ env.user.clubId) }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+			</div>
+			<input type="hidden" name="page" value="rename-club"/>
+			<input type="hidden" name="action" value="rename-club"/>
+		</form>
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-	<form class="form-horizontal" method="post">
-		{{ macro.textfield('name',i18n.getMessage('entity_club_name'),env.getRequestParameter('name'),true,validationMsg,'text') }}
-		{{ macro.textfield('kurz',i18n.getMessage('entity_club_kurz'),env.getRequestParameter('kurz'),true,validationMsg,'text') }}
-		{{ macro.textfield('stadium',i18n.getMessage('entity_stadium'),env.getRequestParameter('stadium'),true,validationMsg,'text') }}
-		<div class="form-actions">
-			<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
-			<a href="{{ env.getInternalUrl("team","id=" ~ env.user.clubId) }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
-		</div>
-		<input type="hidden" name="page" value="rename-club"/>
-		<input type="hidden" name="action" value="rename-club"/>
-	</form>
-{% endblock %}
+{% endembed %}

@@ -26,22 +26,26 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-{{ i18n.getMessage("youthplayer-buy_navlabel") }}
+{% embed "page.twig" %}
+{% block youth_buy %}
+	{% block page_title %}
+		{{ i18n.getMessage("youthplayer-buy_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/youthbuy.png' %}{% if file_exists('img/youthbuy.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<form class="form-horizontal" method="post">
+			<fieldset>
+				<legend>{{ i18n.getMessage("youthplayer-buy_formlabel") }}</legend>
+				<p><strong>{{ i18n.getMessage("youthplayer-buy_confirmationmsg") }}</strong></p>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_confirm') }}</button>
+				<a href="{{ env.getInternalUrl("youth-marketplace") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+			</div>
+			<input type="hidden" name="page" value="youthplayer-buy"/>
+			<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
+			<input type="hidden" name="action" value="buy-youthplayer"/>
+		</form>
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-<form class="form-horizontal" method="post">
-	<fieldset>
-		<legend>{{ i18n.getMessage("youthplayer-buy_formlabel") }}</legend>
-		<p><strong>{{ i18n.getMessage("youthplayer-buy_confirmationmsg") }}</strong></p>
-	</fieldset>
-	<div class="form-actions">
-		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_confirm') }}</button>
-		<a href="{{ env.getInternalUrl("youth-marketplace") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
-	</div>
-	<input type="hidden" name="page" value="youthplayer-buy"/>
-	<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
-	<input type="hidden" name="action" value="buy-youthplayer"/>
-</form>
-{% endblock %}
+{% endembed %}

@@ -27,61 +27,57 @@
 * https://github.com/ihofmann/open-websoccer
 #}
 {% import "macro.twig" as macro %}
-        <div id="report_result">
+{% block match_result_players %}
+	<div id="report_result">
 		<span id="report_goals_home">
-		{% if match.match_home_picture|length %}<img
-            src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_home_picture }}"
-            style="max-height: 120px; margin-right: 20px;"/>{% endif %}
-            {{ match.match_goals_home }}</span>
-            <span id="report_goals_separator">-</span>
-		<span id="report_goals_guest">{{ match.match_goals_guest }}
-            {% if match.match_guest_picture|length %}<img
-                src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_guest_picture }}"
-                style="max-height: 120px; margin-left: 20px;"/>{% endif %}
+			{% if match.match_home_picture|length %}
+			<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_home_picture }}" style="max-height: 120px; margin-right: 20px;"/>{% endif %}{{ match.match_goals_home }}
 		</span>
-            <div class="row" style="margin: -40px 0 10px 0;">
-                <div style="width: 50%; float: left;">
-                    {% for goalMessage in homeStrikerMessages %}
-                        <small style="font-weight: bold;">{{ goalMessage.playerNames|split(';')[0] }}
-                            ({{ goalMessage.minute }}
-                            .{% if goalMessage.type == "Elfmeter_erfolg" %},{{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0,1) }}.{% endif %}
-                            )<br></small>
-                    {% endfor %}
-                    <br>
-                </div>
-                <div style="width: 50%; float: right;">
-                    {% for goalMessage in guestStrikerMessages %}
-                        <small style="font-weight: bold;">{{ goalMessage.playerNames|split(';')[0] }}
-                            ({{ goalMessage.minute }}
-                            .{% if goalMessage.type == "Elfmeter_erfolg" %},{{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0,1) }}.{% endif %}
-                            )<br></small>
-                    {% endfor %}
-                    <br>
-                </div>
+        <span id="report_goals_separator">-</span>
+		<span id="report_goals_guest">{{ match.match_goals_guest }}
+            {% if match.match_guest_picture|length %}<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ match.match_guest_picture }}" style="max-height: 120px; margin-left: 20px;"/>{% endif %}
+		</span>
+        <div class="row" style="margin: -40px 0 10px 0;">
+			<div style="width: 50%; float: left;">
+        		{% for goalMessage in homeStrikerMessages %}
+            		<small style="font-weight: bold;">{{ goalMessage.playerNames|split(';')[0] }}
+            			({{ goalMessage.minute }} .{% if goalMessage.type == "Elfmeter_erfolg" %},{{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0,1) }}.{% endif %} )<br>
+            		</small>
+            	{% endfor %}
+            	<br>
+			</div>
+            <div style="width: 50%; float: right;">
+            	{% for goalMessage in guestStrikerMessages %}
+                	<small style="font-weight: bold;">{{ goalMessage.playerNames|split(';')[0] }}
+                    	({{ goalMessage.minute }} .{% if goalMessage.type == "Elfmeter_erfolg" %},{{ i18n.getMessage("match_details_commenttitle_penalty")|slice(0,1) }}.{% endif %} )<br>
+                    </small>
+                {% endfor %}
+                <br>
             </div>
-            <br><br>
         </div>
-        <p style="margin-top: 10px;">
-            {% if not match.match_simulated %}
-                {% if allowTacticChanges %}
-                    <a class="btn" href="{{ env.getInternalUrl("match-live-changes","id=" ~ match.match_id) }}"><i
-                                class="icon-edit"></i> {{ i18n.getMessage("match_details_button_changes") }}</a>
-                {% endif %}
+        <br><br>
+    </div>
+    <p style="margin-top: 10px;">
+    	{% if not match.match_simulated %}
+        	{% if allowTacticChanges %}
+            	<a class="btn" href="{{ env.getInternalUrl("match-live-changes","id=" ~ match.match_id) }}"><i class="icon-edit"></i> {{ i18n.getMessage("match_details_button_changes") }}</a>
             {% endif %}
-        </p>
-<div class="row-fluid">
-	<table>
-		<td>
-			<div class="span6">
-				<h4>{{ match.match_home_name }}</h4>
-				{{ macro.matchResultPlayers(match,home_players) }}
-			</div>
-		</td>
-		<td>
-			<div class="span6">
-				<h4>{{ match.match_guest_name }}</h4>
-				{{ macro.matchResultPlayers(match,guest_players) }}
-			</div>
-		</td>
-	</table>
-</div>
+        {% endif %}
+    </p>
+	<div class="row-fluid">
+		<table>
+			<td>
+				<div class="span6">
+					<h4>{{ match.match_home_name }}</h4>
+					{{ macro.matchResultPlayers(match,home_players) }}
+				</div>
+			</td>
+			<td>
+				<div class="span6">
+					<h4>{{ match.match_guest_name }}</h4>
+					{{ macro.matchResultPlayers(match,guest_players) }}
+				</div>
+			</td>
+		</table>
+	</div>
+{% endblock %}

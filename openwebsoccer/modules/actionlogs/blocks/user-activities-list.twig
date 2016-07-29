@@ -27,27 +27,29 @@
 * https://github.com/ihofmann/open-websoccer
 #}
 {% import "macro.twig" as macro %}
-{% if activities is defined and activities|length > 0 %}
-	<table>
-		{% for activity in activities %}
-			<tr>
-				<td>
-					{% if env.getConfig("activities_noshow") == "1" %}
-						{% if activity.user_id == env.user.id %}
+{% block user_aktivities_list %}
+	{% if activities is defined and activities|length > 0 %}
+		{% if env.getConfig("activities_noshow") == "1" %}
+			{% if activity.user_id == env.user.id %}
+				{{ env.getFormattedDatetime(activity.created_date) }}
+				{{ i18n.getMessage("activitylog_" ~ activity.action_id)|format(activity.user_name)}}
+			{% else %}
+				{{ macro.box(i18n.getMessage("activities_noshow"),"","info") }}
+			{% endif %}
+		{% else %}
+			<table>
+				{% for activity in activities %}
+					<tr>
+						<td>
 							{{ env.getFormattedDatetime(activity.created_date) }}
 							{{ i18n.getMessage("activitylog_" ~ activity.action_id)|format(activity.user_name)}}
-						{% else %}
-							{{ macro.box(i18n.getMessage("activities_noshow"),"","info") }}
-						{% endif %}
-					{% else %}
-						{{ env.getFormattedDatetime(activity.created_date) }}
-						{{ i18n.getMessage("activitylog_" ~ activity.action_id)|format(activity.user_name)}}
-					{% endif %}
-					<br>
-				</td>
-			</tr>
-		{% endfor %}
-	</table>
-{% else %}
-	{{ macro.box(i18n.getMessage("activities_none_available_for_user"),"","info") }}
-{% endif %}
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+		<br>
+	{% else %}
+		{{ macro.box(i18n.getMessage("activities_none_available_for_user"),"","info") }}
+	{% endif %}
+{% endblock %}

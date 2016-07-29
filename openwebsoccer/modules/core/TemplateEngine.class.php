@@ -49,9 +49,6 @@ class TemplateEngine
 		$this->_environment->addGlobal(ENVIRONMENT_GLOBAL_NAME,$env);
 		$this->_environment->addGlobal(SKIN_GLOBAL_NAME,$this->_skin);
 		$this->_environment->addGlobal(VIEWHANDLER_GLOBAL_NAME,$viewHandler);
-		$this->_environment->addGlobal(SEC,$OpenWebsoccer);
-		$ActionLog = '1.00';
-		$this->_environment->addGlobal(AKTIONLOG,$ActionLog);
 	}
 	FUNCTION loadTemplate($templateName)
 	{

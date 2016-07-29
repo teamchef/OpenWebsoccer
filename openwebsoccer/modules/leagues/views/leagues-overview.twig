@@ -26,21 +26,25 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("leagues_title") }}
+{% embed "page.twig" %}
+{% block leagues_overview %}
+	{% block page_title %}
+		{{ i18n.getMessage("leagues_title") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/leaguesoverview.png' %}{% if file_exists('img/leaguesoverview.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<form class="form-inline" method="post">
+			<label class="control-label" for="country">{{ i18n.getMessage("entity_league_land") }}</label>
+			<select id="country" name="country">
+				<option></option>
+				{% for country in countries %}
+					<option value="{{ country.name }}">{{ country.name }} ({{ country.noOfLeagues }})</option>
+				{% endfor %}
+			</select>
+			<button type="submit" class="btn btn-primary ajaxSubmit" data-ajaxtarget="leagues-selection" data-ajaxblock="leagues-selection">{{ i18n.getMessage('button_display') }}</button>
+			<input type="hidden" name="page" value="leagues" />
+		</form>
+		<div id="leagues-selection"></div>
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-	<form class="form-inline" method="post">
-		<label class="control-label" for="country">{{ i18n.getMessage("entity_league_land") }}</label>
-		<select id="country" name="country">
-			<option></option>
-			{% for country in countries %}
-				<option value="{{ country.name }}">{{ country.name }} ({{ country.noOfLeagues }})</option>
-			{% endfor %}
-		</select>
-		<button type="submit" class="btn btn-primary ajaxSubmit" data-ajaxtarget="leagues-selection" data-ajaxblock="leagues-selection">{{ i18n.getMessage('button_display') }}</button>
-		<input type="hidden" name="page" value="leagues" />
-	</form>
-	<div id="leagues-selection"></div>
-{% endblock %}
+{% endembed %}

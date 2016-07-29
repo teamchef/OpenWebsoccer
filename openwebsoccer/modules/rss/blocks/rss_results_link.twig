@@ -26,9 +26,9 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-<p class="text-right">
-	<i class="icon-rss-sign"></i>
-	<a href="{{ env.getConfig("context_root") }}/webservices/rss.php?page=rss-results&id={{ env.user.id }}&lang={{ i18n.getCurrentLanguage() }}" target="_blank">
-		{{ i18n.getMessage("rss_link_label") }}
-	</a>
-</p>
+{% block rss_results_link %}
+	<p class="text-right">
+		<i class="icon-rss-sign"></i>
+		<a href="{{ env.getConfig("context_root") }}/webservices/rss.php?page=rss-results&id={{ env.user.id }}&lang={{ i18n.getCurrentLanguage() }}" target="_blank">{{ i18n.getMessage("rss_link_label") }}</a>
+	</p>
+{% endblock %}

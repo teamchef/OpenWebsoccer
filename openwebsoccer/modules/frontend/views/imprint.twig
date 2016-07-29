@@ -26,10 +26,14 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("imprint_title") }}
+{% embed "page.twig" %}
+{% block imprint %}
+	{% block page_title %}
+		{{ i18n.getMessage("imprint_title") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/imprint.png' %}{% if file_exists('img/imprint.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		{{ imprint_content|raw|nl2br }}
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-	{{ imprint_content|raw|nl2br }}
-{% endblock %}
+{% endembed %}

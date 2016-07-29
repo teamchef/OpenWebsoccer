@@ -26,17 +26,24 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-<div class="ajaxLoadedBlock" id="matchReportRefresh" data-ajaxblock="shoutbox" data-ajaxquerystr="id={{ env.getRequestParameter("id") }}" data-refreshperiod="15">
-	<h4 class="colour"> {{ i18n.getMessage('shoutbox_title') }}</h4>
-	[Heute,{{ "now"|date("H:i","Europe/Berlin") }}]
-	<br><br>
-	{% for message in messages %}
-		<div>
-			{% if env.user.isAdmin() %}<a href="#" class="ajaxLink" data-ajaxtarget="shoutbox_block" data-ajaxblock="shoutbox" data-ajaxquerystr="id={{ env.getRequestParameter("id") }}&action=delete-shoutbox-message&mid={{ message.message_id }}" title="{{ i18n.getMessage("button_delete") }}"><i class="icon-trash"></i></a>
-			{% endif %}
-			<small class="muted" style="font-size: 9px;">[{{ env.getFormattedDatetime(message.date,i18n) }}] <a href="{{ env.getInternalUrl("match","id=" ~ message.match_id) }}" class="muted">{{ message.home_name }} - {{ message.guest_name }}</a></small>
-			<br>
-			<a href="{{ env.getInternalUrl("user","id=" ~ message.user_id) }}">{{ message.user_name }}</a>: {{ message.message }}
-		</div>
-	{% endfor %}
-</div>
+{% block shoutbox %}
+	<div class="ajaxLoadedBlock" id="matchReportRefresh" data-ajaxblock="shoutbox" data-ajaxquerystr="id={{ env.getRequestParameter("id") }}" data-refreshperiod="15">
+		<h4 class="colour"> {{ i18n.getMessage('shoutbox_title') }}</h4>
+		[Heute,{{ "now"|date("H:i","Europe/Berlin") }}]
+		<br><br>
+		{% for message in messages %}
+			<div>
+				{% if env.user.isAdmin() %}
+					<a href="#" class="ajaxLink" data-ajaxtarget="shoutbox_block" data-ajaxblock="shoutbox" data-ajaxquerystr="id={{ env.getRequestParameter("id") }}&action=delete-shoutbox-message&mid=
+						{{ message.message_id }}" title="{{ i18n.getMessage("button_delete") }}"><i class="icon-trash"></i>
+				   </a>
+				{% endif %}
+				<small class="muted" style="font-size: 9px;">[{{ env.getFormattedDatetime(message.date,i18n) }}]
+					<a href="{{ env.getInternalUrl("match","id=" ~ message.match_id) }}" class="muted">{{ message.home_name }} - {{ message.guest_name }}</a>
+				</small>
+				<br>
+				<a href="{{ env.getInternalUrl("user","id=" ~ message.user_id) }}">{{ message.user_name }}</a>: {{ message.message }}
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

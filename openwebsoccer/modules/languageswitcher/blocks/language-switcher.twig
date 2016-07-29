@@ -26,30 +26,27 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-<div class="box">
-{% block stylesheets %}
-	{{ parent() }}
-	<style type="text/css">
-		.languageswitcher {
-			list-style-type: none;
-			margin: 0;
-			padding: 0;
-			text-align: center;
-		}
-		.languageswitcher li {
-			display: inline;
-			padding-right: 20px;
-		}
-	</style>
+{% block language_switcher %}
+	<div class="box">
+		{% block stylesheets %}
+			{{ parent() }}
+			<style type="text/css">
+				.languageswitcher { list-style-type: none; margin: 0; padding: 0; text-align: center; }
+				.languageswitcher li { display: inline; padding-right: 20px; }
+			</style>
+		{% endblock %}
+		{% block box_title %}
+			<h4 class="colour"> {{ i18n.getMessage('langswitcher_block_title') }}</h4>
+		{% endblock %}
+		{% block box_content %}
+			<ul class="languageswitcher">
+				{% for language in i18n.supportedLanguages %}
+					<li><a href="{{ env.getInternalActionUrl("switch-language","lang=" ~ language ~ "&id=" ~ env.getRequestParameter("id")) }}">
+							<img src="{{ skin.getImage("flags/" ~ language ~ ".png") }}" width="24" height="24" alt="{{ i18n.getMessage('lang_label_' ~ language) }}" title="{{ i18n.getMessage('lang_label_' ~ language) }}"/>
+						</a>
+					</li>
+				{% endfor %}
+			</ul>
+		{% endblock %}
+	</div>
 {% endblock %}
-{% block box_title %}
-	<h4 class="colour"> {{ i18n.getMessage('langswitcher_block_title') }}</h4>
-{% endblock %}
-{% block box_content %}
-	<ul class="languageswitcher">
-		{% for language in i18n.supportedLanguages %}
-			<li><a href="{{ env.getInternalActionUrl("switch-language","lang=" ~ language ~ "&id=" ~ env.getRequestParameter("id")) }}"><img src="{{ skin.getImage("flags/" ~ language ~ ".png") }}" width="24" height="24" alt="{{ i18n.getMessage('lang_label_' ~ language) }}" title="{{ i18n.getMessage('lang_label_' ~ language) }}"/></a></li>
-		{% endfor %}
-	</ul>
-{% endblock %}
-</div>

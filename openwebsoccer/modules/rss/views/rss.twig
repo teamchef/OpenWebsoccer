@@ -38,10 +38,12 @@
 		<ttl>120</ttl>
 		{% for item in items %}
 			<item>
+				<![CDATA[
 				<title>{{ item.title }}</title>
 				<guid isPermaLink="true">{{ item.url }}</guid>
 				<link>{{ item.url }}
 				<pubDate>{{ item.date }}</pubDate>
+				 ]]>
 			</item>
 		{% endfor %}
 	</channel>

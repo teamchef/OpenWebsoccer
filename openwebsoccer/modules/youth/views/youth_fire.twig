@@ -26,11 +26,13 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
+{% embed "page.twig" %}
+{% block youth_fire %}
 {% block page_title %}
 {{ i18n.getMessage("youthplayer-fire_navlabel") }}
 {% endblock %}
 {% block page_content %}
+	{% set bild = '/img/youthfire.png' %}{% if file_exists('img/youthfire.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
 <form class="form-horizontal" method="post">
 	<fieldset>
 		<legend>{{ i18n.getMessage("youthplayer-fire_formlabel") }}</legend>
@@ -45,3 +47,5 @@
 	<input type="hidden" name="action" value="fire-youthplayer"/>
 </form>
 {% endblock %}
+{% endblock %}
+{% endembed %}

@@ -26,31 +26,35 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("premium-confirm-action_title") }}
+{% embed "page.twig" %}
+{% block premium_confirm_action %}
+	{% block page_title %}
+		{{ i18n.getMessage("premium-confirm-action_title") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/premiumconfirm.png' %}{% if file_exists('img/premiumconfirm.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<div class="well">
+			{{ i18n.getMessage("premium-confirm-action_question")|format(env.getContextParameters()["premium_balance_required"],env.getConfig("premium_credit_unit"))|raw }}
+		</div>
+		<div class="form-actions">
+			<form method="post" style="display: inline;">
+				{% for actionParamKey,actionParamValue in env.getContextParameters()["actionparameters"] %}
+					<input type="hidden" name="{{ actionParamKey }}" value="{{ actionParamValue }}">
+				{% endfor %}
+				<input type="hidden" name="page" value="{{ env.getContextParameters()["srcpage"] }}">
+				<input type="hidden" name="action" value="{{ env.getContextParameters()["actionid"] }}">
+				<input type="hidden" name="premiumconfirmed" value="1">
+				<button type="submit" class="btn btn-success">{{ i18n.getMessage("premium-confirm-action_confirm") }}</button>
+			</form>
+			<form method="post" style="display: inline;">
+				{% for actionParamKey,actionParamValue in env.getContextParameters()["actionparameters"] %}
+					<input type="hidden" name="{{ actionParamKey }}" value="{{ actionParamValue }}">
+				{% endfor %}
+				<input type="hidden" name="page" value="{{ env.getContextParameters()["srcpage"] }}">
+				<input type="hidden" name="action" value="">
+				<button type="submit" class="btn btn-danger">{{ i18n.getMessage("button_cancel") }}</button>
+			</form>
+		</div>
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-	<div class="well">
-		{{ i18n.getMessage("premium-confirm-action_question")|format(env.getContextParameters()["premium_balance_required"],env.getConfig("premium_credit_unit"))|raw }}
-	</div>
-	<div class="form-actions">
-		<form method="post" style="display: inline;">
-			{% for actionParamKey,actionParamValue in env.getContextParameters()["actionparameters"] %}
-				<input type="hidden" name="{{ actionParamKey }}" value="{{ actionParamValue }}">
-			{% endfor %}
-			<input type="hidden" name="page" value="{{ env.getContextParameters()["srcpage"] }}">
-			<input type="hidden" name="action" value="{{ env.getContextParameters()["actionid"] }}">
-			<input type="hidden" name="premiumconfirmed" value="1">
-			<button type="submit" class="btn btn-success">{{ i18n.getMessage("premium-confirm-action_confirm") }}</button>
-		</form>
-		<form method="post" style="display: inline;">
-			{% for actionParamKey,actionParamValue in env.getContextParameters()["actionparameters"] %}
-				<input type="hidden" name="{{ actionParamKey }}" value="{{ actionParamValue }}">
-			{% endfor %}
-			<input type="hidden" name="page" value="{{ env.getContextParameters()["srcpage"] }}">
-			<input type="hidden" name="action" value="">
-			<button type="submit" class="btn btn-danger">{{ i18n.getMessage("button_cancel") }}</button>
-		</form>
-	</div>
-{% endblock %}
+{% endembed %}

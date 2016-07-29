@@ -26,7 +26,9 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
+{% embed "page.twig" %}
 {% block page_content %}
+	{% set bild = '/img/todaysmatches.png' %}{% if file_exists('img/todaysmatches.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
 	<div class="ajaxLoadedBlock" id="todaysmatches_block" data-ajaxblock="matches" data-ignoreemptymessages="true" data-refreshperiod="30"></div>
 {% endblock %}
+{% endembed %}

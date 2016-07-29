@@ -26,21 +26,25 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-<div class="box">
-{% block box_title %}
-	<h4 class="colour"> {{ i18n.getMessage('projectstatistics_title') }}</h4>
-	<h5 class="colour"></h5>
+{% block projectstatistics %}
+	<div class="box">
+		{% block box_title %}
+			<h4 class="colour"> {{ i18n.getMessage('projectstatistics_title') }}</h4>
+			<h5 class="colour"></h5>
+		{% endblock %}
+		{% block box_content %}
+			<i class="icon-time"></i> {{ "now"|date(" d. m. Y - H:i","Europe/Berlin") }} <br><br>
+			<p>
+				<a href="{{ env.getInternalUrl("who-is-online") }}" title="{{ i18n.getMessage("who-is-online_navlabel") }}">
+				{% if usersOnline == 1 %}
+					{{ i18n.getMessage("projectstatistics_onlineusers_single")|raw }}{% else %}{{ i18n.getMessage("projectstatistics_onlineusers",usersOnline)|raw }}
+				{% endif %}
+					 .</a> <br> {{ i18n.getMessage("projectstatistics_totalusers",usersTotal)|raw }}.
+			</p>
+			<p>
+				{{ i18n.getMessage("projectstatistics_leagues",numberOfLeagues)|raw }}. <br>
+				<a href="{{ env.getInternalUrl("freeclubs") }}">{{ i18n.getMessage("projectstatistics_freeteams",numberOfFreeTeams)|raw }} .</a>
+			</p>
+		{% endblock %}
+	</div>
 {% endblock %}
-{% block box_content %}
-	<i class="icon-time"></i> {{ "now"|date(" d. m. Y - H:i","Europe/Berlin") }} <br><br>
-	<p><a href="{{ env.getInternalUrl("who-is-online") }}" title="{{ i18n.getMessage("who-is-online_navlabel") }}">
-		{% if usersOnline == 1 %}
-			{{ i18n.getMessage("projectstatistics_onlineusers_single")|raw }}{% else %}{{ i18n.getMessage("projectstatistics_onlineusers",usersOnline)|raw }}
-		{% endif %}
-		 .</a> <br> {{ i18n.getMessage("projectstatistics_totalusers",usersTotal)|raw }}.
-	</p>
-	<p>{{ i18n.getMessage("projectstatistics_leagues",numberOfLeagues)|raw }}. <br>
-		<a href="{{ env.getInternalUrl("freeclubs") }}">{{ i18n.getMessage("projectstatistics_freeteams",numberOfFreeTeams)|raw }} .</a>
-	</p>
-{% endblock %}
-</div>

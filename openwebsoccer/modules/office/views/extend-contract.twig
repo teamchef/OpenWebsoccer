@@ -26,22 +26,26 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("extend-contract_title",player.player_firstname ~ " " ~ player.player_lastname) }}
+{% embed "page.twig" %}
+{% block extend_contract %}
+	{% block page_title %}
+		{{ i18n.getMessage("extend-contract_title",player.player_firstname ~ " " ~ player.player_lastname) }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/entendcontract.png' %}{% if file_exists('img/entendcontract.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<h3>{{ i18n.getMessage("extend-contract_existing_contract_title") }}</h3>
+			<dl class="dl-horizontal">
+				<dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
+				<dd>{{ player.player_contract_salary|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
+				<dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
+				<dd>{{ player.player_contract_goalbonus|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
+				<dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
+				<dd>{{ player.player_contract_matches }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
+			</dl>
+			<p style="margin-top: 30px;"><i class="icon-arrow-right"></i>
+				<a href="{{ env.getInternalUrl("player","id=" ~ player.player_id) }}">{{ i18n.getMessage("extend-contract_link_profile") }}</a>
+			</p>
+		<p><i class="icon-warning-sign"></i> {{ i18n.getMessage("extend-contract_decrease_satisfaction_hint") }}</p>
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-	<h3>{{ i18n.getMessage("extend-contract_existing_contract_title") }}</h3>
-	<dl class="dl-horizontal">
-		<dt>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</dt>
-		<dd>{{ player.player_contract_salary|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
-		<dt>{{ i18n.getMessage("entity_player_vertrag_torpraemie") }}</dt>
-		<dd>{{ player.player_contract_goalbonus|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</dd>
-		<dt>{{ i18n.getMessage("entity_player_vertrag_spiele") }}</dt>
-		<dd>{{ player.player_contract_matches }} {{ i18n.getMessage("player_details_unit_matches") }}</dd>
-	</dl>
-	<p style="margin-top: 30px;"><i class="icon-arrow-right"></i>
-		<a href="{{ env.getInternalUrl("player","id=" ~ player.player_id) }}">{{ i18n.getMessage("extend-contract_link_profile") }}</a>
-	</p>
-	<p><i class="icon-warning-sign"></i> {{ i18n.getMessage("extend-contract_decrease_satisfaction_hint") }}</p>
-{% endblock %}
+{% endembed %}

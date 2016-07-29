@@ -26,24 +26,28 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("premium-exchange_navlabel") }}
-{% endblock %}
-{% block page_content %}
-	<div class="well">
-		<p>{{ i18n.getMessage("premium-exchange_intro") }}</p>
-		<p><strong>1 {{ env.getConfig("premium_credit_unit") }} = {{ env.getConfig("premium_exchangerate_gamecurrency")|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</strong></p>
-	</div>
-	<h4>{{ i18n.getMessage("entity_users_premium_balance") }} : {{ env.user.premiumBalance|number_format(0,',',' ') }} {{ env.getConfig("premium_credit_unit") }}</h4>
-	<form class="form-horizontal" method="post">
-		{{ macro.textfield('amount',i18n.getMessage('premium-exchange_amount_label'),env.getRequestParameter('amount'),true,validationMsg,'number',env.getConfig("premium_credit_unit")) }}
-		<div class="form-actions">
-			<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
-			<a href="{{ env.getInternalUrl("premiumaccount") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+{% embed "page.twig" %}
+{% block premium_exchange %}
+	{% block page_title %}
+		{{ i18n.getMessage("premium-exchange_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/premiumexchange.png' %}{% if file_exists('img/premiumexchange.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<div class="well">
+			<p>{{ i18n.getMessage("premium-exchange_intro") }}</p>
+			<p><strong>1 {{ env.getConfig("premium_credit_unit") }} = {{ env.getConfig("premium_exchangerate_gamecurrency")|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</strong></p>
 		</div>
-		<input type="hidden" name="page" value="premium-exchange"/>
-		<input type="hidden" name="validateonly" value="1"/>
-		<input type="hidden" name="action" value="exchange-premium"/>
-	</form>
+		<h4>{{ i18n.getMessage("entity_users_premium_balance") }} : {{ env.user.premiumBalance|number_format(0,',',' ') }} {{ env.getConfig("premium_credit_unit") }}</h4>
+		<form class="form-horizontal" method="post">
+			{{ macro.textfield('amount',i18n.getMessage('premium-exchange_amount_label'),env.getRequestParameter('amount'),true,validationMsg,'number',env.getConfig("premium_credit_unit")) }}
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
+				<a href="{{ env.getInternalUrl("premiumaccount") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+			</div>
+			<input type="hidden" name="page" value="premium-exchange"/>
+			<input type="hidden" name="validateonly" value="1"/>
+			<input type="hidden" name="action" value="exchange-premium"/>
+		</form>
+	{% endblock %}
 {% endblock %}
+{% endembed %}

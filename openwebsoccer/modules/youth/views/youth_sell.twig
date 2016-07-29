@@ -26,22 +26,26 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-{{ i18n.getMessage("youthplayer-sell_navlabel") }}
+{% embed "page.twig" %}
+{% block youth_sell %}
+	{% block page_title %}
+		{{ i18n.getMessage("youthplayer-sell_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/youthsell.png' %}{% if file_exists('img/youthsell.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<form class="form-horizontal" method="post">
+			<fieldset>
+				<legend>{{ i18n.getMessage("youthplayer-sell_formlabel") }}</legend>
+				{{ macro.textfield('transfer_fee',i18n.getMessage('entity_youthplayer_transfer_fee'),env.getRequestParameter('transfer_fee'),true,validationMsg,'number') }}
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_submit') }}</button>
+				<a href="{{ env.getInternalUrl("youth-team") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+			</div>
+			<input type="hidden" name="page" value="youthplayer-sell"/>
+			<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
+			<input type="hidden" name="action" value="sell-youthplayer"/>
+		</form>
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-<form class="form-horizontal" method="post">
-	<fieldset>
-		<legend>{{ i18n.getMessage("youthplayer-sell_formlabel") }}</legend>
-		{{ macro.textfield('transfer_fee',i18n.getMessage('entity_youthplayer_transfer_fee'),env.getRequestParameter('transfer_fee'),true,validationMsg,'number') }}
-	</fieldset>
-	<div class="form-actions">
-		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_submit') }}</button>
-		<a href="{{ env.getInternalUrl("youth-team") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
-	</div>
-	<input type="hidden" name="page" value="youthplayer-sell"/>
-	<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
-	<input type="hidden" name="action" value="sell-youthplayer"/>
-</form>
-{% endblock %}
+{% endembed %}

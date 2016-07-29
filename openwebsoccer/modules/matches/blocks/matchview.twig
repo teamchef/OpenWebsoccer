@@ -27,6 +27,7 @@
 * https://github.com/ihofmann/open-websoccer
 #}
 {% import "macro.twig" as macro %}
+{% block matchview %}
 {% if match.match_deprecated_report|length > 0 %}
 	{{ match.match_deprecated_report|raw|nl2br }}
 {% else %}
@@ -93,4 +94,5 @@
 			{% endfor %}
 		</tbody>
 	</table>
+{% endblock %}
 {% endif %}

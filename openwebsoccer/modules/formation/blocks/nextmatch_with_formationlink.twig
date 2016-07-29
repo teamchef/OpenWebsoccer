@@ -27,6 +27,8 @@
 * https://github.com/ihofmann/open-websoccer
 #}
 {% extends "blocks/nextmatch.twig" %}
-{% block nextmatch_footer %}
-	<br><br><br><p><a href="{{ env.getInternalUrl("formation") }}" class="btn">{{ i18n.getMessage("formation_navlabel") }}</a></p>
+{% block nextmatch_with_formationslink %}
+	{% block nextmatch_footer %}
+		<br><br><br><p>&emsp;<a href="{{ env.getInternalUrl("formation") }}" class="btn">{{ i18n.getMessage("formation_navlabel") }}</a></p>
+	{% endblock %}
 {% endblock %}

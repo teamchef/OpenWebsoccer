@@ -26,56 +26,60 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("highscore_title") }}
-{% endblock %}
-{% block page_content %}
-	{% if users|length > 0 %}
-		<table class="table table-striped">
-			<thead>
-				<tr>
-					<th>{{ i18n.getMessage("highscore_rank") }}</th>
-					<th>{{ i18n.getMessage("highscore_user") }}</th>
-					<th>{{ i18n.getMessage("entity_club") }}</th>
-					<th>{{ i18n.getMessage("highscore_registration_date") }}</th>
-					<th>{{ i18n.getMessage("highscore_score") }}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for user in users %}
+{% embed "page.twig" %}
+{% block user_highscore %}
+	{% block page_title %}
+		{{ i18n.getMessage("highscore_title") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/highscore.png' %}{% if file_exists('img/highscore.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		{% if users|length > 0 %}
+			<table class="table table-striped">
+				<thead>
 					<tr>
-						<td><strong>{{ (macro.pageNo - 1) * macro.eps + loop.index }}</strong></td>
-						<td>
-							{% if user.picture|length > 0 %}
-								<a href="{{ env.getInternalUrl("user","id=" ~ user.id) }}" title="{{ i18n.getMessage("user_navlabel") }}">
-									<img src="{{ user.picture }}" alt="{{ user.nick }}" style="width: 40px; height: 40px;"/>
-								</a>
-							{% endif %}
-							<a href="{{ env.getInternalUrl("user","id=" ~ user.id) }}">{{ user.nick }}</a>
-						</td>
-						<td>
-							{% if user.team_id > 0 %}
-								{% if user.team_picture|length > 0 %}
-									<a href="{{ env.getInternalUrl("team","id=" ~ user.team_id) }}"
-										{% if env.getConfig("cdn_root_set") %} title="{{ i18n.getMessage("team_navlabel") }}">
-											<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ user.team_picture }}" alt="{{ user.team_name }}" style="max-width: 40px;"/></a>
-										{% else %}
-											title="{{ i18n.getMessage("team_navlabel") }}">
-											<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ user.team_picture }}" alt="{{ user.team_name }}" style="max-width: 40px;"/></a>
-										{% endif %}
-								{% endif %}
-									<a href="{{ env.getInternalUrl("team","id=" ~ user.team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ user.team_name }}</a>
-							{% else %}
-							 -
-							{% endif %}
-						</td>
-						<td>{{ env.getFormattedDate(user.registration_date) }}</td>
-						<td>{{ user.highscore|number_format(0,',',' ') }}</td>
+						<th>{{ i18n.getMessage("highscore_rank") }}</th>
+						<th>{{ i18n.getMessage("highscore_user") }}</th>
+						<th>{{ i18n.getMessage("entity_club") }}</th>
+						<th>{{ i18n.getMessage("highscore_registration_date") }}</th>
+						<th>{{ i18n.getMessage("highscore_score") }}</th>
 					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-		{{ pagination.paginator(paginator) }}
-	{% endif %}
+				</thead>
+				<tbody>
+					{% for user in users %}
+						<tr>
+							<td><strong>{{ (macro.pageNo - 1) * macro.eps + loop.index }}</strong></td>
+							<td>
+								{% if user.picture|length > 0 %}
+									<a href="{{ env.getInternalUrl("user","id=" ~ user.id) }}" title="{{ i18n.getMessage("user_navlabel") }}">
+										<img src="{{ user.picture }}" alt="{{ user.nick }}" style="width: 40px; height: 40px;"/>
+									</a>
+								{% endif %}
+								<a href="{{ env.getInternalUrl("user","id=" ~ user.id) }}">{{ user.nick }}</a>
+							</td>
+							<td>
+								{% if user.team_id > 0 %}
+									{% if user.team_picture|length > 0 %}
+										<a href="{{ env.getInternalUrl("team","id=" ~ user.team_id) }}"
+											{% if env.getConfig("cdn_root_set") %} title="{{ i18n.getMessage("team_navlabel") }}">
+												<img src="{{ env.getConfig("cdn_root") }}/uploads/club/{{ user.team_picture }}" alt="{{ user.team_name }}" style="max-width: 40px;"/></a>
+											{% else %}
+												title="{{ i18n.getMessage("team_navlabel") }}">
+												<img src="{{ env.getConfig("context_root") }}/uploads/club/{{ user.team_picture }}" alt="{{ user.team_name }}" style="max-width: 40px;"/></a>
+											{% endif %}
+									{% endif %}
+										<a href="{{ env.getInternalUrl("team","id=" ~ user.team_id) }}" title="{{ i18n.getMessage("team_navlabel") }}">{{ user.team_name }}</a>
+								{% else %}
+								 -
+								{% endif %}
+							</td>
+							<td>{{ env.getFormattedDate(user.registration_date) }}</td>
+							<td>{{ user.highscore|number_format(0,',',' ') }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{{ pagination.paginator(paginator) }}
+		{% endif %}
+	{% endblock %}
 {% endblock %}
+{% endembed %}

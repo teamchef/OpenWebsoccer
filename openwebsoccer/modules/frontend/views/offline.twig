@@ -26,17 +26,21 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block browser_title %}
-	{{ env.getConfig("projectname") }}
+{% embed "page.twig" %}
+{% block offline %}
+	{% block browser_title %}
+		{{ env.getConfig("projectname") }}
+	{% endblock %}
+	{% block page_header %}
+		<h1>{{ i18n.getMessage('offline_title') }}</h1>
+		{{ offline_message|raw }}
+	{% endblock %}
+	{% set bild = '/img/offline.png' %}{% if file_exists('img/offline.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+	{% block page_columns %}
+		&nbsp;
+	{% endblock %}
+	{% block navigation %}
+		&nbsp;
+	{% endblock %}
 {% endblock %}
-{% block page_header %}
-	<h1>{{ i18n.getMessage('offline_title') }}</h1>
-	{{ offline_message|raw }}
-{% endblock %}
-{% block page_columns %}
-	&nbsp;
-{% endblock %}
-{% block navigation %}
-	&nbsp;
-{% endblock %}
+{% endembed %}

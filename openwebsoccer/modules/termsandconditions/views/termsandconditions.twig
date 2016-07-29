@@ -26,10 +26,14 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("termsandconditions_navlabel") }}
+{% embed "page.twig" %}
+{% block termsandconditiona %}
+	{% block page_title %}
+		{{ i18n.getMessage("termsandconditions_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/termsandcondition.png' %}{% if file_exists('img/termsandcondition.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		{{ terms|raw }}
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-	{{ terms|raw }}
-{% endblock %}
+{% endembed %}

@@ -26,94 +26,99 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block stylesheets %}
-    {{ parent() }}
-    {% include 'websoccericon_css.twig' %}
-{% endblock %}
-{% block page_title %}
-    {{ match.match_home_name }} - {{ match.match_guest_name }}
-{% endblock %}
-{% block page_content %}
-    {% if match.match_type == "league" %}
-        {% set matchtype = i18n.getMessage("matchtype_" ~ match.match_type) ~  "," ~ i18n.getMessage("match_details_matchday",match.match_matchday) %}
-    {% elseif match.match_type == "cup" %}
-        {% set matchtype = i18n.getMessage("matchtype_" ~ match.match_type) ~  "," ~ match.match_cup_name ~ " (" ~ match.match_cup_round ~ ")" %}
-    {% else %}
-        {% set matchtype = i18n.getMessage("matchtype_" ~ match.match_type) %}
-    {% endif %}
-    <table>
-        <td>
-            {% if match.match_home_noformation %}
-                {{ macro.box("",i18n.getMessage("match_details_noformation",match.match_home_name),"warning") }}
-            {% endif %}
-        </td>
-        <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-        <td>
-        <td>
-            {% if match.match_guest_noformation %}
-                {{ macro.box("",i18n.getMessage("match_details_noformation",match.match_guest_name),"warning") }}
-            {% endif %}
-        </td>
-    </table>
-    <table>
-        <td>
-            {{ profile.infofield(i18n.getMessage("match_details_date"),env.getFormattedDatetime(match.match_date,i18n)) }}
-        </td>
-        <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        </td>
-        <td>
-            {{ profile.infofield(i18n.getMessage("match_details_type"),matchtype) }}
-        </td>
-        <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-        </td>
-        <td>
-            {% if match.match_stadium_name|length > 0 %}
-                {{ profile.infofield(i18n.getMessage("match_details_stadium"),match.match_stadium_name) }}
-            {% endif %}
-        </td>
-        <td>
-        </td>
-        <td>
-            {% if match.match_audience > 0 %}
-                {% set audience = match.match_audience|number_format(0,',',' ') %}
-                {% if match.match_soldout %}
-                    {% set audience = audience ~ " (" ~ i18n.getMessage("entity_match_soldout") ~ ")" %}
-                {% endif %}
-                {{ profile.infofield(i18n.getMessage("match_details_audience"),audience) }}
-            {% endif %}
-        </td>
-    </table>
-    {% if match.match_simulated == 0 and match.match_minutes < 1 %}
-        <hr/>
-        {{ macro.box("",i18n.getMessage("match_details_notyetsimulated"),"info") }}
-    {% else %}
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-    &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+{% embed "page.twig" %}
+{% block match_details %}
+	{% block stylesheets %}
+    	{{ parent() }}
+    	{% include 'websoccericon_css.twig' %}
+	{% endblock %}
+	{% block page_title %}
+    	{{ match.match_home_name }} - {{ match.match_guest_name }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/matchdetails.png' %}{% if file_exists('img/matchdetails.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+    	{% if match.match_type == "league" %}
+        	{% set matchtype = i18n.getMessage("matchtype_" ~ match.match_type) ~  "," ~ i18n.getMessage("match_details_matchday",match.match_matchday) %}
+    	{% elseif match.match_type == "cup" %}
+        	{% set matchtype = i18n.getMessage("matchtype_" ~ match.match_type) ~  "," ~ match.match_cup_name ~ " (" ~ match.match_cup_round ~ ")" %}
+    	{% else %}
+        	{% set matchtype = i18n.getMessage("matchtype_" ~ match.match_type) %}
+    	{% endif %}
+    	<table>
+        	<td>
+            	{% if match.match_home_noformation %}
+                	{{ macro.box("",i18n.getMessage("match_details_noformation",match.match_home_name),"warning") }}
+            	{% endif %}
+        	</td>
+        	<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+        	<td>
+        	<td>
+            	{% if match.match_guest_noformation %}
+                	{{ macro.box("",i18n.getMessage("match_details_noformation",match.match_guest_name),"warning") }}
+            	{% endif %}
+        	</td>
+    	</table>
+    	<table>
+        	<td>
+            	{{ profile.infofield(i18n.getMessage("match_details_date"),env.getFormattedDatetime(match.match_date,i18n)) }}
+        	</td>
+        	<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+        	<td>
+            	{{ profile.infofield(i18n.getMessage("match_details_type"),matchtype) }}
+        	</td>
+        	<td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+        	<td>
+            	{% if match.match_stadium_name|length > 0 %}
+                	{{ profile.infofield(i18n.getMessage("match_details_stadium"),match.match_stadium_name) }}
+            	{% endif %}
+        	</td>
+        	<td></td>
+        	<td>
+            	{% if match.match_audience > 0 %}
+                	{% set audience = match.match_audience|number_format(0,',',' ') %}
+                	{% if match.match_soldout %}
+                    	{% set audience = audience ~ " (" ~ i18n.getMessage("entity_match_soldout") ~ ")" %}
+                	{% endif %}
+                	{{ profile.infofield(i18n.getMessage("match_details_audience"),audience) }}
+            	{% endif %}
+        	</td>
+    	</table>
+    	{% if match.match_simulated == 0 and match.match_minutes < 1 %}
+        	<hr/>
+        	{{ macro.box("",i18n.getMessage("match_details_notyetsimulated"),"info") }}
+    	{% else %}
+    	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+    	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
     		{% if allowTacticChanges %}
-			<a class="btn" href="{{ env.getInternalUrl("match-live-changes","id=" ~ match.match_id) }}"><i class="icon-edit"></i> {{ i18n.getMessage("match_details_button_changes") }}</a>
-		{% endif %}
-        <h3>{{ i18n.getMessage("match_details_report_title") }}</h3>
-                <table>
-                    <td><div class="ajaxLoadedBlock" id="match-statistics" data-ajaxblock="match-statistics" data-ajaxquerystr="id={{ match.match_id }}" data-refreshperiod="30"></div></td>
-                    <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
-                    <td><div class="ajaxLoadedBlock" id="match-result-players" data-ajaxblock="match-result-players" data-ajaxquerystr="id={{ match.match_id }}" data-refreshperiod="30"></div></td>
-                    <div id="statistic">
-                        {% if match.match_deprecated_report|length > 0 %}
-                            <p>{{ i18n.getMessage("match_details_nostatistics_available") }}</p>
-                        {% else %}
-                            <span id="matchstatistic"></span>
-                        {% endif %}
-                    </div>
-                    <td><div id="players-list"></div></td>
-                </table>
-                <span class="report_team_home">{{ match.match_home_name }} <a href="{{ env.getInternalUrl("team","id=" ~ match.match_home_id) }}" title="{{ i18n.getMessage("team_navlabel") }}">
-                	<i class="icon-info-sign darkIcon"></i></a>
-                </span>
-                <span style="margin-left: 20px;" class="report_team_guest">{{ match.match_guest_name }} <a href="{{ env.getInternalUrl("team","id=" ~ match.match_guest_id) }}" title="{{ i18n.getMessage("team_navlabel") }}">
-                	<i class="icon-info-sign darkIcon"></i></a>
-                </span>
-                 <div class="ajaxLoadedBlock" id="reportarea" data-ajaxblock="matchview" data-ajaxquerystr="id={{ match.match_id }}" data-refreshperiod="30"></div>
-    {% endif %}
+				<a class="btn" href="{{ env.getInternalUrl("match-live-changes","id=" ~ match.match_id) }}"><i class="icon-edit"></i> {{ i18n.getMessage("match_details_button_changes") }}</a>
+			{% endif %}
+        	<h3>{{ i18n.getMessage("match_details_report_title") }}</h3>
+            <table>
+            	<td><div class="ajaxLoadedBlock" id="match-statistics" data-ajaxblock="match-statistics" data-ajaxquerystr="id={{ match.match_id }}" data-refreshperiod="30"></div></td>
+                <td>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</td>
+                <td><div class="ajaxLoadedBlock" id="match-result-players" data-ajaxblock="match-result-players" data-ajaxquerystr="id={{ match.match_id }}" data-refreshperiod="30"></div></td>
+                <div id="statistic">
+                	{% if match.match_deprecated_report|length > 0 %}
+                    	<p>{{ i18n.getMessage("match_details_nostatistics_available") }}</p>
+                    {% else %}
+                    	<span id="matchstatistic"></span>
+                    {% endif %}
+                </div>
+                <td><div id="players-list"></div></td>
+            </table>
+            <span class="report_team_home">{{ match.match_home_name }}
+            	<a href="{{ env.getInternalUrl("team","id=" ~ match.match_home_id) }}" title="{{ i18n.getMessage("team_navlabel") }}">
+                	<i class="icon-info-sign darkIcon"></i>
+            	</a>
+            </span>
+            <span style="margin-left: 20px;" class="report_team_guest">{{ match.match_guest_name }}
+            	<a href="{{ env.getInternalUrl("team","id=" ~ match.match_guest_id) }}" title="{{ i18n.getMessage("team_navlabel") }}">
+                	<i class="icon-info-sign darkIcon"></i>
+                </a>
+            </span>
+            <div class="ajaxLoadedBlock" id="reportarea" data-ajaxblock="matchview" data-ajaxquerystr="id={{ match.match_id }}" data-refreshperiod="30"></div>
+    	{% endif %}
+	{% endblock %}
 {% endblock %}
+{% endembed %}

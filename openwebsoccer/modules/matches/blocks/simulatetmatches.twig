@@ -26,8 +26,9 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% block box_content %}
-	{% import "macro.twig" as macro %}
+{% import "macro.twig" as macro %}
+{% block simulatetmatches %}
+	{% block box_content %}
 	{% if matches is defined and matches|length > 0 %}
 		{% for match in matches %}
 			{% if online == 0 %}
@@ -130,4 +131,5 @@
 	{% endif %}
 	</b>
 	</div>
+{% endblock %}
 {% endblock %}

@@ -26,22 +26,26 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-   	{{ i18n.getMessage("upload-clublogo_navlabel") }}
+{% embed "page.twig" %}
+{% block upload_clublogo %}
+	{% block page_title %}
+   		{{ i18n.getMessage("upload-clublogo_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/clubslogo.png' %}{% if file_exists('img/clubslogo.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		{% if env.getConfig("upload_clublogo_max_size") > 0 %}
+			<p>{{ i18n.getMessage("upload-clublogo_intro",env.getConfig("upload_clublogo_max_size"))|raw }}</p>
+			<form class="form-horizontal" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="MAX_FILE_SIZE" value="{{ env.getConfig("upload_clublogo_max_size") * 1024 }}"/>
+				{{ macro.textfield('picture',i18n.getMessage('entity_club_bild'),env.getRequestParameter('picture'),true,validationMsg,'file') }}
+				<div class="form-actions">
+					<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
+					<a href="{{ env.getInternalUrl("team","id=" ~ env.user.clubId) }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+				</div>
+				<input type="hidden" name="page" value="upload-clublogo"/>
+				<input type="hidden" name="action" value="upload-club-picture"/>
+			</form>
+		{% endif %}
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-	{% if env.getConfig("upload_clublogo_max_size") > 0 %}
-		<p>{{ i18n.getMessage("upload-clublogo_intro",env.getConfig("upload_clublogo_max_size"))|raw }}</p>
-		<form class="form-horizontal" method="post" enctype="multipart/form-data">
-			<input type="hidden" name="MAX_FILE_SIZE" value="{{ env.getConfig("upload_clublogo_max_size") * 1024 }}"/>
-			{{ macro.textfield('picture',i18n.getMessage('entity_club_bild'),env.getRequestParameter('picture'),true,validationMsg,'file') }}
-			<div class="form-actions">
-				<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_save') }}</button>
-				<a href="{{ env.getInternalUrl("team","id=" ~ env.user.clubId) }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
-			</div>
-			<input type="hidden" name="page" value="upload-clublogo"/>
-			<input type="hidden" name="action" value="upload-club-picture"/>
-		</form>
-	{% endif %}
-{% endblock %}
+{% endembed %}

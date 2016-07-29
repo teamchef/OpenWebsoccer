@@ -26,9 +26,13 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("office_title") }}
+{% embed "page.twig" %}
+{% block office_overview %}
+	{% block page_title %}
+		{{ i18n.getMessage("office_title") }}
+	{% endblock %}
+	{% set bild = '/img/officeoverview.png' %}{% if file_exists('img/officeoverview.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+	{% block page_content %}
+	{% endblock %}
 {% endblock %}
-{% block page_content %}
-{% endblock %}
+{% endembed %}

@@ -26,49 +26,51 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ player.player_firstname }} {% if player.player_pseudonym|length > 0 %}"{{ player.player_pseudonym }}" {% endif %}{{ player.player_lastname }}
-{% endblock %}
-{% block page_content %}
-	{% if player.player_picture|length > 0 %}
-		<div style="text-align: center; margin-bottom: 10px;">
-			{% if env.getConfig("cdn_root_set") %}
-				<img src="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.player_picture }}" class="img-rounded">
-			{% else %}
-				<img src="{{ env.getConfig("context_root") }}/uploads/player/{{ player.player_picture }}" class="img-rounded">
-			{% endif %}
-		</div>
-	{% endif %}
-	<div class="tab-content">
-		<table>
-			<tr>
-				<td>................................................</td>
-				<td>................................................</td>
-				<td>................................</td>
-				<td>................................</td>
-				<td>................................</td>
-			</tr>
-			<tr>
-				<th>{{ i18n.getMessage("entity_player_position") }}</th>
-				<td>{{ i18n.getMessage("player_position_" ~ player.player_position) }}</td><td></td>
-				<td><h4>{{ i18n.getMessage("player_details_statistic_season") }}</h4></td>
-				<td><h4>{{ i18n.getMessage("player_details_statistic_total") }}</h4></td>
-			</tr>
-			{% if player.player_position_main|length > 0 %}
+{% embed "page.twig" %}
+{% block player_details %}
+	{% block page_title %}
+		{{ player.player_firstname }} {% if player.player_pseudonym|length > 0 %}"{{ player.player_pseudonym }}" {% endif %}{{ player.player_lastname }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/playerdetails.png' %}{% if file_exists('img/playerdetails.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		{% if player.player_picture|length > 0 %}
+			<div style="text-align: center; margin-bottom: 10px;">
+				{% if env.getConfig("cdn_root_set") %}
+					<img src="{{ env.getConfig("cdn_root") }}/uploads/player/{{ player.player_picture }}" class="img-rounded">
+				{% else %}
+					<img src="{{ env.getConfig("context_root") }}/uploads/player/{{ player.player_picture }}" class="img-rounded">
+				{% endif %}
+			</div>
+		{% endif %}
+		<div class="tab-content">
+			<table>
 				<tr>
-					<th>{{ i18n.getMessage("entity_player_position_main") }}</th>
-					<td>{{ i18n.getMessage("option_" ~ player.player_position_main) }}</td>
-					<th>{{ i18n.getMessage("player_details_statistic_matches") }}</th>
-					<td>{{ player.player_season_matches }}</td><td>{{ player.player_total_matches }}</td>
+					<td>................................................</td>
+					<td>................................................</td>
+					<td>................................</td>
+					<td>................................</td>
+					<td>................................</td>
 				</tr>
-			{% endif %}
-			{% if player.player_position_second|length > 0 %}
 				<tr>
-					<th>{{ i18n.getMessage("entity_player_position_second") }}</th>
-					<td>{{ i18n.getMessage("option_" ~ player.player_position_second) }}</td>
+					<th>{{ i18n.getMessage("entity_player_position") }}</th>
+					<td>{{ i18n.getMessage("player_position_" ~ player.player_position) }}</td><td></td>
+					<td><h4>{{ i18n.getMessage("player_details_statistic_season") }}</h4></td>
+					<td><h4>{{ i18n.getMessage("player_details_statistic_total") }}</h4></td>
 				</tr>
-			{% endif %}
+				{% if player.player_position_main|length > 0 %}
+					<tr>
+						<th>{{ i18n.getMessage("entity_player_position_main") }}</th>
+						<td>{{ i18n.getMessage("option_" ~ player.player_position_main) }}</td>
+						<th>{{ i18n.getMessage("player_details_statistic_matches") }}</th>
+						<td>{{ player.player_season_matches }}</td><td>{{ player.player_total_matches }}</td>
+					</tr>
+				{% endif %}
+				{% if player.player_position_second|length > 0 %}
+					<tr>
+						<th>{{ i18n.getMessage("entity_player_position_second") }}</th>
+						<td>{{ i18n.getMessage("option_" ~ player.player_position_second) }}</td>
+					</tr>
+				{% endif %}
 				<th>{{ i18n.getMessage("entity_player_verein_id") }}</th>
 				{% if player.team_id > 0 %}
 					<td><a href="{{ env.getInternalUrl("team","id=" ~ player.team_id) }}">{{ player.team_name }}</a></td>
@@ -116,14 +118,15 @@
 					{% if env.getConfig("cdn_root_set") %}
 						<td><img src="{{ env.getConfig("cdn_root") }}/img/flags/{{ player.player_nationality }}.png"  alt="{{ player.player_nationality }}" style="width: 15px; height: 10px; vertical-align: baseline"/>
 					{% else %}
-						<td><img src="{{ env.getConfig("context_root") }}/img/flags/{{ player.player_nationality }}.png"  alt="{{ player.player_nationality }}" style="width: 15px; height: 10px; vertical-align: baseline"/>
+						<td>
+							<img src="{{ env.getConfig("context_root") }}/img/flags/{{ player.player_nationality }}.png"  alt="{{ player.player_nationality }}" style="width: 15px; height: 10px; vertical-align: baseline"/>
 							{% if i18n.hasMessage("option_" ~ player.player_nationality_filename) %}
 								{% set countryLabel = i18n.getMessage("option_" ~ player.player_nationality_filename) %}
 							{% else %}
 								{% set countryLabel = player.player_nationality_filename %}
 							{% endif %}
 							{% if nationImg %}<td><img src="{{ nationImg }}" title="{{ countryLabel }}" alt="{{ countryLabel }}" />
-							{% else %}{{ countryLabel }}
+								{% else %}{{ countryLabel }}
 							{% endif %}
 						</td>
 						<th>{{ i18n.getMessage("player_details_statistic_yellow_red") }}</th>
@@ -170,7 +173,9 @@
 					{% if env.getConfig("hide_strength_attributes") != "1" %}
 						<tr>
 							<th><h4>{{ i18n.getMessage("player_details_strength_title") }}</h4></th>
-							<td><p><a href="#statModal" class="btn btn-small ajaxLink" role="button" data-toggle="modal" data-ajaxtarget="playerStatisticsPerCompetition" data-ajaxblock="playerstatistics" data-ajaxquerystr="id={{ player.player_id }}" ><i class="icon-bar-chart"></i> {{ i18n.getMessage("player_details_statistic_opendetails") }}</a></p></td>
+							<td><p><a href="#statModal" class="btn btn-small ajaxLink" role="button" data-toggle="modal" data-ajaxtarget="playerStatisticsPerCompetition" data-ajaxblock="playerstatistics"
+								data-ajaxquerystr="id={{ player.player_id }}" ><i class="icon-bar-chart"></i> {{ i18n.getMessage("player_details_statistic_opendetails") }}</a></p>
+							</td>
 						</tr>
 						<tr><th><p><em>{{ i18n.getMessage('entity_player_w_staerke') }} ({{ player.player_strength }}%)</em></p></th><td>{{ macro.progressbar(player.player_strength) }}</td></tr>
 						<tr><th><p><em>{{ i18n.getMessage('entity_player_w_technik') }} ({{ player.player_strength_technique }}%)</em></p></th><td>{{ macro.progressbar(player.player_strength_technique) }}</td></tr>
@@ -179,42 +184,44 @@
 						<tr><th><p><em>{{ i18n.getMessage('entity_player_w_zufriedenheit') }} ({{ player.player_strength_satisfaction }}%)</em></p></th><td>{{ macro.progressbar(player.player_strength_satisfaction) }}</td></tr>
 					{% endif %}
 				</tr>
-		</table>
-	</div>
-	<div class="tab-pane" id="statistic">
-		<div id="statModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="statModalLabel" aria-hidden="true">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ߗ</button>
-			</div>
-			<div class="modal-body">
-				<div id="playerStatisticsPerCompetition">...</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">{{ i18n.getMessage("button_close") }}</a>
-			</div>
+			</table>
 		</div>
-		<h4>{{ i18n.getMessage("player_details_grades_title") }}</h4>
-		{% if grades is defined and grades|length > 0 %}
- 			{% if grades|length == 1 %}
- 				<p><strong>{{ i18n.getMessage("player_details_grade_last_match") }}:</strong> {{ grades[0] }}</p>
+		<div class="tab-pane" id="statistic">
+			<div id="statModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="statModalLabel" aria-hidden="true">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">ߗ</button>
+				</div>
+				<div class="modal-body">
+					<div id="playerStatisticsPerCompetition">...</div>
+				</div>
+				<div class="modal-footer">
+					<a href="#" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">{{ i18n.getMessage("button_close") }}</a>
+				</div>
+			</div>
+			<h4>{{ i18n.getMessage("player_details_grades_title") }}</h4>
+			{% if grades is defined and grades|length > 0 %}
+ 				{% if grades|length == 1 %}
+ 					<p><strong>{{ i18n.getMessage("player_details_grade_last_match") }}:</strong> {{ grades[0] }}</p>
+ 				{% else %}
+ 					<div id="grades" style="width: 600px; height: 300px; margin-left: 30px; margin-bottom: 30px" data-series="[{% for grade in grades %}{% if loop.index > 1 %},{% endif %}[{{ loop.index }},{{ grade }}]{% endfor %}]">
+ 					</div>
+ 				{% endif %}
+ 				<p><strong>{{ i18n.getMessage("player_details_grade_average") }}:</strong> {{ player.player_avg_grade }}</p>
  			{% else %}
- 				<div id="grades" style="width: 600px; height: 300px; margin-left: 30px; margin-bottom: 30px" data-series="[{% for grade in grades %}{% if loop.index > 1 %},{% endif %}[{{ loop.index }},{{ grade }}]{% endfor %}]">
- 				</div>
+ 				<p>{{ i18n.getMessage("player_details_nogradesavailable") }}</p>
  			{% endif %}
- 			<p><strong>{{ i18n.getMessage("player_details_grade_average") }}:</strong> {{ player.player_avg_grade }}</p>
- 		{% else %}
- 			<p>{{ i18n.getMessage("player_details_nogradesavailable") }}</p>
- 		{% endif %}
-	</div>
-	<div class="tab-pane" id="history">
-		{% if player.player_history|length > 0 %}
-			<p>{{ player.player_history|nl2br }}</p>
-		{% elseif completedtransfers is not defined or completedtransfers|length == 0 or not env.getConfig("transfermarket_enabled") %}
- 			<p>{{ i18n.getMessage("player_details_nohistoryavailable") }}</p>
-		{% endif %}
-		{% if env.getConfig("transfermarket_enabled") or env.getConfig("transferoffers_enabled") %}
-			<h4>{{ i18n.getMessage("transfers_tab") }}</h4>
-			{% include "blocks/transfers-list.twig" %}
-		{% endif %}
-	</div>
+		</div>
+		<div class="tab-pane" id="history">
+			{% if player.player_history|length > 0 %}
+				<p>{{ player.player_history|nl2br }}</p>
+			{% elseif completedtransfers is not defined or completedtransfers|length == 0 or not env.getConfig("transfermarket_enabled") %}
+ 				<p>{{ i18n.getMessage("player_details_nohistoryavailable") }}</p>
+			{% endif %}
+			{% if env.getConfig("transfermarket_enabled") or env.getConfig("transferoffers_enabled") %}
+				<h4>{{ i18n.getMessage("transfers_tab") }}</h4>
+				{% include "blocks/transfers-list.twig" %}
+			{% endif %}
+		</div>
+	{% endblock %}
 {% endblock %}
+{% endembed %}

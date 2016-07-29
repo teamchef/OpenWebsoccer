@@ -27,7 +27,7 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
-SEC;
+// SEC;
 class HallOfFameModel extends BaseModel
 {
 	FUNCTION getTemplateParameters()

@@ -26,16 +26,18 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-<div class="box">
-{% block box_title %}
-	<h4 class="colour"> {{ i18n.getMessage('news_block_title') }}</h4>
+{% block topnews %}
+	<div class="box">
+		{% block box_title %}
+			<h4 class="colour"> {{ i18n.getMessage('news_block_title') }}</h4>
+		{% endblock %}
+		{% block box_content %}
+			<ul class="unstyled">
+				{% for article in topnews %}
+					<li><small>{{ article.date }}</small> <a href="{{ env.getInternalUrl("news-details","id=" ~ article.id) }}">{{ article.title }}</a></li>
+				{% endfor %}
+			</ul>
+			<p><a href="{{ env.getInternalUrl("news") }}" class="btn btn-primary">{{ i18n.getMessage("button_more") }}</a></p>
+		{% endblock %}
+	</div>
 {% endblock %}
-{% block box_content %}
-	<ul class="unstyled">
-		{% for article in topnews %}
-			<li><small>{{ article.date }}</small> <a href="{{ env.getInternalUrl("news-details","id=" ~ article.id) }}">{{ article.title }}</a></li>
-		{% endfor %}
-	</ul>
-	<p><a href="{{ env.getInternalUrl("news") }}" class="btn btn-primary">{{ i18n.getMessage("button_more") }}</a></p>
-{% endblock %}
-</div>

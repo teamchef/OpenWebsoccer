@@ -26,56 +26,64 @@
 * For comparison of the code look at the original at
 * https://github.com/ihofmann/open-websoccer
 #}
-{% extends "base.twig" %}
-{% block page_title %}
-	{{ i18n.getMessage("results_navlabel") }}
-{% endblock %}
-{% block page_content %}
-	<ul class="nav nav-tabs" id="resultsTab">
-		<li class="active"><a href="#leagues" data-toggle="tab">{{ i18n.getMessage("results_tab_leagues") }}</a></li>
-		<li><a href="#cups" data-toggle="tab" class="ajaxLink" data-ajaxblock="cups-list" data-ajaxtarget="cups-content">{{ i18n.getMessage("results_tab_cups") }}</a></li>
-		<li><a href="#latest" data-toggle="tab" class="ajaxLink" data-ajaxblock="latest-results" data-ajaxtarget="latest-results_block">{{ i18n.getMessage("results_tab_latest_results") }}</a></li>
-	</ul>
-	<div class="tab-content">
-		<div class="tab-pane active" id="leagues">
-			<div class="row-fluid">
-				<div class="span3">
-					{% if countries is defined and countries|length > 0 %}
-						<div id="countries">
-							{% for countryName,leagues in countries %}
-								<div class="accordion-group">
-									<div class="accordion-heading">
-										{% if env.getConfig("cdn_root_set") %}
-											<img src="{{ env.getConfig("cdn_root") }}/img/flags/{{ countryName }}.png" style="max-width: 40px;"/>
-										{% else %}
-											<img src="{{ env.getConfig("context_root") }}/img/flags/{{ countryName }}.png" style="max-width: 40px;"/>
-										{% endif %}
-										<a data-toggle="collapse" data-parent="#countries" href="#collapse{{ loop.index }}"><strong>{{ countryName }}</strong></a>
-									</div>
-									<div id="collapse{{ loop.index }}" class="accordion-body collapse">
-										<div class="accordion-inner">
-											<ul class="unstyled">
-												{% for league in leagues %}
-													<li><a href="#league{{ league.id }}" class="ajaxLink" data-ajaxblock="season-picker" data-ajaxtarget="season-picker_block" data-ajaxquerystr="leagueid={{ league.id }}">{{ league.name }}</a></li>
-												{% endfor %}
-											</ul>
+{% embed "page.twig" %}
+{% block results_overview %}
+	{% block page_title %}
+		{{ i18n.getMessage("results_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/resultsoverview.png' %}{% if file_exists('img/resultsoverview.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<ul class="nav nav-tabs" id="resultsTab">
+			<li class="active"><a href="#leagues" data-toggle="tab">{{ i18n.getMessage("results_tab_leagues") }}</a></li>
+			<li><a href="#cups" data-toggle="tab" class="ajaxLink" data-ajaxblock="cups-list" data-ajaxtarget="cups-content">{{ i18n.getMessage("results_tab_cups") }}</a></li>
+			<li><a href="#latest" data-toggle="tab" class="ajaxLink" data-ajaxblock="latest-results" data-ajaxtarget="latest-results_block">{{ i18n.getMessage("results_tab_latest_results") }}</a></li>
+		</ul>
+		<div class="tab-content">
+			<div class="tab-pane active" id="leagues">
+				<div class="row-fluid">
+					<div class="span3">
+						{% if countries is defined and countries|length > 0 %}
+							<div id="countries">
+								{% for countryName,leagues in countries %}
+									<div class="accordion-group">
+										<div class="accordion-heading">
+											{% if env.getConfig("cdn_root_set") %}
+												<img src="{{ env.getConfig("cdn_root") }}/img/flags/{{ countryName }}.png" style="max-width: 40px;"/>
+											{% else %}
+												<img src="{{ env.getConfig("context_root") }}/img/flags/{{ countryName }}.png" style="max-width: 40px;"/>
+											{% endif %}
+											<a data-toggle="collapse" data-parent="#countries" href="#collapse{{ loop.index }}"><strong>{{ countryName }}</strong></a>
+										</div>
+										<div id="collapse{{ loop.index }}" class="accordion-body collapse">
+											<div class="accordion-inner">
+												<ul class="unstyled">
+													{% for league in leagues %}
+														<li>
+															<a href="#league{{ league.id }}" class="ajaxLink" data-ajaxblock="season-picker" data-ajaxtarget="season-picker_block" data-ajaxquerystr="leagueid={{ league.id }}">
+																{{ league.name }}
+															</a>
+														</li>
+													{% endfor %}
+												</ul>
+											</div>
 										</div>
 									</div>
-								</div>
-							{% endfor %}
-						</div>
-					{% endif %}
-				</div>
-				<div class="span9">
-					<span id="season-picker_block">{{ viewHandler.renderBlock("season-picker")|raw }}</span>
+								{% endfor %}
+							</div>
+						{% endif %}
+					</div>
+					<div class="span9">
+						<span id="season-picker_block">{{ viewHandler.renderBlock("season-picker")|raw }}</span>
+					</div>
 				</div>
 			</div>
+			<div class="tab-pane" id="cups">
+				<div id="cups-content"></div>
+			</div>
+			<div class="tab-pane" id="latest">
+				<span id="latest-results_block">{{ viewHandler.renderBlock("latest-results")|raw }}</span>
+			</div>
 		</div>
-		<div class="tab-pane" id="cups">
-			<div id="cups-content"></div>
-		</div>
-		<div class="tab-pane" id="latest">
-			<span id="latest-results_block">{{ viewHandler.renderBlock("latest-results")|raw }}</span>
-		</div>
-	</div>
+	{% endblock %}
 {% endblock %}
+{% endembed %}
