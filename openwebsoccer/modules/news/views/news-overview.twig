@@ -30,8 +30,6 @@
 {% block news_overview %}
 	{% block page_title %}
 		{{ i18n.getMessage("news_title") }}
-		<br>
-		<h3>{{ sprintf(Lib()) }}</h3>
 	{% endblock %}
 	{% block page_content %}
 		{% set bild = '/img/newsoverview.png' %}{% if file_exists('img/newsoverview.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
@@ -45,14 +43,6 @@
 			<p style="margin-bottom: 30px;"><a href="{{ env.getInternalUrl("news-details","id=" ~ article.id) }}">Mehr</a></p>
 		{% endfor %}
 		{{ pagination.paginator(paginator) }}
-		<h4>verfügbare PHP-Funktionen</h4>
-		{{ print_r(0|phpFunktionen) }}
-		<h4>definierte Variablen</h4>
-		{{ print_r(0|definierteVariablen) }}
-		<h4>definierte Konstanten</h4>
-		{{ print_r(0|definierteKonstanten) }}
-		<h4>geladene Extensions</h4>
-		{{ print_r(0|phpExtensions) }}
 	{% endblock %}
 {% endblock %}
 {% endembed %}
