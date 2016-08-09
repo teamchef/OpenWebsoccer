@@ -634,6 +634,7 @@
 	<message id='phpjobscheduler_navlabel'>TLC Jobscheduler</message>
 	<message id='settings_tab_tlc'>TLC - Features</message>
 	<message id='settings_label_projectStatistics_noshow'>Box: Projektstatistiken ausblenden</message>
+	<message id='settings_label_adminlogintosystememail'>Admin-Login an die System-Email senden.</message>
 	<message id='settings_label_news_noshow'>Box: News ausblenden</message>
 	<message id='settings_label_todaysmatches_noshow'>Box: heutige Spiele ausblenden</message>
 	<message id='settings_label_latestResults_noshow'>Box: letzte Ergebnisse ausblenden</message>
@@ -816,5 +817,6 @@
 	<message id='settings_label_youth_strengthchange_verybad_help'>Veränderung der Spielerstärke in Punkten bei einer Note schlechter als 5.</message>
 	<message id='season_complete_label_youthplayers_age_delete'>Höchstalter Jugendspieler</message>
 	<message id='season_complete_label_youthplayers_age_delete_help'>Ab diesem Alter werden Jugendspieler gelöscht.</message>
+	<message id='settings_label_twigcache_autoreload'>Twig-Cache autoload ( erneuert automatisch den Twig-Cache bei jeder Änderung von Twig-Dateien | Änderung nur über TemplateEngine.class.php möglich ! )</message>
 </messages>
 </module>

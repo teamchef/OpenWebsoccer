@@ -66,8 +66,6 @@ if ($inputUser or $inputPassword) {
 			$admin = $result->fetch_array();
 			$hashedPw = SecurityUtil::hashPassword($inputPassword,$admin['passwort_salt']);
 			$hashed = SecurityUtil::create_hash($inputPassword);
-			if ($hashed){ echo 'OK'; }
-			echo $hashed;
 			if ($hashedPw == $admin['passwort'] || $hashedPw == $admin['passwort_neu'] || $hashed) {
 			// if ($admin['passwort'] == $hashedPw || $admin['passwort_neu'] == $hashedPw) {
 				if (version_compare(PHP_VERSION,'6.0.0') >= 0) {
@@ -101,9 +99,21 @@ if ($inputUser or $inputPassword) {
 					} else {
 						$inhalt = '';
 					}
+
 					$inhalt .= $content;
-					fwrite($fp,$content);
+					fwrite($fp, $content);
 					fclose($fp);
+					// Login eines Admins an die System-Mail-Adresse senden
+					$adminlogintosystememail = $website->getConfig("adminlogintosystememail");
+					if ($adminlogintosystememail)
+					{
+						$empfaenger = $website->getConfig("systememail");
+						$betreff = 'Admin-Login von ' . $admin['name'];
+						$from = 'From:' . $website->getConfig("projectname") . ' - Admin-Login' . '<' . $website->getConfig("systememail") . '>';
+						$from .= 'Content-Type: text/html\n';
+						$text = $content;
+						mail($empfaenger, $betreff, $text, $from);
+					}
 				  }
 				header('location: index.php');
 			} else {

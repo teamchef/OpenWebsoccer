@@ -353,7 +353,7 @@
 					{% if player.injured > 0 %}
 						<i class="icon-medkit" title="{{ i18n.getMessage("player_injured") }}"></i>
 					{% endif %}
-					{% if player.playstatus == 'Ausgewechselt' %}
+					{% if player.playstatus == 'Ausgewechselt' && player.minutesPlayed > 6 %}
 					<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_out") }}"><i class="icon-arrow-down"></i>{{ player.minutesPlayed + 1 }}'</span>
 					{% elseif player.minutesPlayed < match.match_minutes %}
 					<span class="minutesPlayed" title="{{ i18n.getMessage("player_substitute_in") }}"><i class="icon-arrow-up"></i>{{ match.match_minutes - player.minutesPlayed + 1 }}'</span>

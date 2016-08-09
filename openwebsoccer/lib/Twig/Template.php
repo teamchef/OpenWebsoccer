@@ -15,6 +15,12 @@
  *
  * @author Fabien Potencier <fabien@symfony.com>
  */
+ 
+/*
+ * Anpassungen für das alternative Caching im OpenWebsoccer Enviroment
+ *
+ * Author:		Rolf Joseph
+ */
 abstract class Twig_Template implements Twig_TemplateInterface
 {
     protected static $cache = array();

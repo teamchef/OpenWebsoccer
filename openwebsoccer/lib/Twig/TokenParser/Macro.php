@@ -40,8 +40,20 @@ class Twig_TokenParser_Macro extends Twig_TokenParser
         }
         $this->parser->popLocalScope();
         $stream->expect(Twig_Token::BLOCK_END_TYPE);
-
-        $this->parser->setMacro($name,new Twig_Node_Macro($name,new Twig_Node_Body(array($body)),$arguments,$lineno,$this->getTag()));
+        
+        // Start: Settings für Makros im OpenWebsoccer
+        // macros dürfen nur einmal in der macro.twig hinterlegt sein, sonst muss das macro im Twig-Template integriert sein.
+        // macro.twig für den Check setzen
+		$filename = '../../../../cache/macro.twig';
+		if (file_exists($filename)) {
+    		// verhindert das die macro.twig zigmal als mac....tmp als Node erstellt wird, indem der Verweis auf macro.twig zeigt
+        	$this->parser->setMacro($name);
+		}
+		else {
+	 		// falls die macro.tig nicht als PHP-Datei erstellt wurde muss die folgende Zeile einmalig ausgeführt werden
+        	$this->parser->setMacro($name,new Twig_Node_Macro($name,new Twig_Node_Body(array($body)),$arguments,$lineno,$this->getTag()));
+		}
+		// End: Settigs für Makros im OpenWebsoccer by Rolf Joseph / ErdemCan
     }
 
     public function decideBlockEnd(Twig_Token $token)

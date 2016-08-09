@@ -73,6 +73,7 @@
 	<message id='activitylog_fire-youthplayer'>%s hat einen Jugendspieler entlassen.</message>
 	<message id='activitylog_move-youthplayer-to-professional'>%s hat einen Jugendspieler in den Profikader aufgenommen.</message>
 	<message id='activitylog_directtransfer-cancel'>%s hat ein Direkttransfer-Angebot zurückgezogen.</message>
+	<message id='activitylog_choose-sponsor'>%s hat einen Sponsorvertrag unterschrieben..</message>
 	<message id='allaktivities_navlabel'>Alle User Aktivitäten</message>
 	<message id='admin'>Zugriff nur für den Admin !</message>
 	<message id='alltimetable_navlabel'>Ewige Tabelle</message>

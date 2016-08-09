@@ -43,8 +43,13 @@ class DefaultBootstrapSkin
 	{
 		if ($this->_websoccer->getConfig('cdn_root_set')) {
 			$files[] = $this->_websoccer->getConfig('cdn_root').'/css/openwebsoccer.min.css';
+			$files[] = $this->_websoccer->getConfig('cdn_root').'/css/jquery.simple-dtpicker.css';
 		} else {
 			$files[] = $this->_websoccer->getConfig('context_root').'/css/openwebsoccer.min.css';
+			// $files[] = $this->_websoccer->getConfig('context_root').'/css/jquery.simple-dtpicker.css';
+			$files[] = $this->_websoccer->getConfig('context_root').'/css/bootstrap-timepicker.min.css';
+			$files[] = $this->_websoccer->getConfig('context_root').'/css/datepicker.css';
+			$files[] = $this->_websoccer->getConfig('context_root').'/css/friendly.css';
 		}
 		return $files;
 	}
@@ -54,10 +59,16 @@ class DefaultBootstrapSkin
 			$files[] = $this->_websoccer->getConfig('cdn_root').'/js/websoccer.min.js';
 			$files[] = $this->_websoccer->getConfig('cdn_root').'/js/flot/jquery.flot.min.js';
 			$files[] = $this->_websoccer->getConfig('cdn_root').'/js/flot/jquery.flot.pie.min.js';
+			$files[] = $this->_websoccer->getConfig('cdn_root').'/js/jquery.simple-dtpicker.js';
 		} else {
 			$files[] = $this->_websoccer->getConfig('context_root').'/js/websoccer.min.js';
 			$files[] = $this->_websoccer->getConfig('context_root').'/js/flot/jquery.flot.min.js';
 			$files[] = $this->_websoccer->getConfig('context_root').'/js/flot/jquery.flot.pie.min.js';
+			// $files[] = $this->_websoccer->getConfig('context_root').'/js/jquery.simple-dtpicker.js';
+			$files[] = $this->_websoccer->getConfig('context_root').'/js/friendly.js';
+			$files[] = $this->_websoccer->getConfig('context_root').'/js/bootstrap-timepicker.min.js';
+			$files[] = $this->_websoccer->getConfig('context_root').'/js/bootstrap-datepicker.de.js';
+			$files[] = $this->_websoccer->getConfig('context_root').'/js/bootstrap-datepicker.js';
 		}
 		return $files;
 	}

@@ -28,7 +28,6 @@
 * https://github.com/ihofmann/open-websoccer
 ******************************************************************/
 SEC;
-define('TEMPLATE_SUBDIR_DEFAULT','default');
 define('I18N_GLOBAL_NAME','i18n');
 define('ENVIRONMENT_GLOBAL_NAME','env');
 define('SKIN_GLOBAL_NAME','skin');
@@ -86,37 +85,29 @@ class TemplateEngine
 		// environment config
 		$twigConfig = array(
 				'cache' => CACHE_FOLDER,
+				'debug' => true,
+				'charset' => 'ISO-8859-1',
+				'auto_reload' => true,
 		);
-		if (DEBUG) {
-			$twigConfig['auto_reload'] = TRUE;
-			$twigConfig['strict_variables'] = TRUE;
-		}
 		// Twig inizialisieren
 		$this->_environment = new Twig_Environment($loader,$twigConfig);
 		$twig = $this->_environment;
 		// PHP Funktionen und Filter werden in Twig verfügbar gemacht
 		$twig->registerUndefinedFilterCallback(function($name) {
 		if (function_exists($name)) {
-						return new Twig_SimpleFilter($name,function() use($name) {
-					return call_user_func_array($name,func_get_args());
+				return new Twig_SimpleFilter($name,function() use($name) {
+				return call_user_func_array($name,func_get_args());
 				});
 			}
 			return false;
 		});
 		$twig->registerUndefinedFunctionCallback(function($name) {
 		if (function_exists($name)) {
-						return new Twig_SimpleFunction($name,function() use($name) {
-					return call_user_func_array($name,func_get_args());
+				return new Twig_SimpleFunction($name,function() use($name) {
+				return call_user_func_array($name,func_get_args());
 				});
 			}
 			return false;
 		});
-	}
-	FUNCTION _addSettingsSupport() {
-		$function = new Twig_SimpleFunction(CONFIG_FUNCTION_NAME,function ($key) {
-			global $i18n;
-			return $i18n->getMessage($key);
-		});
-		$this->_environment->addFunction($function);
 	}
 }
