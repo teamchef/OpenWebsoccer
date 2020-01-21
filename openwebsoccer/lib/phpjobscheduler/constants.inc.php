@@ -2,11 +2,11 @@
 $app_name = "phpJobScheduler";
 $phpJobScheduler_version = "3.9";
 // -------------------------------
-  define('TIME_WINDOW', 3600);//denomination is in seconds, so 3600 = 60 minute time frame window
+  define('TIME_WINDOW',3600);//denomination is in seconds,so 3600 = 60 minute time frame window
 
-  define('ERROR_LOG', TRUE);// prints successful runs and errors to log table
+  define('ERROR_LOG',TRUE);// prints successful runs and errors to log table
 
-  define('LOCATION', dirname(__FILE__) ."/");// used to open local files
+  define('LOCATION',dirname(__FILE__) ."/");// used to open local files
 
   define('PJS_TABLE','phpjobscheduler');// pjs table name
   define('LOGS_TABLE','phpjobscheduler_logs');// logs table name
@@ -15,5 +15,5 @@ $phpJobScheduler_version = "3.9";
   
   //database settings
   define('CHARSET',"utf8"); // sets the charset of your database for communication
-  define('DBDRIVER', 'mysql');// database driver to use
-  define('DBPORT', '3306'); // database port for connection
+  define('DBDRIVER','mysql');// database driver to use
+  define('DBPORT','3306'); // database port for connection

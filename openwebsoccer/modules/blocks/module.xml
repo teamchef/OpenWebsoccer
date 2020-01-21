@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE module SYSTEM '../openwebsoccer.dtd'>
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called 'OpenWebsoccer' is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version='OpenWebsoccer'>
+<blocks>
+<block	id='user-activities'				template='user-activities-list'			model='UserActivitiesModel'		includepages='none'											area='custom'			weight='8'	role='user,guest'/>
+<block	id='user-activities-all'			template='user-activities-box'			model='AllUserActivitiesModel'	includepages='none'											area='custom'			weight='8'	role='user,guest'/>
+<block	id='alltimetable-table'				template='alltimetable-table'			model='AlltimeTableModel'		includepages='alltimetable'									area='content_bottom'	weight='2'	role='user,guest'/>
+<block	id='teamplayers'					template='teamplayers'					model='TeamPlayersModel'		includepages='team'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='team-results'					template='results-list'					model='TeamResultsModel'		includepages='none'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='team-history'					template='team_history'					model='TeamHistoryModel'		includepages='none'											area='custom'			weight='0'	role='user'/>
+<block	id='upload-clublogo-link'			template='upload_clublogo_link'											includepages='team'											area='content_top'		weight='0'	role='user'/>
+<block	id='rename-club-link'				template='rename_club_link'												includepages='team'											area='content_top'		weight='0'	role='user'/>
+<block	id='cupgroupdetails'				template='cupgroup_table'				model='CupGroupDetailsModel'	includepages='none'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='nextmatch_with_formationlink'	template='nextmatch_with_formationlink'	model='NextMatchModel'			includepages='office'										area='content_top'		weight='0'	role='user'/>
+<block	id='formation_templates'			template='formation_templates'			model='FormationTemplatesModel'	includepages='none'											area='custom'						role='user'/>
+<block	id='login-form'						template='userlogin'													includepages='all'			excludepages='login,register'	area='sidebar'			weight='0'	role='guest'/>
+<block	id='messagesblock'					template='messagesblock'												includepages='all'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='latest-results-summary'			template='results-list-smallblock'		model='LatestResultsBlockModel'	includepages='none'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='ads_sidebar'					template='ads_sidebar'					model='AdsModel'				includepages='all'											area='sidebar'			weight='10'	role='user'/>
+<block	id='ads_top'						template='ads_top'						model='AdsModel'				includepages='all'											area='content_top'		weight='10'	role='user'/>
+<block	id='ads_bottom'						template='ads_bottom'					model='AdsModel'				includepages='all'											area='content_bottom'	weight='10'	role='user'/>
+<block	id='help_formation'					template='help_formation'												includepages='formation'									area='content_top'		weight='0'	role='user'/>
+<block	id='help_messages'					template='help_messages'												includepages='messages'										area='content_top'		weight='0'	role='user'/>
+<block	id='help_myteam'					template='help_myteam'													includepages='myteam'										area='content_top'		weight='0'	role='user'/>
+<block	id='help_tickets'					template='help_tickets'													includepages='tickets'										area='content_top'		weight='0'	role='user'/>
+<block	id='help_sponsor'					template='help_sponsor'													includepages='sponsor'										area='content_top'		weight='0'	role='user'/>
+<block	id='help_stadium'					template='help_stadium'													includepages='stadium'										area='content_top'		weight='0'	role='user'/>
+<block	id='help_training'					template='help_training'												includepages='training'										area='content_top'		weight='0'	role='user'/>
+<block	id='help_trainingcamp'				template='help_trainingcamp'											includepages='trainingcamp'									area='content_top'		weight='0'	role='user'/>
+<block	id='help_transfermarket'			template='help_transfermarket'											includepages='transfermarket'								area='content_top'		weight='0'	role='user'/>
+<block	id='help_transfer-bid'				template='help_transfer-bid'											includepages='transfer-bid'									area='content_top'		weight='0'	role='user'/>
+<block	id='language-switcher'				template='language-switcher'			model='LanguageSwitcherModel'	includepages='all'											area='sidebar'			weight='10'	role='guest,user'/>
+<block	id='leaguetable'					template='league_table'					model='LeagueTableModel'		includepages='leagues,league'								area='content_bottom'	weight='2'	role='user,guest'/>
+<block	id='lent-players'					template='lent_players'					model='LentPlayersModel'		includepages='myteam'										area='content_bottom'				role='user'/>
+<block	id='lastmatch'						template='lastmatch'					model='LastMatchModel'			includepages='office'										area='content_top'		weight='2'	role='user'/>
+<block	id='match-result-players'			template='match_result_players'			model='MatchPlayersModel'		includepages='none'											area='custom'						role='user,guest'/>
+<block	id='match-statistics'				template='match_result_statistics'		model='MatchStatisticsModel'	includepages='none'											area='custom'						role='user,guest'/>
+<block	id='cups-list'						template='cups-list'					model='CupsListModel'			includepages='none'											area='custom'						role='user,guest'/>
+<block	id='cup-results'					template='cup-results'					model='CupResultsModel'			includepages='none'											area='custom'						role='user,guest'/>
+<block	id='todays-matches'					template='results-list'					model='TodaysMatchesModel'		includepages='home,todaysmatches'							area='content_top'					role='user,guest'/>
+<block	id='match-preview'					template='match_preview'				model='MatchPreviewModel'		includepages='match'										area='content_bottom'	weight='0'	role='user,guest'/>
+<block	id='todaysmatches'					template='todaysmatches'				model='TodaysMatchesModel'		includepages='none'											area='content_top'		weight='0'	role='user,guest'/>
+<block	id='livematches'					template='livematches'					model='TodaysMatchesModel'		includepages='none'											area='content_top'		weight='0'	role='user,guest'/>
+<block	id='livematchesticker'				template='livematchesticker'			model='TodaysMatchesModel'		includepages='all'			excludepages='home'				area='content_top'		weight='0'	role='user'/>
+<block	id='simulatetmatches'				template='simulatetmatches'				model='TodaysMatchesModel'		includepages='none'											area='content_top'		weight='0'	role='user,guest'/>
+<block	id='matchview'						template='matchview'					model='MatchDetailsModel'		includepages='all'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='message-details'				template='message-details'				model='MessageDetailsModel'		includepages='none'											area='custom'						role='user'/>
+<block	id='messages-outbox'				template='messages-outbox'				model='MessagesOutboxModel'		includepages='none'											area='custom'						role='user'/>
+<block	id='usernick-search'				template='autocomplete-resultlist'		model='UserNickSearchModel'		includepages='none'											area='custom'						role='user'/>
+<block	id='compose-message-body'			template='message-compose'												includepages='none'											area='custom'						role='user'/>
+<block	id='national-match-results'			template='results-list'				model='NationalMatchResultsModel'	includepages='custom'										area='content_top'					role='user'/>
+<block	id='national-next-matches'			template='results-list'				model='NationalNextMatchesModel'	includepages='custom'										area='content_top'					role='user'/>
+<block	id='national-next-match'			template='national_next_match'		model='NationalNextMatchModel'		includepages='office'										area='content_bottom'	weight='5'	role='user'/>
+<block	id='news'							template='topnews'						model='TopNewsListModel'		includepages='home'											area='custom'			weight='0'	role='guest,user'/>
+<block	id='notifications'					template='notifications'				model='NotificationsModel'		includepages='none'											area='custom'						role='user'/>
+<block	id='extend-contract-form'			template='extend-contract-form'			model='PlayerDetailsModel'		includepages='extend-contract'								area='content_bottom'	weight='0'	role='user'/>
+<block	id='finances-summary'				template='finances_summary'				model='FinancesSummaryModel'	includepages='finances'										area='content_top'		weight='0'	role='user'/>
+<block	id='playerstatistics'				template='playerstatistics'				model='PlayerStatisticsModel'	includepages='none'											area='custom'						role='user,guest'/>
+<block	id='clubsearch'						template='autocomplete-resultlist'		model='ClubSearchModel'			includepages='none'											area='custom'						role='user,guest'/>
+<block	id='playerssearch-results'			template='playerssearch-results'		model='PlayersSearchModel'		includepages='playerssearch'								area='content_bottom'				role='user,guest'/>
+<block	id='userprofile'					template='userprofile'					model='ProfileBlockModel'		includepages='all'	excludepages='youth-formation,youth-match'	area='sidebar'		weight='0'	role='user'/>
+<block	id='user-clubs-selection'			template='user_clubs_selection'			model='UserClubsSelectionModel'	includepages='none'											area='custom'			weight='0'	role='user'/>
+<block	id='rss-results-link'				template='rss_results_link'												includepages='results'										area='content_top'		weight='1'	role='user'/>
+<block	id='season-picker'					template='season-picker'				model='SeasonsOfLeagueModel'	includepages='none'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='results-list'					template='results-list'					model='MatchDayResultsModel'	includepages='none'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='latest-results'					template='results-list'					model='LatestResultsModel'		includepages='none'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='shoutboxEingabe'				template='shoutboxEingabe'				model='ShoutboxModel'			includepages='match'										area='sidebar'			weight='1'	role='user,guest'/>
+<block	id='shoutbox'						template='shoutbox'						model='ShoutboxModel'			includepages='match'										area='sidebar'			weight='2'	role='user,guest'/>
+<block	id='shoutbox_in_leagueEingabe'		template='shoutboxEingabe'				model='ShoutboxModel'			includepages='league'										area='sidebar'			weight='1'	role='user,guest'/>
+<block	id='shoutbox_in_league'				template='shoutbox'						model='ShoutboxLeagueModel'		includepages='league'										area='sidebar'			weight='2'	role='user'/>
+<block	id='socialrecommendations'			template='socialrecommendations'										includepages='all'											area='content_bottom'	weight='6'	role='guest,user'/>
+<block	id='projectstatistics'				template='projectstatistics'			model='ProjectStatisticsModel'	includepages='none'											area='custom'			weight='0'	role='user,guest'/>
+<block	id='ads_sidebar'					template='ads_sidebar'					model='AdsModel'				includepages='all'											area='sidebar'			weight='10'	role='user'/>
+<block	id='ads_top'						template='ads_top'						model='AdsModel'				includepages='all'											area='content_top'		weight='10'	role='user'/>
+<block	id='ads_bottom'						template='ads_bottom'					model='AdsModel'				includepages='all'											area='content_bottom'	weight='10'	role='user'/>
+<block	id='si_sidebar'						template='si_sidebar'					model='SiModel'					includepages='all'											area='sidebar'			weight='10'	role='user,guest'/>
+<block	id='si_top'							template='si_top'						model='SiModel'					includepages='all'											area='content_top'		weight='10'	role='user,guest'/>
+<block	id='si_bottom'						template='si_bottom'					model='SiModel'					includepages='all'											area='content_bottom'	weight='10'	role='user,guest'/>
+<block	id='sif_sidebar'					template='sif_sidebar'					model='SifModel'				includepages='all'											area='sidebar'			weight='10'	role='user,guest'/>
+<block	id='sif_top'						template='sif_top'						model='SifModel'				includepages='all'											area='content_top'		weight='10'	role='user,guest'/>
+<block	id='sif_bottom'						template='sif_bottom'					model='SifModel'				includepages='all'											area='content_bottom'	weight='10'	role='user,guest'/>
+<block	id='transfer-bid'					template='transfer-bid-block'			model='TransferBidModel'		includepages='transfer-bid'									area='content_bottom'	weight='0'	role='user'/>
+<block	id='transfermarket-mybids'			template='transfer-bids-list'			model='MyTransferBidsModel'		includepages='none'											area='custom'						role='user'/>
+<block	id='transfermarket-mytransfers'		template='transfers-list'				model='MyTransfersModel'		includepages='none'											area='custom'						role='user'/>
+<block	id='transfermarket-lasttransfers'	template='transfers-list'				model='LastTransfersModel'		includepages='none'											area='custom'						role='user'/>
+<block	id='teamtransfers'					template='transfers-list'				model='TeamTransfersModel'		includepages='none'											area='custom'						role='user,guest'/>
+<block	id='usertransfers'					template='transfers-list'				model='UserTransfersModel'		includepages='none'											area='custom'						role='user'/>
+<block	id='directtransfer-sentoffers'		template='directtransfer-sentoffers'	model='TransferOffersSentModel'	includepages='none'											area='custom'						role='user'/>
+<block	id='directtransfer-offer'			template='directtransfer-offer'			model='DirectTransferOfferModel'	includepages='player'									area='content_top'		weight='0'	role='user'/>
+<block	id='directtransfer-offer-form'		template='directtransfer-offer-form'	model='DirectTransferOfferModel'	includepages='none'										area='custom'						role='user'/>
+<block	id='absence-alert'					template='absence_alert'				model='AbsenceAlertModel'		includepages='office'										area='content_top'		weight='1'	role='user'/>
+<block	id='user-results'					template='results-list'					model='UserResultsModel'		includepages='none'											area='custom'			weight='0'	role='user'/>
+<block	id='user-history'					template='user_history'					model='UserHistoryModel'		includepages='none'											area='custom'			weight='0'	role='user'/>
+<block	id='youth-playerdetails'			template='youth_playerdetails'			model='YouthPlayerDetailsModel'	includepages='youthplayer-sell,youthplayer-fire,youthplayer-buy,youthplayer-makeprofessional'	area='content_top'
+	weight='0'	role='user'/>
+<block	id='youthplayers_of_team'			template='youth_players_of_team'		model='YouthPlayersOfTeamModel'	includepages='none'											area='custom'			weight='0'	role='user,guest'/>
+</blocks>
+</module>

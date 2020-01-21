@@ -5,7 +5,7 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -19,7 +19,7 @@
 interface Twig_ExistsLoaderInterface
 {
     /**
-     * Check if we have the source code of a template, given its name.
+     * Check if we have the source code of a template,given its name.
      *
      * @param string $name The name of the template to check if we can load
      *

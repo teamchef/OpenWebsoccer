@@ -1,36 +1,61 @@
-{% extends "base.twig" %}
-
-{% block page_title %}
-{{ i18n.getMessage("premium_info_title") }}
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% embed "page.twig" %}
+{% block premium_feature_requested %}
+	{% block page_title %}
+		{{ i18n.getMessage("premium_info_title") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/premiumfeature.png' %}{% if file_exists('img/premiumfeature.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		{% if env.getContextParameters()["premium_balance_required"] is defined %}
+			<div class="alert">
+				<strong>{{ i18n.getMessage("premium_info_notenoughcredit_alert")|format(env.getContextParameters()["premium_balance_required"],env.getConfig("premium_credit_unit")) }}</strong>
+			</div>
+		{% endif %}
+		<div class="well">
+			{{ i18n.getMessage("premium_info_description")|raw }}
+		</div>
+		{% set priceOptions = env.getConfig("premium_price_options")|split(',') %}
+		{% if priceOptions|length > 0 %}
+			<h3>{{ i18n.getMessage("premium_info_price_options") }}</h3>
+			<table class="table">
+				<tbody>
+					{% for priceOption in priceOptions %}
+						{% set optionParts = priceOption|split(':') %}
+						<tr>
+							<td>{{ optionParts[0] }} {{ env.getConfig("premium_currency") }}</td>
+							<td>{{ optionParts[1] }} {{ env.getConfig("premium_credit_unit") }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endif %}
+	{% endblock %}
 {% endblock %}
-
-{% block page_content %}
-
-{% if env.getContextParameters()["premium_balance_required"] is defined %}
-<div class="alert">
-	<strong>{{ i18n.getMessage("premium_info_notenoughcredit_alert")|format(env.getContextParameters()["premium_balance_required"], env.getConfig("premium_credit_unit")) }}</strong>
-</div>
-{% endif %}
-
-<div class="well">
-{{ i18n.getMessage("premium_info_description")|raw }}
-</div>
-
-{% set priceOptions = env.getConfig("premium_price_options")|split(',') %}
-{% if priceOptions|length > 0 %}
-
-	<h3>{{ i18n.getMessage("premium_info_price_options") }}</h3>
-
-	<table class="table">
-		<tbody>
-		{% for priceOption in priceOptions %}
-			{% set optionParts = priceOption|split(':') %}
-			<tr>
-				<td>{{ optionParts[0] }} {{ env.getConfig("premium_currency") }}</td>
-				<td>{{ optionParts[1] }} {{ env.getConfig("premium_credit_unit") }}</td>
-			</tr>
-		{% endfor %}
-		</tbody>
-	</table>
-{% endif %}
-{% endblock %}
+{% endembed %}

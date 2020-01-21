@@ -1,0 +1,337 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<!DOCTYPE module SYSTEM '../openwebsoccer.dtd'>
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called 'OpenWebsoccer' is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version='OpenWebsoccer'>
+	<actions>
+		<action id='disable-account'					controller='DisableAccountController'					role='user'/>
+		<action id='upload-club-picture'				controller='UploadClubPictureController'				role='user'				log='true'/>
+		<action id='rename-club'						controller='RenameClubController'						role='user'				log='true'>
+																													<param id='name'				type='text'		required='true'		min='8'		max='24'/>
+																													<param id='kurz'				type='text'		required='true'		min='3'		max='4'/>
+																													<param id='stadium'				type='text'		required='true'		min='8'		max='24'/>			</action>
+		<action id='fire-player'						controller='FirePlayerController'						role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='save-formation'						controller='SaveFormationController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>
+																													<param id='offensive'			type='number'	required='true'		min='1'		max='100'/>
+																													<param id='setup'				type='text'		required='true'/>
+																													<param id='longpasses'			type='boolean'/>
+																													<param id='counterattacks'		type='boolean'/>
+																													<param id='freekickplayer'		type='number'/>
+																													<param id='player1'				type='number'	required='true'/>
+																													<param id='player2'				type='number'	required='true'/>
+																													<param id='player3'				type='number'	required='true'/>
+																													<param id='player4'				type='number'	required='true'/>
+																													<param id='player5'				type='number'	required='true'/>
+																													<param id='player6'				type='number'	required='true'/>
+																													<param id='player7'				type='number'	required='true'/>
+																													<param id='player8'				type='number'	required='true'/>
+																													<param id='player9'				type='number'	required='true'/>
+																													<param id='player10'			type='number'	required='true'/>
+																													<param id='player11'			type='number'	required='true'/>
+																													<param id='bench1'				type='number'/>
+																													<param id='bench2'				type='number'/>
+																													<param id='bench3'				type='number'/>
+																													<param id='bench4'				type='number'/>
+																													<param id='bench5'				type='number'/>
+																													<param id='bench6'				type='number'/>
+																													<param id='bench7'				type='number'/>
+																													<param id='player1_pos'			type='text'		required='true'/>
+																													<param id='player2_pos'			type='text'		required='true'/>
+																													<param id='player3_pos'			type='text'		required='true'/>
+																													<param id='player4_pos'			type='text'		required='true'/>
+																													<param id='player5_pos'			type='text'		required='true'/>
+																													<param id='player6_pos'			type='text'		required='true'/>
+																													<param id='player7_pos'			type='text'		required='true'/>
+																													<param id='player8_pos'			type='text'		required='true'/>
+																													<param id='player9_pos'			type='text'		required='true'/>
+																													<param id='player10_pos'		type='text'		required='true'/>
+																													<param id='player11_pos'		type='text'		required='true'/>
+																													<param id='sub1_out'			type='number'/>
+																													<param id='sub1_in'				type='number'/>
+																													<param id='sub1_minute'			type='number'/>
+																													<param id='sub1_condition'		type='text'/>
+																													<param id='sub1_position'		type='text'/>
+																													<param id='sub2_out'			type='number'/>
+																													<param id='sub2_in'				type='number'/>
+																													<param id='sub2_minute'			type='number'/>
+																													<param id='sub2_condition'		type='text'/>
+																													<param id='sub2_position'		type='text'/>
+																													<param id='sub3_out'			type='number'/>
+																													<param id='sub3_in'				type='number'/>
+																													<param id='sub3_minute'			type='number'/>
+																													<param id='sub3_condition'		type='text'/>
+																													<param id='sub3_position'		type='text'/>
+																													<param id='templatename'		type='text'										max='24'/>			</action>
+		<action id='remove-formation-template'			controller='RemoveFormationTemplateController'			role='user'				log='true'>
+																													<param id='templateid'			type='number'	required='true'/>									</action>
+		<action id='login'								controller='FormLoginController'						role='guest'>
+																													<param id='loginstr'			type='text'		required='true'/>
+																													<param id='loginpassword'		type='text'		required='true'					max='32'/>
+																													<param id='rememberme'			type='boolean'/>													</action>
+		<action id='send-password'						controller='SendPasswordController'						role='guest'			log='true'>
+																													<param id='useremail'			type='text'		required='true'		validator='EmailValidator'/>	</action>
+		<action id='activate'							controller='UserActivationController'					role='guest'			log='true'>
+																													<param id='userid'				type='number'	required='true'/>
+																													<param id='key'					type='text'		required='true'/>									</action>
+		<action id='choose-team'						controller='ChooseTeamController'						role='user'				log='true'>
+																													<param id='teamId'				type='number'	required='true'/>									</action>
+		<action id='choose-additional-team'				controller='ChooseAdditionalTeamController'				role='user'				log='true'>
+																													<param id='teamId'				type='number'	required='true'/>									</action>
+		<action id='switch-language'					controller='LanguageSwitcherController'					role='guest,user'		log='true'>
+																		     										<param id='lang'				type='text'		required='true'		min='2'		max='2'/>			</action>
+		<action id='lend-player'						controller='LendPlayerController'						role='user'				log='true'>
+																													<param id='fee'					type='number'	required='true'		min='1'		max='1000000000'/>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='unmarkLendable'						controller='UnmarkLendableController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='borrow-player'						controller='BorrowPlayerController'						role='user'				log='true'>
+																													<param id='matches'				type='number'	required='true'		min='1'		max='100'/>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='save-live-formation'				controller='SaveMatchChangesController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'/>
+																													<param id='offensive'			type='number'	required='true'		min='1'		max='100'/>
+																													<param id='longpasses'			type='boolean'/>
+																													<param id='counterattacks'		type='boolean'/>
+																													<param id='freekickplayer'		type='number'/>
+																													<param id='player1'				type='number'/>
+																													<param id='player2'				type='number'/>
+																													<param id='player3'				type='number'/>
+																													<param id='player4'				type='number'/>
+																													<param id='player5'				type='number'/>
+																													<param id='player6'				type='number'/>
+																													<param id='player7'				type='number'/>
+																													<param id='player8'				type='number'/>
+																													<param id='player9'				type='number'/>
+																													<param id='player10'			type='number'/>
+																													<param id='player11'			type='number'/>
+																													<param id='player1_pos'			type='text'/>
+																													<param id='player2_pos'			type='text'/>
+																													<param id='player3_pos'			type='text'/>
+																													<param id='player4_pos'			type='text'/>
+																													<param id='player5_pos'			type='text'/>
+																													<param id='player6_pos'			type='text'/>
+																													<param id='player7_pos'			type='text'/>
+																													<param id='player8_pos'			type='text'/>
+																													<param id='player9_pos'			type='text'/>
+																													<param id='player10_pos'		type='text'/>
+																													<param id='player11_pos'		type='text'/>
+																													<param id='sub1_out'			type='number'/>
+																													<param id='sub1_in'				type='number'/>
+																													<param id='sub1_minute'			type='number'/>
+																													<param id='sub1_condition'		type='text'/>
+																													<param id='sub1_position'		type='text'/>
+																													<param id='sub2_out'			type='number'/>
+																													<param id='sub2_in'				type='number'/>
+																													<param id='sub2_minute'			type='number'/>
+																													<param id='sub2_condition'		type='text'/>
+																													<param id='sub2_position'		type='text'/>
+																													<param id='sub3_out'			type='number'/>
+																													<param id='sub3_in'				type='number'/>
+																													<param id='sub3_minute'			type='number'/>
+																													<param id='sub3_condition'		type='text'/>
+																													<param id='sub3_position'		type='text'/>														</action>
+		<action id='delete-message'						controller='DeleteMessageController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'		max='2000000000'/>	</action>
+		<action id='send-message'						controller='SendMessageController'						role='user'				log='true'>
+																													<param id='nick'				type='text'		required='true'		min='1'		max='50'/>
+																													<param id='subject'				type='text'		required='true'		min='3'		max='50'/>
+																													<param id='msgcontent'			type='text'		required='true'		min='3'		max='1024'/>		</action>
+		<action id='add-national-player'				controller='AddNationalPlayerController'				role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='remove-national-player'				controller='RemoveNationalPlayerController'				role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='extend-contract'					controller='ExtendContractController'					role='user'				log='true'>
+																													<param id='salary'				type='number'	required='true'					max='1000000000'/>
+																													<param id='goal_bonus'			type='number'	required='false'/>
+																													<param id='matches'				type='number'	required='true'		min='20'	max='100'/>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='save-tickets'						controller='SaveTicketsController'						role='user'				log='true'>
+																													<param id='p_stands'			type='number'	required='true'		min='1'		max='1000'/>
+																													<param id='p_seats'				type='number'	required='true'		min='1'		max='1000'/>
+																													<param id='p_stands_grand'		type='number'	required='true'		min='1'		max='1000'/>
+																													<param id='p_seats_grand'		type='number'	required='true'		min='1'		max='1000'/>
+																													<param id='p_vip'				type='number'	required='true'		min='1'		max='1000'/>		</action>
+		<action id='markAsUnsellable'					controller='MarkAsUnsellableController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'		max='1000000000'/>	</action>
+		<action id='unmarkUnsellable'					controller='UnmarkUnsellableController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'		max='1000000000'/>	</action>
+		<action id='select-captain'						controller='SelectCaptainController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'		max='1000000000'/>	</action>
+		<action id='exchange-premium'					controller='ExchangePremiumController'					role='user'				log='true'>
+																													<param id='validateonly'		type='boolean'/>
+																													<param id='amount'				type='number'	required='true'		min='1'/>						</action>
+		<action id='save-profile'						controller='SaveProfileController'						role='user'				log='true'>
+																													<param id='newemail'			type='text'		required='false'				validator='EmailValidator'/>
+																													<param id='newpassword'			type='text'		required='false'	min='6'		max='32'																																																								validator='PasswordValidator'/>
+																													<param id='realname'			type='text'		required='false'				max='80'/>
+																													<param id='place'				type='text'		required='false'				max='50'/>
+																													<param id='country'				type='text'		required='false'				max='40'/>
+																													<param id='birthday'			type='date'		required='false'				max='20'/>
+																													<param id='occupation'			type='text'		required='false'				max='50'/>
+																													<param id='interests'			type='text'		required='false'				max='250'/>
+																													<param id='favorite_club'		type='text'		required='false'				max='100'/>
+																													<param id='homepage'			type='url'		required='false'				max='250'/>
+																													<param id='c_hideinonlinelist'	type='boolean'	required='false'/>									</action>
+		<action id='save-username'						controller='SaveUsernameController'						role='user'				log='true'>
+																													<param id='nick'				type='text'		required='true'		min='3'		max='24'/>
+																													<param id='termsandconditions'	type='boolean'	required='true'/>									</action>
+		<action id='upload-profile-picture' 			controller='UploadProfilePictureController'				role='user'				log='true'/>
+		<action id='delete-profile-picture'				controller='DeleteProfilePictureController'				role='user'				log='true'/>
+		<action id='select-team'						controller='SelectTeamController'						role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'		max='2000000000'/>	</action>
+		<action id='send-shoutbox-msg'					controller='SendShoutBoxMessageController'				role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>
+																													<param id='msgtext'				type='text'		required='true'		min='2'		max='140'/>			</action>
+		<action id='delete-shoutbox-message'			controller='DeleteShoutBoxMessageController'			role='admin'			log='true'>
+																													<param id='mid'					type='number'	required='true'/></action>
+		<action id='choose-sponsor'						controller='ChooseSponsorController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'		max='2000000000'/>	</action>
+		<action id='extend-stadium'						controller='ExtendStadiumController'					role='user'				log='true'>
+																													<param id='validate-only'		type='boolean'/>
+																													<param id='side_standing'		type='number'						min='1'		max='10000'/>
+																													<param id='side_seats'			type='number' 						min='1'		max='10000'/>
+																													<param id='grand_standing'		type='number'						min='1'		max='10000'/>
+																													<param id='grand_seats'			type='number'						min='1'		max='10000'/>
+																													<param id='vip'					type='number'						min='1'		max='1000'/>
+																													<param id='offerid'				type='number'									max='100000000'/>	</action>
+		<action id='accept-stadium-construction-work'	controller='AcceptStadiumConstructionWorkController'	role='user'				log='true'/>
+		<action id='upgrade-stadium'					controller='UpgradeStadiumController'					role='user' 			log='true'>
+																													<param id='type'				type='text'		required='true'/>									</action>
+		<action id='order-building'						controller='OrderBuildingController'					role='user' 			log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='choose-trainer'						controller='ChooseTrainerController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'		max='2000000000'/>
+																													<param id='units'				type='number'	required='true'		min='5'		max='20'/>			</action>
+		<action id='execute-training'					controller='ExecuteTrainingController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'		max='2000000000'/>
+																													<param id='focus'				type='text'		required='true'		min='2'		max='3'/>
+																													<param id='intensity'			type='number'	required='true'		min='1'		max='100'/>			</action>
+		<action id='book-camp'							controller='BookCampController'							role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'		min='1'		max='2000000000'/>
+																													<param id='start_date'			type='date'		required='true'		min='5'		max='20'/>
+																													<param id='days'				type='number'	required='true'		min='1'/>						</action>
+		<action id='cancel-camp'						controller='CancelCampController'						role='user'				log='true'>
+																													<param id='bookingid'			type='number'	required='true'		min='1'		max='2000000000'/>	</action>
+		<action id='sell-player'						controller='SellPlayerController'						role='user'				log='true'>
+																													<param id='min_bid'				type='number'	required='true'					max='1000000000'/>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='transfer-bid'						controller='TransferBidController'						role='user'				log='true'>
+																													<param id='amount'				type='number'						min='1'		max='1000000000'/>
+																													<param id='handmoney'			type='number'						min='1'		max='1000000000'/>
+																													<param id='contract_salary'		type='number' 	required='true'					max='1000000000'/>
+																													<param id='contract_goal_bonus'	type='number'						min='1'		max='1000000000'/>
+																													<param id='contract_matches'	type='number'	required='true'		min='20'	max='100'/>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='remove-player-from-transfermarket'	controller='RemovePlayerFromTransfermarketController'	role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='directtransfer-offer'				controller='DirectTransferOfferController'				role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>
+																													<param id='amount'				type='number'	required='true'		min='1'		max='1000000000'/>
+																													<param id='exchangeplayer1'		type='number'/>
+																													<param id='exchangeplayer2'		type='number'/>
+																													<param id='comment'				type='text'										max='255'/>			</action>
+		<action id='directtransfer-accept'				controller='DirectTransferAcceptController'				role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='directtransfer-cancel'				controller='DirectTransferCancelController'				role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='directtransfer-reject'				controller='DirectTransferRejectController'				role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>
+																													<param id='comment'				type='text'										max='255'/>
+																													<param id='allow_alternative'	type='boolean'/>													</action>
+		<action id='report-absence'						controller='ReportAbsenceController'					role='user'				log='true'>
+																													<param id='days'				type='number'	required='true'		min='2'		max='30'/>
+																													<param id='deputynick'			type='text'		required='true'/>									</action>
+		<action id='return-from-absence'				controller='ReturnFromAbsenceController'				role='user'				log='true'/>
+		<action id='logout'								controller='LogoutController'							role='user'				log='true'/>
+		<action id='userregistration'					controller='RegisterFormController'						role='guest'			log='true'>
+																													<param id='nick'				type='text'		required='true'		min='3'		max='24'/>
+																													<param id='email'				type='text'		required='true'					validator='EmailValidator'/>
+																													<param id='email_repeat'		type='text'		required='true'/>
+																													<param id='pswd'				type='text'		required='true'		min='6'		max='32'																																																								validator='PasswordValidator'/>
+																													<param id='pswd_repeat'			type='text'		required='true'/>
+																													<param id='termsandconditions'	type='boolean'	required='true'/>									</action>
+		<action id='sell-youthplayer'					controller='SellYouthPlayerController'					role='user' 			log='true'>
+																													<param id='transfer_fee'		type='number'	required='true'		min='1'		max='1000000000'/>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='remove-youthplayer-from-market'		controller='RemoveYouthPlayerFromMarketController'		role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='fire-youthplayer'					controller='FireYouthPlayerController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='buy-youthplayer'					controller='BuyYouthPlayerController'					role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='move-youthplayer-to-professional'	controller='MoveYouthPlayerToProfessionalController'	role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>
+																													<param id='mainposition'		type='text'		required='true'/>									</action>
+		<action id='scout-youthplayer'					controller='ScoutYouthPlayerController'					role='user'				log='true'>
+																													<param id='scoutid'				type='number'	required='true'/>
+																													<param id='country'				type='text'		required='true'/>									</action>
+		<action id='create-youthmatch-request'			controller='CreateYouthMatchRequestController'			role='user'				log='true'>
+																													<param id='matchdate'			type='number'	required='true'/>
+																													<param id='reward'				type='number'	required='false'	min='1'/>						</action>
+		<action id='cancel-youth-match-request'			controller='CancelYouthMatchRequestController'			role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='accept-youth-match-request'			controller='AcceptYouthMatchRequestController'			role='user'				log='true'>
+																													<param id='id'					type='number'	required='true'/>									</action>
+		<action id='save-youth-formation'				controller='SaveYouthFormationController'				role='user'				log='true'>
+																													<param id='matchid'				type='number'	required='true'/>
+																													<param id='setup'				type='text'		required='true'/>
+																													<param id='player1'				type='number'	required='true'/>
+																													<param id='player2'				type='number'	required='true'/>
+																													<param id='player3'				type='number'	required='true'/>
+																													<param id='player4'				type='number'	required='true'/>
+																													<param id='player5'				type='number'	required='true'/>
+																													<param id='player6'				type='number'	required='true'/>
+																													<param id='player7'				type='number'	required='true'/>
+																													<param id='player8'				type='number'	required='true'/>
+																													<param id='player9'				type='number'	required='true'/>
+																													<param id='player10'			type='number'	required='true'/>
+																													<param id='player11'			type='number'	required='true'/>
+																													<param id='bench1'				type='number'/>
+																													<param id='bench2'				type='number'/>
+																													<param id='bench3'				type='number'/>
+																													<param id='bench4'				type='number'/>
+																													<param id='bench5'				type='number'/>
+																													<param id='bench6'				type='number'/>
+																													<param id='bench7'				type='number'/>
+																													<param id='sub1_out'			type='number'/>
+																													<param id='sub1_in'				type='number'/>
+																													<param id='sub1_minute'			type='number'/>
+																													<param id='sub1_condition'		type='text'/>
+																													<param id='sub2_out'			type='number'/>
+																													<param id='sub2_in'				type='number'/>
+																													<param id='sub2_minute'			type='number'/>
+																													<param id='sub2_condition'		type='text'/>
+																													<param id='sub3_out'			type='number'/>
+																													<param id='sub3_in'				type='number'/>
+																													<param id='sub3_minute'			type='number'/>
+																													<param id='sub3_condition'		type='text'/>														</action>
+	</actions>
+</module>

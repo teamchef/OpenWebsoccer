@@ -1,23 +1,52 @@
-{% extends "box.twig" %}
-
-{% block box_title %}
-{{ i18n.getMessage('activitylog_box_title') }}
-{% endblock %}
-
-{% block box_content %}
-
-{% if activities is defined and activities|length > 0 %}
-	
-	<table class="table table-striped">
-	{% for activity in activities %}
-		{% set username = "<a href=\"" ~ env.getInternalUrl("user", "id=" ~ activity.user_id) ~ "\">" ~ activity.user_name|e ~ "</a>" %}
-		<tr>
-			<td><small>{{ env.getFormattedDatetime(activity.created_date) }}</small> {{ i18n.getMessage("activitylog_" ~ activity.action_id)|format(username)|raw }}</td>
-		</tr>
-	{% endfor %}
-	</table>
-	
-{% endif %}
-
-
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% block user_aktivities_box %}
+	<div class="box">
+		{% block box_title %}
+			<h4>{{ i18n.getMessage('activitylog_box_title') }}</h4>
+		{% endblock %}
+		{% block box_content %}
+			{% if activities is defined and activities|length > 0 %}
+				<table>
+					{% for activity in activities %}
+						{% set username = "<a href=\"" ~ env.getInternalUrl("user","id=" ~ activity.user_id) ~ "\">" ~ activity.user_name|e ~ "</a>" %}
+						<tr>
+							<td>
+								<small>
+									{{ env.getFormattedDatetime(activity.created_date) }}
+									{{ i18n.getMessage("activitylog_" ~ activity.action_id)|format(username)|raw }}
+								</small>
+							</td>
+						</tr>
+					{% endfor %}
+				</table>
+			{% endif %}
+		{% endblock %}
+	</div>
 {% endblock %}

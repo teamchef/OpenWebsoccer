@@ -5,7 +5,7 @@
  *
  * (c) 2010 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -18,23 +18,18 @@
  */
 class Twig_Node_Spaceless extends Twig_Node
 {
-    public function __construct(Twig_NodeInterface $body, $lineno, $tag = 'spaceless')
+    public function __construct(Twig_NodeInterface $body,$lineno,$tag = 'spaceless')
     {
-        parent::__construct(array('body' => $body), array(), $lineno, $tag);
+        parent::__construct(array('body' => $body),array(),$lineno,$tag);
     }
 
-    /**
-     * Compiles the node to PHP.
-     *
-     * @param Twig_Compiler $compiler A Twig_Compiler instance
-     */
     public function compile(Twig_Compiler $compiler)
     {
         $compiler
             ->addDebugInfo($this)
             ->write("ob_start();\n")
             ->subcompile($this->getNode('body'))
-            ->write("echo trim(preg_replace('/>\s+</', '><', ob_get_clean()));\n")
+            ->write("echo trim(preg_replace('/>\s+</','><',ob_get_clean()));\n")
         ;
     }
 }

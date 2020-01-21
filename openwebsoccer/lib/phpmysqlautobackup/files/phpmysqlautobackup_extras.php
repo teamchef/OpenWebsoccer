@@ -10,8 +10,8 @@ Version    Date              Comment
 1.4.0      Dec 2007   improved faster version
 1.5.0      Dec 2008   improved and added FTP backup to remote site
 1.5.4      Nov 2009   Version printed in email
-1.5.5      Feb 2011  more options for config added - email reports only and/or backup, save backup file to local and/or remote server.
-                                Reporter added: email report of last 6 (or more) backup stats (date, total bytes exported, total lines exported) plus any errors
+1.5.5      Feb 2011  more options for config added - email reports only and/or backup,save backup file to local and/or remote server.
+                                Reporter added: email report of last 6 (or more) backup stats (date,total bytes exported,total lines exported) plus any errors
                                 MySQL error reporting added  and Automated version checker added
 1.6.0      Dec 2011  PDO version
 1.6.1      April 2012 - CURLOPT_TRANSFERTEXT turned off (to stop garbaging zip file on transfer) and bug removed from write_back
@@ -26,7 +26,7 @@ function has_data($value)
  else return (($value != '') && (strtolower($value) != 'null') && (strlen(trim($value)) > 0)) ? true : false;
 }
 
-function xmail ($to_emailaddress,$from_emailaddress, $subject, $content, $file_name, $backup_type, $ver)
+function xmail ($to_emailaddress,$from_emailaddress,$subject,$content,$file_name,$backup_type,$ver)
 {
  $mail_attached = "";
  $boundary = "----=_NextPart_000_01FB_010".md5($to_emailaddress);
@@ -38,33 +38,33 @@ function xmail ($to_emailaddress,$from_emailaddress, $subject, $content, $file_n
  $mail_attached .= "--".$boundary."--".NEWLINE;
  $add_header ="MIME-Version: 1.0".NEWLINE."Content-Type: multipart/mixed;".NEWLINE." boundary=\"$boundary\" ".NEWLINE;
  $mail_content="--".$boundary.NEWLINE."Content-Type: text/plain; ".NEWLINE." charset=\"iso-8859-1\"".NEWLINE."Content-Transfer-Encoding: 7bit".NEWLINE.NEWLINE."BACKUP Successful...".NEWLINE.NEWLINE."Please see attached for your zipped Backup file; $backup_type ".NEWLINE."If this is the first backup then you should test it restores correctly to a test server.".NEWLINE.NEWLINE." phpMySQLAutoBackup (version $ver) is developed by http://www.dwalker.co.uk/ ".NEWLINE.NEWLINE." Have a good day now you have a backup of your MySQL db  :-) ".NEWLINE.NEWLINE." Please consider making a donation at: ".NEWLINE." http://www.dwalker.co.uk/make_a_donation.php ".NEWLINE." (every penny or cent helps)".NEWLINE.$mail_attached;
- return mail($to_emailaddress, $subject, $mail_content, "From: $from_emailaddress".NEWLINE."Reply-To:$from_emailaddress".NEWLINE.$add_header);
+ return mail($to_emailaddress,$subject,$mail_content,"From: $from_emailaddress".NEWLINE."Reply-To:$from_emailaddress".NEWLINE.$add_header);
 }
 
-function write_backup($gzdata, $backup_file_name)
+function write_backup($gzdata,$backup_file_name)
 {
 	if (file_exists(LOCATION.'../../../../msd/work/backup/')){
-	   	$fp = fopen(LOCATION.'../../../../msd/work/backup/'.$backup_file_name, "w");
- 	   	fwrite($fp, $gzdata);
+	   	$fp = fopen(LOCATION.'../../../../msd/work/backup/'.$backup_file_name,"w");
+ 	   	fwrite($fp,$gzdata);
  		fclose($fp);
  		//check folder is protected - stop HTTP access
  		if (!file_exists(LOCATION.'../../../../msd/work/backup/.htaccess'))
  		   {
-  		   		$fp = fopen(LOCATION.'../../../../msd/work/backup/.htaccess', "w");
-  				fwrite($fp, "deny from all");
+  		   		$fp = fopen(LOCATION.'../../../../msd/work/backup/.htaccess',"w");
+  				fwrite($fp,"deny from all");
   				fclose($fp);
  			}
  		delete_old_backups();
 	}
 	else {
-		$fp = fopen(LOCATION.'../backups/'.$backup_file_name, "w");
- 		fwrite($fp, $gzdata);
+		$fp = fopen(LOCATION.'../backups/'.$backup_file_name,"w");
+ 		fwrite($fp,$gzdata);
  		fclose($fp);
  		//check folder is protected - stop HTTP access
  		if (!file_exists(LOCATION.'../backups/.htaccess'))
  			{
-  				$fp = fopen(LOCATION.'../backups/.htaccess', "w");
-  				fwrite($fp, "deny from all");
+  				$fp = fopen(LOCATION.'../backups/.htaccess',"w");
+  				fwrite($fp,"deny from all");
   				fclose($fp);
  			}
  		delete_old_backups();
@@ -111,15 +111,15 @@ class transfer_backup
        if (function_exists('curl_exec'))
        {
         $file=LOCATION."../../../../msd/work/backup".$filename;
-        $fp = fopen($file, "r");
+        $fp = fopen($file,"r");
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "ftp://$ftp_username:$ftp_password@$ftp_server.$ftp_path".$filename);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_UPLOAD, 1);
-        curl_setopt($ch, CURLOPT_INFILE, $fp);
-        curl_setopt($ch, CURLOPT_INFILESIZE, filesize($file));
-        curl_setopt($ch, CURLOPT_TRANSFERTEXT, 0);
-        curl_setopt($ch, CURLOPT_REFERER, $_SERVER['HTTP_HOST']." - via phpMySQLAutoBackup");
+        curl_setopt($ch,CURLOPT_URL,"ftp://$ftp_username:$ftp_password@$ftp_server.$ftp_path".$filename);
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+        curl_setopt($ch,CURLOPT_UPLOAD,1);
+        curl_setopt($ch,CURLOPT_INFILE,$fp);
+        curl_setopt($ch,CURLOPT_INFILESIZE,filesize($file));
+        curl_setopt($ch,CURLOPT_TRANSFERTEXT,0);
+        curl_setopt($ch,CURLOPT_REFERER,$_SERVER['HTTP_HOST']." - via phpMySQLAutoBackup");
         $output = curl_exec($ch);
         $info = curl_getinfo($ch);
         if (empty($info['http_code'])) $this->error = NEWLINE."FTP ERROR - Failed to transfer backup file to remote ftp server";
@@ -141,7 +141,7 @@ class transfer_backup
 
 class record
 {
-      public function save($date, $bytes, $lines)
+      public function save($date,$bytes,$lines)
       {
        $dbc = dbc::instance();
        $result = $dbc->prepare("SHOW TABLES LIKE 'phpmysqlautobackup_log' ");
@@ -156,11 +156,11 @@ class record
         $result = $dbc->prepare($q);
         $result = $dbc->execute($result);
        }
-       $query="INSERT INTO `phpmysqlautobackup_log` (`date`, `bytes`, `lines`)
-                 VALUES ('$date', '$bytes', '$lines')";
+       $query="INSERT INTO `phpmysqlautobackup_log` (`date`,`bytes`,`lines`)
+                 VALUES ('$date','$bytes','$lines')";
        $result = $dbc->prepare($query);
        $result = $dbc->execute($result);
-       $query="SELECT date FROM `phpmysqlautobackup_log` ORDER BY `date` DESC LIMIT 0 , ".LOG_REPORTS_MAX;
+       $query="SELECT date FROM `phpmysqlautobackup_log` ORDER BY `date` DESC LIMIT 0 ,".LOG_REPORTS_MAX;
        $result = $dbc->prepare($query);
        $rows = $dbc->executeGetRows($result);
 
@@ -175,11 +175,11 @@ class record
        $dbc = dbc::instance();
        $result = $dbc->prepare("SELECT * FROM `phpmysqlautobackup_log` ORDER BY `date` DESC ");
        $rows = $dbc->executeGetRows($result);
-       $report=NEWLINE."Below are the records of the last ".LOG_REPORTS_MAX." backups.".NEWLINE."DATE and TIME (total bytes, Total lines exported)";
+       $report=NEWLINE."Below are the records of the last ".LOG_REPORTS_MAX." backups.".NEWLINE."DATE and TIME (total bytes,Total lines exported)";
        foreach ($rows as $row)
        {
         $report.= NEWLINE.strftime("%d %b %Y - %H:%M:%S",$row['date'])." (";
-        $report.= number_format(($row['bytes']/1000), 2, '.', '') ." KB, ";
+        $report.= number_format(($row['bytes']/1000),2,'.','') ." KB,";
         $report.= number_format($row['lines'])." lines)";
        }
        return $report;
@@ -195,20 +195,20 @@ class version
        if (function_exists('curl_exec'))
        {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, "http://www.dwalker.co.uk/versions/phpMySQLAutoBackup.php");
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        curl_setopt($ch,CURLOPT_URL,"http://www.dwalker.co.uk/versions/phpMySQLAutoBackup.php");
+        curl_setopt($ch,CURLOPT_RETURNTRANSFER,TRUE);
         $newest_version=curl_exec($ch);
         curl_close($ch);
        }
-       /*elseif ($fp = fsockopen("www.dwalker.co.uk", 80, $errno, $errstr, 30));
+       /*elseif ($fp = fsockopen("www.dwalker.co.uk",80,$errno,$errstr,30));
        {
         $headers ="GET /versions/phpMySQLAutoBackup.php HTTP/1.0\r\nHost: dwalker.co.uk\r\n"
                 . "Content-Type: application/x-www-form-urlencoded\r\n"
                 . "\r\nConnection: close\r\n\r\n";
-        fwrite($fp, $headers);
+        fwrite($fp,$headers);
         while (!feof($fp))
         {
-         $newest_version= fgets($fp, 128);
+         $newest_version= fgets($fp,128);
         }
         fclose($fp);
        } */

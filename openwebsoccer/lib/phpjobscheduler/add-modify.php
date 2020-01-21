@@ -27,7 +27,7 @@ else
 {
  $fire_time = time() + $time_interval;
  $query="INSERT INTO ".PJS_TABLE."
-          (scriptpath, name, time_interval, fire_time, time_last_fired,run_only_once, paused)
+          (scriptpath,name,time_interval,fire_time,time_last_fired,run_only_once,paused)
          VALUES
           ('$scriptpath','$name','$time_interval','$fire_time','0','$run_only_once','$paused')";
 }

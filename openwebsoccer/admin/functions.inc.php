@@ -1,35 +1,41 @@
 <?php
-/******************************************************
-
-  This file is part of OpenWebSoccer-Sim.
-
-  OpenWebSoccer-Sim is free software: you can redistribute it
-  and/or modify it under the terms of the
-  GNU Lesser General Public License
-  as published by the Free Software Foundation, either version 3 of
-  the License, or any later version.
-
-  OpenWebSoccer-Sim is distributed in the hope that it will be
-  useful, but WITHOUT ANY WARRANTY; without even the implied
-  warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-  See the GNU Lesser General Public License for more details.
-
-  You should have received a copy of the GNU Lesser General Public
-  License along with OpenWebSoccer-Sim.
-  If not, see <http://www.gnu.org/licenses/>.
-
-******************************************************/
-
+/******************************************************************
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+******************************************************************/
 /**
  * Escapes for HTML output. Uses <code>htmlspecialchars</code> (UTF-8).
  *
  * @param string $message message string to escape.
- * @return string escaped input string, ready for secure HTML output.
+ * @return string escaped input string,ready for secure HTML output.
  */
 function escapeOutput($message) {
-	return htmlspecialchars($message, ENT_COMPAT, 'UTF-8');
+	return htmlspecialchars($message,ENT_COMPAT,'UTF-8');
 }
-
 /**
  * Creates code for displaying an alert with severity Warning.
  *
@@ -37,10 +43,9 @@ function escapeOutput($message) {
  * @param string $message message details.
  * @return string HTML code displaying an alert.
  */
-function createWarningMessage($title, $message) {
-  return createMessage('warning', $title, $message);
+function createWarningMessage($title,$message) {
+  return createMessage('warning',$title,$message);
 }
-
 /**
  * Creates code for displaying an alert with severity Info.
  *
@@ -48,10 +53,9 @@ function createWarningMessage($title, $message) {
  * @param string $message message details.
  * @return string HTML code displaying an alert.
  */
-function createInfoMessage($title, $message) {
-  return createMessage('info', $title, $message);
+function createInfoMessage($title,$message) {
+  return createMessage('info',$title,$message);
 }
-
 /**
  * Creates code for displaying an alert with severity Error.
  *
@@ -59,10 +63,9 @@ function createInfoMessage($title, $message) {
  * @param string $message message details.
  * @return string HTML code displaying an alert.
  */
-function createErrorMessage($title, $message) {
-  return createMessage('error', $title, $message);
+function createErrorMessage($title,$message) {
+  return createMessage('error',$title,$message);
 }
-
 /**
  * Creates code for displaying an alert with severity Success.
  *
@@ -70,10 +73,9 @@ function createErrorMessage($title, $message) {
  * @param string $message message details.
  * @return string HTML code displaying an alert.
  */
-function createSuccessMessage($title, $message) {
-  return createMessage('success', $title, $message);
+function createSuccessMessage($title,$message) {
+  return createMessage('success',$title,$message);
 }
-
 /**
  * Creates code for displaying an alert with specified severity.
  *
@@ -82,7 +84,7 @@ function createSuccessMessage($title, $message) {
  * @param string $message message details.
  * @return string HTML code displaying an alert.
  */
-function createMessage($severity, $title, $message) {
+function createMessage($severity,$title,$message) {
   $html = '<div class=\'alert alert-'. $severity . '\'>';
   $html .= '<button type=\'button\' class=\'close\' data-dismiss=\'alert\'>&times;</button>';
   $html .= '<h4>'. $title .'</h4>';
@@ -90,7 +92,6 @@ function createMessage($severity, $title, $message) {
   $html .= '</div>';
   return $html;
 }
-
 /**
  * Writes a log statement into the entity log file.
  *
@@ -100,14 +101,11 @@ function createMessage($severity, $title, $message) {
  * @param string $entity name of affacted entity.
  * @param string $entityValue string value which identifies the entity item.
  */
-function logAdminAction(WebSoccer $websoccer, $type, $username, $entity, $entityValue) {
+function logAdminAction(WebSoccer $websoccer,$type,$username,$entity,$entityValue) {
 	$userIp = getenv('REMOTE_ADDR');
 	$message = $websoccer->getFormattedDatetime($websoccer->getNowAsTimestamp()) . ';' . $username . ';' . $userIp . ';' . $type . ';' . $entity . ';' . $entityValue;
-	$file = BASE_FOLDER . '/generated/entitylog.php';
-
-	$fw = new FileWriter($file, FALSE);
+	$file = ROOT . '/generated/entitylog.php';
+	$fw = new FileWriter($file,FALSE);
 	$fw->writeLine($message);
 	$fw->close();
 }
-
-?>

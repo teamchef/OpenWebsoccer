@@ -1,0 +1,64 @@
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% if env.getConfig("cdn_root_set") %}
+	.websoccericon-shoot { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -95px -225px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-attempt { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -31px -225px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-goal { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -95px -32px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-yellowcard { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -96px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-redcard { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -160px -96px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-substitution { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -223px -163px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-injury { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -222px -224px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-penalty { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -160px -224px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-matchcompleted { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -159px -30px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-corner { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -31px -160px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-tacticschange { background: url('{{ env.getConfig("cdn_root") }}/img/icons-websoccer-32.png') no-repeat -95px -160px; width: 34px; height: 34px; display: inline-block; }
+{% else %}
+	.websoccericon-shoot { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -95px -225px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-attempt { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -31px -225px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-goal { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -95px -32px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-yellowcard { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -223px -96px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-redcard { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -160px -96px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-substitution { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -223px -163px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-injury { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -222px -224px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-penalty { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -160px -224px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-matchcompleted { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -159px -30px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-corner { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -31px -160px; width: 34px; height: 32px; display: inline-block; }
+	.websoccericon-tacticschange { background: url('{{ env.getConfig("context_root") }}/img/icons-websoccer-32.png') no-repeat -95px -160px; width: 34px; height: 34px; display: inline-block; }
+{% endif %}
+#report_result { border-top: 1px solid #000000; border-bottom: 1px solid #000000; text-align: center; }
+#report_goals_home,#report_goals_separator,#report_goals_guest { padding: 30px; display: inline-block; font-size: 36px; font-weight: bold; }
+#report_goals_home { padding-left: 0; }
+#report_goals_guest { padding-right: 0; }
+#reportarea { border: 1px solid #000000; padding: 5px; border: 1px solid #dde2e4; -webkit-border-radius: 4px; -moz-border-radius: 4px; border-radius: 4px; -webkit-box-shadow: inset 0 1px 1px rgb(0,0,0); -moz-box-shadow: inset 0 1px 1px rgb(0,0,0); box-shadow: inset 0 1px 1px rgb(0,0,0); }
+.report_minute { font-weight: bold; color: #000000; }
+.report_comment { color: #666666; }
+.report_team_home { color: #006699; }
+#reporttable { table-layout: fixed; }
+#reporttable td { padding-top: 10px; }
+.report_team_guest { color: #ff6600; }

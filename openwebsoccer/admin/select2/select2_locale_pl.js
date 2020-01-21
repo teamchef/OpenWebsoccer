@@ -12,15 +12,15 @@
         return "ów";
     };
 
-    $.extend($.fn.select2.defaults, {
+    $.extend($.fn.select2.defaults,{
         formatNoMatches: function () {
             return "Brak wyników.";
         },
-        formatInputTooShort: function (input, min) {
+        formatInputTooShort: function (input,min) {
             var n = min - input.length;
             return "Wpisz jeszcze " + n + " znak" + pl_suffix(n) + ".";
         },
-        formatInputTooLong: function (input, max) {
+        formatInputTooLong: function (input,max) {
             var n = input.length - max;
             return "Wpisana fraza jest za długa o " + n + " znak" + pl_suffix(n) + ".";
         },

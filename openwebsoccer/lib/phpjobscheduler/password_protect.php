@@ -46,24 +46,24 @@ $LOGIN_INFORMATION = array(
 #  SETTINGS START
 ##################################################################
 
-// Add login/password pairs below, like described above
+// Add login/password pairs below,like described above
 // NOTE: all rows except last must have comma "," at the end of line
 $LOGIN_INFORMATION = array(
   'openwebsoccer' => 'openwebsoccer'
 );
 
-// request login? true - show login and password boxes, false - password box only
-define('USE_USERNAME', true);
+// request login? true - show login and password boxes,false - password box only
+define('USE_USERNAME',true);
 
 // User will be redirected to this page after logout
-define('LOGOUT_URL', 'http://www.example.com/');
+define('LOGOUT_URL','http://www.example.com/');
 
 // time out after NN minutes of inactivity. Set to 0 to not timeout
-define('TIMEOUT_MINUTES', 0);
+define('TIMEOUT_MINUTES',0);
 
 // This parameter is only useful when TIMEOUT_MINUTES is not zero
-// true - timeout time from last activity, false - timeout time from login
-define('TIMEOUT_CHECK_ACTIVITY', true);
+// true - timeout time from last activity,false - timeout time from login
+define('TIMEOUT_CHECK_ACTIVITY',true);
 
 ##################################################################
 #  SETTINGS END
@@ -76,7 +76,7 @@ define('TIMEOUT_CHECK_ACTIVITY', true);
 
 // show usage example
 if(isset($_GET['help'])) {
-  die('Include following code into every page you would like to protect, at the very beginning (first line):<br>&lt;?php include("' . str_replace('\\','\\\\',__FILE__) . '"); ?&gt;');
+  die('Include following code into every page you would like to protect,at the very beginning (first line):<br>&lt;?php include("' . str_replace('\\','\\\\',__FILE__) . '"); ?&gt;');
 }
 
 // timeout in seconds
@@ -84,7 +84,7 @@ $timeout = (TIMEOUT_MINUTES == 0 ? 0 : time() + TIMEOUT_MINUTES * 60);
 
 // logout?
 if(isset($_GET['logout'])) {
-  setcookie("verify", '', $timeout, '/'); // clear password;
+  setcookie("verify",'',$timeout,'/'); // clear password;
   header('Location: ' . LOGOUT_URL);
   exit();
 }
@@ -112,7 +112,7 @@ function showLoginPasswordProtect($error_msg) {
     <input type="password" name="access_password" /><p></p><input type="submit" name="Submit" value="Submit" />
   </form>
   <br />
-  <a style="font-size:9px; color: #B0B0B0; font-family: Verdana, Arial;" href="http://www.zubrag.com/scripts/password-protect.php" title="Download Password Protector">Powered by Password Protect</a>
+  <a style="font-size:9px; color: #B0B0B0; font-family: Verdana,Arial;" href="http://www.zubrag.com/scripts/password-protect.php" title="Download Password Protector">Powered by Password Protect</a>
   </div>
 </body>
 </html>
@@ -128,14 +128,14 @@ if (isset($_POST['access_password'])) {
 
   $login = isset($_POST['access_login']) ? $_POST['access_login'] : '';
   $pass = $_POST['access_password'];
-  if (!USE_USERNAME && !in_array($pass, $LOGIN_INFORMATION)
-  || (USE_USERNAME && ( !array_key_exists($login, $LOGIN_INFORMATION) || $LOGIN_INFORMATION[$login] != $pass ) )
+  if (!USE_USERNAME && !in_array($pass,$LOGIN_INFORMATION)
+  || (USE_USERNAME && ( !array_key_exists($login,$LOGIN_INFORMATION) || $LOGIN_INFORMATION[$login] != $pass ) )
   ) {
     showLoginPasswordProtect("Incorrect password.");
   }
   else {
     // set cookie if password was validated
-    setcookie("verify", md5($login.'%'.$pass), $timeout, '/');
+    setcookie("verify",md5($login.'%'.$pass),$timeout,'/');
 
     // Some programs (like Form1 Bilder) check $_POST array to see if parameters passed
     // So need to clear password protector variables
@@ -161,7 +161,7 @@ else {
       $found = true;
       // prolong timeout
       if (TIMEOUT_CHECK_ACTIVITY) {
-        setcookie("verify", md5($lp), $timeout, '/');
+        setcookie("verify",md5($lp),$timeout,'/');
       }
       break;
     }

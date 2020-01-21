@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+
+<!---
+    * This file is part of OpenWebSoccer-Sim.
+    *
+    * OpenWebSoccer-Sim is free software: you can redistribute it
+    * and/or modify it under the terms of the
+    * GNU Lesser General Public License
+    * as published by the Free Software Foundation, either version 3 of
+    * the License, or any later version.
+    *
+    * OpenWebSoccer-Sim is distributed in the hope that it will be
+    * useful, but WITHOUT ANY WARRANTY; without even the implied
+    * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    * See the GNU Lesser General Public License for more details.
+    *
+    * You should have received a copy of the GNU Lesser General Public
+    * License along with OpenWebSoccer-Sim.
+    * If not, see
+    <http://www.gnu.org/licenses/>.
+-->
+
+<module version="OpenWebsoccer">
+    <settings>
+        <setting id="googleplus_enable_login" category="social" type="boolean" default="0"/>
+        <setting id="googleplus_appname" category="social" type="text" default=""/>
+        <setting id="googleplus_clientid" category="social" type="text" default=""/>
+        <setting id="googleplus_clientsecret" category="social" type="text" default=""/>
+        <setting id="googleplus_developerkey" category="social" type="text" default=""/>
+        <setting id="googleplus_enable_likebutton" category="social" type="boolean" default="0"/>
+    </settings>
+
+    <blocks>
+        <block
+                id="googleplus-login-sidebar"
+                template="googleplusloginbox"
+                model="GoogleplusLoginModel"
+                includepages="all"
+                area="sidebar"
+                weight="1"
+                role="guest"/>
+        <block
+                id="googleplus-like"
+                template="googleplus_like"
+                includepages="home,news-details,match,todaysmatches,highscore,freeclubs"
+                area="content_bottom"
+                weight="5"
+                role="guest,user"/>
+    </blocks>
+
+    <actions>
+        <action id="googleplus-login" controller="GoogleplusLoginController" role="guest"/>
+    </actions>
+</module>

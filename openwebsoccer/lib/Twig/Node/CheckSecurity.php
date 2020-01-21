@@ -5,7 +5,7 @@
  *
  * (c) 2015 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -18,7 +18,7 @@ class Twig_Node_CheckSecurity extends Twig_Node
     protected $usedTags;
     protected $usedFunctions;
 
-    public function __construct(array $usedFilters, array $usedTags, array $usedFunctions)
+    public function __construct(array $usedFilters,array $usedTags,array $usedFunctions)
     {
         $this->usedFilters = $usedFilters;
         $this->usedTags = $usedTags;
@@ -30,7 +30,7 @@ class Twig_Node_CheckSecurity extends Twig_Node
     public function compile(Twig_Compiler $compiler)
     {
         $tags = $filters = $functions = array();
-        foreach (array('tags', 'filters', 'functions') as $type) {
+        foreach (array('tags','filters','functions') as $type) {
             foreach ($this->{'used'.ucfirst($type)} as $name => $node) {
                 if ($node instanceof Twig_Node) {
                     ${$type}[$name] = $node->getLine();
@@ -48,9 +48,9 @@ class Twig_Node_CheckSecurity extends Twig_Node
             ->indent()
             ->write("\$this->env->getExtension('sandbox')->checkSecurity(\n")
             ->indent()
-            ->write(!$tags ? "array(),\n" : "array('".implode("', '", array_keys($tags))."'),\n")
-            ->write(!$filters ? "array(),\n" : "array('".implode("', '", array_keys($filters))."'),\n")
-            ->write(!$functions ? "array()\n" : "array('".implode("', '", array_keys($functions))."')\n")
+            ->write(!$tags ? "array(),\n" : "array('".implode("','",array_keys($tags))."'),\n")
+            ->write(!$filters ? "array(),\n" : "array('".implode("','",array_keys($filters))."'),\n")
+            ->write(!$functions ? "array()\n" : "array('".implode("','",array_keys($functions))."')\n")
             ->outdent()
             ->write(");\n")
             ->outdent()

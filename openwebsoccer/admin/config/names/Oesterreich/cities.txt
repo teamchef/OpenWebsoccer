@@ -6,7 +6,7 @@ Innsbruck
 Klagenfurt
 Villach
 Wels
-St.Pölten
+St.Poelten
 Dornbrin
 Feldkirch
 Bregenz
@@ -14,4 +14,4 @@ Wolfsberg
 Traun
 Kapfenberg
 Lustenau
-Mödling
+Moedling

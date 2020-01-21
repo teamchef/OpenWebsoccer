@@ -5,7 +5,7 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -37,7 +37,7 @@ interface Twig_TemplateInterface
      * @param array $context An array of parameters to pass to the template
      * @param array $blocks  An array of blocks to pass to the template
      */
-    public function display(array $context, array $blocks = array());
+    public function display(array $context,array $blocks = array());
 
     /**
      * Returns the bound environment for this template.

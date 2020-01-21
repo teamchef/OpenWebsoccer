@@ -1,5 +1,33 @@
-{% import "macros/messagebox.twig" as messagebox %}
-
-{{ messagebox.box(i18n.getMessage("absence_warning"), "", "warning") }}
-
-<p><a href="{{ env.getInternalActionUrl("return-from-absence") }}" class="btn"><i class="icon-signin"></i> {{ i18n.getMessage("absence_return_button") }}</a></p>
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% import "macro.twig" as macro %}
+{% block absense_alert %}
+	{{ macro.box(i18n.getMessage("absence_warning"),"","warning") }}
+	<p><a href="{{ env.getInternalActionUrl("return-from-absence") }}" class="btn"><i class="icon-signin"></i> {{ i18n.getMessage("absence_return_button") }}</a></p>
+{% endblock %}

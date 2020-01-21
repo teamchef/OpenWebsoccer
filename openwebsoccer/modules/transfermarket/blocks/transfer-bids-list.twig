@@ -1,35 +1,63 @@
-{% if bids is defined and bids|length > 0 %}
-
-	<table class="table table-striped">
-		<thead>
-			<tr>
-				<th>{{ i18n.getMessage("transfer_bid_date") }}</th>
-				<th>{{ i18n.getMessage("entity_player") }}</th>
-				<th>{{ i18n.getMessage("transfermarket_head_deadline") }}</th>
-				<th>{{ i18n.getMessage("transfer_bid_amount") }}</th>
-				<th>{{ i18n.getMessage("transfer_bid_handmoney") }}</th>
-				<th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
-			</tr>
-		</thead>
-		<tbody>
-  
-	  	{% for bid in bids %}
-			<tr>
-				<td><a class="btn btn-mini {% if bid.ishighest %}btn-success{% else %}btn-danger{% endif %} wstooltip" 
-					href="{{ env.getInternalUrl("transfer-bid", "id=" ~ bid.player_id) }}"
-					title="{% if bid.ishighest %}{{ i18n.getMessage("transfer_bids_ishighest") }}{% else %}{{ i18n.getMessage("transfer_bids_overbidden") }}{% endif %}"><i class="icon-hand-up"></i> {{ env.getFormattedDatetime(bid.date) }}</a></td>
-				<td><a href="{{ env.getInternalUrl("player", "id=" ~ bid.player_id) }}">{{ bid.player_firstname }} {{ bid.player_lastname }}</a></td>
-				<td>{{ env.getFormattedDatetime(bid.auction_end) }}</td>
-				<td>{{ bid.amount|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td>
-				<td>{{ bid.hand_money|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td>
-				<td>{{ bid.contract_salary|number_format(0, ',', ' ')  }} {{ env.getConfig("game_currency") }}</td>
-			</tr>
-	  	{% endfor %}
-	  	
-		</tbody>
-	</table>
-
-
-{% else %}
-	<p>{{ i18n.getMessage("transfer_bids_nobids") }}</p>
-{% endif %}
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% block transfer_bids_list %}
+	{% if bids is defined and bids|length > 0 %}
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>{{ i18n.getMessage("transfer_bid_date") }}</th>
+					<th>{{ i18n.getMessage("entity_player") }}</th>
+					<th>{{ i18n.getMessage("transfermarket_head_deadline") }}</th>
+					<th>{{ i18n.getMessage("transfer_bid_amount") }}</th>
+					<th>{{ i18n.getMessage("transfer_bid_handmoney") }}</th>
+					<th>{{ i18n.getMessage("entity_player_vertrag_gehalt") }}</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for bid in bids %}
+					<tr>
+						<td>
+							<a class="btn btn-mini {% if bid.ishighest %}btn-success{% else %}btn-danger{% endif %} wstooltip" href="{{ env.getInternalUrl("transfer-bid","id=" ~ bid.player_id) }}"
+								title="{% if bid.ishighest %}{{ i18n.getMessage("transfer_bids_ishighest") }}{% else %}{{ i18n.getMessage("transfer_bids_overbidden") }}{% endif %}">
+								<i class="icon-hand-up"></i> {{ env.getFormattedDatetime(bid.date) }}
+							</a>
+						</td>
+						<td><a href="{{ env.getInternalUrl("player","id=" ~ bid.player_id) }}">{{ bid.player_firstname }} {{ bid.player_lastname }}</a></td>
+						<td>{{ env.getFormattedDatetime(bid.auction_end) }}</td>
+						<td>{{ bid.amount|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</td>
+						<td>{{ bid.hand_money|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</td>
+						<td>{{ bid.contract_salary|number_format(0,',',' ') }} {{ env.getConfig("game_currency") }}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	{% else %}
+		<p>{{ i18n.getMessage("transfer_bids_nobids") }}</p>
+	{% endif %}
+{% endblock %}

@@ -12,9 +12,9 @@
         3: function() { return "tři"; },
         4: function() { return "čtyři"; }
     }
-    $.extend($.fn.select2.defaults, {
+    $.extend($.fn.select2.defaults,{
         formatNoMatches: function () { return "Nenalezeny žádné položky"; },
-        formatInputTooShort: function (input, min) {
+        formatInputTooShort: function (input,min) {
             var n = min - input.length;
             if (n == 1) {
                 return "Prosím zadejte ještě jeden znak";
@@ -24,7 +24,7 @@
                 return "Prosím zadejte ještě dalších "+n+" znaků";
             }
         },
-        formatInputTooLong: function (input, max) {
+        formatInputTooLong: function (input,max) {
             var n = input.length - max;
             if (n == 1) {
                 return "Prosím zadejte o jeden znak méně";

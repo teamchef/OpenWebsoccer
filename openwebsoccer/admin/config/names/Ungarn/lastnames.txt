@@ -22,7 +22,7 @@ Lakatos
 Mészáros 
 Orosz
 Rácz
-Török
+Toeroek
 Deák 
 Borbély 
 Kocsis 
@@ -36,6 +36,6 @@ Farkas
 Papp 
 Fekete 
 Fehér 
-Vörös 
+Voeroes 
 Halász 
 Hajdú 

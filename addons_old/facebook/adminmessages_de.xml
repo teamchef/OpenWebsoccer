@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+
+<!---
+    * This file is part of OpenWebSoccer-Sim.
+    *
+    * OpenWebSoccer-Sim is free software: you can redistribute it
+    * and/or modify it under the terms of the
+    * GNU Lesser General Public License
+    * as published by the Free Software Foundation, either version 3 of
+    * the License, or any later version.
+    *
+    * OpenWebSoccer-Sim is distributed in the hope that it will be
+    * useful, but WITHOUT ANY WARRANTY; without even the implied
+    * warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+    * See the GNU Lesser General Public License for more details.
+    *
+    * You should have received a copy of the GNU Lesser General Public
+    * License along with OpenWebSoccer-Sim.
+    * If not, see
+    <http://www.gnu.org/licenses/>.
+-->
+
+<module version="OpenWebsoccer">
+    <messages>
+        <message id="settings_label_facebook_enable_login">Log-In über Facebook aktivieren. Erfordert die Eingabe einer
+            APP-ID und des Facebook-Sicherheitscodes (siehe unten). Ausserdem muss die PHP-Erweiterung CURL auf dem
+            Server aktiviert sein.
+        </message>
+        <message id="settings_label_facebook_appid">Facebook App ID</message>
+        <message id="settings_label_facebook_appid_help">Erhalten Sie, wenn Sie Ihre Webseite<a
+                href="https://developers.facebook.com/apps" target="_blank">als App auf Facebook registrieren</a>.
+        </message>
+        <message id="settings_label_facebook_appsecret">Facebook App Secret</message>
+        <message id="settings_label_facebook_appsecret_help">Erhalten Sie ebenfalls bei der Registrierung Ihrer Webseite
+            auf Facebook.
+        </message>
+        <message id="settings_label_facebook_enable_comments">Diskussionen (z.B. in News und Spielberichten) über ein
+            Facebook-Plugin erlauben. Erfordert die Eingabe einer Facebook App ID (siehe oben).
+        </message>
+        <message id="settings_label_facebook_enable_likebutton">Zeige auf bestimmten Seiten den Facebook-Like-Button
+            an.
+        </message>
+    </messages>
+</module>

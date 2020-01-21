@@ -1,4 +1,4 @@
-describe('Timepicker feature', function() {
+describe('Timepicker feature',function() {
   'use strict';
 
   var $input1,
@@ -52,15 +52,15 @@ describe('Timepicker feature', function() {
     $input3.remove();
   });
 
-  it('should be available on the jquery object', function() {
+  it('should be available on the jquery object',function() {
     expect($.fn.timepicker).toBeDefined();
   });
 
-  it('should be chainable', function() {
+  it('should be chainable',function() {
     expect($timepicker1).toBe($input1);
   });
 
-  it('should have sensible defaults', function() {
+  it('should have sensible defaults',function() {
     expect(tp1.defaultTime).toBeTruthy();
     expect(tp1.minuteStep).toBe(15);
     expect(tp1.secondStep).toBe(15);
@@ -74,12 +74,12 @@ describe('Timepicker feature', function() {
     expect(tp1.isOpen).toBe(false);
   });
 
-  it('should allow user to configure defaults', function() {
+  it('should allow user to configure defaults',function() {
     expect(tp2.template).toBe('modal');
     expect(tp2.minuteStep).toBe(30);
   });
 
-  it('should be configurable with data attributes', function() {
+  it('should be configurable with data attributes',function() {
     $('body').append('<div id="hi" class="bootstrap-timepicker"><input id="timepicker4" data-template="modal" data-minute-step="30" data-modal-backdrop="true" data-show-meridian="true" type="text"/></div');
 
     var $input4 = $('body').find('#timepicker4'),
@@ -87,14 +87,14 @@ describe('Timepicker feature', function() {
 
     expect($('body').find('#timepicker4').length).toBe(1);
     expect(tp4.template).toBe('modal');
-    expect(tp4.minuteStep).toBe(30, 'data-minute-step not working');
-    expect(tp4.modalBackdrop).toBe(true, 'data-modal-backdrop not working');
-    expect(tp4.showMeridian).toBe(true, 'data-show-meridian not working');
+    expect(tp4.minuteStep).toBe(30,'data-minute-step not working');
+    expect(tp4.modalBackdrop).toBe(true,'data-modal-backdrop not working');
+    expect(tp4.showMeridian).toBe(true,'data-show-meridian not working');
 
     tp4.remove();
   });
 
-  it('should have current time by default', function() {
+  it('should have current time by default',function() {
     var dTime = new Date(),
       hour = dTime.getHours(),
       minute = Math.floor(dTime.getMinutes() / tp1.minuteStep) * tp1.minuteStep;
@@ -107,7 +107,7 @@ describe('Timepicker feature', function() {
     expect(tp1.minute).toBe(minute);
   });
 
-  it('should not override time with current time if value is already set', function() {
+  it('should not override time with current time if value is already set',function() {
     $('body').append('<div id="timepicker4"><input id="timepicker4Input" type="text" value="12:15 AM" /></div>');
     var $input4 = $('#timepicker4Input').timepicker(),
       tp4 = $input4.data('timepicker');
@@ -118,15 +118,15 @@ describe('Timepicker feature', function() {
     $('#timepicker4').remove();
   });
 
-  it('should have no value if defaultTime is set to false', function() {
+  it('should have no value if defaultTime is set to false',function() {
     expect($input2.val()).toBe('');
   });
 
-  it('should be able to set default time with config option', function() {
+  it('should be able to set default time with config option',function() {
     expect(tp3.getTime()).toBe('13:25:15');
   });
 
-  it('should update the element and widget with the setTime method', function() {
+  it('should update the element and widget with the setTime method',function() {
     tp2.setTime('09:15:20 AM');
 
     expect(tp2.hour).toBe(9);
@@ -140,23 +140,23 @@ describe('Timepicker feature', function() {
     expect(tp2.$widget.find('.bootstrap-timepicker-meridian').val()).toBe('AM');
   });
 
-  it('should be able to format time values into a string', function() {
-    expect(tp2.formatTime(3, 15, 45, 'PM')).toBe('03:15:45 PM');
+  it('should be able to format time values into a string',function() {
+    expect(tp2.formatTime(3,15,45,'PM')).toBe('03:15:45 PM');
   });
 
-  it('should be able get & set the pickers time', function() {
+  it('should be able get & set the pickers time',function() {
     tp3.setTime('23:15:20');
     expect(tp3.getTime()).toBe('23:15:20');
   });
 
-  it('should update picker on blur', function() {
+  it('should update picker on blur',function() {
     $input1.val('10:25 AM');
     expect(tp1.getTime()).not.toBe('10:25 AM');
     $input1.trigger('blur');
     expect(tp1.getTime()).toBe('10:25 AM');
   });
 
-  it('should update element with updateElement method', function() {
+  it('should update element with updateElement method',function() {
     tp1.hour = 10;
     tp1.minute = 30;
     tp1.meridian = 'PM';
@@ -165,7 +165,7 @@ describe('Timepicker feature', function() {
     expect($input1.val()).toBe('10:30 PM');
   });
 
-  it('should update widget with updateWidget method', function() {
+  it('should update widget with updateWidget method',function() {
     tp2.hour = 10;
     tp2.minute = 30;
     tp2.second = 15;
@@ -181,7 +181,7 @@ describe('Timepicker feature', function() {
     expect(tp2.$widget.find('.bootstrap-timepicker-second').val()).toBe('15');
   });
 
-  it('should update picker with updateFromElementVal method', function() {
+  it('should update picker with updateFromElementVal method',function() {
     tp1.hour = 12;
     tp1.minute = 12;
     tp1.meridian = 'PM';
@@ -206,7 +206,7 @@ describe('Timepicker feature', function() {
     expect(tp1.meridian).toBe('AM');
   });
 
-  it('should update picker with updateFromWidgetInputs method', function() {
+  it('should update picker with updateFromWidgetInputs method',function() {
     tp1.hour = 12;
     tp1.minute = 12;
     tp1.meridian = 'PM';
@@ -229,19 +229,19 @@ describe('Timepicker feature', function() {
     expect($input1.val()).toBe('10:30 AM');
   });
 
-  it('should increment hours with incrementHour method', function() {
+  it('should increment hours with incrementHour method',function() {
     tp1.hour = 9;
     tp1.incrementHour();
     expect(tp1.hour).toBe(10);
   });
 
-  it('should decrement hours with decrementHour method', function() {
+  it('should decrement hours with decrementHour method',function() {
     tp1.hour = 9;
     tp1.decrementHour();
     expect(tp1.hour).toBe(8);
   });
 
-  it('should toggle meridian if hour goes past 12', function() {
+  it('should toggle meridian if hour goes past 12',function() {
     $input1.val('11:00 AM');
     tp1.updateFromElementVal();
     tp1.incrementHour();
@@ -251,7 +251,7 @@ describe('Timepicker feature', function() {
     expect(tp1.meridian).toBe('PM');
   });
 
-  it('should toggle meridian if hour goes below 1', function() {
+  it('should toggle meridian if hour goes below 1',function() {
     $input1.val('11:00 AM');
     tp1.updateFromElementVal();
     tp1.incrementHour();
@@ -261,7 +261,7 @@ describe('Timepicker feature', function() {
     expect(tp1.meridian).toBe('PM');
   });
 
-  it('should set hour to 1 if hour increments on 12 for 12h clock', function() {
+  it('should set hour to 1 if hour increments on 12 for 12h clock',function() {
     $input1.val('11:15 PM');
     tp1.updateFromElementVal();
     tp1.incrementHour();
@@ -270,7 +270,7 @@ describe('Timepicker feature', function() {
     expect(tp1.getTime()).toBe('01:15 AM');
   });
 
-  it('should set hour to 0 if hour increments on 23 for 24h clock', function() {
+  it('should set hour to 0 if hour increments on 23 for 24h clock',function() {
     $input3.val('22:15:30');
     tp3.updateFromElementVal();
     tp3.incrementHour();
@@ -281,7 +281,7 @@ describe('Timepicker feature', function() {
     expect(tp3.second).toBe(30);
   });
 
-  it('should increment minutes with incrementMinute method', function() {
+  it('should increment minutes with incrementMinute method',function() {
     tp1.minute = 10;
     tp1.incrementMinute();
 
@@ -293,7 +293,7 @@ describe('Timepicker feature', function() {
     expect(tp2.minute).toBe(30);
   });
 
-  it('should decrement minutes with decrementMinute method', function() {
+  it('should decrement minutes with decrementMinute method',function() {
     tp1.hour = 11;
     tp1.minute = 0;
     tp1.decrementMinute();
@@ -310,7 +310,7 @@ describe('Timepicker feature', function() {
   });
 
 
-  it('should increment hour if minutes increment past 59', function() {
+  it('should increment hour if minutes increment past 59',function() {
     $input1.val('11:55 AM');
     tp1.updateFromElementVal();
     tp1.incrementMinute();
@@ -319,14 +319,14 @@ describe('Timepicker feature', function() {
     expect(tp1.getTime()).toBe('12:00 PM');
   });
 
-  it('should toggle meridian with toggleMeridian method', function() {
+  it('should toggle meridian with toggleMeridian method',function() {
     tp1.meridian = 'PM';
     tp1.toggleMeridian();
 
     expect(tp1.meridian).toBe('AM');
   });
 
-  it('should increment seconds with incrementSecond method', function() {
+  it('should increment seconds with incrementSecond method',function() {
     tp1.second = 0;
     tp1.incrementSecond();
 
@@ -338,7 +338,7 @@ describe('Timepicker feature', function() {
     expect(tp2.second).toBe(30);
   });
 
-  it('should decrement seconds with decrementSecond method', function() {
+  it('should decrement seconds with decrementSecond method',function() {
     tp2.hour = 11;
     tp2.minute = 0;
     tp2.second = 0;
@@ -349,7 +349,7 @@ describe('Timepicker feature', function() {
   });
 
 
-  it('should increment minute by 1 if seconds increment past 59', function() {
+  it('should increment minute by 1 if seconds increment past 59',function() {
     $input2.val('11:55:30 AM');
     tp2.updateFromElementVal();
     tp2.incrementSecond();
@@ -358,10 +358,10 @@ describe('Timepicker feature', function() {
     expect(tp2.getTime()).toBe('11:56:00 AM');
   });
 
-  it('should not have any remaining events if remove is called', function() {
+  it('should not have any remaining events if remove is called',function() {
     var hideEvents = 0;
 
-    $input1.on('hide.timepicker', function() {
+    $input1.on('hide.timepicker',function() {
       hideEvents++;
     });
 
@@ -378,7 +378,7 @@ describe('Timepicker feature', function() {
     expect(hideEvents).toBe(1);
   });
 
-  it('should not have the widget in the DOM if remove method is called', function() {
+  it('should not have the widget in the DOM if remove method is called',function() {
     expect($('body')).toContain('.bootstrap-timepicker-widget');
     tp1.remove();
     tp2.remove();
@@ -386,13 +386,13 @@ describe('Timepicker feature', function() {
     expect($('body')).not.toContain('.bootstrap-timepicker-widget');
   });
 
-  it('should be able to set time from a script', function() {
-    $input1.timepicker('setTime', '12:35 PM');
+  it('should be able to set time from a script',function() {
+    $input1.timepicker('setTime','12:35 PM');
     tp1.update();
     expect(tp1.getTime()).toBe('12:35 PM');
   });
 
-  it('should be able to opened from script', function() {
+  it('should be able to opened from script',function() {
     expect(tp1.isOpen).toBe(false);
     $input1.timepicker('showWidget');
     expect(tp1.isOpen).toBe(true);

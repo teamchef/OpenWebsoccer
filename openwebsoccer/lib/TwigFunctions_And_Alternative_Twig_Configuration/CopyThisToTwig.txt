@@ -1,0 +1,22 @@
+Kopieren Sie den Inhalt in das Twig-Verzeichnis.
+
+
+eigene Twig-Funktionen:
+
+um eigene Funktionen in Twig zur Verfügung zu stellen,
+wurde die Lib.php unter Extensions erstellt. Darin ist
+vor allem der nützliche Operator ! enthalten, sowie weitere
+Definitionen zur Veranschaulischung.
+
+
+Twig-Alternativ-Konfiguration:
+
+Der Cache wird nicht nur für Einblicke als Entwickler übersichtlicher, da die Dateien
+nun endlich einfach zuzuordnen sind. Obwohl hier .twig Dateien enthalten sind,
+liegen PHP-Dateien vor, welche zusätzlich optimiert wurden.
+
+Der Sourcecode der Twig-Templates ist nicht mehr enthalten. Ebenfalls sind die
+Debug-Informationen nicht mehr vorhanden. Die Struktur im Cache entspricht die der
+Twig-Templates, also mit view und block Verzeichnis.
+
+

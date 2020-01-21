@@ -1,23 +1,51 @@
-{% extends "base.twig" %}
-
-{% block page_title %}
-{{ i18n.getMessage("youthplayer-buy_navlabel") }}
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% embed "page.twig" %}
+{% block youth_buy %}
+	{% block page_title %}
+		{{ i18n.getMessage("youthplayer-buy_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/youthbuy.png' %}{% if file_exists('img/youthbuy.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<form class="form-horizontal" method="post">
+			<fieldset>
+				<legend>{{ i18n.getMessage("youthplayer-buy_formlabel") }}</legend>
+				<p><strong>{{ i18n.getMessage("youthplayer-buy_confirmationmsg") }}</strong></p>
+			</fieldset>
+			<div class="form-actions">
+				<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_confirm') }}</button>
+				<a href="{{ env.getInternalUrl("youth-marketplace") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
+			</div>
+			<input type="hidden" name="page" value="youthplayer-buy"/>
+			<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
+			<input type="hidden" name="action" value="buy-youthplayer"/>
+		</form>
+	{% endblock %}
 {% endblock %}
-
-{% block page_content %}
-<form class="form-horizontal" method="post">
-
-	<fieldset>
-		<legend>{{ i18n.getMessage("youthplayer-buy_formlabel") }}</legend>
-		
-		<p><strong>{{ i18n.getMessage("youthplayer-buy_confirmationmsg") }}</strong></p>
-	</fieldset>
-	<div class="form-actions">
-		<button type="submit" class="btn btn-primary">{{ i18n.getMessage('button_confirm') }}</button>
-		<a href="{{ env.getInternalUrl("youth-marketplace") }}" class="btn">{{ i18n.getMessage('button_cancel') }}</a>
-	</div>
-	<input type="hidden" name="page" value="youthplayer-buy"/>
-	<input type="hidden" name="id" value="{{ env.getRequestParameter('id') }}"/>
-	<input type="hidden" name="action" value="buy-youthplayer"/>
-</form>
-{% endblock %}
+{% endembed %}

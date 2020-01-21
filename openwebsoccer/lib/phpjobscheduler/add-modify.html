@@ -12,13 +12,13 @@
       cellPadding="2">
 <TBODY>
         <tr bgColor="#ffffff" align="center">
-          <td vAlign="top" align="right"><b>Script zur AusfÃ¼hrng:</b></td>
+          <td vAlign="top" align="right"><b>Script zur Ausführng:</b></td>
           <td align="left" colspan="2"><input class="box" size="100"
-          value="" name="scriptpath"><font size="2"><strong> <a href="javascript:testpath();">Pfad testen = JobausfÃ¼hrung !</a></strong></font><br>
-          Bitte geben sie den Pfad zur AusfÃ¼hng des Scripts ein.<script language="JavaScript"><!--
+          value="" name="scriptpath"><font size="2"><strong> <a href="javascript:testpath();">Pfad testen = Jobausführung !</a></strong></font><br>
+          Bitte geben sie den Pfad zur Ausfühng des Scripts ein.<script language="JavaScript"><!--
 function testpath()
 {
- if (confirm("Achtung - die URL zum eingetragene Script wird sofort ausgefÃ¼hrt !\n\nAusfÃ¼hren ?")) 
+ if (confirm("Achtung - die URL zum eingetragene Script wird sofort ausgeführt !\n\nAusführen ?")) 
  {
   var tWindow = null;
   if(tWindow != null) if(!tWindow.closed) tWindow.close()
@@ -38,9 +38,9 @@ function testpath()
         <tr bgColor="#ffffff" align="center">
           <td vAlign="top" align="right" rowspan="4"><b><br>
           <br>
-          SriptausfÃ¼hrng:</b></td>
-          <td align="left" bgcolor="#E9E9E9"><div align="right"><strong><font color="#000000">minÃ¼tlich</font></strong></td>
-          <td align="left" bgcolor="#E9E9E9">- lÃ¤uft alle: 
+          Sriptausführng:</b></td>
+          <td align="left" bgcolor="#E9E9E9"><div align="right"><strong><font color="#000000">minütlich</font></strong></td>
+          <td align="left" bgcolor="#E9E9E9">- läuft alle: 
             <select class="button" name="minutes"
           onchange="disable_others()" size="1" value="0" >
             <option selected value="-1">0</option>
@@ -103,12 +103,12 @@ function testpath()
             <option value="57">57 </option>
             <option value="58">58 </option>
             <option value="59">59 </option>
-          </select> Minute(n)&nbsp;  Wie man das Zeitfenster zur AusfÃ¼hrung Ã¤ndert, siehe <a
+          </select> Minute(n)&nbsp;  Wie man das Zeitfenster zur Ausführung ändert,siehe <a
           href="./readme.html#timeframewindow">hier.</a></td>
         </tr>
         <tr>
-          <td align="left" bgcolor="#E9E9E9"><div align="right"><font color="#FF0000"><strong>stÃ¼ndlich</strong></font></td>
-          <td align="left" bgcolor="#E9E9E9">- lÃ¤uft alle: 
+          <td align="left" bgcolor="#E9E9E9"><div align="right"><font color="#FF0000"><strong>stündlich</strong></font></td>
+          <td align="left" bgcolor="#E9E9E9">- läuft alle: 
             <select class="button" name="hours"
           onchange="disable_others()" size="1" value="0" >
             <option selected value="-1">0</option>
@@ -138,8 +138,8 @@ function testpath()
           </select> Stunde(n)</td>
         </tr>
         <tr align="center">
-          <td align="left" bgcolor="#E9E9E9"><div align="right"><font color="#FF8000"><strong>tÃ¤glich</strong></font></td>
-          <td align="left" bgcolor="#E9E9E9">- lÃ¤uft alle: 
+          <td align="left" bgcolor="#E9E9E9"><div align="right"><font color="#FF8000"><strong>täglich</strong></font></td>
+          <td align="left" bgcolor="#E9E9E9">- läuft alle: 
             <select class="button" name="days"  onchange="disable_others()"  >
             <option selected value="-1">0</option>
             <option value="1">1 </option>
@@ -151,9 +151,9 @@ function testpath()
           </select> Tag(e)</td>
         </tr>
         <tr align="center">
-          <td align="left" bgcolor="#E9E9E9"><div align="right"><font color="#C00000"><strong>wÃ¶chentlich</font><br>
-			  <br>fÃ¼hrt den Job aus:<br><br>Job auf Pause setzen:&nbsp; </strong></td>
-          <td align="left" bgcolor="#E9E9E9">- lÃ¤uft alle: 
+          <td align="left" bgcolor="#E9E9E9"><div align="right"><font color="#C00000"><strong>wöchentlich</font><br>
+			  <br>führt den Job aus:<br><br>Job auf Pause setzen:&nbsp; </strong></td>
+          <td align="left" bgcolor="#E9E9E9">- läuft alle: 
             <select class="button" name="weeks"  onchange="disable_others()" >
             <option selected value="-1">0</option>
             <option value="1">1 </option>
@@ -210,20 +210,20 @@ function testpath()
             <option value="52">52</option>
           </select> Woche(n)<br><br> 
 		  <select class="button" name="run_only_once" >
-            <option selected value="0">bis der Job geÃ¶scht wird</option>
-            <option value="1">einmalige AusfÃ¼hrung</option>
+            <option selected value="0">bis der Job geöscht wird</option>
+            <option value="1">einmalige Ausführung</option>
           </select> 
            
-          Das Script wird nach einmaliger AusfÃ¼hrung <strong>sofort gelÃ¶scht.</strong> <br><br><select class="button" name="paused" >
-            <option selected value="0">Job lÃ¤uft</option>
-            <option value="1">Job pausiert - wird nicht ausgefÃ¼hrt</option>
-          </select>&nbsp; Gut als Referenz oder fÃ¼hr einen spÃ¤teren Start.</td>
+          Das Script wird nach einmaliger Ausführung <strong>sofort gelöscht.</strong> <br><br><select class="button" name="paused" >
+            <option selected value="0">Job läuft</option>
+            <option value="1">Job pausiert - wird nicht ausgeführt</option>
+          </select>&nbsp; Gut als Referenz oder führ einen späteren Start.</td>
         </tr>
         <tr bgColor="#ffffff" align="center">
           <td vAlign="top" align="right"></td>
           <td align="left" colspan="2">
 		  <div align="center"><center><p>&nbsp;<input class="button" type="button"
-          onclick="add()" value="Job hinzufÃ¼gen" name="button"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
+          onclick="add()" value="Job hinzufügen" name="button"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input
           class="button" type="button" onclick="javascript:document.location='index.php'"
           value="abbrechen" name="cancel"></p>
           </center></div></td>
@@ -268,7 +268,7 @@ function add()
 {
  with (document.I_F)
  {
-  if ( (minutes.options[minutes.selectedIndex].value<0) & (hours.options[hours.selectedIndex].value<0) &(days.options[days.selectedIndex].value<0) & (weeks.options[weeks.selectedIndex].value<0) ) alert("Please select a period to run this script:\n\n MINUTES, HOURLY, DAILY or WEEKLY");
+  if ( (minutes.options[minutes.selectedIndex].value<0) & (hours.options[hours.selectedIndex].value<0) &(days.options[days.selectedIndex].value<0) & (weeks.options[weeks.selectedIndex].value<0) ) alert("Please select a period to run this script:\n\n MINUTES,HOURLY,DAILY or WEEKLY");
   else submit();
  }
 }

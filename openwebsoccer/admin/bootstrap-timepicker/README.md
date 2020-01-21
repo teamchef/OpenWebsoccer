@@ -11,7 +11,7 @@ View <a href="http://jdewit.github.com/bootstrap-timepicker">demos & documentati
 Support
 =======
 
-If you make money using this timepicker, please consider 
+If you make money using this timepicker,please consider 
 supporting its development.
 
 <a href="http://www.pledgie.com/campaigns/19125"><img alt="Click here to support bootstrap-timepicker!" src="http://www.pledgie.com/campaigns/19125.png?skin_name=chrome" border="0" target="_blank"/></a> <a class="FlattrButton" style="display:none;" rev="flattr;button:compact;" href="http://jdewit.github.com/bootstrap-timepicker"></a> <noscript><a href="http://flattr.com/thing/1116513/Bootstrap-Timepicker" target="_blank"> <img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" /></a></noscript>
@@ -31,7 +31,7 @@ Contributing
 $ bower install
 ```
 
-3. Use <a href="www.gruntjs.com">Grunt</a> to run tests, compress assets, etc. 
+3. Use <a href="www.gruntjs.com">Grunt</a> to run tests,compress assets,etc. 
 
 ``` bash 
 $ grunt jasmine // run the jasmine tests headless in the console
@@ -42,7 +42,7 @@ $ grunt dump // minify the js and css files
 
 - Please make it easy on me by covering any new features or issues 
 with <a href="http://pivotal.github.com/jasmine">Jasmine</a> tests.
-- If your changes need documentation, please take the time to update the docs 
+- If your changes need documentation,please take the time to update the docs 
 and copy the minified assets (<b>grunt copy</b>) in the <b>gh-pages</b> branch.
 
 Acknowledgements

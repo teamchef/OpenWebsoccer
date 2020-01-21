@@ -5,7 +5,7 @@
  *
  * Contributors https://github.com/jdewit/bootstrap-timepicker/graphs/contributors
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 .bootstrap-timepicker .add-on {
@@ -17,7 +17,7 @@
   height: 16px;
 }
 .bootstrap-timepicker .dropdown-menu .dropdown-menu:before {
-  border-bottom: 7px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 7px solid rgba(0,0,0,0.2);
   border-left: 7px solid transparent;
   border-right: 7px solid transparent;
   content: "";

@@ -1,0 +1,6 @@
+# folgenden Robot anweisen auch alte Einträge bei sich zu löschen
+User-agent: ia_archiver
+Disallow: /
+# für alle Robots alles sperren
+User-agent: *
+Disallow: /

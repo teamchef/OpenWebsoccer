@@ -6,8 +6,8 @@ Bilzen
 Binche
 Braine-l'Alleud
 Brasschaat
-Brügge
-Brüssel
+Bruegge
+Bruessel
 Charleroi
 Châtelet
 Dendermonde
@@ -35,8 +35,8 @@ La Louvière
 Lier
 Lokeren
 Lommel
-Löwen
-Lüttich
+Loewen
+Luettich
 Maasmechelen
 Mechelen
 Menen

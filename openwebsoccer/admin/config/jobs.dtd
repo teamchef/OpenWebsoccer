@@ -1,5 +1,4 @@
 <!ELEMENT jobs (job+)>
-
 <!ELEMENT job EMPTY>
 <!ATTLIST job id ID #REQUIRED>
 <!ATTLIST job name CDATA #REQUIRED>

@@ -1,7 +1,38 @@
+--
+--
+-- This file is part of OpenWebSoccer-Sim.
+--
+-- OpenWebSoccer-Sim is free software: you can redistribute it
+-- and/or modify it under the terms of the
+-- GNU Lesser General Public License
+-- as published by the Free Software Foundation, either version 3 of
+-- the License, or any later version.
+--
+-- OpenWebSoccer-Sim is distributed in the hope that it will be
+-- useful, but WITHOUT ANY WARRANTY; without even the implied
+-- warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+-- See the GNU Lesser General Public License for more details.
+--
+-- You should have received a copy of the GNU Lesser General Public
+-- License along with OpenWebSoccer-Sim.
+-- If not, see <http://www.gnu.org/licenses/>.
+--
+-- Author: Ingo Hofmann
+-- Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+--
+-- This Version called "OpenWebsoccer" is a advanced modification
+-- by Rolf Joseph / ErdemCan 2015 - 2016
+--
+-- For comparison of the code look at the original at
+-- https://github.com/ihofmann/open-websoccer
+--
+--
+-- zusätzliches Statusfeld einfügen
 ALTER TABLE _stadiumbuilding ADD status enum('1','0');
 
+-- Fremdschlüsselabfrage deaktivieren
 SET FOREIGN_KEY_CHECKS = 0;
-
+-- einfügen der Meldungen der Stadionerweiterugen
 INSERT INTO `_stadiumbuilding` (`id`, `name`, `description`, `picture`, `required_building_id`, `costs`, `premiumfee`, `construction_time_days`, `effect_training`, `effect_youthscouting`, `effect_tickets`, `effect_fanpopularity`, `effect_injury`, `effect_income`, `status`) VALUES
 ('', 'Parkplatz (niedrig)', 'Parkplätze', NULL, NULL, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 ('', 'Parkhaus (mittel)', 'Parkhaus', NULL, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -85,11 +116,13 @@ INSERT INTO `_stadiumbuilding` (`id`, `name`, `description`, `picture`, `require
 ('', 'Salinen', 'Die Lunge wird sich freuen.', NULL, NULL, 200000, 0, 30, 0, 0, 5, 5, 0, 0, 0),
 ('', 'Polizeiwache', 'Mehr Zuschauer, aber kostet dafür auch Geld.', NULL, NULL, 500000, 0, 50, 0, 0, 10, 0, 0, '-10000', 0),
 ('', 'Fanbetreungs Punkt', 'Kostet etwas, aber bringt auch mehr Zuschauer.', NULL, NULL, 50000, 0, 30, 0, 0, 5, 0, 0, '-1000', 0);
-
+-- Fremdschlüsselabfrage aktivieren
 SET FOREIGN_KEY_CHECKS = 1;
 
+-- zusätzliches Statusfeld einfügen
 ALTER TABLE _randomevent ADD status enum('1','0');
 
+-- einfügen der Meldungen der Zufallsereignisse
 INSERT INTO `_randomevent` (`id`, `message`, `effect`, `effect_money_amount`, `effect_blocked_matches`, `effect_skillchange`, `weight`, `status`) VALUES
 ('', 'Sie gewinnen im Lotto', 'money', 100000, 0, 0, 3),
 ('', 'Sie finden Geld auf der Straße. Sie sind ein Glückspilz', 'money', 500, 0, 0, 3),
@@ -156,4 +189,5 @@ INSERT INTO `_randomevent` (`id`, `message`, `effect`, `effect_money_amount`, `e
 ('', 'Sie platzieren eine Sportwette und gewinnen diese auch noch.', 'money', 1750, 0, 0, 3),
 ('', 'Sie finden einen Alukoffer und öffnen diesen', 'money', 75750, 0, 0, 3),
 ('', 'Ein Mitarbeiter verletzt sich im Büro. Sie kaufen Ihn eine Aufmerksamkeit.', 'money', -500, 0, 0, 3);
+-- Beschränkung der Anzahl der Einträge
 ALTER TABLE `_randomevent` MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=67;

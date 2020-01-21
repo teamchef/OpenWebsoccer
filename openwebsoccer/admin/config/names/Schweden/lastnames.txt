@@ -19,11 +19,11 @@ Mattsson
 Berglund
 Frederiksson
 Forsberg
-Sjöberg
-Engström
+Sjoeberg
+Engstroem
 Holm
 Berggren
-Ström
+Stroem
 Hedlund
 Dahlberg
-Hellström
+Hellstroem

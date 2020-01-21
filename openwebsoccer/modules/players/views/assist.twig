@@ -1,61 +1,80 @@
-{% extends "base.twig" %}
-{% import "macros/messagebox.twig" as messagebox %}
-
-{% block page_title %}
-{{ i18n.getMessage("topassist_navlabel") }}
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% embed "page.twig" %}
+{% block myschedule %}
+	{% block page_title %}
+		{{ i18n.getMessage("topassist_navlabel") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/assist.png' %}{% if file_exists('img/assist.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<form class="form-inline" method="post">
+			<label class="control-label" for="country">{{ i18n.getMessage("entity_league") }}</label>
+			<label for="leagueid"></label>
+			<select id="leagueid" name="leagueid">
+				<option></option>
+				{% for leagueItem in leagues %}
+					<option value="{{ leagueItem.league_id }}"{% if env.getRequestParameter("leagueid") == leagueItem.league_id %} selected{% endif %}>{{ leagueItem.league_country }} - {{ leagueItem.league_name }}</option>
+				{% endfor %}
+			</select>
+			<button type="submit" class="btn btn-primary ajaxSubmit" data-ajaxtarget="pagecontent">{{ i18n.getMessage('button_display') }}</button>
+			<input type="hidden" name="page" value="topassist"/>
+		</form>
+		{% if players is defined and players|length > 0 %}
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>{{ i18n.getMessage("playertable_head_name") }}</th>
+						<th>{{ i18n.getMessage("entity_player_verein_id") }}</th>
+						<th>{{ i18n.getMessage("player_details_statistic_assists") }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for player in players %}
+						<tr>
+							<td><strong>{{ loop.index }}</strong></td>
+							<td><p><a href="{{ env.getInternalUrl("player","id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a></p></td>
+							<td>
+								{% if player.team_id > 0 %}
+									<a href="{{ env.getInternalUrl("team","id=" ~ player.team_id) }}">{{ player.team_name }}</a>
+								{% else %}
+									 -
+								{% endif %}
+							</td>
+							<td>{{ player.assists }}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% else %}
+			{{ macro.box(i18n.getMessage("no_players_found"),"","info") }}
+		{% endif %}
+	{% endblock %}
 {% endblock %}
-
-{% block page_content %}
-
-<form class="form-inline" method="post">
-
-    <label class="control-label" for="country">{{ i18n.getMessage("entity_league") }}</label>
-    <select id="leagueid" name="leagueid">
-        <option></option>
-    {% for leagueItem in leagues %}
-        <option value="{{ leagueItem.league_id }}"{% if env.getRequestParameter("leagueid") == leagueItem.league_id %} selected{% endif %}>{{ leagueItem.league_country }} - {{ leagueItem.league_name }}</option>
-    {% endfor %}
-    </select>
-
-    <button type="submit" class="btn btn-primary ajaxSubmit"
-        data-ajaxtarget="pagecontent">{{ i18n.getMessage('button_display') }}</button>
-
-    <input type="hidden" name="page" value="topassist" />
-</form>
-
-{% if players is defined and players|length > 0 %}
-
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>{{ i18n.getMessage("playertable_head_name") }}</th>
-                <th>{{ i18n.getMessage("entity_player_verein_id") }}</th>
-                <th>{{ i18n.getMessage("player_details_statistic_assists") }}</th>
-            </tr>
-        </thead>
-        <tbody>
-
-            {% for player in players %}
-            <tr>
-                <td><strong>{{ loop.index }}</strong></td>
-                <td><p><a href="{{ env.getInternalUrl("player", "id=" ~ player.id) }}">{{ player.firstname }} {% if player.pseudonym|length > 0 %}"{{ player.pseudonym }}" {% endif %}{{ player.lastname }}</a></p></td>
-                <td>
-                {% if player.team_id > 0 %}
-                <a href="{{ env.getInternalUrl("team", "id=" ~ player.team_id) }}">{{ player.team_name }}</a>
-                {% else %}
-                -
-                {% endif %}
-                </td>
-                <td>{{ player.assists }}</td>
-            </tr>
-            {% endfor %}
-
-        </tbody>
-    </table>
-
-{% else %}
-    {{ messagebox.box(i18n.getMessage("no_players_found"), "", "info") }}
-{% endif %}
-
-{% endblock %}
+{% endembed %}

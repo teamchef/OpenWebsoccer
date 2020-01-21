@@ -5,7 +5,7 @@
  *
  * (c) 2015 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -21,7 +21,7 @@ class Twig_Extension_Profiler extends Twig_Extension
     public function enter(Twig_Profiler_Profile $profile)
     {
         $this->actives[0]->addProfile($profile);
-        array_unshift($this->actives, $profile);
+        array_unshift($this->actives,$profile);
     }
 
     public function leave(Twig_Profiler_Profile $profile)
@@ -34,17 +34,11 @@ class Twig_Extension_Profiler extends Twig_Extension
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getNodeVisitors()
     {
         return array(new Twig_Profiler_NodeVisitor_Profiler($this->getName()));
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getName()
     {
         return 'profiler';

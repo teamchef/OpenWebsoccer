@@ -1,4 +1,4 @@
-describe('Mouse events feature', function() {
+describe('Mouse events feature',function() {
   'use strict';
 
   var $input1,
@@ -46,10 +46,10 @@ describe('Mouse events feature', function() {
     $input3.remove();
   });
 
-  it('should be shown and trigger show events on input click', function() {
+  it('should be shown and trigger show events on input click',function() {
     var showEvents = 0;
 
-    $input1.on('show.timepicker', function() {
+    $input1.on('show.timepicker',function() {
       showEvents++;
     });
 
@@ -59,12 +59,12 @@ describe('Mouse events feature', function() {
     expect(showEvents).toBe(1);
   });
 
-  it('should be hidden and trigger hide events on click outside of widget', function() {
+  it('should be hidden and trigger hide events on click outside of widget',function() {
     var hideEvents = 0,
         time;
     $input1.val('11:30 AM');
 
-    $input1.on('hide.timepicker', function(e) {
+    $input1.on('hide.timepicker',function(e) {
       hideEvents++;
 
       time = e.time.value;
@@ -76,13 +76,13 @@ describe('Mouse events feature', function() {
     tp1.$widget.find('.bootstrap-timepicker-hour').trigger('mousedown');
     $('body').trigger('mousedown');
 
-    expect(tp1.isOpen).toBe(false, 'widget is still open');
-    expect(hideEvents).toBe(1, 'hide event was not thrown once');
+    expect(tp1.isOpen).toBe(false,'widget is still open');
+    expect(hideEvents).toBe(1,'hide event was not thrown once');
     expect(time).toBe('11:30 AM');
 
   });
 
-  it('should increment hour on button click', function() {
+  it('should increment hour on button click',function() {
     tp1.setTime('11:30 AM');
     tp1.update();
 
@@ -94,13 +94,13 @@ describe('Mouse events feature', function() {
     expect(tp2.getTime()).toBe('01:00:00 AM');
   });
 
-  it('should decrement hour on button click', function() {
+  it('should decrement hour on button click',function() {
     tp1.setTime('12:30 PM');
     tp1.update();
 
     tp1.$widget.find('a[data-action="decrementHour"]').trigger('click');
 
-    expect(tp1.getTime()).toBe('11:30 AM', 'meridian isnt toggling');
+    expect(tp1.getTime()).toBe('11:30 AM','meridian isnt toggling');
 
     tp2.$widget.find('a[data-action="incrementHour"]').trigger('click');
     tp2.$widget.find('a[data-action="incrementHour"]').trigger('click');
@@ -108,7 +108,7 @@ describe('Mouse events feature', function() {
     expect(tp2.getTime()).toBe('01:00:00 AM');
   });
 
-  it('should increment minute on button click', function() {
+  it('should increment minute on button click',function() {
     tp1.setTime('11:30 AM');
     tp1.update();
 
@@ -120,7 +120,7 @@ describe('Mouse events feature', function() {
     expect(tp2.getTime()).toBe('00:30:00 AM');
   });
 
-  it('should decrement minute on button click', function() {
+  it('should decrement minute on button click',function() {
     tp1.setTime('12:30 PM');
     tp1.update();
 
@@ -129,12 +129,12 @@ describe('Mouse events feature', function() {
     expect(tp1.getTime()).toBe('12:15 PM');
   });
 
-  it('should be 11:30:00 PM if minute is decremented on empty input', function() {
+  it('should be 11:30:00 PM if minute is decremented on empty input',function() {
     tp2.$widget.find('a[data-action="decrementMinute"]').trigger('click');
     expect(tp2.getTime()).toBe('11:30:00 PM');
   });
 
-  it('should increment second on button click', function() {
+  it('should increment second on button click',function() {
     tp2.setTime('11:30:15 AM');
     tp2.update();
 
@@ -143,7 +143,7 @@ describe('Mouse events feature', function() {
     expect(tp2.getTime()).toBe('11:30:30 AM');
   });
 
-  it('should decrement second on button click', function() {
+  it('should decrement second on button click',function() {
     tp2.setTime('12:30:15 PM');
     tp2.update();
 
@@ -152,7 +152,7 @@ describe('Mouse events feature', function() {
     expect(tp2.getTime()).toBe('12:29:45 PM');
   });
 
-  it('should toggle meridian on button click', function() {
+  it('should toggle meridian on button click',function() {
     tp1.setTime('12:30 PM');
     tp1.update();
 
@@ -163,11 +163,11 @@ describe('Mouse events feature', function() {
   });
 
 
-  it('should trigger changeTime event if time is changed', function() {
+  it('should trigger changeTime event if time is changed',function() {
     var eventCount = 0,
         time;
 
-    $input1.timepicker().on('changeTime.timepicker', function(e) {
+    $input1.timepicker().on('changeTime.timepicker',function(e) {
         eventCount++;
         time = e.time.value;
     });
@@ -189,7 +189,7 @@ describe('Mouse events feature', function() {
     expect(tp1.getTime()).toBe('12:45 PM');
   });
 
-  it('should highlight widget inputs on click', function() {
+  it('should highlight widget inputs on click',function() {
       //TODO;
       //tp1.setTime('11:55 AM');
       //tp1.update();
@@ -202,14 +202,14 @@ describe('Mouse events feature', function() {
 ////var range = window.getSelection().getRangeAt(0);
 ////var hour1 = range.extractContents();
 
-      //expect(hour1).toBe('11', 'hour input not being highlighted');
+      //expect(hour1).toBe('11','hour input not being highlighted');
 
       //tp1.$widget.find('.bootstrap-timepicker-minute').trigger('click');
       //var minute1 = window.getSelection().toString();
-      //expect(minute1).toBe('55', 'minute input not being highlighted');
+      //expect(minute1).toBe('55','minute input not being highlighted');
 
       //tp1.$widget.find('.bootstrap-timepicker-meridian').trigger('click');
       //var meridian1 = window.getSelection().toString();
-      //expect(meridian1).toBe('AM', 'meridian input not being highlighted');
+      //expect(meridian1).toBe('AM','meridian input not being highlighted');
   });
 });

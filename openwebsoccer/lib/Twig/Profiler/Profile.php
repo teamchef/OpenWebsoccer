@@ -5,14 +5,14 @@
  *
  * (c) 2015 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
 /**
  * @author Fabien Potencier <fabien@symfony.com>
  */
-class Twig_Profiler_Profile implements IteratorAggregate, Serializable
+class Twig_Profiler_Profile implements IteratorAggregate,Serializable
 {
     const ROOT = 'ROOT';
     const BLOCK = 'block';
@@ -26,11 +26,11 @@ class Twig_Profiler_Profile implements IteratorAggregate, Serializable
     private $ends = array();
     private $profiles = array();
 
-    public function __construct($template = 'main', $type = self::ROOT, $name = 'main')
+    public function __construct($template = 'main',$type = self::ROOT,$name = 'main')
     {
         $this->template = $template;
         $this->type = $type;
-        $this->name = 0 === strpos($name, '__internal_') ? 'INTERNAL' : $name;
+        $this->name = 0 === strpos($name,'__internal_') ? 'INTERNAL' : $name;
         $this->enter();
     }
 
@@ -86,6 +86,16 @@ class Twig_Profiler_Profile implements IteratorAggregate, Serializable
      */
     public function getDuration()
     {
+        if ($this->isRoot() && $this->profiles) {
+            // for the root node with children,duration is the sum of all child durations
+            $duration = 0;
+            foreach ($this->profiles as $profile) {
+                $duration += $profile->getDuration();
+            }
+
+            return $duration;
+        }
+
         return isset($this->ends['wt']) && isset($this->starts['wt']) ? $this->ends['wt'] - $this->starts['wt'] : 0;
     }
 
@@ -140,11 +150,11 @@ class Twig_Profiler_Profile implements IteratorAggregate, Serializable
 
     public function serialize()
     {
-        return serialize(array($this->template, $this->name, $this->type, $this->starts, $this->ends, $this->profiles));
+        return serialize(array($this->template,$this->name,$this->type,$this->starts,$this->ends,$this->profiles));
     }
 
     public function unserialize($data)
     {
-        list($this->template, $this->name, $this->type, $this->starts, $this->ends, $this->profiles) = unserialize($data);
+        list($this->template,$this->name,$this->type,$this->starts,$this->ends,$this->profiles) = unserialize($data);
     }
 }

@@ -5,7 +5,7 @@
  *
  * (c) 2015 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -21,31 +21,31 @@ class Twig_Profiler_Dumper_Text
         return $this->dumpProfile($profile);
     }
 
-    protected function formatTemplate(Twig_Profiler_Profile $profile, $prefix)
+    protected function formatTemplate(Twig_Profiler_Profile $profile,$prefix)
     {
-        return sprintf('%s└ %s', $prefix, $profile->getTemplate());
+        return sprintf('%s└ %s',$prefix,$profile->getTemplate());
     }
 
-    protected function formatNonTemplate(Twig_Profiler_Profile $profile, $prefix)
+    protected function formatNonTemplate(Twig_Profiler_Profile $profile,$prefix)
     {
-        return sprintf('%s└ %s::%s(%s)', $prefix, $profile->getTemplate(), $profile->getType(), $profile->getName());
+        return sprintf('%s└ %s::%s(%s)',$prefix,$profile->getTemplate(),$profile->getType(),$profile->getName());
     }
 
-    protected function formatTime(Twig_Profiler_Profile $profile, $percent)
+    protected function formatTime(Twig_Profiler_Profile $profile,$percent)
     {
-        return sprintf('%.2fms/%.0f%%', $profile->getDuration() * 1000, $percent);
+        return sprintf('%.2fms/%.0f%%',$profile->getDuration() * 1000,$percent);
     }
 
-    private function dumpProfile(Twig_Profiler_Profile $profile, $prefix = '', $sibling = false)
+    private function dumpProfile(Twig_Profiler_Profile $profile,$prefix = '',$sibling = false)
     {
         if ($profile->isRoot()) {
             $this->root = $profile->getDuration();
             $start = $profile->getName();
         } else {
             if ($profile->isTemplate()) {
-                $start = $this->formatTemplate($profile, $prefix);
+                $start = $this->formatTemplate($profile,$prefix);
             } else {
-                $start = $this->formatNonTemplate($profile, $prefix);
+                $start = $this->formatNonTemplate($profile,$prefix);
             }
             $prefix .= $sibling ? '│ ' : '  ';
         }
@@ -55,12 +55,12 @@ class Twig_Profiler_Dumper_Text
         if ($profile->getDuration() * 1000 < 1) {
             $str = $start."\n";
         } else {
-            $str = sprintf("%s %s\n", $start, $this->formatTime($profile, $percent));
+            $str = sprintf("%s %s\n",$start,$this->formatTime($profile,$percent));
         }
 
         $nCount = count($profile->getProfiles());
         foreach ($profile as $i => $p) {
-            $str .= $this->dumpProfile($p, $prefix, $i + 1 !== $nCount);
+            $str .= $this->dumpProfile($p,$prefix,$i + 1 !== $nCount);
         }
 
         return $str;

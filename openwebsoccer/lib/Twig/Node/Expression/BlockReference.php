@@ -6,7 +6,7 @@
  * (c) 2009 Fabien Potencier
  * (c) 2009 Armin Ronacher
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -17,16 +17,11 @@
  */
 class Twig_Node_Expression_BlockReference extends Twig_Node_Expression
 {
-    public function __construct(Twig_NodeInterface $name, $asString = false, $lineno, $tag = null)
+    public function __construct(Twig_NodeInterface $name,$asString = false,$lineno,$tag = null)
     {
-        parent::__construct(array('name' => $name), array('as_string' => $asString, 'output' => false), $lineno, $tag);
+        parent::__construct(array('name' => $name),array('as_string' => $asString,'output' => false),$lineno,$tag);
     }
 
-    /**
-     * Compiles the node to PHP.
-     *
-     * @param Twig_Compiler $compiler A Twig_Compiler instance
-     */
     public function compile(Twig_Compiler $compiler)
     {
         if ($this->getAttribute('as_string')) {
@@ -38,13 +33,13 @@ class Twig_Node_Expression_BlockReference extends Twig_Node_Expression
                 ->addDebugInfo($this)
                 ->write('$this->displayBlock(')
                 ->subcompile($this->getNode('name'))
-                ->raw(", \$context, \$blocks);\n")
+                ->raw(",\$context,\$blocks);\n")
             ;
         } else {
             $compiler
                 ->raw('$this->renderBlock(')
                 ->subcompile($this->getNode('name'))
-                ->raw(', $context, $blocks)')
+                ->raw(',$context,$blocks)')
             ;
         }
     }

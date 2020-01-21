@@ -1,0 +1,21 @@
+.dropcaps {
+  font-size: 3em;
+  font-weight: bold;
+  line-height: 1em;
+  margin: 0 0.1ex 0 -0.05em;
+  position: relative;
+}
+.dropcaps:before {
+  color: #444;
+  content: attr(data-quote);
+  position: absolute;
+  right: 100%;
+  /* Chrome, Firefox 3.5+, IE 10+, Opera 9+, Safari 1+ */
+  text-shadow: 2px 2px 2px white;
+}
+.titling, .highlight:first-line {
+  text-transform: uppercase;
+}
+.titling, .highlight:first-line, .dropcaps, .titling .dropcaps:before {
+  color: #1BB3E9;
+}

@@ -6,7 +6,7 @@
  * (c) 2009 Fabien Potencier
  * (c) 2009 Armin Ronacher
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -17,16 +17,11 @@
  */
 class Twig_Node_Print extends Twig_Node implements Twig_NodeOutputInterface
 {
-    public function __construct(Twig_Node_Expression $expr, $lineno, $tag = null)
+    public function __construct(Twig_Node_Expression $expr,$lineno,$tag = null)
     {
-        parent::__construct(array('expr' => $expr), array(), $lineno, $tag);
+        parent::__construct(array('expr' => $expr),array(),$lineno,$tag);
     }
 
-    /**
-     * Compiles the node to PHP.
-     *
-     * @param Twig_Compiler $compiler A Twig_Compiler instance
-     */
     public function compile(Twig_Compiler $compiler)
     {
         $compiler

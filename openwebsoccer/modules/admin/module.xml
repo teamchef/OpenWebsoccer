@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE module SYSTEM "../openwebsoccer.dtd">
+<!---
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modification
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+-->
+<module version="OpenWebsoccer">
+	<admin>
+		<adminpage	id="all_settings"									permissionrole="r_admin"				navcategory="settings"	filename="all_settings"/>
+		<adminpage	id="all_logging"									permissionrole="r_admin"				navcategory="settings"	filename="all_logging"/>
+		<adminpage	id="entitylogging"									permissionrole="r_admin"				navcategory="settings"	filename="entitylogging"/>
+		<adminpage	id="jobs"											permissionrole="r_admin"				navcategory="settings"	filename="jobs"/>
+		<adminpage	id="imprint"										permissionrole="r_admin"				navcategory="settings"	filename="imprint"/>
+		<adminpage	id="termsandconditions"								permissionrole="r_admin"				navcategory="settings"	filename="termsandconditions"/>
+		<adminpage	id="phpjobscheduler"								permissionrole="r_admin"				navcategory="settings"	filename="phpjobscheduler"/>
+		<adminpage	id="firemanagers"									permissionrole="r_user"					navcategory="league"	filename="firemanagers"/>
+		<adminpage	id="schedulegenerator"								permissionrole="r_spiele"				navcategory="season"	filename="schedulegenerator"/>
+		<adminpage	id="complete-season"								permissionrole="r_spiele"				navcategory="season"	filename="season-complete"/>
+		<adminpage	id="teamsgenerator"									permissionrole="r_daten"				navcategory="league"	filename="teamsgenerator"/>
+		<adminpage	id="playersgenerator"								permissionrole="r_daten"				navcategory="league"	filename="playersgenerator"/>
+		<adminpage	id="movematchday"									permissionrole="r_daten"				navcategory="season"	filename="movematchday"/>
+		<adminpage	id="club"											permissionrole="r_daten"				navcategory="league"	entity="club">
+			<entity dbtable="verein AS ClubTab">
+				<overview	edit="true"	delete="true" 					logging="true"							loggingcolumns="name,liga_id">
+					<column id="entity_club_name"						type="text"			sort="true"			filter="true"			field="ClubTab.name"/>
+					<column id="entity_club_liga_id"					type="text"			sort="true"			filter="true"			field="LeagueTab.name"/>
+					<column id="entity_club_nationalteam"				type="boolean"		sort="true"			filter="true"			field="ClubTab.nationalteam"/>
+					<column id="entity_club_user_id"					type="text"			sort="true"			filter="true"			field="UserTab.nick"/>
+					<column id="entity_club_finanz_budget"				type="number"		sort="true"			filter="true"			field="ClubTab.finanz_budget"/>
+					<column id="entity_player"							type="number"		sort="true"			filter="true"			field="(SELECT COUNT(*) FROM {tablePrefix}_spieler AS PlayerTab WHERE PlayerTab.verein_id = ClubTab.id)"/>
+					<column id="entity_club_status"						type="boolean"		sort="true"			filter="true"			field="ClubTab.status"/>
+						<join type="LEFT" jointable="liga AS LeagueTab" joincondition="ClubTab.liga_id = LeagueTab.id"/>
+						<join type="LEFT" jointable="user AS UserTab"	joincondition="ClubTab.user_id = UserTab.id"/></overview>
+				<editform>
+					<field id="name"									type="text"			required="true"/>
+					<field id="kurz"									type="text"			required="true"/>
+					<field id="nationalteam"							type="boolean"		required="false"/>
+					<field id="liga_id"									type="foreign_key"	required="false"	default="0"				entity="league"		jointable="liga"	cascade="delete"	labelcolumns="land,name"/>
+					<field id="user_id"									type="foreign_key"												entity="users"		jointable="user"						labelcolumns="nick"/>
+					<field id="user_id_actual"							type="foreign_key"												entity="users"		jointable="user"						labelcolumns="nick"/>
+					<field id="interimmanager"							type="boolean"		required="false"/>
+					<field id="bild"									type="file"/>
+					<field id="stadion_id"								type="foreign_key"												entity="stadium"	jointable="stadion"						labelcolumns="name"/>
+					<field id="sponsor_id"								type="foreign_key"												entity="sponsor"	jointable="sponsor"						labelcolumns="name"/>
+					<field id="sponsor_spiele"							type="number"/>
+					<field id="finanz_budget"							type="number"/>
+					<field id="min_target_rank"							type="number"							default="0"/>
+					<field id="preis_stehen"							type="number"/>
+					<field id="preis_sitz"								type="number"/>
+					<field id="preis_haupt_stehen"						type="number"/>
+					<field id="preis_haupt_sitze"						type="number"/>
+					<field id="preis_vip"								type="number"/>
+					<field id="last_steh"								type="number"		editonly="true"/>
+					<field id="last_sitz"								type="number" 		editonly="true"/>
+					<field id="last_haupt_steh"							type="number"		editonly="true"/>
+					<field id="last_haupt_sitz"							type="number"		editonly="true"/>
+					<field id="last_vip" 								type="number"		editonly="true"/>
+					<field id="meisterschaften"							type="number"		editonly="true"/>
+					<field id="st_tore"									type="number"		editonly="true"/>
+					<field id="st_gegentore"							type="number"		editonly="true"/>
+					<field id="st_spiele"								type="number"		editonly="true"/>
+					<field id="st_siege"								type="number"		editonly="true"/>
+					<field id="st_niederlagen"							type="number"		editonly="true"/>
+					<field id="st_unentschieden"						type="number"		editonly="true"/>
+					<field id="st_punkte"								type="number"		editonly="true"/>
+					<field id="sa_tore"									type="number"		editonly="true"/>
+					<field id="sa_gegentore"							type="number"		editonly="true"/>
+					<field id="sa_spiele"								type="number"		editonly="true"/>
+					<field id="sa_siege"								type="number"		editonly="true"/>
+					<field id="sa_niederlagen"							type="number"		editonly="true"/>
+					<field id="sa_unentschieden"						type="number"		editonly="true"/>
+					<field id="sa_punkte"								type="number"		editonly="true"/>
+					<field id="captain_id"								type="foreign_key"	required="false"	default="0"	 			entity="player"		jointable="spieler"				labelcolumns="vorname,nachname,kunstname"/>
+					<field id="history"									type="textarea"/>
+					<field id="status"									type="boolean"							default="1"/></editform></entity></adminpage>
+		<adminpage	id="admin"											permissionrole="r_adminuser"			navcategory="website"	entity="admin">
+			<entity dbtable="admin">
+				<overview edit="true"	delete="true">
+					<column id="entity_admin_name"						type="text"			sort="true"			filter="true"			field="name"/>
+					<column id="entity_admin_email"						type="email"		sort="true"			filter="true"			field="email"/>
+					<column id="entity_admin_r_admin"					type="boolean"		sort="true"			filter="true"			field="r_admin"/></overview>
+				<editform>
+					<field	id="name"									type="text"			required="true"/>
+					<field	id="passwort"								type="password"		required="true"		converter="AdminPasswordConverter"/>
+					<field	id="email"									type="email"		required="true"/>
+					<field	id="r_admin"								type="boolean"/>
+					<field	id="r_adminuser"							type="boolean"/>
+					<field	id="r_user"									type="boolean"/>
+					<field	id="r_daten"								type="boolean"/>
+					<field	id="r_staerken"								type="boolean"/>
+					<field	id="r_spiele"								type="boolean"/>
+					<field	id="r_news"									type="boolean"/>
+					<field	id="r_demo"									type="boolean"/></editform>	</entity></adminpage>
+		<adminpage	id="cup"											permissionrole="r_spiele"				navcategory="season"	entity="cup">
+			<entity dbtable="cup AS CupTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_cup_name"						type="text"			sort="true"			filter="true"			field="CupTab.name"/>
+					<column id="entity_cup_winner_id"					type="text"			sort="true"			filter="true"			field="ClubTab.name"/>
+					<column id="entity_cup_matches"						type="number"		sort="true"			filter="true"			field="(SELECT COUNT(*) FROM {tablePrefix}_spiel AS MatchesTab WHERE MatchesTab.pokalname = CupTab.name)"/>
+					<column id="entity_cup_rounds"						type="number"		sort="true"			filter="true"			field="(SELECT COUNT(*) FROM {tablePrefix}_cup_round AS RoundsTab WHERE RoundsTab.cup_id = CupTab.id)"																																converter="CupRoundsLinkConverter"/>
+					<column id="entity_cup_archived"					type="boolean"		sort="true"			filter="true"			field="CupTab.archived"/>
+						<join	type="LEFT"	jointable="verein AS ClubTab"					joincondition="CupTab.winner_id = ClubTab.id"/></overview>
+				<editform>
+					<field	id="name"									type="text"			required="true"								validator="UniqueCupNameValidator"/>
+					<field	id="winner_id"								type="foreign_key"												entity="club"			jointable="verein"				labelcolumns="name" required="false"/>
+					<field	id="logo"									type="file"			required="false"/>
+					<field	id="winner_award"							type="number"		required="false"/>
+					<field	id="second_award"							type="number"		required="false"/>
+					<field	id="perround_award"							type="number"		required="false"/>
+					<field	id="archived"								type="boolean"/></editform></entity></adminpage>
+		<adminpage	id="league"											permissionrole="r_daten"				navcategory="league"	entity="league">
+			<entity dbtable="liga" >
+				<overview edit="true"	delete="true">
+					<column id="entity_league_name"						type="text"			sort="true"			filter="true"			field="name"/>
+					<column id="entity_league_kurz"						type="text"			sort="true"			filter="true"			field="kurz"/>
+					<column id="entity_league_land"						type="text"			sort="true"			filter="true"			field="land"/></overview>
+				<editform>
+					<field	id="name"									type="text"			required="true"/>
+					<field	id="kurz"									type="text"			required="true"/>
+					<field	id="land"									type="text"			required="true"/>
+					<field	id="p_steh"									type="percent"		required="true"		default="80"/>
+					<field	id="p_sitz"									type="percent"		required="true"		default="80"/>
+					<field	id="p_haupt_steh"							type="percent"		required="true"		default="80"/>
+					<field	id="p_haupt_sitz"							type="percent"		required="true"		default="80"/>
+					<field	id="p_vip"									type="percent"		required="true"		default="80"/>
+					<field	id="preis_steh"								type="number"		required="true"		default="10"/>
+					<field	id="preis_sitz"								type="number"		required="true"		default="15"/>
+					<field	id="preis_vip"								type="number"		required="true"		default="20"/></editform></entity></adminpage>
+		<adminpage	id="match"											permissionrole="r_spiele"				navcategory="season"	entity="match">
+			<entity dbtable="spiel As MatchTab">
+				<overview	edit="true"	delete="true">
+					<column id="entity_match_datum"						type="timestamp"	sort="true"			filter="true" 			field="MatchTab.datum"/>
+					<column id="entity_match_home_verein"				type="text"			sort="true"			filter="true"			field="HomeTab.name"/>
+					<column id="entity_match_gast_verein"				type="text"			sort="true"			filter="true"			field="GuestTab.name"/>
+					<column id="entity_match_saison_id"					type="text"			sort="true"			filter="true"			field="SeasonTab.name"/>
+					<column id="entity_match_spieltag"					type="number"		sort="true"			filter="true"			field="MatchTab.spieltag"/>
+					<column id="entity_match_pokalname"					type="text"			sort="true"			filter="true"			field="MatchTab.pokalname"/>
+					<column id="entity_match_pokalrunde"				type="text"			sort="true"			filter="true"			field="MatchTab.pokalrunde"/>
+					<column id="entity_match_berechnet"					type="boolean"		sort="true"			filter="true"			field="MatchTab.berechnet"/>
+					<column id="entity_match_matchreportitems"			type="number"		sort="true"			filter="true"			field="1"					converter="MatchReportLinkConverter"/>
+						<join type="INNER"	jointable="verein AS HomeTab"					joincondition="HomeTab.id = MatchTab.home_verein"/>
+						<join type="INNER"	jointable="verein AS GuestTab"					joincondition="GuestTab.id = MatchTab.gast_verein"/>
+						<join type="LEFT"	jointable="saison AS SeasonTab"					joincondition="SeasonTab.id = MatchTab.saison_id"/></overview>
+				<editform>
+					<field	id="datum"									type="timestamp"	required="true"/>
+					<field	id="spieltyp"								type="select"		required="true"		selection="Ligaspiel,Pokalspiel,Freundschaft"/>
+					<field	id="saison_id"								type="foreign_key" 												entity="season"			jointable="saison"	cascade="delete"	labelcolumns="id,name"/>
+					<field	id="spieltag"								type="number"/>
+					<field	id="pokalname"								type="text"/>
+					<field	id="pokalrunde"								type="text"/>
+					<field	id="pokalgruppe"							type="text"/>
+					<field	id="elfmeter"								type="boolean"/>
+					<field	id="home_verein"							type="foreign_key"												entity="club"			jointable="verein"	cascade="delete"	labelcolumns="name"/>
+					<field	id="gast_verein"							type="foreign_key"												entity="club"			jointable="verein"	cascade="delete"	labelcolumns="name"/>
+					<field	id="stadion_id"								type="foreign_key"												entity="stadium"		jointable="stadion"						labelcolumns="id,name"/>
+					<field	id="berechnet"								type="boolean"/>
+					<field	id="home_tore"								type="number"/>
+					<field	id="gast_tore"								type="number"/>
+					<field	id="zuschauer"								type="number"/>
+					<field	id="soldout"								type="boolean"/>
+					<field	id="bericht"								type="textarea"/>
+					<field	id="blocked"								type="boolean"/></editform></entity></adminpage>
+		<adminpage	id="matchtext"										permissionrole="r_daten"				navcategory="season"	entity="matchtext">
+			<entity dbtable="spiel_text">
+				<overview	edit="true"	delete="true">
+					<column id="entity_matchtext_aktion"				type="text"			sort="true"			filter="true"			field="aktion"/>
+					<column id="entity_matchtext_nachricht"				type="text"			sort="true"			filter="true"			field="nachricht"/></overview>
+				<editform>
+					<field	id="aktion"									type="select"		required="true"	selection="Tor,Tor_mit_vorlage,Auswechslung,Zweikampf_gewonnen,Zweikampf_verloren,Pass_daneben,Torschuss_daneben,Torschuss_auf_Tor,Karte_gelb,Karte_rot,Karte_gelb_rot,Verletzung,Elfmeter_erfolg,Elfmeter_verschossen,Ecke,Freistoss_daneben,Freistoss_treffer,Taktikaenderung"/>
+					<field	id="nachricht"								type="text"			required="true"/></editform></entity></adminpage>
+		<adminpage	id="transaction"									permissionrole="r_daten"				navcategory="league"	entity="transaction">
+			<entity dbtable="konto AS TransactionTab">
+				<overview edit="false"	delete="true">
+					<column id="entity_transaction_verein_id"			type="text"			sort="true"			filter="true"			field="ClubTab.name"/>
+					<column id="entity_transaction_absender"			type="text"			sort="true"			filter="true"			field="TransactionTab.absender"				converter="PaymentSenderMessageConverter"/>
+					<column id="entity_transaction_betrag"				type="number"		sort="true"			filter="true"			field="TransactionTab.betrag"/>
+					<column id="entity_transaction_datum"				type="timestamp"	sort="true"			filter="true"			field="TransactionTab.datum"/>
+					<column id="entity_transaction_timestamp"			type="text"			sort="true"			filter="true"			field="TransactionTab.datum"/>
+					<column id="entity_transaction_verwendung"			type="text"			sort="true"			filter="true"			field="TransactionTab.verwendung"			converter="PaymentSubjectMessageConverter"/>
+						<join type="LEFT"								jointable="verein AS ClubTab"			joincondition="TransactionTab.verein_id = ClubTab.id"/></overview>
+				<editform>
+					<field	id="verein_id"								type="foreign_key"	required="true"		entity="club"		jointable="verein"	cascade="delete"								labelcolumns="name"/>
+					<field	id="datum"									type="timestamp"	required="true"/>
+					<field	id="absender"								type="text"			required="true"/>
+					<field	id="verwendung"								type="text"			required="true"/>
+					<field	id="betrag"									type="number"		required="true"		converter="MoneyTransactionConverter"/></editform></entity></adminpage>
+		<adminpage id="news"											permissionrole="r_news"					navcategory="website"	entity="news">
+			<entity dbtable="news AS NewsTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_news_titel"						type="text" 		sort="true"			filter="true"			field="NewsTab.titel"/>
+					<column id="entity_news_datum"						type="timestamp"	sort="true"			filter="true"			field="NewsTab.datum"/>
+					<column id="entity_admin_name"						type="text"			sort="true"			filter="true"			field="AdminTab.name"/>
+					<column id="entity_news_status"						type="boolean"		sort="true"			filter="true"			field="NewsTab.status"/>
+						<join type="LEFT"								jointable="admin AS AdminTab"			joincondition="AdminTab.id = NewsTab.autor_id"/></overview>
+				<editform>
+					<field	id="autor_id"								type="foreign_key"	required="true"		jointable="admin"																		labelcolumns="name"/>
+					<field	id="titel"									type="text"			required="true"/>
+					<field	id="datum"									type="timestamp"	required="true"/>
+					<field	id="nachricht"								type="textarea"		required="true"/>
+					<field	id="linktext1"								type="text"/>
+					<field	id="linkurl1"								type="url"/>
+					<field	id="linktext2"								type="text"/>
+					<field	id="linkurl2"								type="url"/>
+					<field	id="linktext3"								type="text"/>
+					<field	id="linkurl3"								type="url"/>
+					<field	id="c_br"									type="boolean"/>
+					<field	id="c_links"								type="boolean"/>
+					<field	id="status"									type="boolean"/></editform></entity></adminpage>
+		<adminpage	id="player"											permissionrole="r_daten"				navcategory="league"	entity="player">
+			<entity dbtable="spieler AS PlayerTab">
+				<overview edit="true"	delete="true"					logging="true"		loggingcolumns="vorname,nachname,kunstname,verein_id,position">
+					<column	id="entity_player_nachname"					type="text"			sort="true"			filter="true"			field="PlayerTab.nachname"/>
+					<column	id="entity_player_vorname"					type="text"			sort="true"			filter="true"			field="PlayerTab.vorname"/>
+					<column	id="entity_player_kunstname"				type="text"			sort="true"			filter="true"			field="PlayerTab.kunstname"/>
+					<column id="entity_player_verein_id"				type="text"			sort="true"			filter="true"			field="ClubTab.name"/>
+					<column id="entity_player_position"					type="text"			sort="true"			filter="true"			field="PlayerTab.position"/>
+					<column id="entity_player_position_main"			type="text"			sort="true"			filter="true"			field="PlayerTab.position_main"/>
+					<column id="entity_player_position_second"			type="text"			sort="true"			filter="true"			field="PlayerTab.position_second"/>
+					<column id="entity_player_lending_owner_id"			type="text"			sort="true"			filter="true"			field="LenderTab.name"/>
+					<column id="entity_player_status"					type="boolean"		sort="true"			filter="true"			field="PlayerTab.status"/>
+						<join type="LEFT"								jointable="verein AS ClubTab"		joincondition="PlayerTab.verein_id = ClubTab.id"/>
+						<join type="LEFT"								jointable="verein AS LenderTab"		joincondition="PlayerTab.lending_owner_id = LenderTab.id"/></overview>
+				<editform>
+					<field id="vorname"									type="text"/>
+					<field id="nachname"								type="text"/>
+					<field id="kunstname"								type="text"/>
+					<field id="verein_id"								type="foreign_key"												entity="club"	jointable="verein"	cascade="delete"			labelcolumns="name"/>
+					<field id="geburtstag"								type="date"  />
+					<field id="age"										type="number"  />
+					<field id="position"								type="select"		required="true"		selection="Torwart,Abwehr,Mittelfeld,Sturm"/>
+					<field id="position_main"							type="select"		required="false"	selection="T,LV,IV,RV,LM,ZM,DM,OM,RM,LS,MS,RS"/>
+					<field id="position_second"							type="select"		required="false"	selection="T,LV,IV,RV,LM,ZM,DM,OM,RM,LS,MS,RS"/>
+					<field id="nation"									type="text"			required="true"  />
+					<field id="picture"									type="file"  />
+					<field id="verletzt"								type="number"							default="0"/>
+					<field id="gesperrt"								type="number"							default="0"/>
+					<field id="gesperrt_cups"							type="number"							default="0"/>
+					<field id="gesperrt_nationalteam"					type="number"							default="0"/>
+					<field id="w_staerke"								type="percent"		required="true"								roles="r_staerken"/>
+					<field id="w_technik"								type="percent"		required="true"								roles="r_staerken"/>
+					<field id="w_kondition"								type="percent"		required="true"								roles="r_staerken"/>
+					<field id="w_frische"								type="percent"		required="true"		default="100"			roles="r_staerken"/>
+					<field id="w_zufriedenheit"							type="percent"		required="true"		default="100"			roles="r_staerken"/>
+					<field id="transfermarkt"							type="boolean"/>
+					<field id="transfer_start"							type="timestamp"/>
+					<field id="transfer_ende"							type="timestamp"/>
+					<field id="transfer_mindestgebot"					type="number"/>
+					<field id="vertrag_gehalt"							type="number"/>
+					<field id="vertrag_spiele"							type="number"/>
+					<field id="vertrag_torpraemie"						type="number"/>
+					<field id="lending_owner_id"						type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="lending_fee"								type="number"/>
+					<field id="lending_matches"							type="number"/>
+					<field id="marktwert"								type="number"/>
+					<field id="sa_tore"									type="number"/>
+					<field id="sa_assists"								type="number"/>
+					<field id="sa_spiele"								type="number"/>
+					<field id="sa_karten_gelb"							type="number"/>
+					<field id="sa_karten_gelb_rot"						type="number"/>
+					<field id="sa_karten_rot"							type="number"/>
+					<field id="st_tore"									type="number"/>
+					<field id="st_assists"								type="number"/>
+					<field id="st_spiele"								type="number"/>
+					<field id="st_karten_gelb"							type="number"/>
+					<field id="st_karten_gelb_rot"						type="number"/>
+					<field id="st_karten_rot"							type="number"/>
+					<field id="history"									type="textarea"/>
+					<field id="unsellable"								type="boolean"/>
+					<field id="status"									type="boolean"							default="1"/></editform></entity></adminpage>
+		<adminpage	id="premiumstatement"								permissionrole="r_user"					navcategory="website"	entity="premiumstatement">
+			<entity dbtable="premiumstatement AS TransactionTab">
+				<overview edit="false"	delete="true">
+					<column id="entity_premiumstatement_user_id"		type="text"			sort="true"			filter="true"			field="UserTab.nick"/>
+					<column id="entity_premiumstatement_action_id"		type="text"			sort="true"			filter="true"			field="TransactionTab.action_id"/>
+					<column id="entity_premiumstatement_amount"			type="number"		sort="true"			filter="true"			field="TransactionTab.amount"/>
+					<column id="entity_premiumstatement_created_date"	type="timestamp"	sort="true"			filter="true"			field="TransactionTab.created_date"/>
+						<join type="LEFT" jointable="user AS UserTab" 	joincondition="TransactionTab.user_id = UserTab.id"/></overview>
+				<editform>
+					<field id="user_id"									type="foreign_key"	required="true"								entity="users"	jointable="user"	cascade="delete"	labelcolumns="nick"/>
+					<field id="created_date"							type="timestamp"	required="true"/>
+					<field id="action_id"								type="text"			required="true"/>
+					<field id="subject_data"							type="textarea"		required="false"/>
+					<field id="amount"									type="number"		required="true"								converter="PremiumTransactionConverter"/></editform></entity></adminpage>
+		<adminpage	id="premiumpayment"									permissionrole="r_user"					navcategory="website"		entity="premiumpayment"	>
+			<entity dbtable="premiumpayment AS TransactionTab">
+				<overview edit="false"	delete="true">
+					<column id="entity_premiumpayment_user_id"			type="text"			sort="true"			filter="true"			field="UserTab.nick"/>
+					<column id="entity_premiumpayment_amount"			type="number"		sort="true"			filter="true"			field="(TransactionTab.amount / 100)"/>
+					<column id="entity_premiumpayment_created_date"		type="timestamp"	sort="true"			filter="true"			field="TransactionTab.created_date"/>
+						<join type="LEFT" jointable="user AS UserTab" 	joincondition="TransactionTab.user_id = UserTab.id"/></overview>
+				<editform>
+					<field id="user_id"									type="foreign_key"	required="true"								entity="users"	jointable="user"	cascade="delete"				labelcolumns="nick"/>
+					<field id="created_date" 							type="timestamp"	required="true"  />
+					<field id="amount"									type="number"		required="true"/></editform></entity></adminpage>
+		<adminpage	id="randomevent"									permissionrole="r_daten"			navcategory="league"		entity="randomevent">
+			<entity dbtable="randomevent AS EventTab">
+				<overview edit="false"	delete="true">
+					<column id="entity_randomevent_message"				type="text"			sort="true"			filter="true"			field="EventTab.message"/>
+					<column id="entity_randomevent_effect"				type="text"			sort="true"			filter="true"			field="EventTab.effect"/>
+					<column id="entity_randomevent_weight"				type="number"		sort="true"			filter="true"			field="EventTab.weight"/>
+				</overview>
+				<editform>
+					<field id="message"									type="text"			required="true"/>
+					<field id="effect"									type="select"		required="true"		selection="money,player_injured,player_blocked,player_happiness,player_fitness,player_stamina"/>
+					<field id="effect_money_amount"						type="number"/>
+					<field id="effect_blocked_matches"					type="number"/>
+					<field id="effect_skillchange"						type="number"/>
+					<field id="weight"									type="number"		required="true"		default="3"/>
+					<field id="status" type="boolean"/></editform></entity></adminpage>
+		<adminpage	id="season"											permissionrole="r_spiele"				navcategory="season"	entity="season">
+			<entity dbtable="saison AS SeasonTab">
+				<overview edit="false"	delete="true">
+					<column id="entity_season_name"						type="text"			sort="true"			filter="true"			field="SeasonTab.name"/>
+					<column id="entity_season_liga_id"					type="text"			sort="true"			filter="true"			field="LeagueTab.name"/>
+					<column id="entity_season_beendet"					type="boolean"		sort="true"			filter="true"			field="SeasonTab.beendet"/>
+						<join type="LEFT" jointable="liga AS LeagueTab" joincondition="LeagueTab.id = SeasonTab.liga_id"/></overview>
+				<editform>
+					<field id="name" type="text" required="true"/>
+					<field id="liga_id"									type="foreign_key"	required="true"								entity="league"	jointable="liga"	cascade="delete"			labelcolumns="land,name"/>
+					<field id="beendet"									type="boolean"/>
+					<field id="platz_1_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_2_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_3_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_4_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_5_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_6_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_7_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_8_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_9_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_10_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_11_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_12_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_13_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_14_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_15_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_16_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_17_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_18_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_19_id"								type="foreign_key"												entity="club"	jointable="verein"								labelcolumns="name"/>
+					<field id="platz_20_id"								type="foreign_key"												entity="club"	jointable="verein"			labelcolumns="name"/></editform></entity></adminpage>
+		<adminpage	id="sponsor"										permissionrole="r_daten"				navcategory="league"	entity="sponsor">
+			<entity dbtable="sponsor AS SponsorTab">
+				<overview edit="false"	delete="true">
+					<column id="entity_sponsor_name"					type="text"			sort="true"			filter="true"			field="SponsorTab.name"/>
+					<column id="entity_sponsor_liga_id"					type="text"			sort="true"			filter="true"			field="LeagueTab.name"/>
+					<column id="entity_sponsor_min_platz"				type="number"		sort="true"			filter="true"			field="SponsorTab.min_platz"/>
+					<column id="entity_sponsor_max_teams"				type="number"		sort="true"			filter="true"			field="SponsorTab.max_teams"/>
+						<join type="LEFT"								jointable="liga AS LeagueTab"			joincondition="SponsorTab.liga_id = LeagueTab.id"/></overview>
+				<editform>
+					<field id="name"									type="text"			required="true"/>
+					<field id="liga_id"									type="foreign_key"	required="true"								entity="league"	jointable="liga"	cascade="delete"			labelcolumns="land,name"/>
+					<field id="b_spiel"									type="number"		required="true"/>
+					<field id="b_heimzuschlag"							type="number"		required="true"/>
+					<field id="b_sieg"									type="number"		required="true"/>
+					<field id="b_meisterschaft"							type="number"		required="true"/>
+					<field id="max_teams"								type="number"		required="true"/>
+					<field id="min_platz"								type="number"		required="true"/>
+					<field id="bild"									type="file"/></editform></entity></adminpage>
+		<adminpage	id="stadium"										permissionrole="r_daten"				navcategory="league"	entity="stadium">
+			<entity dbtable="stadion AS StadiumTab">
+				<overview edit="false"	delete="true">
+					<column id="entity_stadium_name"					field="StadiumTab.name"					type="text"			sort="true"			filter="true"/>
+					<column id="entity_stadium_land"					field="StadiumTab.land"					type="text"			sort="true"			filter="true"/>
+					<column id="entity_stadium_verein"					field="ClubTab.name"					type="text"			sort="true"			filter="true"/>
+						<join type="LEFT"								jointable="verein AS ClubTab"			joincondition="StadiumTab.id = ClubTab.stadion_id"/>
+				</overview>
+				<editform>
+					<field id="name"									type="text"			required="true"/>
+					<field id="stadt"									type="text"/>
+					<field id="land"									type="text"			required="true"/>
+					<field id="picture"									type="file"/>
+					<field id="p_steh"									type="number"		required="true"/>
+					<field id="p_sitz"									type="number"		required="true"/>
+					<field id="p_haupt_steh"							type="number"		required="true"/>
+					<field id="p_haupt_sitz"							type="number"		required="true"/>
+					<field id="p_vip"									type="number"		required="true"/>
+					<field id="level_pitch"								type="number"		required="true"		default="0"/>
+					<field id="level_videowall"							type="number"		required="true"		default="0"/>
+					<field id="level_seatsquality"						type="number"		required="true"		default="0"/>
+					<field id="level_vipquality"						type="number"		required="true"		default="0"/>
+					<field id="maintenance_pitch"						type="number"		required="true"		default="0"/>
+					<field id="maintenance_videowall"					type="number"		required="true"		default="0"/>
+					<field id="maintenance_seatsquality"				type="number"		required="true"		default="0"/>
+					<field id="maintenance_vipquality"					type="number"		required="true"		default="0"/></editform></entity></adminpage>
+		<adminpage	id="stadiumbuilder"									permissionrole="r_daten"				navcategory="league"	entity="stadiumbuilder">
+			<entity dbtable="stadium_builder AS BuilderTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_stadiumbuilder_name"						type="text"		sort="true"		filter="true"			field="BuilderTab.name"/>
+					<column id="entity_stadiumbuilder_fixedcosts"				type="number"	sort="true"		filter="true"			field="BuilderTab.fixedcosts"/>
+					<column id="entity_stadiumbuilder_cost_per_seat"			type="number"	sort="true"		filter="true"			field="BuilderTab.cost_per_seat"/>
+					<column id="entity_stadiumbuilder_construction_time_days"	type="number"	sort="true"		filter="true"			field="BuilderTab.construction_time_days"/>
+					<column id="entity_stadiumbuilder_min_stadium_size"			type="number"	sort="true"		filter="true"			field="BuilderTab.min_stadium_size"/>
+					<column id="entity_stadiumbuilder_max_stadium_size"			type="number"	sort="true"		filter="true"			field="BuilderTab.max_stadium_size"/>
+					<column id="entity_stadiumbuilder_reliability"				type="percent"	sort="true"		filter="true"			field="BuilderTab.reliability"/>
+					<column id="entity_stadiumbuilder_premiumfee"				type="number"	sort="true"		filter="true"			field="BuilderTab.premiumfee"/></overview>
+				<editform>
+					<field id="name"									type="text"			required="true"/>
+					<field id="picture"									type="file"/>
+					<field id="fixedcosts"								type="number"		required="true"		default="0"/>
+					<field id="cost_per_seat"							type="number"		required="true"		default="0"/>
+					<field id="construction_time_days"					type="number"		required="true"		default="5"/>
+					<field id="construction_time_days_min"				type="number"		required="true"		default="14"/>
+					<field id="min_stadium_size"						type="number"		required="true"		default="0"/>
+					<field id="max_stadium_size"						type="number"		required="true"		default="0"/>
+					<field id="reliability"								type="percent"		required="true"		default="100"/>
+					<field id="premiumfee"								type="number"		required="false"	default="0"/></editform></entity></adminpage>
+		<adminpage	id="stadiumconstruction"							permissionrole="r_daten"				navcategory="league"	entity="stadiumconstruction">
+			<entity dbtable="stadium_construction AS ConstructionTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_stadiumconstruction_team_id"		type="text"			sort="true"			filter="true"			field="ClubTab.name"/>
+					<column id="entity_stadiumconstruction_builder_id"	type="text"			sort="true"			filter="true"			field="BuilderTab.name"/>
+					<column id="entity_stadiumconstruction_started"		type="timestamp"	sort="true"			filter="true"			field="ConstructionTab.started"/>
+					<column id="entity_stadiumconstruction_deadline"	type="timestamp"	sort="true"			filter="true"			field="ConstructionTab.deadline"/>
+						<join type="LEFT"								jointable="verein AS ClubTab"			joincondition="ConstructionTab.team_id = ClubTab.id"/>
+						<join type="INNER"								jointable="stadium_builder AS BuilderTab" joincondition="ConstructionTab.builder_id = BuilderTab.id"/></overview>
+				<editform>
+					<field id="team_id"									type="foreign_key"	required="true"								entity="club"		jointable="verein"	cascade="delete"	labelcolumns="name"/>
+					<field id="builder_id"								type="foreign_key"	required="true"								entity="stadiumbuilder"	jointable="stadium_builder"			labelcolumns="name"/>
+					<field id="started"									type="timestamp"	required="true"/>
+					<field id="deadline"								type="timestamp"	required="true"/>
+					<field id="p_steh"									type="number"		required="true"		default="0"/>
+					<field id="p_sitz"									type="number"		required="true"		default="0"/>
+					<field id="p_haupt_steh"							type="number"		required="true"		default="0"/>
+					<field id="p_haupt_sitz"							type="number"		required="true"		default="0"/>
+					<field id="p_vip"									type="number"		required="true"		default="0"/></editform></entity></adminpage>
+		<adminpage	id="stadiumbuilding"								permissionrole="r_daten"				navcategory="league"	entity="stadiumbuilding">
+			<entity dbtable="stadiumbuilding AS BuildingTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_stadiumbuilding_name"					type="text"		sort="true"		filter="true"			field="BuildingTab.name"/>
+					<column id="entity_stadiumbuilding_required_building_id"	type="text"		sort="true"		filter="true"			field="RequiredBuildingTab.name"/>
+					<column id="entity_stadiumbuilding_costs"					type="number"	sort="true"		filter="true"			field="BuildingTab.costs"/>
+					<column id="entity_stadiumbuilding_premiumfee"				type="number"	sort="true"		filter="true"			field="BuildingTab.premiumfee"/>
+						<join type="LEFT"								jointable="stadiumbuilding AS RequiredBuildingTab"				joincondition="RequiredBuildingTab.id = BuildingTab.required_building_id"/></overview>
+				<editform>
+					<field id="name"									type="text"			required="true"/>
+					<field id="description"								type="text"/>
+					<field id="picture"									type="file"/>
+					<field id="required_building_id"					type="foreign_key"												entity="stadiumbuilding"	jointable="stadiumbuilding"		labelcolumns="name"/>
+					<field id="costs"									type="number"		required="true"/>
+					<field id="construction_time_days"					type="number"		required="true"		default="0"/>
+					<field id="premiumfee"								type="number"		required="true"		default="0"/>
+					<field id="effect_training"							type="number"		required="true"		default="0"/>
+					<field id="effect_youthscouting"					type="number"		required="true"		default="0"/>
+					<field id="effect_tickets"							type="number"		required="true"		default="0"/>
+					<field id="effect_fanpopularity"					type="number"		required="true"		default="0"/>
+					<field id="effect_injury"							type="number"		required="true"		default="0"/>
+					<field id="effect_income"							type="number"		required="true"		default="0"/>
+					<field id="status"									type="boolean"/></editform></entity></adminpage>
+		<adminpage	id="tablemarker"									permissionrole="r_daten"			navcategory="league"		entity="tablemarker">
+			<entity dbtable="tabelle_markierung AS MarkerTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_tablemarker_bezeichnung"			type="text"			sort="true"			filter="true"			field="MarkerTab.bezeichnung"/>
+					<column id="entity_tablemarker_liga_id"				type="text"			sort="true"			filter="true"			field="LeagueTab.name"/>
+					<column id="entity_tablemarker_platz_von"			type="number"		sort="true"			filter="true"			field="MarkerTab.platz_von"/>
+					<column id="entity_tablemarker_platz_bis"			type="number"		sort="true"			filter="true"			field="MarkerTab.platz_bis"	/>
+					<column id="entity_tablemarker_target_league_id"	type="text"			sort="true"			filter="true"			field="TargetLeagueTab.name"/>
+						<join type="LEFT"								jointable="liga AS LeagueTab"									joincondition="MarkerTab.liga_id = LeagueTab.id"/>
+						<join type="LEFT"								jointable="liga AS TargetLeagueTab"								joincondition="MarkerTab.target_league_id = TargetLeagueTab.id"/></overview>
+				<editform>
+					<field id="bezeichnung"								type="text"			required="true"/>
+					<field id="liga_id"									type="foreign_key"	required="true"								entity="league"	jointable="liga"	cascade="delete"		labelcolumns="land,name"/>
+					<field id="platz_von"								type="number"		required="true"/>
+					<field id="platz_bis"								type="number"		required="true"/>
+					<field id="farbe"									type="color"		required="true"/>
+					<field id="target_league_id"						type="foreign_key"	required="false"							entity="league"	jointable="liga"	labelcolumns="land,name"/></editform></entity></adminpage>
+		<adminpage	id="trainer"										permissionrole="r_daten"			navcategory="league"		entity="trainer">
+			<entity dbtable="trainer">
+				<overview edit="true"	delete="true">
+					<column id="entity_trainer_name"					type="text"			sort="true"			filter="true"			field="name"/>
+					<column id="entity_trainer_salary"					type="number"		sort="true"			filter="true"			field="salary"/>
+					<column id="entity_trainer_p_technique"				type="percent"		sort="true"			filter="true"			field="p_technique"/>
+					<column id="entity_trainer_p_stamina"				type="percent"		sort="true"			filter="true"			field="p_stamina"/>
+					<column id="entity_trainer_premiumfee"				type="number"		sort="true"			filter="true"			field="premiumfee"/></overview>
+				<editform>
+					<field id="name"									type="text"			required="true"/>
+					<field id="salary"									type="number"		required="true"/>
+					<field id="p_technique"								type="percent"		required="true"/>
+					<field id="p_stamina"								type="percent"		required="true"/>
+					<field id="premiumfee"								type="number"		required="false"/></editform></entity></adminpage>
+		<adminpage	id="trainingcamp"									permissionrole="r_daten"				navcategory="league"	entity="trainingcamp">
+			<entity dbtable="trainingslager">
+				<overview edit="true"	delete="true">
+					<column id="entity_trainingcamp_name"				type="text"			sort="true"			filter="true"			field="name"/>
+					<column id="entity_trainingcamp_land"				type="text"			sort="true"			filter="true"			field="land"/>
+					<column id="entity_trainingcamp_preis_spieler_tag"	type="number"		sort="true"			filter="true"			field="preis_spieler_tag"/>
+					<column id="entity_trainingcamp_p_staerke"			type="number"		sort="true"			filter="true"			field="p_staerke"/>
+					<column id="entity_trainingcamp_p_technik"			type="number"		sort="true"			filter="true"			field="p_technik"/>
+					<column id="entity_trainingcamp_p_kondition"		type="number"		sort="true"			filter="true"			field="p_kondition"/>
+					<column id="entity_trainingcamp_p_frische"			type="number"		sort="true"			filter="true"			field="p_frische"/>
+					<column id="entity_trainingcamp_p_zufriedenheit"	type="number"		sort="true"			filter="true"			field="p_zufriedenheit"/></overview>
+				<editform>
+					<field id="name"									type="text"			required="true"/>
+					<field id="land"									type="text"			required="true"/>
+					<field id="preis_spieler_tag"						type="number"		required="true"/>
+					<field id="p_staerke"								type="number"		required="true"/>
+					<field id="p_technik"								type="number"		required="true"/>
+					<field id="p_kondition"								type="number"		required="true"/>
+					<field id="p_frische"								type="number"		required="true"/>
+					<field id="p_zufriedenheit"							type="number"		required="true"/></editform></entity></adminpage>
+		<adminpage	id="transfer_offer"									permissionrole="r_daten"				navcategory="league"	entity="transfer_offer">
+			<entity dbtable="transfer_offer AS OfferTab">
+				<overview edit="true"	delete="true"	add="false">
+					<column id="entity_transfer_offer_submitted_date"	type="timestamp"	sort="true"			filter="true"			field="OfferTab.submitted_date"/>
+					<column id="entity_transfer_offer_player_id"		type="text"			sort="true"			filter="true"			field="CONCAT(PlayerTab.vorname,' ',IF(PlayerTab.kunstname IS NOT NULL,CONCAT('\'',PlayerTab.kunstname,'\' '),''),PlayerTab.nachname)"/>
+					<column id="entity_transfer_offer_receiver_club_id"	type="text"			sort="true"			filter="true"			field="ClubTab.name"/>
+					<column id="entity_transfer_offer_sender_club_id"	type="text"			sort="true"			filter="true"			field="SenderClubTab.name"/>
+					<column id="entity_transfer_offer_offer_amount"		type="number"		sort="true"			filter="true"			field="OfferTab.offer_amount"/>
+					<column id="entity_transfer_offer_offer_player1"	type="text"			sort="true"			filter="true"			field="CONCAT(ExPlayer1Tab.vorname,' ',ExPlayer1Tab.nachname)"/>
+					<column id="entity_transfer_offer_offer_player2"	type="text"			sort="true"			filter="true"			field="CONCAT(ExPlayer2Tab.vorname,' ',ExPlayer2Tab.nachname)"/>
+					<column id="entity_transfer_offer_rejected_date"	type="timestamp"	sort="true"			filter="true"/>
+					<column id="entity_transfer_offer_admin_approval_pending"	type="boolean"	sort="true"		filter="true"			field="OfferTab.admin_approval_pending"		converter="TransferOfferApprovalLinkConverter"/>
+					<join type="INNER"									jointable="spieler AS PlayerTab"		joincondition="OfferTab.player_id = PlayerTab.id"/>
+					<join type="INNER"									jointable="verein AS ClubTab"			joincondition="OfferTab.receiver_club_id = ClubTab.id"/>
+					<join type="INNER"									jointable="verein AS SenderClubTab"		joincondition="OfferTab.sender_club_id = SenderClubTab.id"/>
+					<join type="LEFT"									jointable="spieler AS ExPlayer1Tab"		joincondition="OfferTab.offer_player1 = ExPlayer1Tab.id"/>
+					<join type="LEFT"									jointable="spieler AS ExPlayer2Tab"		joincondition="OfferTab.offer_player2 = ExPlayer2Tab.id"/></overview>
+				<editform>
+					<field id="submitted_date"							type="timestamp"	required="true"/>
+					<field id="player_id"								type="foreign_key"	required="true"								entity="player"	jointable="spieler"						labelcolumns="nachname,vorname"/>
+					<field id="receiver_club_id"						type="foreign_key"	required="true"								entity="club"	jointable="verein"						labelcolumns="name"/>
+					<field id="sender_club_id"							type="foreign_key"	required="true"								entity="club"	jointable="verein"						labelcolumns="name"/>
+					<field id="sender_user_id"							type="foreign_key"	required="true"								entity="users"	jointable="user"						labelcolumns="nick"/>
+					<field id="offer_amount"							type="number"		required="true"/>
+					<field id="offer_message"							type="textarea"		required="false"/>
+					<field id="offer_player1"							type="foreign_key"	required="true"								entity="player"	jointable="spieler"						labelcolumns="nachname,vorname"/>
+					<field id="offer_player2"							type="foreign_key"	required="true"								entity="player"	jointable="spieler"						labelcolumns="nachname,vorname"/>
+				</editform></entity></adminpage>
+		<adminpage	id="transfers"										permissionrole="r_daten"				navcategory="league"	entity="transfers">
+			<entity dbtable="transfer AS TransferTab">
+				<overview edit="false"	delete="true"	add="false">
+					<column id="entity_transfers_datum"					type="timestamp"	sort="true"			filter="true"			field="TransferTab.datum"/>
+					<column id="entity_transfers_spieler_id"			type="text"			sort="true"			filter="true"			field="CONCAT(PlayerTab.vorname,' ',PlayerTab.nachname)"/>
+					<column id="entity_transfers_seller_club_id"		type="text"			sort="true"			filter="true"			field="SellerTab.name"/>
+					<column id="entity_transfers_buyer_club_id"			type="text"			sort="true"			filter="true"			field="BuyerTab.name"/>
+					<column id="entity_transfers_bid_amount"			type="number"		sort="true"			filter="true"			field="BidTab.abloese"/>
+					<column id="entity_transfers_directtransfer_amount"	type="number"		sort="true"			filter="true"			field="TransferTab.directtransfer_amount"/>
+					<column id="entity_transfer_offer_offer_player1"	type="text"			sort="true"			filter="true"			field="CONCAT(ExPlayer1Tab.vorname,' ',ExPlayer1Tab.nachname)"/>
+					<column id="entity_transfer_offer_offer_player2"	type="text"			sort="true"			filter="true"			field="CONCAT(ExPlayer2Tab.vorname,' ',ExPlayer2Tab.nachname)"/>
+						<join type="INNER"								jointable="spieler AS PlayerTab"		joincondition="TransferTab.spieler_id = PlayerTab.id"/>
+						<join type="INNER"								jointable="verein AS BuyerTab"			joincondition="TransferTab.buyer_club_id = BuyerTab.id"/>
+						<join type="LEFT"								jointable="verein AS SellerTab"			joincondition="TransferTab.seller_club_id = SellerTab.id"/>
+						<join type="LEFT"								jointable="transfer_angebot AS BidTab"	joincondition="TransferTab.bid_id = BidTab.id"/>
+						<join type="LEFT"								jointable="spieler AS ExPlayer1Tab"		joincondition="TransferTab.directtransfer_player1 = ExPlayer1Tab.id"/>
+						<join type="LEFT"								jointable="spieler AS ExPlayer2Tab"		joincondition="TransferTab.directtransfer_player2 = ExPlayer2Tab.id"/></overview></entity></adminpage>
+		<adminpage	id="userabsence"									permissionrole="r_user"					navcategory="website"	entity="userabsence">
+			<entity dbtable="userabsence AS AbsenceTab">
+				<overview edit="true" delete="true">
+					<column  id="entity_userabsence_user_id"			type="text"			sort="true"			filter="true"			field="UserTab.nick"/>
+					<column  id="entity_userabsence_deputy_id"			type="text"			sort="true"			filter="true"			field="DeputyTab.nick"/>
+					<column  id="entity_userabsence_from_date"			type="timestamp"	sort="true"			filter="true"			field="AbsenceTab.from_date"/>
+					<column  id="entity_userabsence_to_date"			type="timestamp"	sort="true"			filter="true"			field="AbsenceTab.to_date"/>
+						<join type="INNER"								jointable="user AS UserTab"				joincondition="AbsenceTab.user_id = UserTab.id"/>
+						<join type="LEFT"								jointable="user AS DeputyTab"			joincondition="AbsenceTab.deputy_id = DeputyTab.id"/></overview>
+				<editform>
+					<field id="user_id"									type="foreign_key"	required="true"								entity="users"	jointable="user"						labelcolumns="nick"/>
+					<field id="from_date"								type="timestamp"	required="true"/>
+					<field id="to_date"									type="timestamp"	required="true"/>
+					<field id="deputy_id"								type="foreign_key"												entity="users"	jointable="user"						labelcolumns="nick"/>
+				</editform></entity></adminpage>
+		<adminpage	id="badge"											permissionrole="r_user"					navcategory="website"	entity="badge">
+			<entity dbtable="badge AS BadgeTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_badge_name"						type="text"			sort="true"			filter="true"			field="BadgeTab.name"/>
+					<column id="entity_badge_level"						type="text"			sort="true"			filter="true"			field="BadgeTab.level"/>
+					<column id="entity_badge_event"						type="text"			sort="true"			filter="true"			field="BadgeTab.event"/>
+					<column id="entity_badge_event_benchmark"			type="number"		sort="true"			filter="true"			field="BadgeTab.event_benchmark"/></overview>
+				<editform>
+					<field id="name"									type="text"			required="true"/>
+					<field id="description"								type="text"			required="false"/>
+					<field id="level"									type="select"		required="true"		selection="bronze,silver,gold"/>
+					<field id="event"									type="select"		required="true" 																																																							selection="membership_since_x_days,win_with_x_goals_difference,completed_season_at_x,x_trades,stadium_construction_by_x,cupwinner"/>
+					<field id="event_benchmark"							type="number"		required="true"		default="0"/></editform></entity></adminpage>
+		<adminpage	id="users"											permissionrole="r_user"					navcategory="website"	entity="users">
+			<entity dbtable="user AS UserTab">
+				<overview edit="true"	delete="true">
+					<column  id="entity_users_nick"						type="text"			sort="true"			filter="true"			field="UserTab.nick"/>
+					<column  id="entity_users_lastonline"				type="timestamp"	sort="true"			filter="true"			field="UserTab.lastonline"/>
+					<column  id="entity_users_highscore"				type="number"		sort="true"			filter="true"			field="UserTab.highscore"/>
+					<column  id="entity_users_clubname"					type="text"			sort="true"			filter="true"			field="ClubTab.name"/>
+					<column  id="entity_users_datum_anmeldung"			type="timestamp"	sort="true"			filter="true"			field="UserTab.datum_anmeldung"/>
+					<column  id="entity_users_premium_balance"			type="number"		sort="true"			filter="true"			field="UserTab.premium_balance" />
+					<column  id="entity_users_email"					type="email"		sort="true"			filter="true"			field="UserTab.email"/>
+					<column  id="entity_user_inactivity"				type="text"			sort="true"			filter="true"			field="(ActTab.login+ActTab.aufstellung+ActTab.transfer+ActTab.vertragsauslauf)"																																							converter="InactivityConverter" />
+					<column  id="entity_users_status"					type="boolean"		sort="true"			filter="true"			field="UserTab.status"/>
+					<column  id="entity_user_inactivity_login"			type="text"			sort="true"			filter="true"			field="ActTab.login"															hidden="true"/>
+					<column  id="entity_user_inactivity_aufstellung"	type="text"			sort="true"			filter="true"			field="ActTab.aufstellung"														hidden="true"/>
+					<column  id="entity_user_inactivity_transfer"		type="text"			sort="true"			filter="true"			field="ActTab.transfer"															hidden="true"/>
+					<column  id="entity_user_inactivity_vertragsauslauf"	type="text"		sort="true"			filter="true"			field="ActTab.vertragsauslauf"													hidden="true"/>
+					<column  id="entity_user_inactivity_transfer_check"	type="text"			sort="true"			filter="true"			field="ActTab.transfer_check"													hidden="true"/>
+						<join type="LEFT"								jointable="verein AS ClubTab"			joincondition="ClubTab.user_id = UserTab.id"/>
+						<join type="LEFT"								jointable="user_inactivity AS ActTab"	joincondition="ActTab.user_id = UserTab.id"/></overview>
+				<editform>
+					<field id="datum_anmeldung"							type="timestamp"	readonly="true"/>
+					<field id="nick"									type="text"			required="true"/>
+					<field id="email"									type="email"		required="true"/>
+					<field id="passwort"								type="password"		required="true"								converter="UserPasswordConverter"/>
+					<field id="premium_balance"							type="number"/>
+					<field id="picture"									type="file"/>
+					<field id="name"									type="text"/>
+					<field id="wohnort"									type="text"/>
+					<field id="land"									type="text"/>
+					<field id="geburtstag"								type="date"/>
+					<field id="beruf"									type="text"/>
+					<field id="interessen"								type="text"/>
+					<field id="lieblingsverein"							type="text"/>
+					<field id="homepage"								type="url"/>
+					<field id="highscore"								type="number"/>
+					<field id="fanbeliebtheit"							type="percent"/>
+					<field id="history"									type="textarea"/>
+					<field id="status"									type="boolean"/></editform></entity></adminpage>
+		<adminpage	id="youthplayer"									permissionrole="r_daten"				navcategory="league"	entity="youthplayer">
+			<entity dbtable="youthplayer AS PlayerTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_youthplayer_lastname"			type="text"			sort="true"			filter="true"			field="PlayerTab.lastname"/>
+					<column id="entity_youthplayer_firstname"			type="text"			sort="true"			filter="true"			field="PlayerTab.firstname"/>
+					<column id="entity_youthplayer_team_id"				type="text"			sort="true"			filter="true"			field="ClubTab.name"/>
+					<column id="entity_youthplayer_position"			type="text"			sort="true"			filter="true"			field="PlayerTab.position"/>
+					<column id="entity_youthplayer_age"					type="number"		sort="true"			filter="true"			field="PlayerTab.age"/>
+					<column id="entity_youthplayer_strength"			type="number"		sort="true"			filter="true"			field="PlayerTab.strength"/>
+						<join type="INNER"								jointable="verein AS ClubTab"			joincondition="PlayerTab.team_id = ClubTab.id"/></overview>
+				<editform>
+					<field id="team_id"									type="foreign_key"	required="true"								entity="club"	jointable="verein"						labelcolumns="name"/>
+					<field id="firstname"								type="text"			required="true"/>
+					<field id="lastname"								type="text"			required="true"/>
+					<field id="age"										type="number"		required="true"/>
+					<field id="position"								type="select"		required="true"		selection="Torwart,Abwehr,Mittelfeld,Sturm"/>
+					<field id="nation"									type="text"			required="true"/>
+					<field id="strength"								type="percent"		required="true"/>
+					<field id="strength_last_change"					type="number"		required="false"	default="0"/>
+					<field id="st_matches"								type="number"		default="0"/>
+					<field id="st_goals"								type="number"		default="0"/>
+					<field id="st_assists"								type="number"		default="0"/>
+					<field id="st_cards_yellow"							type="number"		default="0"/>
+					<field id="st_cards_yellow_red"						type="number"		default="0"/>
+					<field id="st_cards_red"							type="number"		default="0"/>
+					<field id="transfer_fee"							type="number"		default="0"/></editform></entity></adminpage>
+		<adminpage	id="youthscout"										permissionrole="r_daten"				navcategory="league"	entity="youthscout">
+			<entity dbtable="youthscout AS ScoutTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_youthscout_name"					type="text"			sort="true"			filter="true"			field="ScoutTab.name"/>
+					<column id="entity_youthscout_expertise"			type="percent"		sort="true"			filter="true"			field="ScoutTab.expertise"/>
+					<column id="entity_youthscout_fee"					type="number"		sort="true"			filter="true"			field="ScoutTab.fee"/>
+					<column id="entity_youthscout_speciality"			type="text"			sort="true"			filter="true"			field="ScoutTab.speciality"/></overview>
+				<editform>
+					<field id="name"									type="text"			required="true"/>
+					<field id="expertise"								type="percent"		required="true"/>
+					<field id="fee"										type="number"		required="true"/>
+					<field id="speciality"								type="select"		required="false"	selection="Torwart,Abwehr,Mittelfeld,Sturm"/></editform></entity></adminpage>
+		<adminpage	id="youthmatch"										permissionrole="r_daten"				navcategory="league"	entity="youthmatch">
+			<entity dbtable="youthmatch AS MatchTab">
+				<overview edit="true"	delete="true">
+					<column id="entity_youthmatch_matchdate"			type="timestamp"	sort="true"			filter="true"			field="MatchTab.matchdate"/>
+					<column id="entity_youthmatch_home_team_id"			type="text"			sort="true"			filter="true"			field="HomeTab.name"/>
+					<column id="entity_youthmatch_guest_team_id"		type="text"			sort="true"			filter="true"			field="GuestTab.name"/>
+					<column id="entity_youthmatch_simulated"			type="boolean"		sort="true"			filter="true"			field="MatchTab.simulated"/>
+					<join type="INNER"									jointable="verein AS HomeTab"			joincondition="HomeTab.id = MatchTab.home_team_id"/>
+					<join type="INNER"									jointable="verein AS GuestTab"			joincondition="GuestTab.id = MatchTab.guest_team_id"/></overview>
+				<editform>
+					<field id="matchdate"								type="timestamp"	required="true"/>
+					<field id="home_team_id"							type="foreign_key"												entity="club"	jointable="verein"						labelcolumns="name"/>
+					<field id="guest_team_id"							type="foreign_key"												entity="club"	jointable="verein"						labelcolumns="name"/>
+					<field id="simulated"								type="boolean"		required="false"/>
+					<field id="home_goals"								type="number"		required="false"/>
+					<field id="guest_goals"								type="number" 		required="false"/></editform></entity></adminpage>
+	</admin>
+</module>

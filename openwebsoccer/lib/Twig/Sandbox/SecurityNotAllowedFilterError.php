@@ -5,7 +5,7 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -18,9 +18,9 @@ class Twig_Sandbox_SecurityNotAllowedFilterError extends Twig_Sandbox_SecurityEr
 {
     private $filterName;
 
-    public function __construct($message, $functionName, $lineno = -1, $filename = null, Exception $previous = null)
+    public function __construct($message,$functionName,$lineno = -1,$filename = null,Exception $previous = null)
     {
-        parent::__construct($message, $lineno, $filename, $previous);
+        parent::__construct($message,$lineno,$filename,$previous);
         $this->filterName = $functionName;
     }
 

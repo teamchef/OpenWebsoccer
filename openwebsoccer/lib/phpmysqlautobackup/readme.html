@@ -54,7 +54,7 @@
 
 
 <div align="center"><center>
-    <p>Please consider making a <a name="donation">donation</a>; Every penny or cent helps, any amount is gratefully received.</p>
+    <p>Please consider making a <a name="donation">donation</a>; Every penny or cent helps,any amount is gratefully received.</p>
       <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="2125295">
@@ -66,7 +66,7 @@
 <p align="center"><a href="http://www.dwalker.co.uk/phpmysqlautobackup/"><b><em>php</em>MySQL<em>AutoBackup</em></b></a><br>
 the simple way to <strong>backup MySQL databases</strong>.  
 Automates the backup of MySQL databases.  <br>
-The PHP scripts export your database (data and structures), 
+The PHP scripts export your database (data and structures),
 compresses it into gzip format and emails it to you. </p>
 <p align="center"><strong><font color="#FF9933">Note will now only run once per hour by default; when testing please see &quot;debugging&quot; section<br />
 in the run.php file to ensure the backup will run more than just once per hour for testing purposes.</font></strong></p>
@@ -74,7 +74,7 @@ in the run.php file to ensure the backup will run more than just once per hour f
 
 <ol>
   <li>BACKUP your original files.&nbsp;</li>
-  <li>Follow the install details below (note: you can use your original run.php file, but you must add the new variables detailed below, if missing from your original run.php file).<br />
+  <li>Follow the install details below (note: you can use your original run.php file,but you must add the new variables detailed below,if missing from your original run.php file).<br />
     You can use the details within your existing <strong>/phpMySQLAutoBackup/run.php</strong> file to complete section 2 below.<br />
   </li>
 </ol>
@@ -88,7 +88,7 @@ in the run.php file to ensure the backup will run more than just once per hour f
       <p>You should upload the files and folders retaining the <strong>original names</strong>&nbsp;</p>
     </blockquote>
   </li>
-  <li>To configure your installation, add your details to the following variables within file
+  <li>To configure your installation,add your details to the following variables within file
     /phpMySQLAutoBackup/<strong>run.php:</strong><blockquote>
       <blockquote>
         <ol type="a">
@@ -111,9 +111,9 @@ in the run.php file to ensure the backup will run more than just once per hour f
           </strong>set to 1 to send the backup via email to the address above </li>
           <li>$<strong>send_email_report<br />
           </strong>set to 1 to send the report via email to the address above </li>
-          <li><strong>$time_interval</strong> - interval between backups - stops malicious attempts at bringing down your server by making multiple requests to run the backup. By default this is set to one hour (3600 seconds), will only allow the backup to run once each hour. If DEBUG is set to 1 (see below) then $time_interval is also set to 1. </li>
+          <li><strong>$time_interval</strong> - interval between backups - stops malicious attempts at bringing down your server by making multiple requests to run the backup. By default this is set to one hour (3600 seconds),will only allow the backup to run once each hour. If DEBUG is set to 1 (see below) then $time_interval is also set to 1. </li>
           <li><strong>DEBUG - <font color="#FF0000">SET this to 0 (zero) when you are happy it is working </font><br />
-          </strong>set to 1 to print output to screen, displays any errors, and shows report </li>
+          </strong>set to 1 to print output to screen,displays any errors,and shows report </li>
           <li><strong>FTP</strong> - push the backup file to a remote server. PHP CURL is required and ensure the local and remote backups folders are writeable.<br />
             <br />
             <blockquote>
@@ -122,7 +122,7 @@ in the run.php file to ensure the backup will run more than just once per hour f
                 $ftp_password=&quot;yoursecure-pass&quot;; <br />
                 $ftp_server=&quot;ftp.your--domain.com&quot;;<br />
                 $ftp_path=&quot;/public_html/secure-folder/&quot;; </p>
-              <p>Uncomment the variables, add the correct ftp details and it will copy the backup to the remote server. </p>
+              <p>Uncomment the variables,add the correct ftp details and it will copy the backup to the remote server. </p>
               <p><em>The remote folder you are uploading to should be secure and already exist. Ensure your backups are not uploaded to a folder open for public access. </em></p>
             </blockquote>
           </li>
@@ -155,7 +155,7 @@ fix for&nbsp;email attachment issue (the backup file is included within email bo
                 <br>
                 You can add any number of table names.<br>
                 <br>
-                <font color="#FF0000">If you specify distinct tables names, as above, then ONLY those
+                <font color="#FF0000">If you specify distinct tables names,as above,then ONLY those
                   tables will be included in your backup.<br>
                 </font><br>
                 For a list of minimum number of table names to backup for popular applications including phpBB and phpAMA
@@ -182,7 +182,7 @@ fix for&nbsp;email attachment issue (the backup file is included within email bo
             </blockquote>
           </li>
           <li><strong>$limit_from</strong><strong><br>
-            </strong>record number to start from, use this if you have a large table to backup.&nbsp;
+            </strong>record number to start from,use this if you have a large table to backup.&nbsp;
             Should be used with a single table setting like:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           $table_select[0]=&quot;MyFirstTableName&quot;;</li>
@@ -190,14 +190,14 @@ fix for&nbsp;email attachment issue (the backup file is included within email bo
             total rows to export <br>
             <br>
             The two variables above are used in the SQL query:<br>
-            &nbsp;&nbsp; <em>SELECT * FROM tablename LIMIT <strong>$limit_from , $limit_to</strong><br>
+            &nbsp;&nbsp; <em>SELECT * FROM tablename LIMIT <strong>$limit_from ,$limit_to</strong><br>
             </em>These variables have been added to allow for the backup of just a section of a very
           large table with millions of records.
             <blockquote>&nbsp;</blockquote>
           </li>
         </ol>
         <p><strong>TIP:</strong>&nbsp; If you need to backup several different databases or tables at different
-        backup times you can copy the run.php file, and rename it appropriately.</p>
+        backup times you can copy the run.php file,and rename it appropriately.</p>
       </blockquote>
     </blockquote>
   </li>
@@ -206,14 +206,14 @@ fix for&nbsp;email attachment issue (the backup file is included within email bo
         <blockquote>
           <p>Enter in your address bar the url:</p>
           <p><a href="http://www.[Your---domain].com/phpMySQLAutoBackup/run.php">http://www.[Your--domain].com/phpmysqlautobackup/run.php</a><br>
-            &nbsp; (runs silently [no output] when DEBUG is set to zero, unless there are errors, OHhh no.)</p>
+            &nbsp; (runs silently [no output] when DEBUG is set to zero,unless there are errors,OHhh no.)</p>
         </blockquote>
       </blockquote>
         <blockquote>
           <p align="left"><strong>If you have entered the above details correctly this will export
-            your database, compress it into gzip format and email it to you.</strong><br>
+            your database,compress it into gzip format and email it to you.</strong><br>
             <br>
-          When run correctly for the first time it will create a new table within your database called: phpmysqlautobackup, which contains a single record to monitor the last time it was run (used to stop abuse), and phpmysqlautobackup_log which holds the reports. </p>
+          When run correctly for the first time it will create a new table within your database called: phpmysqlautobackup,which contains a single record to monitor the last time it was run (used to stop abuse),and phpmysqlautobackup_log which holds the reports. </p>
           <p align="left">To schedule it to run hourly/daily/monthly add the above url to a cron job
             or use the <big><font face="Garamond">excellent <a href="http://www.phpjobscheduler.co.uk/">phpJobScheduler</a></font></big></p>
     </blockquote>
@@ -224,13 +224,13 @@ fix for&nbsp;email attachment issue (the backup file is included within email bo
 <blockquote>
   <p>If you experience problems then the most common error is the script is timing-out; usually the error messages are:</p>
   <blockquote>
-    <p><font color="red">Fatal error:  Maximum execution time of 50 seconds exceeded in</font>, or<br>
-    <font color="red">Fatal error: allowed memory size of bytes exhausted (tried to allocate bytes)</font>, or  <br>
-      <font color="red">Internal Server Error, this is an error with your script</font>, or other similar message </p>
+    <p><font color="red">Fatal error:  Maximum execution time of 50 seconds exceeded in</font>,or<br>
+    <font color="red">Fatal error: allowed memory size of bytes exhausted (tried to allocate bytes)</font>,or  <br>
+      <font color="red">Internal Server Error,this is an error with your script</font>,or other similar message </p>
   </blockquote>
   <p>Then you need to either:</p>
   <ul>
-    <li>Specify specific table names to backup to reduce the time taken to create the backup, see table_select above, or</li>
+    <li>Specify specific table names to backup to reduce the time taken to create the backup,see table_select above,or</li>
     <li>  Set the upper and lower export limits see limit_to and limit_from above.<br>
       <br>
       <ul>
@@ -252,7 +252,7 @@ fix for&nbsp;email attachment issue (the backup file is included within email bo
 This will backup all records from row 1001 and upto 1000 rows.       <br>
 <br>
 <br>
-If you copy the run.php file, and rename it appropriately then you can run the several backups of the data starting at different rows.<br>
+If you copy the run.php file,and rename it appropriately then you can run the several backups of the data starting at different rows.<br>
 <br>
 Confused? Got a question? Try <a href="http://members.dwalker.co.uk/forum/search.php">searching the forum</a> <br>  
                     <br>
@@ -263,9 +263,9 @@ Confused? Got a question? Try <a href="http://members.dwalker.co.uk/forum/search
     </li>
   </ul>
 </blockquote>
-<p>I do hope you find it useful, and if you use it let me know.</p>
+<p>I do hope you find it useful,and if you use it let me know.</p>
 <p>And if you are feeling generous then you might even consider <a href="#donation">giving
-a tiny donation</a>, any small amount helps with upgrades and patches, even if you don't want to contribute financially  please do let others know about phpMySQLAutoBackup which will help in the long term :-) </p>
+a tiny donation</a>,any small amount helps with upgrades and patches,even if you don't want to contribute financially  please do let others know about phpMySQLAutoBackup which will help in the long term :-) </p>
 <p>&nbsp;</p>
 
 <div align="center">
@@ -276,11 +276,11 @@ a tiny donation</a>, any small amount helps with upgrades and patches, even if y
         <th width="376" scope="col">
 		Create your own members area: 	
     <div id="logo-bk">
-	  <div align="center"><a href="http://www.dwalker.co.uk/phpautomembersarea/"><img src="http://www.dwalker.co.uk/phpautomembersarea/pamalogo.gif" alt="phpAMA - create a members area using PHP MySQL, protect your members only or adult content" border="0"></a></div>
+	  <div align="center"><a href="http://www.dwalker.co.uk/phpautomembersarea/"><img src="http://www.dwalker.co.uk/phpautomembersarea/pamalogo.gif" alt="phpAMA - create a members area using PHP MySQL,protect your members only or adult content" border="0"></a></div>
 	</div>		
 	<a href="http://www.dwalker.co.uk/phpautomembersarea/" >phpAutoMembersArea</a></th>
         <th width="462" scope="col">Run cron jobs with ease schedule PHP scripts to <br />
-          run: 1-59 minutes, hourly, daily or weekly, <br />
+          run: 1-59 minutes,hourly,daily or weekly,<br />
           and log the output
 		         <div id="logo-bk">
 	  <div align="center"><a href="http://www.phpjobscheduler.co.uk/"><img src="http://www.phpjobscheduler.co.uk/pjslogo.gif" alt="phpJobScheduler - scheduling PHP scripts to run at set intervals your replacement for cron jobs.&nbsp; " border="0" height="75" width="165"></a> </div>

@@ -6,7 +6,7 @@
  * (c) 2010 Fabien Potencier
  * (c) 2010 Arnaud Le Blanc
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -26,24 +26,25 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
     /**
      * Constructor.
      *
-     * @param array|Traversable $parsers A Traversable of Twig_TokenParserInterface instances
-     * @param array|Traversable $brokers A Traversable of Twig_TokenParserBrokerInterface instances
+     * @param array|Traversable $parsers                 A Traversable of Twig_TokenParserInterface instances
+     * @param array|Traversable $brokers                 A Traversable of Twig_TokenParserBrokerInterface instances
+     * @param bool              $triggerDeprecationError
      */
-    public function __construct($parsers = array(), $brokers = array(), $triggerDeprecationError = true)
+    public function __construct($parsers = array(),$brokers = array(),$triggerDeprecationError = true)
     {
         if ($triggerDeprecationError) {
-            @trigger_error('The '.__CLASS__.' class is deprecated since version 1.12 and will be removed in 2.0.', E_USER_DEPRECATED);
+            @trigger_error('The '.__CLASS__.' class is deprecated since version 1.12 and will be removed in 2.0.',E_USER_DEPRECATED);
         }
 
         foreach ($parsers as $parser) {
             if (!$parser instanceof Twig_TokenParserInterface) {
-                throw new LogicException('$parsers must a an array of Twig_TokenParserInterface');
+                throw new LogicException('$parsers must a an array of Twig_TokenParserInterface.');
             }
             $this->parsers[$parser->getTag()] = $parser;
         }
         foreach ($brokers as $broker) {
             if (!$broker instanceof Twig_TokenParserBrokerInterface) {
-                throw new LogicException('$brokers must a an array of Twig_TokenParserBrokerInterface');
+                throw new LogicException('$brokers must a an array of Twig_TokenParserBrokerInterface.');
             }
             $this->brokers[] = $broker;
         }
@@ -89,7 +90,7 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
      */
     public function removeTokenParserBroker(Twig_TokenParserBroker $broker)
     {
-        if (false !== $pos = array_search($broker, $this->brokers)) {
+        if (false !== $pos = array_search($broker,$this->brokers)) {
             unset($this->brokers[$pos]);
         }
     }
@@ -97,7 +98,7 @@ class Twig_TokenParserBroker implements Twig_TokenParserBrokerInterface
     /**
      * Gets a suitable TokenParser for a tag.
      *
-     * First looks in parsers, then in brokers.
+     * First looks in parsers,then in brokers.
      *
      * @param string $tag A tag name
      *

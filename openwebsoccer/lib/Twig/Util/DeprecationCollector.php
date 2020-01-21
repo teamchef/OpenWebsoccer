@@ -5,7 +5,7 @@
  *
  * (c) Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 
@@ -30,12 +30,12 @@ class Twig_Util_DeprecationCollector
      *
      * @return array() An array of deprecations
      */
-    public function collectDir($dir, $ext = '.twig')
+    public function collectDir($dir,$ext = '.twig')
     {
         $iterator = new RegexIterator(
             new RecursiveIteratorIterator(
-                new RecursiveDirectoryIterator($dir), RecursiveIteratorIterator::LEAVES_ONLY
-            ), '{'.preg_quote($ext).'$}'
+                new RecursiveDirectoryIterator($dir),RecursiveIteratorIterator::LEAVES_ONLY
+            ),'{'.preg_quote($ext).'$}'
         );
 
         return $this->collect(new Twig_Util_TemplateDirIterator($iterator));
@@ -52,11 +52,11 @@ class Twig_Util_DeprecationCollector
     {
         $this->deprecations = array();
 
-        set_error_handler(array($this, 'errorHandler'));
+        set_error_handler(array($this,'errorHandler'));
 
         foreach ($iterator as $name => $contents) {
             try {
-                $this->twig->parse($this->twig->tokenize($contents, $name));
+                $this->twig->parse($this->twig->tokenize($contents,$name));
             } catch (Twig_Error_Syntax $e) {
                 // ignore templates containing syntax errors
             }
@@ -73,7 +73,7 @@ class Twig_Util_DeprecationCollector
     /**
      * @internal
      */
-    public function errorHandler($type, $msg)
+    public function errorHandler($type,$msg)
     {
         if (E_USER_DEPRECATED === $type) {
             $this->deprecations[] = $msg;

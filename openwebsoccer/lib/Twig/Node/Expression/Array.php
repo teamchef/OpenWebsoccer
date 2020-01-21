@@ -5,16 +5,16 @@
  *
  * (c) 2009 Fabien Potencier
  *
- * For the full copyright and license information, please view the LICENSE
+ * For the full copyright and license information,please view the LICENSE
  * file that was distributed with this source code.
  */
 class Twig_Node_Expression_Array extends Twig_Node_Expression
 {
     protected $index;
 
-    public function __construct(array $elements, $lineno)
+    public function __construct(array $elements,$lineno)
     {
-        parent::__construct($elements, array(), $lineno);
+        parent::__construct($elements,array(),$lineno);
 
         $this->index = -1;
         foreach ($this->getKeyValuePairs() as $pair) {
@@ -28,7 +28,7 @@ class Twig_Node_Expression_Array extends Twig_Node_Expression
     {
         $pairs = array();
 
-        foreach (array_chunk($this->nodes, 2) as $pair) {
+        foreach (array_chunk($this->nodes,2) as $pair) {
             $pairs[] = array(
                 'key' => $pair[0],
                 'value' => $pair[1],
@@ -51,27 +51,22 @@ class Twig_Node_Expression_Array extends Twig_Node_Expression
         return false;
     }
 
-    public function addElement(Twig_Node_Expression $value, Twig_Node_Expression $key = null)
+    public function addElement(Twig_Node_Expression $value,Twig_Node_Expression $key = null)
     {
         if (null === $key) {
-            $key = new Twig_Node_Expression_Constant(++$this->index, $value->getLine());
+            $key = new Twig_Node_Expression_Constant(++$this->index,$value->getLine());
         }
 
-        array_push($this->nodes, $key, $value);
+        array_push($this->nodes,$key,$value);
     }
 
-    /**
-     * Compiles the node to PHP.
-     *
-     * @param Twig_Compiler $compiler A Twig_Compiler instance
-     */
     public function compile(Twig_Compiler $compiler)
     {
         $compiler->raw('array(');
         $first = true;
         foreach ($this->getKeyValuePairs() as $pair) {
             if (!$first) {
-                $compiler->raw(', ');
+                $compiler->raw(',');
             }
             $first = false;
 

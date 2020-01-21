@@ -1,34 +1,60 @@
-{% extends "base.twig" %}
-
-{% block page_title %}
-{{ i18n.getMessage("premium-confirm-action_title") }}
+{#
+*
+* This file is part of OpenWebSoccer-Sim.
+*
+* OpenWebSoccer-Sim is free software: you can redistribute it
+* and/or modify it under the terms of the
+* GNU Lesser General Public License
+* as published by the Free Software Foundation,either version 3 of
+* the License,or any later version.
+*
+* OpenWebSoccer-Sim is distributed in the hope that it will be
+* useful,but WITHOUT ANY WARRANTY; without even the implied
+* warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+* See the GNU Lesser General Public License for more details.
+*
+* You should have received a copy of the GNU Lesser General Public
+* License along with OpenWebSoccer-Sim.
+* If not,see <http://www.gnu.org/licenses/>.
+*
+* Author: Ingo Hofmann
+* Base Version: OpenWebSoccer-Sim 5.2.4-Snapshot vom 21. Juni 2015
+*
+* This Version called "OpenWebsoccer" is a advanced modifikation
+* by Rolf Joseph / ErdemCan 2015 - 2016
+*
+* For comparison of the code look at the original at
+* https://github.com/ihofmann/open-websoccer
+#}
+{% embed "page.twig" %}
+{% block premium_confirm_action %}
+	{% block page_title %}
+		{{ i18n.getMessage("premium-confirm-action_title") }}
+	{% endblock %}
+	{% block page_content %}
+		{% set bild = '/img/premiumconfirm.png' %}{% if file_exists('img/premiumconfirm.png') %}<br>{% if cdnset %}<img src="{{ cdn }}{{ bild }}"/><br><br>{% else %}<img src="{{ root }}{{ bild }}"/><br><br>{% endif %}{% endif %}
+		<div class="well">
+			{{ i18n.getMessage("premium-confirm-action_question")|format(env.getContextParameters()["premium_balance_required"],env.getConfig("premium_credit_unit"))|raw }}
+		</div>
+		<div class="form-actions">
+			<form method="post" style="display: inline;">
+				{% for actionParamKey,actionParamValue in env.getContextParameters()["actionparameters"] %}
+					<input type="hidden" name="{{ actionParamKey }}" value="{{ actionParamValue }}">
+				{% endfor %}
+				<input type="hidden" name="page" value="{{ env.getContextParameters()["srcpage"] }}">
+				<input type="hidden" name="action" value="{{ env.getContextParameters()["actionid"] }}">
+				<input type="hidden" name="premiumconfirmed" value="1">
+				<button type="submit" class="btn btn-success">{{ i18n.getMessage("premium-confirm-action_confirm") }}</button>
+			</form>
+			<form method="post" style="display: inline;">
+				{% for actionParamKey,actionParamValue in env.getContextParameters()["actionparameters"] %}
+					<input type="hidden" name="{{ actionParamKey }}" value="{{ actionParamValue }}">
+				{% endfor %}
+				<input type="hidden" name="page" value="{{ env.getContextParameters()["srcpage"] }}">
+				<input type="hidden" name="action" value="">
+				<button type="submit" class="btn btn-danger">{{ i18n.getMessage("button_cancel") }}</button>
+			</form>
+		</div>
+	{% endblock %}
 {% endblock %}
-
-{% block page_content %}
-
-<div class="well">
-{{ i18n.getMessage("premium-confirm-action_question")|format(env.getContextParameters()["premium_balance_required"], env.getConfig("premium_credit_unit"))|raw }}
-</div>
-
-<div class="form-actions">
-	<form method="post" style="display: inline">
-		{% for actionParamKey,actionParamValue in env.getContextParameters()["actionparameters"]  %}
-			<input type="hidden" name="{{ actionParamKey }}" value="{{ actionParamValue }}">
-		{% endfor %}
-		<input type="hidden" name="page" value="{{ env.getContextParameters()["srcpage"] }}">
-		<input type="hidden" name="action" value="{{ env.getContextParameters()["actionid"] }}">
-		<input type="hidden" name="premiumconfirmed" value="1">
-		<button type="submit" class="btn btn-success">{{ i18n.getMessage("premium-confirm-action_confirm") }}</button>
-	</form>
-	
-	<form method="post" style="display: inline">
-		{% for actionParamKey,actionParamValue in env.getContextParameters()["actionparameters"]  %}
-			<input type="hidden" name="{{ actionParamKey }}" value="{{ actionParamValue }}">
-		{% endfor %}
-		<input type="hidden" name="page" value="{{ env.getContextParameters()["srcpage"] }}">
-		<input type="hidden" name="action" value="">
-		<button type="submit" class="btn btn-danger">{{ i18n.getMessage("button_cancel") }}</button>
-	</form>
-</div>
-
-{% endblock %}
+{% endembed %}
